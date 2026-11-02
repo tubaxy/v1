@@ -3,130 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{% block title %}TakaWallet • Minimal Fintech & Earning Platform{% endblock %}</title>
+    <title>{% block title %}TaskWallet • Classic Digital Ecosystem{% endblock %}</title>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome 6 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Fonts: Anek Bangla (Bangla), The Seasons Style (Cormorant Garamond/Serif), Gotham Style (Montserrat) -->
+    <!-- Fonts: Anek Bangla (Bangla), The Seasons Style (Cormorant Garamond Classic Serif), Gotham Style (Montserrat) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- PWA Config -->
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#030712">
+    <meta name="theme-color" content="#03050a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="TakaWallet">
-
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        fintech: {
-                            bg: '#040711',
-                            card: '#0a0f1d',
-                            blue: '#1d4ed8',
-                            cyan: '#06b6d4',
-                            electric: '#38bdf8'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <meta name="apple-mobile-web-app-title" content="TaskWallet">
 
     <style>
-        /* 1. Global Font System */
         * {
             font-family: 'Anek Bangla', 'Montserrat', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* The Seasons Serif Typography for Brand & Headings */
-        .font-seasons {
+        /* Classic Luxury "The Seasons" Serif */
+        .font-classic-seasons {
             font-family: 'The Seasons', 'Cormorant Garamond', Georgia, serif;
-            letter-spacing: -0.02em;
+            letter-spacing: 0.04em;
         }
 
-        /* Gotham Sans Typography for Numbers, English Labels & UI */
+        /* Clean "Gotham" Geometric Sans */
         .font-gotham {
             font-family: 'Gotham', 'Montserrat', -apple-system, sans-serif;
             letter-spacing: -0.01em;
         }
 
-        /* 2. Liquid Glassmorphism Styling */
-        .liquid-glass {
-            background: rgba(10, 15, 29, 0.72);
-            backdrop-filter: blur(28px) saturate(200%);
-            -webkit-backdrop-filter: blur(28px) saturate(200%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.8), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+        /* Deep Matte Obsidian Background */
+        body {
+            background-color: #04060b;
+            color: #f1f5f9;
         }
 
-        .liquid-glass-header {
-            background: rgba(4, 7, 17, 0.82);
-            backdrop-filter: blur(32px) saturate(190%);
-            -webkit-backdrop-filter: blur(32px) saturate(190%);
+        /* Liquid Frosted Glass (Non-colorful, Classic) */
+        .classic-glass {
+            background: rgba(10, 14, 23, 0.72);
+            backdrop-filter: blur(24px) saturate(160%);
+            -webkit-backdrop-filter: blur(24px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .header-glass {
+            background: rgba(4, 6, 11, 0.85);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        .liquid-glass-dock {
-            background: rgba(10, 15, 29, 0.82);
-            backdrop-filter: blur(28px) saturate(210%);
-            -webkit-backdrop-filter: blur(28px) saturate(210%);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        /* Water Liquid Morphing Animation for Center Nav */
+        @keyframes water-morph {
+            0% { border-radius: 42% 58% 60% 40% / 45% 45% 55% 55%; transform: translateY(0); }
+            33% { border-radius: 55% 45% 42% 58% / 58% 52% 48% 42%; transform: translateY(-2px); }
+            66% { border-radius: 40% 60% 55% 45% / 48% 60% 40% 52%; transform: translateY(1px); }
+            100% { border-radius: 42% 58% 60% 40% / 45% 45% 55% 55%; transform: translateY(0); }
         }
 
-        /* 3. Subtle Ambient Light & Glow Keyframes */
-        @keyframes liquid-glow {
-            0%, 100% { transform: scale(1) translateY(0); opacity: 0.45; }
-            50% { transform: scale(1.08) translateY(-10px); opacity: 0.75; }
-        }
-        .ambient-fintech-glow {
-            animation: liquid-glow 8s ease-in-out infinite;
+        .water-droplet-btn {
+            animation: water-morph 6s infinite ease-in-out;
+            background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.25) 0%, rgba(30, 41, 59, 0.9) 60%, rgba(15, 23, 42, 0.98) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7), inset 0 2px 4px rgba(255,255,255,0.3);
         }
 
-        @keyframes orb-pulse {
-            0%, 100% { box-shadow: 0 0 18px rgba(56, 189, 248, 0.35); }
-            50% { box-shadow: 0 0 32px rgba(29, 78, 216, 0.65); }
+        /* Fluid Water Wave Glow on Bottom Dock Items */
+        .water-nav-item {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .support-orb-glow {
-            animation: orb-pulse 3.5s infinite ease-in-out;
+
+        .water-nav-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+            transform: translateX(-50%);
+            border-radius: 50%;
+            transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .water-nav-item:hover::before, .water-nav-item.active::before {
+            width: 70px;
+            height: 45px;
+            opacity: 1;
+        }
+
+        /* Water Ripple Rings for Support Orb */
+        @keyframes water-ring {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.25); opacity: 0; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+        .support-water-pulse::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            animation: water-ring 2.8s infinite cubic-bezier(0.1, 0.7, 0.3, 1);
+            pointer-events: none;
         }
     </style>
 
-    <!-- Robust Hardware Fingerprint Engine -->
+    <!-- Robust Device Fingerprint -->
     <script>
         async function getHardwareFingerprint() {
-            const parts = [];
-            parts.push(screen.width + "x" + screen.height + "x" + screen.colorDepth);
-            parts.push(Intl.DateTimeFormat().resolvedOptions().timeZone);
-            parts.push(navigator.language);
-            parts.push(navigator.hardwareConcurrency || "4");
-
+            const parts = [
+                screen.width + "x" + screen.height + "x" + screen.colorDepth,
+                Intl.DateTimeFormat().resolvedOptions().timeZone,
+                navigator.language,
+                navigator.hardwareConcurrency || "4"
+            ];
             try {
                 const canvas = document.createElement('canvas');
-                canvas.width = 200;
-                canvas.height = 40;
+                canvas.width = 200; canvas.height = 40;
                 const ctx = canvas.getContext('2d');
-                ctx.textBaseline = "top";
-                ctx.font = "14px 'Montserrat'";
-                ctx.fillStyle = "#1d4ed8";
-                ctx.fillRect(100, 1, 62, 20);
-                ctx.fillStyle = "#38bdf8";
-                ctx.fillText("TakaWallet-Hardware", 2, 15);
+                ctx.textBaseline = "top"; ctx.font = "14px 'Montserrat'";
+                ctx.fillStyle = "#1e293b"; ctx.fillRect(100, 1, 62, 20);
+                ctx.fillStyle = "#cbd5e1"; ctx.fillText("TaskWallet-Secure", 2, 15);
                 parts.push(canvas.toDataURL());
             } catch(e) {}
 
-            const raw = parts.join("|||");
-            const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw));
+            const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(parts.join("|||")));
             const hash = Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
             return "DEV-" + hash.substring(0, 24).toUpperCase();
         }
@@ -136,8 +151,7 @@
             localStorage.setItem('mx_device_unique_token', deviceID);
             document.cookie = "device_id=" + deviceID + "; path=/; max-age=31536000; SameSite=Lax";
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const ref = urlParams.get('ref');
+            const ref = new URLSearchParams(window.location.search).get('ref');
             if (ref) localStorage.setItem('mx_referral_cached', ref.trim().toUpperCase());
 
             document.addEventListener("DOMContentLoaded", function () {
@@ -149,48 +163,45 @@
         })();
     </script>
 </head>
-<body class="bg-[#040711] text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-sky-500/20 selection:text-sky-300 relative overflow-x-hidden pb-28">
+<body class="selection:bg-white/10 selection:text-white relative overflow-x-hidden pb-28">
 
-    <!-- Ambient Blue Spotlights (Image 2 Aesthetic) -->
-    <div class="fixed -top-40 -left-32 w-[420px] h-[420px] bg-blue-600/15 rounded-full blur-[140px] pointer-events-none ambient-fintech-glow"></div>
-    <div class="fixed top-1/3 -right-32 w-[400px] h-[400px] bg-cyan-600/10 rounded-full blur-[150px] pointer-events-none ambient-fintech-glow"></div>
-    <div class="fixed -bottom-40 left-1/4 w-[500px] h-[500px] bg-indigo-700/10 rounded-full blur-[160px] pointer-events-none"></div>
+    <!-- Subtle Monochrome Background Spotlights -->
+    <div class="fixed -top-40 -left-32 w-96 h-96 bg-white/[0.02] rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="fixed top-1/2 -right-40 w-96 h-96 bg-slate-500/[0.02] rounded-full blur-[160px] pointer-events-none"></div>
 
-    <!-- ================= 1. HEADER (NO IMAGE - PURE THE SEASONS TYPOGRAPHY) ================= -->
-    <header class="sticky top-0 z-40 liquid-glass-header transition-all duration-300">
+    <!-- ================= 1. HEADER (100% CLASSIC TYPOGRAPHY - NO IMAGE) ================= -->
+    <header class="sticky top-0 z-40 header-glass">
         <div class="max-w-xl mx-auto px-4 h-16 flex items-center justify-between">
             
-            <!-- Left: Toggle Hamburger & Brand Typography (No Logo Image) -->
-            <div class="flex items-center gap-3">
-                <!-- Hamburger Trigger (Opens Left Drawer) -->
+            <!-- Left: Minimal Classic Drawer Toggle & Classic Logo -->
+            <div class="flex items-center gap-3.5">
                 <button onclick="toggleSidebar(true)" 
-                        class="w-10 h-10 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] active:scale-95 border border-white/[0.08] flex items-center justify-center text-slate-300 hover:text-white transition shadow-sm" 
-                        aria-label="Open Left Navigation">
+                        class="w-10 h-10 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] active:scale-95 border border-white/[0.08] flex items-center justify-center text-slate-300 hover:text-white transition shadow-sm" 
+                        aria-label="Open Navigation Menu">
                     <i class="fa-solid fa-bars-staggered text-sm"></i>
                 </button>
 
-                <!-- Brand Name in "The Seasons" Elegant Serif -->
-                <a href="/" class="flex items-baseline select-none group">
-                    <span class="font-seasons text-2xl font-bold tracking-tight text-white group-hover:text-slate-100 transition">
-                        Taka<span class="text-sky-400 font-normal italic ml-0.5">Wallet</span>
+                <!-- Full Classic "The Seasons" Serif Logo -->
+                <a href="/" class="flex items-baseline select-none">
+                    <span class="font-classic-seasons text-2xl font-normal text-white uppercase tracking-[0.06em]">
+                        Task<span class="font-light italic text-slate-400 lowercase text-xl ml-0.5">wallet</span>
                     </span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-sky-400 ml-1 shadow-[0_0_8px_#38bdf8]"></span>
                 </a>
             </div>
 
-            <!-- Right: Minimal Clean User Balance Pill / Login CTA -->
-            <div class="flex items-center gap-2.5">
+            <!-- Right: Minimal Titanium Balance Pill -->
+            <div>
                 {% if current_user %}
                     <a href="/account" 
-                       class="flex items-center gap-2 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 px-3 py-1.5 rounded-full transition active:scale-95 shadow-inner">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span class="font-gotham font-black text-xs text-white tabular-nums tracking-wide">
+                       class="flex items-center gap-2 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 px-3.5 py-1.5 rounded-full transition active:scale-95 shadow-inner">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                        <span class="font-gotham font-semibold text-xs text-slate-200 tabular-nums">
                             ৳ {{ "%.2f"|format(current_user.balance) }}
                         </span>
                     </a>
                 {% else %}
                     <a href="/login" 
-                       class="bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-500 hover:to-sky-400 text-white font-gotham font-bold text-xs px-4 py-2 rounded-xl transition active:scale-95 shadow-lg shadow-blue-500/25">
+                       class="bg-white/10 hover:bg-white/15 text-white border border-white/20 font-gotham font-semibold text-xs px-4 py-2 rounded-xl transition active:scale-95 shadow">
                         লগইন
                     </a>
                 {% endif %}
@@ -199,114 +210,112 @@
         </div>
     </header>
 
-    <!-- ================= 2. LEFT-OPENING LIQUID GLASS DRAWER (বাম দিক থেকে ওপেন হবে) ================= -->
+    <!-- ================= 2. LEFT-OPENING DRAWER (NO COLORFUL ICONS) ================= -->
     <div id="drawerOverlay" onclick="toggleSidebar(false)" 
-         class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+         class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
 
     <aside id="drawerPanel" 
-           class="fixed top-0 left-0 h-full w-72 sm:w-80 bg-[#080d1a]/95 backdrop-blur-3xl text-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-out flex flex-col p-6 border-r border-white/10 rounded-r-[32px] overflow-hidden">
+           class="fixed top-0 left-0 h-full w-72 sm:w-80 bg-[#07090e] text-slate-200 shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-out flex flex-col p-6 border-r border-white/[0.08] rounded-r-3xl overflow-hidden">
         
-        <!-- Drawer Header -->
-        <div class="flex items-center justify-between pb-4 border-b border-white/[0.08]">
-            <div class="flex items-baseline select-none">
-                <span class="font-seasons text-xl font-bold tracking-tight text-white">
-                    Taka<span class="text-sky-400 font-normal italic">Wallet</span>
-                </span>
-            </div>
+        <!-- Drawer Top -->
+        <div class="flex items-center justify-between pb-4 border-b border-white/[0.06]">
+            <span class="font-classic-seasons text-lg text-white uppercase tracking-wider">
+                Task<span class="font-light italic text-slate-400 lowercase text-base">wallet</span>
+            </span>
             <button onclick="toggleSidebar(false)" 
-                    class="w-8 h-8 rounded-full bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-white flex items-center justify-center text-xs transition border border-white/[0.06]">
+                    class="w-8 h-8 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-slate-400 hover:text-white flex items-center justify-center text-xs transition border border-white/[0.05]">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
 
-        <!-- User VIP Quick Info -->
+        <!-- User Wallet Card (Monochrome Minimal) -->
         <div class="pt-4 pb-2">
             {% if current_user %}
-            <div class="liquid-glass rounded-2xl p-4 space-y-2 border border-white/10">
+            <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-4 space-y-2">
                 <div class="flex items-center justify-between">
                     <div>
-                        <span class="text-[10px] text-slate-400 uppercase font-gotham tracking-wider block">Wallet Balance</span>
-                        <span class="font-gotham text-lg font-black text-white">৳ {{ "%.2f"|format(current_user.balance) }}</span>
+                        <span class="text-[9px] text-slate-500 uppercase font-gotham tracking-wider block">Wallet Balance</span>
+                        <span class="font-gotham text-lg font-bold text-white">৳ {{ "%.2f"|format(current_user.balance) }}</span>
                     </div>
-                    <span class="text-[9px] font-gotham font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                        Active
+                    <span class="text-[9px] font-gotham px-2.5 py-0.5 rounded-full bg-white/[0.05] text-slate-300 border border-white/10">
+                        Verified
                     </span>
                 </div>
-                <div class="pt-2 border-t border-white/[0.06] flex items-center justify-between text-xs text-slate-400">
-                    <span>{{ current_user.name }}</span>
-                    <span class="font-mono text-[10px] text-sky-400">@{{ current_user.referral_code }}</span>
+                <div class="pt-2 border-t border-white/[0.04] flex items-center justify-between text-xs text-slate-400">
+                    <span class="font-medium text-slate-300">{{ current_user.name }}</span>
+                    <span class="font-mono text-[10px] text-slate-500">@{{ current_user.referral_code }}</span>
                 </div>
             </div>
             {% else %}
-            <div class="liquid-glass rounded-2xl p-4 text-center space-y-2">
-                <h4 class="font-seasons text-base font-bold text-white">TakaWallet-এ স্বাগতম</h4>
-                <p class="text-[11px] text-slate-400">সহজে কাজ সম্পন্ন করে আয় করুন</p>
-                <a href="/login" class="block w-full bg-blue-600 hover:bg-blue-500 text-white font-gotham font-bold text-xs py-2.5 rounded-xl transition shadow-md shadow-blue-600/30">
-                    লগইন বা সাইন-আপ
+            <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-4 text-center space-y-2">
+                <h4 class="font-classic-seasons text-base text-white">TaskWallet</h4>
+                <p class="text-[11px] text-slate-400">কাজের মাধ্যমে সহজে উপার্জন করুন</p>
+                <a href="/login" class="block w-full bg-white text-black font-gotham font-semibold text-xs py-2.5 rounded-xl transition hover:bg-slate-200">
+                    সাইন ইন / রেজিস্ট্রেশন
                 </a>
             </div>
             {% endif %}
         </div>
 
-        <!-- Left Drawer Nav Items -->
-        <nav class="flex-1 py-3 space-y-1.5 overflow-y-auto pr-1 text-xs font-semibold">
-            <span class="text-[9px] font-gotham font-black uppercase tracking-widest text-slate-500 px-3 block mb-1">
+        <!-- Clean Monochromatic Nav List -->
+        <nav class="flex-1 py-3 space-y-1 overflow-y-auto pr-1 text-xs font-medium">
+            <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
                 প্রধান মেনু
             </span>
-            <a href="/app" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.06] transition">
-                <i class="fa-solid fa-house w-4 text-center text-sky-400"></i>
+            <a href="/app" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-house w-4 text-center text-slate-400"></i>
                 <span>ড্যাশবোর্ড</span>
             </a>
-            <a href="/allwork" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.06] transition">
-                <i class="fa-solid fa-bolt w-4 text-center text-amber-400"></i>
+            <a href="/allwork" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-bolt w-4 text-center text-slate-400"></i>
                 <span>সকল কাজ (All Work)</span>
             </a>
-            <a href="/history" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.06] transition">
-                <i class="fa-solid fa-clock-rotate-left w-4 text-center text-indigo-400"></i>
+            <a href="/history" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-clock-rotate-left w-4 text-center text-slate-400"></i>
                 <span>উইথড্রয়াল হিস্ট্রি</span>
             </a>
-            <a href="/withdraw" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.06] transition">
-                <i class="fa-solid fa-wallet w-4 text-center text-emerald-400"></i>
+            <a href="/withdraw" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-wallet w-4 text-center text-slate-400"></i>
                 <span>টাকা উত্তোলন (Payout)</span>
             </a>
-            <a href="/account" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.06] transition">
-                <i class="fa-solid fa-id-card w-4 text-center text-purple-400"></i>
+            <a href="/account" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-id-card w-4 text-center text-slate-400"></i>
                 <span>ডিজিটাল মেম্বার কার্ড</span>
             </a>
 
-            <div class="pt-2 my-2 border-t border-white/[0.06]"></div>
-            <span class="text-[9px] font-gotham font-black uppercase tracking-widest text-slate-500 px-3 block mb-1">
-                আর্নিং হাব
+            <div class="pt-2 my-2 border-t border-white/[0.04]"></div>
+            <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
+                কাজের তালিকা
             </span>
-            <a href="/tasks" class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-slate-300 hover:bg-white/[0.06] transition">
-                <i class="fa-solid fa-list-check w-4 text-center text-blue-400"></i>
+            <a href="/tasks" class="flex items-center gap-3.5 px-3.5 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-list-check w-4 text-center text-slate-400"></i>
                 <span>মাইক্রো টাস্ক</span>
             </a>
-            <a href="/yt" class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-slate-300 hover:bg-white/[0.06] transition">
-                <i class="fa-brands fa-youtube w-4 text-center text-red-500"></i>
+            <a href="/yt" class="flex items-center gap-3.5 px-3.5 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-brands fa-youtube w-4 text-center text-slate-400"></i>
                 <span>ভিডিও ওয়াচ</span>
             </a>
-            <a href="/spin" class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-slate-300 hover:bg-white/[0.06] transition">
-                <i class="fa-solid fa-dharmachakra w-4 text-center text-amber-400"></i>
+            <a href="/spin" class="flex items-center gap-3.5 px-3.5 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-dharmachakra w-4 text-center text-slate-400"></i>
                 <span>লাকি স্পিন</span>
             </a>
-            <a href="/scratch" class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-slate-300 hover:bg-white/[0.06] transition">
-                <i class="fa-solid fa-gift w-4 text-center text-emerald-400"></i>
+            <a href="/scratch" class="flex items-center gap-3.5 px-3.5 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-gift w-4 text-center text-slate-400"></i>
                 <span>স্ক্র্যাচ কার্ড</span>
             </a>
-            <a href="/quiz" class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-slate-300 hover:bg-white/[0.06] transition">
-                <i class="fa-solid fa-brain w-4 text-center text-pink-400"></i>
+            <a href="/quiz" class="flex items-center gap-3.5 px-3.5 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-brain w-4 text-center text-slate-400"></i>
                 <span>ম্যাথ কুইজ</span>
             </a>
-            <a href="/refer" class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-slate-300 hover:bg-white/[0.06] transition">
-                <i class="fa-solid fa-user-plus w-4 text-center text-cyan-400"></i>
+            <a href="/refer" class="flex items-center gap-3.5 px-3.5 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-user-plus w-4 text-center text-slate-400"></i>
                 <span>রেফার করুন</span>
             </a>
         </nav>
 
         {% if current_user %}
-        <div class="pt-3 border-t border-white/[0.08]">
-            <a href="/logout" class="w-full flex items-center justify-center gap-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 text-xs font-bold py-2.5 rounded-xl transition">
+        <div class="pt-3 border-t border-white/[0.06]">
+            <a href="/logout" class="w-full flex items-center justify-center gap-2 bg-white/[0.03] hover:bg-rose-500/10 text-slate-400 hover:text-rose-400 border border-white/[0.06] text-xs font-medium py-2.5 rounded-xl transition">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 <span>লগআউট করুন</span>
             </a>
@@ -314,14 +323,13 @@
         {% endif %}
     </aside>
 
-    <!-- ================= 3. MAIN BODY CONTAINER ================= -->
+    <!-- ================= 3. MAIN BODY ================= -->
     <main class="flex-1 max-w-xl w-full mx-auto p-4 md:py-6 relative z-10">
-        <!-- Flash Alerts in Modern Glass -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="mb-4 p-4 rounded-2xl text-xs font-bold flex items-center gap-3 border backdrop-blur-md {% if category == 'success' %}bg-emerald-500/10 text-emerald-400 border-emerald-500/30{% else %}bg-rose-500/10 text-rose-400 border-rose-500/30{% endif %}">
-                        <i class="fa-solid {% if category == 'success' %}fa-circle-check text-emerald-400{% else %}fa-circle-exclamation text-rose-400{% endif %} text-base"></i>
+                    <div class="mb-4 p-4 rounded-2xl text-xs font-semibold flex items-center gap-3 border backdrop-blur-md {% if category == 'success' %}bg-white/[0.04] text-emerald-400 border-emerald-500/20{% else %}bg-white/[0.04] text-rose-400 border-rose-500/20{% endif %}">
+                        <i class="fa-solid {% if category == 'success' %}fa-circle-check text-emerald-400{% else %}fa-circle-exclamation text-rose-400{% endif %} text-sm"></i>
                         <span>{{ message }}</span>
                     </div>
                 {% endfor %}
@@ -331,54 +339,57 @@
         {% block content %}{% endblock %}
     </main>
 
-    <!-- ================= 4. REDESIGNED LUXURY SUPPORT ORB (FINTECH GLOW) ================= -->
+    <!-- ================= 4. REDESIGNED HEADPHONE SUPPORT BUTTON (WATER RIPPLE CAPSULE) ================= -->
     <div class="fixed bottom-24 right-5 z-40">
         <a href="https://t.me/micro_earnx" target="_blank"
-           class="relative group w-13 h-13 p-3.5 rounded-full liquid-glass support-orb-glow flex items-center justify-center text-sky-400 hover:text-white transition-all duration-300 hover:scale-110 active:scale-95 border border-sky-400/40"
-           title="২৪/৭ টেলিগ্রাম সাপোর্ট">
-            <!-- Pulsing Halo Wave -->
-            <span class="absolute inset-0 rounded-full bg-sky-400/20 animate-ping pointer-events-none"></span>
-            <i class="fa-brands fa-telegram text-2xl drop-shadow-[0_0_10px_#38bdf8]"></i>
-            <span class="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 border-2 border-[#040711] rounded-full"></span>
+           class="support-water-pulse relative group w-12 h-12 rounded-full bg-[#0a0e17] border border-white/20 text-slate-200 hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl"
+           title="২৪/৭ কাস্টমার সাপোর্ট">
+            <!-- Modern Headset Icon -->
+            <i class="fa-solid fa-headset text-lg"></i>
+            <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-black"></span>
         </a>
     </div>
 
-    <!-- ================= 5. LIQUID GLASS BOTTOM NAVIGATION DOCK ================= -->
+    <!-- ================= 5. WATER-ANIMATED LIQUID GLASS BOTTOM NAV DOCK ================= -->
     <div class="fixed bottom-3 left-0 right-0 z-40 px-3 flex justify-center pointer-events-none">
-        <nav class="liquid-glass-dock w-full max-w-md rounded-[28px] px-4 py-2 flex justify-around items-center pointer-events-auto">
+        <nav class="classic-glass w-full max-w-md rounded-3xl px-4 py-2 flex justify-around items-center pointer-events-auto">
             
-            <a href="/app" class="nav-item flex flex-col items-center gap-0.5 text-slate-400 hover:text-sky-400 transition group" data-path="/app">
-                <i class="fa-solid fa-house text-base group-hover:-translate-y-0.5 transition duration-200"></i>
-                <span class="text-[9px] font-gotham font-semibold">Home</span>
+            <!-- Home -->
+            <a href="/app" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-white transition group" data-path="/app">
+                <i class="fa-solid fa-house text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
+                <span class="text-[9px] font-gotham font-medium tracking-tight">Home</span>
             </a>
 
-            <a href="/history" class="nav-item flex flex-col items-center gap-0.5 text-slate-400 hover:text-sky-400 transition group" data-path="/history">
-                <i class="fa-solid fa-clock-rotate-left text-base group-hover:-translate-y-0.5 transition duration-200"></i>
-                <span class="text-[9px] font-gotham font-semibold">History</span>
+            <!-- History -->
+            <a href="/history" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-white transition group" data-path="/history">
+                <i class="fa-solid fa-clock-rotate-left text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
+                <span class="text-[9px] font-gotham font-medium tracking-tight">History</span>
             </a>
 
-            <!-- Central Work Orb -->
-            <a href="/allwork" class="nav-item -mt-6 flex flex-col items-center group active:scale-95 transition" data-path="/allwork">
-                <div class="w-13 h-13 p-3.5 rounded-full bg-gradient-to-tr from-blue-600 via-sky-500 to-cyan-400 text-white flex items-center justify-center text-lg shadow-[0_0_20px_rgba(56,189,248,0.5)] border-2 border-slate-900 group-hover:scale-105 transition">
+            <!-- Center Work Button (Water Droplet Morphing) -->
+            <a href="/allwork" class="nav-item -mt-5 flex flex-col items-center group active:scale-95 transition" data-path="/allwork">
+                <div class="water-droplet-btn w-12 h-12 rounded-full flex items-center justify-center text-white text-base shadow-lg">
                     <i class="fa-solid fa-bolt drop-shadow"></i>
                 </div>
-                <span class="text-[9px] font-gotham font-bold text-sky-400 mt-1">Work</span>
+                <span class="text-[9px] font-gotham font-semibold text-slate-300 mt-1">Work</span>
             </a>
 
-            <a href="/withdraw" class="nav-item flex flex-col items-center gap-0.5 text-slate-400 hover:text-sky-400 transition group" data-path="/withdraw">
-                <i class="fa-solid fa-wallet text-base group-hover:-translate-y-0.5 transition duration-200"></i>
-                <span class="text-[9px] font-gotham font-semibold">Payout</span>
+            <!-- Payout -->
+            <a href="/withdraw" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-white transition group" data-path="/withdraw">
+                <i class="fa-solid fa-wallet text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
+                <span class="text-[9px] font-gotham font-medium tracking-tight">Payout</span>
             </a>
 
-            <a href="/account" class="nav-item flex flex-col items-center gap-0.5 text-slate-400 hover:text-sky-400 transition group" data-path="/account">
-                <i class="fa-solid fa-user text-base group-hover:-translate-y-0.5 transition duration-200"></i>
-                <span class="text-[9px] font-gotham font-semibold">Profile</span>
+            <!-- Profile -->
+            <a href="/account" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-white transition group" data-path="/account">
+                <i class="fa-solid fa-user text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
+                <span class="text-[9px] font-gotham font-medium tracking-tight">Profile</span>
             </a>
 
         </nav>
     </div>
 
-    <!-- SCRIPT: LEFT DRAWER SLIDER & DOCK HIGHLIGHTER -->
+    <!-- SCRIPT: LEFT DRAWER CONTROLLER & ACTIVE NAV HIGHLIGHT -->
     <script>
         function toggleSidebar(open) {
             const overlay = document.getElementById('drawerOverlay');
@@ -402,7 +413,7 @@
                 const target = item.getAttribute('data-path');
                 if (target && currentPath === target) {
                     item.classList.remove('text-slate-400');
-                    item.classList.add('text-sky-400');
+                    item.classList.add('text-white', 'active');
                 }
             });
         });
