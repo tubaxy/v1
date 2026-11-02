@@ -55,7 +55,7 @@ ADMIN_SECRET_PASS = os.getenv("ADMIN_KEY", "Admin@MicroEarnX_2026")
 
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "778208271755-8oh2uvvmme9mgjdco00ja58hv91jojbt.apps.googleusercontent.com")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "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")
-GOOGLE_REDIRECT_URI = os.getenv("GOOGLE_REDIRECT_URI", "https://takawallet.online/auth/google/callback")
+GOOGLE_REDIRECT_URI = os.getenv("GOOGLE_REDIRECT_URI", "https://taskawallet.online/auth/google/callback")
 
 @app.errorhandler(Exception)
 def handle_global_error(e):
