@@ -3,6 +3,9 @@ import time
 import random
 import string
 import requests
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import re
 from datetime import datetime, timezone, timedelta
 from functools import wraps
@@ -181,6 +184,212 @@ def auto_release_expired_gmail_tasks(sb):
         'locked_at': None
     }).eq('status', 'locked').lt('locked_at', two_hours_ago).execute()
 
+
+                                BREVO_SMTP_LOGIN = os.getenv("BREVO_SMTP_LOGIN", "")
+BREVO_SMTP_KEY = os.getenv("BREVO_SMTP_KEY", "")
+BREVO_SENDER_EMAIL = os.getenv("BREVO_SENDER_EMAIL", "support@taskwallet.online")
+
+def send_brevo_otp_email(to_email, otp_code):
+    if not BREVO_SMTP_LOGIN or not BREVO_SMTP_KEY:
+        return False
+    try:
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = f"{otp_code} is your TaskWallet Password Reset Code"
+        msg['From'] = f"TaskWallet Security <{BREVO_SENDER_EMAIL}>"
+        msg['To'] = to_email
+
+        html_content = f"""
+        <div style="background-color: #04060b; color: #f1f5f9; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, sans-serif; text-align: center;">
+            <div style="max-width: 480px; margin: 0 auto; background-color: #0a0e17; border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 35px 25px;">
+                <h1 style="font-size: 24px; font-weight: normal; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px;">TASK<span style="color: #38bdf8; font-style: italic; text-transform: lowercase;">wallet</span></h1>
+                <p style="color: #94a3b8; font-size: 13px; margin-bottom: 25px;">পাসওয়ার্ড রিসেট ভেরিফিকেশন কোড</p>
+                
+                <div style="background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.3); border-radius: 16px; padding: 18px; margin-bottom: 25px;">
+                    <span style="font-size: 36px; font-weight: 900; letter-spacing: 8px; color: #38bdf8; font-family: monospace;">{otp_code}</span>
+                </div>
+                
+                <p style="color: #94a3b8; font-size: 12px; line-height: 1.6; margin-bottom: 20px;">
+                    এই কোডটি আগামী ১৫ মিনিটের জন্য কার্যকর থাকবে। আপনি যদি এই অনুরোধ না করে থাকেন, তবে মেসেজটি এড়িয়ে যান।
+                </p>
+                <div style="border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 15px;">
+                    <p style="color: #f59e0b; font-size: 11px;">⚠️ ইনবক্সে না পেলে অবশ্যই আপনার জিমেইলের <strong>Spam / Junk</strong> ফোল্ডার চেক করুন।</p>
+                </div>
+            </div>
+        </div>
+        """
+        msg.attach(MIMEText(html_content, 'html'))
+
+        server = smtplib.SMTP('smtp-relay.brevo.com', 587, timeout=10)
+        server.starttls()
+        server.login(BREVO_SMTP_LOGIN, BREVO_SMTP_KEY)
+        server.sendmail(BREVO_SENDER_EMAIL, to_email, msg.as_string())
+        server.quit()
+        return True
+    except Exception as e:
+        print("SMTP Error:", e)
+        return False
+
+
+# ==========================================================
+# PASSWORD RESET SYSTEM (/reset)
+# ==========================================================
+@app.route('/reset')
+def reset_page():
+    return render_template('reset.html')
+
+@app.route('/reset/check-email', methods=['POST'])
+def reset_check_email():
+    sb = get_supabase()
+    data = request.get_json() or {}
+    email = data.get('email', '').strip().lower()
+
+    if not email:
+        return jsonify({"success": False, "status": "empty", "message": "ইমেইল প্রদান করুন!"})
+
+    # ১. ইউজার খুঁজে দেখা
+    user_res = sb.table('users').select('*').eq('email', email).execute().data
+    if not user_res:
+        return jsonify({
+            "success": False,
+            "status": "not_registered",
+            "message": "আপনার কোনো অ্যাকাউন্ট খোলা নেই! অ্যাকাউন্ট খুলতে সাইন-আপ পেইজে যান।"
+        })
+
+    user = user_res[0]
+
+    # ২. গুগল সোশ্যাল লগইন কিনা চেক
+    pwd_hash = user.get('password_hash', '')
+    avatar = user.get('avatar_url', '') or ''
+    if pwd_hash.startswith('G-AUTH') or 'googleusercontent.com' in avatar:
+        return jsonify({
+            "success": False,
+            "status": "social_account",
+            "message": "আপনি Continue with Google-এর মাধ্যমে অ্যাকাউন্ট খুলেছেন। লগইন পেইজে গিয়ে গুগলে চেষ্টা করুন অথবা সাপোর্টে মেসেজ দিন।"
+        })
+
+    # ৩. ডাটাবেসে রিসেন্ট ওটিপি চেক (রিফ্রেশ দিলেও হ্যাক আটকাবে)
+    recent_res = sb.table('password_resets').select('*').eq('email', email).order('id', desc=True).limit(1).execute().data
+    attempts = 0
+    if recent_res:
+        row = recent_res[0]
+        attempts = row.get('attempts', 0)
+        # যদি ইতোমধ্যে ২ বার পাঠানো হয়ে থাকে
+        if attempts >= 2:
+            return jsonify({
+                "success": False,
+                "status": "limit_exceeded",
+                "message": "আপনি সর্বোচ্চ ২ বার কোড পাঠিয়েছেন! অনুগ্রহ করে আপনার জিমেইলের Spam/Junk ফোল্ডার চেক করুন অথবা সাপোর্টে কথা বলুন।"
+            })
+
+    # ৪. ওটিপি তৈরি ও সেভ
+    otp_code = str(random.randint(100000, 999999))
+    sent = send_brevo_otp_email(email, otp_code)
+    
+    if not sent:
+        return jsonify({"success": False, "status": "smtp_error", "message": "ইমেইল পাঠাতে সমস্যা হচ্ছে। অনুগ্রহ করে সাপোর্টে মেসেজ দিন।"})
+
+    new_attempts = attempts + 1
+    if recent_res and attempts > 0:
+        sb.table('password_resets').update({
+            'otp_code': otp_code,
+            'attempts': new_attempts,
+            'last_sent_at': datetime.now(timezone.utc).isoformat(),
+            'is_used': False
+        }).eq('id', recent_res[0]['id']).execute()
+    else:
+        sb.table('password_resets').insert({
+            'email': email,
+            'otp_code': otp_code,
+            'attempts': 1,
+            'is_used': False
+        }).execute()
+
+    return jsonify({
+        "success": True,
+        "status": "otp_sent",
+        "attempts": new_attempts,
+        "message": "আপনার ইমেইলে ৬ ডিজিটের কোড পাঠানো হয়েছে। ইনবক্সের পাশাপাশি অবশ্যই Spam/Junk ফোল্ডার চেক করুন।"
+    })
+
+@app.route('/reset/resend-otp', methods=['POST'])
+def reset_resend_otp():
+    sb = get_supabase()
+    data = request.get_json() or {}
+    email = data.get('email', '').strip().lower()
+
+    recent_res = sb.table('password_resets').select('*').eq('email', email).order('id', desc=True).limit(1).execute().data
+    if not recent_res:
+        return jsonify({"success": False, "message": "অবৈধ অনুরোধ!"})
+
+    row = recent_res[0]
+    if row.get('attempts', 0) >= 2:
+        return jsonify({"success": False, "message": "আপনি সর্বোচ্চ ২ বার কোড পাঠিয়েছেন! স্প্যাম ফোল্ডার চেক করুন।"})
+
+    # ১.৫ মিনিট (৯০ সেকেন্ড) কুলডাউন যাচাই
+    last_sent = datetime.fromisoformat(row['last_sent_at'].replace('Z', '+00:00'))
+    diff_sec = (datetime.now(timezone.utc) - last_sent).total_seconds()
+    if diff_sec < 90:
+        remaining_wait = int(90 - diff_sec)
+        return jsonify({"success": False, "message": f"অনুগ্রহ করে আরও {remaining_wait} সেকেন্ড অপেক্ষা করুন।"})
+
+    otp_code = str(random.randint(100000, 999999))
+    send_brevo_otp_email(email, otp_code)
+
+    sb.table('password_resets').update({
+        'otp_code': otp_code,
+        'attempts': 2,
+        'last_sent_at': datetime.now(timezone.utc).isoformat(),
+        'is_used': False
+    }).eq('id', row['id']).execute()
+
+    return jsonify({
+        "success": True,
+        "attempts": 2,
+        "message": "দ্বিতীয়বারের মতো কোড পাঠানো হয়েছে। এটিই শেষ কোড। অবশ্যই Spam বক্স চেক করবেন।"
+    })
+
+@app.route('/reset/verify-otp', methods=['POST'])
+def reset_verify_otp():
+    sb = get_supabase()
+    data = request.get_json() or {}
+    email = data.get('email', '').strip().lower()
+    code = data.get('code', '').strip()
+
+    recent_res = sb.table('password_resets').select('*').eq('email', email).order('id', desc=True).limit(1).execute().data
+    if not recent_res:
+        return jsonify({"success": False, "message": "কোনো কোড পাওয়া যায়নি!"})
+
+    row = recent_res[0]
+    if row.get('is_used'):
+        return jsonify({"success": False, "message": "এই কোডটি ইতিমধ্যে ব্যবহৃত হয়েছে!"})
+
+    if row.get('otp_code') != code:
+        return jsonify({"success": False, "message": "ভুল কোড দিয়েছেন! সঠিক ৬ ডিজিটের কোড দিন।"})
+
+    session['verified_reset_email'] = email
+    return jsonify({"success": True, "message": "কোড যাচাই সম্পন্ন হয়েছে!"})
+
+@app.route('/reset/confirm-password', methods=['POST'])
+def reset_confirm_password():
+    sb = get_supabase()
+    data = request.get_json() or {}
+    new_password = data.get('password', '').strip()
+    email = session.get('verified_reset_email')
+
+    if not email:
+        return jsonify({"success": False, "message": "অননুমোদিত অ্যাক্সেস! পুনরায় চেষ্টা করুন।"})
+
+    if len(new_password) < 6:
+        return jsonify({"success": False, "message": "পাসওয়ার্ড সর্বনিম্ন ৬ অক্ষরের হতে হবে!"})
+
+    hashed = generate_password_hash(new_password)
+    sb.table('users').update({'password_hash': hashed}).eq('email', email).execute()
+
+    # কোড এক্সপায়ার করা
+    sb.table('password_resets').update({'is_used': True}).eq('email', email).execute()
+    session.pop('verified_reset_email', None)
+
+    return jsonify({"success": True, "message": "আপনার পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে!"})
 @app.route('/auth/google')
 def google_auth():
     ref = request.args.get('ref')
