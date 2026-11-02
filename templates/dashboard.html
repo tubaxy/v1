@@ -13,86 +13,146 @@
         transform: translateY(-2px);
     }
 
-    /* Hero Liquid Fintech Card (FLUX Dark Blue Sheen) */
-    .fintech-hero-card {
-        background: radial-gradient(circle at 100% 0%, rgba(37, 99, 235, 0.25) 0%, rgba(10, 15, 29, 0.95) 60%, rgba(4, 7, 17, 0.98) 100%);
-        border: 1px solid rgba(56, 189, 248, 0.2);
-        box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    /* Luxury Metallic Shimmer for User Name */
+    @keyframes name-shimmer {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
     }
+    .stylish-name-shimmer {
+        background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 35%, #38bdf8 65%, #ffffff 100%);
+        background-size: 250% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: name-shimmer 6s ease-in-out infinite;
+    }
+
+    /* ================= DYNAMIC SUBSCRIPTION THEMES FOR BALANCE CARD ================= */
+    /* 1. Wood Balance Card */
+    .card-theme-wood {
+        background: radial-gradient(circle at 100% 0%, rgba(180, 83, 9, 0.25) 0%, rgba(15, 23, 42, 0.95) 55%, #04060b 100%);
+        border: 1px solid rgba(180, 83, 9, 0.35);
+        box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    }
+    .badge-theme-wood { color: #d97706; background: rgba(180, 83, 9, 0.15); border: 1px solid rgba(180, 83, 9, 0.3); }
+
+    /* 2. Bronze Balance Card */
+    .card-theme-bronze {
+        background: radial-gradient(circle at 100% 0%, rgba(234, 88, 12, 0.25) 0%, rgba(15, 23, 42, 0.95) 55%, #04060b 100%);
+        border: 1px solid rgba(234, 88, 12, 0.4);
+        box-shadow: 0 20px 45px -15px rgba(234, 88, 12, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+    }
+    .badge-theme-bronze { color: #fb923c; background: rgba(234, 88, 12, 0.15); border: 1px solid rgba(234, 88, 12, 0.3); }
+
+    /* 3. Silver Balance Card */
+    .card-theme-silver {
+        background: radial-gradient(circle at 100% 0%, rgba(148, 163, 184, 0.25) 0%, rgba(15, 23, 42, 0.95) 55%, #04060b 100%);
+        border: 1px solid rgba(226, 232, 240, 0.35);
+        box-shadow: 0 20px 45px -15px rgba(148, 163, 184, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    }
+    .badge-theme-silver { color: #f1f5f9; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.25); }
+
+    /* 4. Gold Balance Card */
+    .card-theme-gold {
+        background: radial-gradient(circle at 100% 0%, rgba(245, 158, 11, 0.35) 0%, rgba(20, 25, 40, 0.95) 55%, #04060b 100%);
+        border: 1px solid rgba(245, 158, 11, 0.55);
+        box-shadow: 0 20px 50px -10px rgba(245, 158, 11, 0.25), inset 0 1px 2px rgba(253, 224, 71, 0.25);
+    }
+    .badge-theme-gold { color: #fcd34d; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); }
+
+    /* 5. Diamond Balance Card */
+    .card-theme-diamond {
+        background: radial-gradient(circle at 100% 0%, rgba(6, 182, 212, 0.35) 0%, rgba(15, 23, 42, 0.95) 55%, #04060b 100%);
+        border: 1px solid rgba(56, 189, 248, 0.55);
+        box-shadow: 0 20px 50px -10px rgba(56, 189, 248, 0.3), inset 0 1px 2px rgba(125, 211, 252, 0.3);
+    }
+    .badge-theme-diamond { color: #38bdf8; background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); }
 </style>
 
-<div class="max-w-xl mx-auto space-y-4 pb-20">
+<div class="max-w-xl mx-auto space-y-5 pb-24">
 
-    <!-- ================= 1. USER GREETING HEADER ================= -->
+    <!-- ================= 1. STYLISH USER GREETING (ID & TIER REMOVED FROM TOP) ================= -->
     <div class="flex items-center justify-between px-1">
         <div class="leading-tight">
             <span class="text-[9px] font-gotham uppercase tracking-widest text-slate-500 block mb-0.5">
-                Dashboard
+                Welcome back
             </span>
+            <!-- 🌟 শুধুমাত্র ইউজারের নাম The Seasons ক্লাসিক ফন্টে 🌟 -->
             <div class="flex items-center gap-2">
-                <!-- 🌟 শুধুমাত্র ইউজারের নাম The Seasons লোগো ফন্টে 🌟 -->
-                <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
+                <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal tracking-wide stylish-name-shimmer uppercase">
                     {{ user.name }}
                 </h1>
-                <i class="fa-solid fa-circle-check text-sky-400 text-xs shadow-sm" title="Verified Member"></i>
+                <i class="fa-solid fa-crown text-amber-400 text-xs drop-shadow-[0_0_8px_#f59e0b]" title="VIP Member"></i>
             </div>
         </div>
 
-        <!-- Member ID & Tier Pill (Gotham Sub-font) -->
-        <div class="flex items-center gap-2">
-            <a href="/upgrade" class="inline-flex items-center gap-1 font-gotham text-[10px] uppercase font-bold px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-slate-300 hover:text-white transition">
-                <i class="fa-solid fa-crown text-amber-400 text-[9px]"></i>
-                <span>{{ user.tier|upper if user.tier else 'WOOD' }}</span>
-            </a>
-            <div class="font-gotham text-xs font-bold bg-white/[0.03] border border-white/[0.08] px-3 py-1 rounded-full text-slate-300 tabular-nums">
-                #{{ "%05d"|format(user.id) }}
-            </div>
+        <!-- Live Platform Online Indicator -->
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-[10px] font-gotham text-slate-300">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Online</span>
         </div>
     </div>
 
-    <!-- ================= 2. SITE BROADCAST NOTICE (IF ANY) ================= -->
+    <!-- ================= 2. SITE BROADCAST NOTICE ================= -->
     {% if notice %}
     <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.08] flex items-start gap-3 text-xs leading-relaxed">
         <div class="w-7 h-7 rounded-lg bg-blue-500/10 text-sky-400 border border-blue-500/20 flex items-center justify-center shrink-0 mt-0.5">
             <i class="fa-solid fa-bullhorn text-[11px]"></i>
         </div>
         <div class="text-slate-300 pr-1">
-            <span class="text-[10px] font-gotham uppercase tracking-wider text-sky-400 font-bold block mb-0.5">Notice</span>
+            <span class="text-[10px] font-gotham uppercase tracking-wider text-sky-400 font-bold block mb-0.5">Announcement</span>
             {{ notice }}
         </div>
     </div>
     {% endif %}
 
-    <!-- ================= 3. HERO WALLET BALANCE CARD ================= -->
-    <div class="fintech-hero-card rounded-[32px] p-6 text-white relative overflow-hidden space-y-4">
+    <!-- ================= 3. SUBSCRIPTION-ADAPTIVE BALANCE CARD (PROFILE PIC + ID + TIER) ================= -->
+    {% set current_tier = user.tier|lower if user.tier else 'wood' %}
+    <div class="card-theme-{{ current_tier }} rounded-[32px] p-6 text-white relative overflow-hidden space-y-5 transition-all duration-300">
         
-        <div class="flex items-center justify-between">
-            <span class="text-[10px] font-gotham uppercase tracking-widest text-slate-400 font-semibold">
-                Wallet Balance
-            </span>
-            <span class="inline-flex items-center gap-1.5 text-[10px] font-gotham font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                Instant Payout
-            </span>
+        <!-- Top Row Inside Card: Profile Pic + Name + ID + Tier Badge -->
+        <div class="flex items-center justify-between border-b border-white/[0.08] pb-3">
+            <div class="flex items-center gap-3">
+                <!-- User Profile Picture -->
+                <div class="w-11 h-11 rounded-full overflow-hidden bg-white/10 border-2 border-white/20 shadow-md flex items-center justify-center text-sm font-bold text-white shrink-0">
+                    {% if user.avatar_url %}
+                        <img src="{{ user.avatar_url }}" alt="{{ user.name }}" class="w-full h-full object-cover">
+                    {% else %}
+                        <span class="font-gotham">{{ user.name[:1] }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="leading-tight">
+                    <span class="font-gotham text-xs font-semibold text-white block">{{ user.name }}</span>
+                    <span class="font-gotham text-[10px] text-slate-400">UID: #{{ "%05d"|format(user.id) }}</span>
+                </div>
+            </div>
+
+            <!-- Tier Badge Inside Balance Card -->
+            <a href="/upgrade" class="badge-theme-{{ current_tier }} px-3 py-1 rounded-full font-gotham text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 transition hover:scale-105 active:scale-95">
+                <i class="fa-solid fa-gem text-[9px]"></i>
+                <span>{{ current_tier|upper }} VIP</span>
+            </a>
         </div>
 
-        <!-- Big Amount Display (Gotham Sub-font) -->
+        <!-- Center Amount Display -->
         <div class="py-1">
+            <span class="text-[10px] font-gotham uppercase tracking-widest text-slate-400 block mb-1">Total Available Balance</span>
             <div class="font-gotham font-black text-4xl sm:text-5xl text-white tracking-tight tabular-nums">
                 ৳ {{ "%.2f"|format(user.balance) }}
             </div>
-            <span class="text-[10px] text-slate-400 block mt-1">উত্তোলনযোগ্য মূল ব্যালেন্স</span>
+            <span class="text-[10px] text-slate-400 block mt-1">উত্তোলনযোগ্য মূল ওয়ালেট ব্যালেন্স</span>
         </div>
 
         <!-- Action Buttons (10% Blue Accent) -->
-        <div class="grid grid-cols-2 gap-3 pt-2 border-t border-white/[0.08]">
+        <div class="grid grid-cols-2 gap-3 pt-1">
             <a href="/withdraw" 
-               class="bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-gotham font-semibold text-xs py-3 px-4 rounded-xl text-center shadow-lg shadow-blue-600/25 transition flex items-center justify-center gap-2">
+               class="bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-gotham font-semibold text-xs py-3.5 px-4 rounded-xl text-center shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2">
                 <i class="fa-solid fa-wallet text-xs"></i>
-                <span>টাকা তুলুন</span>
+                <span>টাকা তুলুন (Payout)</span>
             </a>
             <a href="/allwork" 
-               class="bg-white/[0.05] hover:bg-white/[0.08] border border-white/10 active:scale-95 text-slate-200 font-gotham font-semibold text-xs py-3 px-4 rounded-xl text-center transition flex items-center justify-center gap-2">
+               class="bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 active:scale-95 text-slate-200 font-gotham font-semibold text-xs py-3.5 px-4 rounded-xl text-center transition flex items-center justify-center gap-2">
                 <i class="fa-solid fa-bolt text-xs text-sky-400"></i>
                 <span>সকল কাজ</span>
             </a>
@@ -100,40 +160,75 @@
 
     </div>
 
-    <!-- ================= 4. VIP UPGRADE BANNER ================= -->
-    <a href="/upgrade" 
-       class="group fintech-card rounded-2xl p-3.5 flex items-center justify-between gap-3 border-amber-500/20 bg-amber-500/[0.02] hover:bg-amber-500/[0.05] transition active:scale-[0.99]">
-        <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center text-sm group-hover:scale-105 transition">
-                <i class="fa-solid fa-crown"></i>
-            </div>
-            <div class="leading-tight">
-                <div class="flex items-center gap-1.5">
-                    <span class="text-xs font-semibold text-white">মেম্বারশিপ আপগ্রেড</span>
-                    <span class="font-gotham text-[8px] bg-amber-400/20 text-amber-300 border border-amber-400/30 px-1.5 py-0.2 rounded-full font-bold">VIP</span>
+    <!-- ================= 4. LIVE COUNTDOWN OF SITE AGE (STARTING 03 MARCH 2026) ================= -->
+    <div class="fintech-card rounded-[28px] p-5 space-y-3 border-white/[0.08]">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
                 </div>
-                <p class="text-[10px] text-slate-400 mt-0.5">রেফার ছাড়া উইথড্র ও দৈনিক ফ্রি আয়ের সুবিধা নিন</p>
+                <div>
+                    <h3 class="text-xs font-semibold text-white">প্ল্যাটফর্মের বয়স (Site Operating Age)</h3>
+                    <span class="text-[10px] text-slate-400 font-gotham">Active Since: 03 March, 2026</span>
+                </div>
+            </div>
+            <span class="text-[9px] font-gotham font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                100% Uptime
+            </span>
+        </div>
+
+        <!-- Live 4-Block Ticking Countdown Grid -->
+        <div class="grid grid-cols-4 gap-2 text-center pt-1 font-gotham select-none">
+            <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                <span class="text-lg sm:text-xl font-black text-white block tabular-nums" id="uptimeDays">00</span>
+                <span class="text-[8px] text-slate-500 uppercase font-semibold">Days</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                <span class="text-lg sm:text-xl font-black text-sky-400 block tabular-nums" id="uptimeHours">00</span>
+                <span class="text-[8px] text-slate-500 uppercase font-semibold">Hours</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                <span class="text-lg sm:text-xl font-black text-sky-400 block tabular-nums" id="uptimeMinutes">00</span>
+                <span class="text-[8px] text-slate-500 uppercase font-semibold">Mins</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                <span class="text-lg sm:text-xl font-black text-emerald-400 block tabular-nums" id="uptimeSeconds">00</span>
+                <span class="text-[8px] text-slate-500 uppercase font-semibold">Secs</span>
             </div>
         </div>
-        <i class="fa-solid fa-chevron-right text-xs text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 transition"></i>
+    </div>
+
+    <!-- ================= 5. VIDEO TUTORIAL GUIDE BANNER ================= -->
+    <a href="/tutorial" 
+       class="group fintech-card rounded-2xl p-3.5 flex items-center justify-between gap-3 border-blue-500/20 bg-blue-500/[0.02] hover:bg-blue-500/[0.06] transition active:scale-[0.99]">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-blue-600/20 border border-blue-500/30 text-sky-400 flex items-center justify-center text-sm group-hover:scale-105 transition">
+                <i class="fa-solid fa-play text-xs"></i>
+            </div>
+            <div class="leading-tight">
+                <span class="text-xs font-semibold text-white">কাজের সম্পূর্ণ ভিডিও টিউটোরিয়াল</span>
+                <p class="text-[10px] text-slate-400 mt-0.5">কীভাবে কাজ করে ইনকাম করবেন তা ১ মিনিটে বুঝে নিন</p>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-right text-xs text-slate-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition"></i>
     </a>
 
-    <!-- ================= 5. CORE EARNING MODULES GRID (MINIMAL FINTECH GLASS) ================= -->
+    <!-- ================= 6. CORE EARNING ZONE ================= -->
     <div class="space-y-2 pt-1">
         <span class="text-[10px] font-gotham font-bold uppercase tracking-wider text-slate-500 px-1 block">
-            Earning Hub
+            Earning Zone
         </span>
 
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
             
-            <!-- Micro Tasks -->
+            <!-- 1. Micro Tasks -->
             <a href="/tasks" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
                 <div>
                     <div class="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-200 flex items-center justify-center text-base mb-3 group-hover:border-sky-500/40 group-hover:text-sky-400 transition">
                         <i class="fa-solid fa-list-check"></i>
                     </div>
                     <h3 class="text-xs font-semibold text-white">মাইক্রো টাস্ক</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5">সহজ কাজ করে স্ক্রিনশট দিন</p>
+                    <p class="text-[10px] text-slate-400 mt-0.5">সহজ কাজ করে প্রমাণ দিন</p>
                 </div>
                 <div class="mt-4 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham font-medium text-slate-400 group-hover:text-sky-400 transition">
                     <span>শুরু করুন</span>
@@ -141,29 +236,29 @@
                 </div>
             </a>
 
-            <!-- Video Watch -->
+            <!-- 2. Video Watch -->
             <a href="/yt" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
                 <div>
                     <div class="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-200 flex items-center justify-center text-base mb-3 group-hover:border-red-500/40 group-hover:text-red-400 transition">
                         <i class="fa-brands fa-youtube"></i>
                     </div>
-                    <h3 class="text-xs font-semibold text-white">ভিডিও দেখুন</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5">৩০ সেকেন্ড ভিডিও = নগদ ক্যাশ</p>
+                    <h3 class="text-xs font-semibold text-white">ভিডিও ওয়াচ</h3>
+                    <p class="text-[10px] text-slate-400 mt-0.5">৩০ সেকেন্ড ভিডিও = ক্যাশ</p>
                 </div>
                 <div class="mt-4 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham font-medium text-slate-400 group-hover:text-red-400 transition">
-                    <span>ভিডিও দেখুন</span>
+                    <span>দেখুন</span>
                     <i class="fa-solid fa-arrow-right text-[8px]"></i>
                 </div>
             </a>
 
-            <!-- Lucky Spin -->
+            <!-- 3. Lucky Spin -->
             <a href="/spin" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
                 <div>
                     <div class="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-200 flex items-center justify-center text-base mb-3 group-hover:border-amber-500/40 group-hover:text-amber-400 transition">
                         <i class="fa-solid fa-dharmachakra"></i>
                     </div>
                     <h3 class="text-xs font-semibold text-white">লাকি স্পিন</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5">দৈনিক ৩ বার ফ্রি স্পিন ঘুরান</p>
+                    <p class="text-[10px] text-slate-400 mt-0.5">দৈনিক ৩টি ফ্রি স্পিন</p>
                 </div>
                 <div class="mt-4 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham font-medium text-slate-400 group-hover:text-amber-400 transition">
                     <span>স্পিন করুন</span>
@@ -171,17 +266,47 @@
                 </div>
             </a>
 
-            <!-- Scratch Card -->
+            <!-- 4. Scratch Card -->
             <a href="/scratch" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
                 <div>
                     <div class="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-200 flex items-center justify-center text-base mb-3 group-hover:border-emerald-500/40 group-hover:text-emerald-400 transition">
                         <i class="fa-solid fa-gift"></i>
                     </div>
                     <h3 class="text-xs font-semibold text-white">স্ক্র্যাচ কার্ড</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5">কার্ড ঘষে সরাসরি বোনাস নিন</p>
+                    <p class="text-[10px] text-slate-400 mt-0.5">কার্ড ঘষে বোনাস নিন</p>
                 </div>
                 <div class="mt-4 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham font-medium text-slate-400 group-hover:text-emerald-400 transition">
-                    <span>কার্ড ঘষুন</span>
+                    <span>ঘষুন</span>
+                    <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                </div>
+            </a>
+
+            <!-- 5. Math Quiz -->
+            <a href="/quiz" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
+                <div>
+                    <div class="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-200 flex items-center justify-center text-base mb-3 group-hover:border-pink-500/40 group-hover:text-pink-400 transition">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3 class="text-xs font-semibold text-white">ম্যাথ কুইজ</h3>
+                    <p class="text-[10px] text-slate-400 mt-0.5">অংক সমাধান করে টাকা</p>
+                </div>
+                <div class="mt-4 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham font-medium text-slate-400 group-hover:text-pink-400 transition">
+                    <span>কুইজ খেলুন</span>
+                    <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                </div>
+            </a>
+
+            <!-- 6. Gmail Farm -->
+            <a href="/gmail" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
+                <div>
+                    <div class="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-200 flex items-center justify-center text-base mb-3 group-hover:border-rose-500/40 group-hover:text-rose-400 transition">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <h3 class="text-xs font-semibold text-white">জিমেইল ফার্ম</h3>
+                    <p class="text-[10px] text-slate-400 mt-0.5">জিমেইল বানিয়ে আয়</p>
+                </div>
+                <div class="mt-4 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham font-medium text-slate-400 group-hover:text-rose-400 transition">
+                    <span>কাজ করুন</span>
                     <i class="fa-solid fa-arrow-right text-[8px]"></i>
                 </div>
             </a>
@@ -189,25 +314,55 @@
         </div>
     </div>
 
-    <!-- ================= 6. LEADERBOARD QUICK SHORTCUT ================= -->
-    <a href="/leaderboard" 
-       class="group fintech-card rounded-2xl p-3.5 flex items-center justify-between gap-3 transition active:scale-[0.99]">
-        <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-sky-400 transition">
-                <i class="fa-solid fa-trophy"></i>
+    <!-- ================= 7. UPGRADE CTA (POSITIONED BELOW EARNING ZONE) ================= -->
+    <a href="/upgrade" 
+       class="group fintech-card rounded-[28px] p-5 flex items-center justify-between gap-4 border-amber-500/30 bg-amber-500/[0.03] hover:bg-amber-500/[0.07] transition shadow-[0_0_30px_rgba(245,158,11,0.08)] active:scale-[0.99]">
+        <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center text-lg group-hover:scale-105 transition shadow-sm">
+                <i class="fa-solid fa-crown"></i>
             </div>
             <div class="leading-tight">
-                <span class="text-xs font-semibold text-white">রেফারেল লিডারবোর্ড</span>
-                <p class="text-[10px] text-slate-400 mt-0.5">সেরা মেম্বারদের লাইভ র‍্যাঙ্কিং দেখুন</p>
+                <div class="flex items-center gap-1.5 mb-0.5">
+                    <span class="text-xs font-bold text-white">মেম্বারশিপ ভিআইপি আপগ্রেড</span>
+                    <span class="font-gotham text-[8px] bg-amber-400/20 text-amber-300 border border-amber-400/30 px-1.5 py-0.2 rounded-full font-bold">5 TIERS</span>
+                </div>
+                <p class="text-[11px] text-slate-400">রেফার ছাড়া উইথড্র, ২ মিনিটে পেআউট ও দৈনিক ফ্রি আয়ের সুবিধা</p>
             </div>
         </div>
-        <div class="flex items-center gap-1 text-[11px] font-gotham font-semibold text-sky-400">
-            <span>ভিউ র‍্যাঙ্ক</span>
-            <i class="fa-solid fa-chevron-right text-[9px] group-hover:translate-x-0.5 transition"></i>
+        <div class="shrink-0 text-right">
+            <span class="font-gotham text-xs font-bold text-amber-400 group-hover:underline flex items-center gap-1">
+                <span>আপগ্রেড</span>
+                <i class="fa-solid fa-chevron-right text-[9px] group-hover:translate-x-0.5 transition"></i>
+            </span>
         </div>
     </a>
 
-    <!-- ================= 7. REFERRAL SHARE CARD ================= -->
+    <!-- ================= 8. MORE NAVS: LEADERBOARD & ANNOUNCEMENT ================= -->
+    <div class="grid grid-cols-2 gap-3">
+        <!-- Leaderboard -->
+        <a href="/leaderboard" class="fintech-card rounded-2xl p-4 flex items-center gap-3 group active:scale-95">
+            <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 group-hover:text-amber-400 flex items-center justify-center text-sm transition">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+            <div class="leading-tight">
+                <span class="text-xs font-semibold text-white block">লিডারবোর্ড</span>
+                <span class="text-[10px] text-slate-400">টপ রেফারার তালিকা</span>
+            </div>
+        </a>
+
+        <!-- Announcements -->
+        <a href="/announcements" class="fintech-card rounded-2xl p-4 flex items-center gap-3 group active:scale-95">
+            <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 group-hover:text-sky-400 flex items-center justify-center text-sm transition">
+                <i class="fa-solid fa-bullhorn"></i>
+            </div>
+            <div class="leading-tight">
+                <span class="text-xs font-semibold text-white block">অ্যানাউন্সমেন্ট</span>
+                <span class="text-[10px] text-slate-400">অফিসিয়াল নোটিশ হাব</span>
+            </div>
+        </a>
+    </div>
+
+    <!-- ================= 9. REFERRAL SHARE CARD ================= -->
     <div class="fintech-card rounded-[28px] p-5 space-y-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
@@ -241,8 +396,32 @@
 
 </div>
 
-<!-- SCRIPT: COPY REFERRAL LINK -->
+<!-- ================= REAL-TIME SITE AGE TICKING ENGINE ================= -->
 <script>
+// Launch Date: 03 March 2026 00:00:00 (Bangladesh Time GMT+6)
+const siteLaunchTimestamp = new Date("2026-03-03T00:00:00+06:00").getTime();
+
+function updateSiteAgeCountdown() {
+    const now = new Date().getTime();
+    const diff = now - siteLaunchTimestamp;
+
+    if (diff > 0) {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('uptimeDays').innerText = String(days).padStart(2, '0');
+        document.getElementById('uptimeHours').innerText = String(hours).padStart(2, '0');
+        document.getElementById('uptimeMinutes').innerText = String(minutes).padStart(2, '0');
+        document.getElementById('uptimeSeconds').innerText = String(seconds).padStart(2, '0');
+    }
+}
+
+// Tick every second live
+updateSiteAgeCountdown();
+setInterval(updateSiteAgeCountdown, 1000);
+
 function copyRefLink() {
     const input = document.getElementById('shareRefLink');
     input.select();
