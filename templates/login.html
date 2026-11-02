@@ -1,136 +1,158 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
-    /* Premium Real Input Box Styling */
-    .real-input-box {
-        background: #ffffff;
-        border: 1.5px solid #cbd5e1;
+    /* 30% Structural Frosted Glass Inputs */
+    .fintech-input-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         transition: all 0.2s ease-in-out;
     }
-    .real-input-box:focus-within {
-        border-color: #E11D48;
-        box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.1);
-        background: #ffffff;
+    /* 10% Electric Blue Focus Accent */
+    .fintech-input-box:focus-within {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+        background: rgba(255, 255, 255, 0.05);
     }
-    /* Hide blurry halo on auth screens */
-    .neon-aura-ring { display: none !important; }
-    .x-letter-glow { color: #E11D48 !important; text-shadow: none !important; }
+
+    /* Classic Font Gradient & Shimmer Keyframes */
+    @keyframes luxury-shimmer {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .classic-gradient-text {
+        background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 35%, #38bdf8 65%, #ffffff 100%);
+        background-size: 250% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: luxury-shimmer 7s ease-in-out infinite;
+    }
+
+    /* Ambient Glow Behind Title */
+    @keyframes subtle-breath {
+        0%, 100% { opacity: 0.25; transform: scale(0.96); }
+        50% { opacity: 0.55; transform: scale(1.06); }
+    }
+    .ambient-title-glow {
+        animation: subtle-breath 5s infinite ease-in-out;
+    }
 </style>
 
-<div class="max-w-sm mx-auto py-2 px-2 space-y-4">
+<div class="max-w-sm mx-auto py-2 space-y-5">
 
-    <!-- 1. Clean Brand Header (NO BLURRY RED GLOW) -->
-    <div class="text-center space-y-1">
-        <div class="w-12 h-12 mx-auto rounded-full border-2 border-rose-200 p-0.5 bg-white shadow-sm overflow-hidden flex items-center justify-center">
-            <img src="https://i.ibb.co/1JbqCDHq/Add-Text-10-10-03-15-45.jpg" alt="Logo" class="w-full h-full object-cover rounded-full">
-        </div>
-        <div class="flex items-center justify-center gap-0.5 pt-1 select-none">
-            <span class="font-black text-slate-900 text-lg tracking-tight">MicroEarn</span>
-            <span class="font-black text-[#E11D48] text-xl">X</span>
-            <span class="text-amber-500 text-sm ml-0.5">⚡</span>
-        </div>
+    <!-- 1. Top Action Row (Left: Register Link | Right: Headphone Support) -->
+    <div class="flex items-center justify-between px-1">
+        <!-- Left Top Link to Signup -->
+        <a href="/" 
+           class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95 shadow-sm">
+            <i class="fa-solid fa-user-plus text-[10px] text-blue-500"></i>
+            <span>সাইন-আপ</span>
+        </a>
+
+        <!-- Right Headphone Support Link -->
+        <a href="https://t.me/micro_earnx" target="_blank" 
+           class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] text-slate-400 hover:text-slate-200 text-xs font-gotham transition active:scale-95" 
+           title="সাপোর্ট">
+            <i class="fa-solid fa-headset text-blue-400 text-xs"></i>
+            <span>সাপোর্ট</span>
+        </a>
     </div>
 
-    <!-- 2. Video Guide Banner -->
-    <a href="/tutorial" 
-       class="flex items-center justify-between p-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-rose-600 text-white rounded-2xl shadow-sm hover:scale-[1.01] active:scale-95 transition-all">
-        <div class="flex items-center gap-2.5">
-            <div class="w-7 h-7 rounded-xl bg-white/20 flex items-center justify-center text-xs">
-                <i class="fa-solid fa-play"></i>
-            </div>
-            <div class="text-left leading-tight">
-                <span class="text-xs font-black block">কাজের ভিডিও টিউটোরিয়াল দেখুন</span>
-                <span class="text-[9px] text-blue-100 opacity-90">কীভাবে কাজ করবেন তা ১ মিনিটে শিখে নিন</span>
-            </div>
-        </div>
-        <i class="fa-solid fa-chevron-right text-xs opacity-75 mr-1"></i>
+    <!-- 2. Classic Animated Headline with Gradient & Glow -->
+    <div class="relative text-center py-2 select-none">
+        <!-- Floating Ambient Glow Circle Behind Text -->
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-20 bg-blue-600/15 rounded-full blur-2xl pointer-events-none ambient-title-glow"></div>
+
+        <h1 class="relative font-classic-seasons text-3xl sm:text-4xl font-normal tracking-[0.03em] classic-gradient-text leading-tight">
+            Welcome to TaskWallet
+        </h1>
+        <p class="relative text-xs text-slate-400 font-gotham font-light tracking-wider mt-1.5 opacity-90">
+            লগইন করে আপনার অ্যাকাউন্টে প্রবেশ করুন
+        </p>
+    </div>
+
+    <!-- 3. Continue With Google Button -->
+    <a href="/auth/google" 
+       class="w-full bg-white/[0.04] hover:bg-white/[0.07] border border-white/10 active:scale-95 text-slate-200 font-gotham font-semibold text-xs py-3.5 px-4 rounded-2xl flex items-center justify-center gap-2.5 transition shadow-sm">
+        <svg class="w-4 h-4" viewBox="0 0 48 48">
+            <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
+            <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/>
+            <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
+            <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
+        </svg>
+        <span>Continue with Google</span>
     </a>
 
-    <!-- 3. Form Heading -->
-    <div class="space-y-0.5 text-left px-1">
-        <h1 class="text-xl font-black text-slate-900 tracking-tight">অ্যাকাউন্টে প্রবেশ করুন</h1>
-        <p class="text-xs text-slate-400 font-medium">আপনার রেজিস্টার্ড ইমেইল ও পাসওয়ার্ড প্রদান করুন</p>
+    <!-- Minimal Divider (Or) -->
+    <div class="flex items-center gap-3 my-1">
+        <div class="h-px bg-white/[0.06] flex-1"></div>
+        <span class="text-[10px] text-slate-500 font-gotham uppercase tracking-widest">or</span>
+        <div class="h-px bg-white/[0.06] flex-1"></div>
     </div>
 
-    <!-- 4. REAL VISIBLE INPUT BOXES -->
-    <form action="/login" method="POST" onsubmit="return validateGmailForm('loginEmail')" class="space-y-3 pt-1">
+    <!-- 4. Clean Login Form -->
+    <form action="/login" method="POST" onsubmit="return validateEmail('loginEmail')" class="space-y-3.5">
         
-        <!-- Email Input -->
+        <!-- Email Field -->
         <div class="space-y-1">
-            <label class="block text-[10px] font-black text-slate-600 uppercase tracking-wider ml-1">ইমেইল অ্যাড্রেস</label>
-            <div class="real-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5">
-                <i class="fa-solid fa-envelope text-slate-400 text-xs w-4 text-center"></i>
+            <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">ইমেইল</label>
+            <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5">
+                <i class="fa-solid fa-envelope text-slate-500 text-xs w-4 text-center"></i>
                 <input type="email" id="loginEmail" name="email" required placeholder="user@gmail.com" 
-                       class="w-full bg-transparent text-xs font-bold text-slate-900 focus:outline-none placeholder-slate-400">
+                       class="w-full bg-transparent text-xs font-gotham text-slate-100 focus:outline-none placeholder-slate-600">
             </div>
         </div>
 
-        <!-- Password Input with Show/Hide Toggle -->
+        <!-- Password Field -->
         <div class="space-y-1">
-            <label class="block text-[10px] font-black text-slate-600 uppercase tracking-wider ml-1">পাসওয়ার্ড</label>
-            <div class="real-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 relative">
-                <i class="fa-solid fa-lock text-slate-400 text-xs w-4 text-center"></i>
+            <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">পাসওয়ার্ড</label>
+            <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 relative">
+                <i class="fa-solid fa-lock text-slate-500 text-xs w-4 text-center"></i>
                 <input type="password" id="loginPassInput" name="password" required placeholder="••••••••" 
-                       class="w-full bg-transparent text-xs font-bold text-slate-900 focus:outline-none placeholder-slate-400 pr-8">
-                
-                <button type="button" onclick="togglePass('loginPassInput', 'loginEyeIcon')" 
-                        class="absolute right-3.5 text-slate-400 hover:text-slate-600 p-1">
+                       class="w-full bg-transparent text-xs font-gotham text-slate-100 focus:outline-none placeholder-slate-600 pr-8">
+                <button type="button" onclick="togglePass('loginPassInput', 'loginEyeIcon')" class="absolute right-3.5 text-slate-500 hover:text-slate-300 p-1">
                     <i id="loginEyeIcon" class="fa-solid fa-eye-slash text-xs"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Submit Button -->
+        <!-- 10% Blue Accent Login CTA Button -->
         <button type="submit" 
-                class="w-full bg-[#E11D48] hover:bg-[#BE123C] active:scale-[0.98] text-white font-black text-xs sm:text-sm py-3.5 px-6 rounded-2xl shadow-lg shadow-rose-500/25 flex items-center justify-center gap-2 transition duration-200 mt-2">
+                class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-3.5 px-4 rounded-2xl shadow-lg shadow-blue-600/25 transition mt-2 flex items-center justify-center gap-2">
             <span>লগইন করুন</span>
-            <i class="fa-solid fa-arrow-right text-xs"></i>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
         </button>
     </form>
 
-    <!-- 5. Password/Account Issue Direct Help Box -->
-    <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1">
-        <span class="text-[11px] font-bold text-slate-600 block">
-            <i class="fa-solid fa-key text-amber-500 mr-1"></i> পাসওয়ার্ড বা একাউন্ট সংক্রান্ত সমস্যা?
-        </span>
-        <a href="https://t.me/micro_earnx" target="_blank" 
-           class="inline-flex items-center gap-1.5 text-sky-600 hover:text-sky-700 text-xs font-black transition">
-            <i class="fa-brands fa-telegram text-sm"></i>
-            <span>সরাসরি হেল্পলাইনে মেসেজ দিন &raquo;</span>
-        </a>
-    </div>
-
-    <!-- 6. Switch to Registration Link -->
+    <!-- 5. Switch to Registration Link -->
     <div class="text-center pt-2">
-        <p class="text-xs text-slate-500 font-medium">
+        <p class="text-xs text-slate-400 font-gotham">
             অ্যাকাউন্ট নেই? 
-            <a href="/" class="text-[#E11D48] font-black hover:underline ml-1">
-                নতুন একাউন্ট খুলুন &raquo;
-            </a>
+            <a href="/" class="text-blue-400 hover:text-blue-300 font-medium ml-1">নতুন অ্যাকাউন্ট তৈরি করুন &raquo;</a>
         </p>
     </div>
 
 </div>
 
-<!-- SCRIPT -->
+<!-- Scripts for Password View & Validation -->
 <script>
 function togglePass(inputId, iconId) {
     const input = document.getElementById(inputId);
     const icon = document.getElementById(iconId);
     if (input.type === "password") {
         input.type = "text";
-        icon.className = "fa-solid fa-eye text-xs text-[#E11D48]";
+        icon.className = "fa-solid fa-eye text-xs text-blue-400";
     } else {
         input.type = "password";
-        icon.className = "fa-solid fa-eye-slash text-xs text-slate-400";
+        icon.className = "fa-solid fa-eye-slash text-xs text-slate-500";
     }
 }
 
-function validateGmailForm(emailId) {
-    const email = document.getElementById(emailId).value.trim().toLowerCase();
+function validateEmail(id) {
+    const email = document.getElementById(id).value.trim().toLowerCase();
     if (!email.endsWith('@gmail.com')) {
-        alert("অনুগ্রহ করে একটি সঠিক ও বৈধ ইমেইল অ্যাড্রেস প্রদান করুন!");
-        document.getElementById(emailId).focus();
+        alert("শুধুমাত্র সঠিক @gmail.com ইমেইল প্রদান করুন!");
         return false;
     }
     return true;
