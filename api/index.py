@@ -131,21 +131,6 @@ def redirect_to_x_page():
     if request.path.startswith('/static') or request.path == '/favicon.ico':
         return None
     
-    # ২. আপনি যদি চান শুধু ইউজারদের জন্য ব্লক হবে কিন্তু অ্যাডমিনরা সাইট দেখতে পারবে, তবে নিচের লাইনটি ব্যবহার করতে পারেন:
-    # if request.path.startswith('/admin'):
-    #     return None
-
-    # ৩. বর্তমানে যদি ইউজার অলরেডি /x পেজেই থাকে, তবে লুপ (infinite loop) আটকাতে হবে
-    if request.path == '/x':
-        return None
-
-    # ৪. বাকি সব রিকোয়েস্টকে সরাসরি x.html এ পাঠিয়ে দেওয়া
-    return render_template('x.html')
-
-@app.route('/x')
-def x_page():
-    return render_template('x.html')
-    
 # ==========================================================
 # Authentication Guards (Decorators)
 # ==========================================================
