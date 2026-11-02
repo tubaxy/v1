@@ -60,6 +60,53 @@ GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "778208271755-8oh2uvvmme9mgjdco
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "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")
 GOOGLE_REDIRECT_URI = os.getenv("GOOGLE_REDIRECT_URI", "https://taskawallet.online/auth/google/callback")
 
+BREVO_SMTP_LOGIN = os.getenv("BREVO_SMTP_LOGIN", "")
+BREVO_SMTP_KEY = os.getenv("BREVO_SMTP_KEY", "")
+BREVO_SENDER_EMAIL = os.getenv("BREVO_SENDER_EMAIL", "support@taskwallet.online")
+
+def send_brevo_otp_email(to_email, otp_code):
+    if not BREVO_SMTP_LOGIN or not BREVO_SMTP_KEY:
+        return False
+    try:
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = f"{otp_code} is your TaskWallet Password Reset Code"
+        msg['From'] = f"TaskWallet Security <{BREVO_SENDER_EMAIL}>"
+        msg['To'] = to_email
+
+        html_content = f"""
+        <div style="background-color: #04060b; color: #f1f5f9; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, sans-serif; text-align: center;">
+            <div style="max-width: 480px; margin: 0 auto; background-color: #0a0e17; border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 35px 25px;">
+                <h1 style="font-size: 24px; font-weight: normal; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px;">TASK<span style="color: #38bdf8; font-style: italic; text-transform: lowercase;">wallet</span></h1>
+                <p style="color: #94a3b8; font-size: 13px; margin-bottom: 25px;">পাসওয়ার্ড রিসেট ভেরিফিকেশন কোড</p>
+                
+                <div style="background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.3); border-radius: 16px; padding: 18px; margin-bottom: 25px;">
+                    <span style="font-size: 36px; font-weight: 900; letter-spacing: 8px; color: #38bdf8; font-family: monospace;">{otp_code}</span>
+                </div>
+                
+                <p style="color: #94a3b8; font-size: 12px; line-height: 1.6; margin-bottom: 20px;">
+                    এই কোডটি আগামী ১৫ মিনিটের জন্য কার্যকর থাকবে। আপনি যদি এই অনুরোধ না করে থাকেন, তবে মেসেজটি এড়িয়ে যান।
+                </p>
+                <div style="border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 15px;">
+                    <p style="color: #f59e0b; font-size: 11px;">⚠️ ইনবক্সে না পেলে অবশ্যই আপনার জিমেইলের <strong>Spam / Junk</strong> ফোল্ডার চেক করুন।</p>
+                </div>
+            </div>
+        </div>
+        """
+        msg.attach(MIMEText(html_content, 'html'))
+
+        server = smtplib.SMTP('smtp-relay.brevo.com', 587, timeout=10)
+        server.starttls()
+        server.login(BREVO_SMTP_LOGIN, BREVO_SMTP_KEY)
+        server.sendmail(BREVO_SENDER_EMAIL, to_email, msg.as_string())
+        server.quit()
+        return True
+    except Exception as e:
+        print("SMTP Error:", e)
+        return False
+
+
+
+
 @app.errorhandler(Exception)
 def handle_global_error(e):
     if isinstance(e, HTTPException):
@@ -183,51 +230,6 @@ def auto_release_expired_gmail_tasks(sb):
         'locked_by': None,
         'locked_at': None
     }).eq('status', 'locked').lt('locked_at', two_hours_ago).execute()
-
-
-                                BREVO_SMTP_LOGIN = os.getenv("BREVO_SMTP_LOGIN", "")
-BREVO_SMTP_KEY = os.getenv("BREVO_SMTP_KEY", "")
-BREVO_SENDER_EMAIL = os.getenv("BREVO_SENDER_EMAIL", "support@taskwallet.online")
-
-def send_brevo_otp_email(to_email, otp_code):
-    if not BREVO_SMTP_LOGIN or not BREVO_SMTP_KEY:
-        return False
-    try:
-        msg = MIMEMultipart('alternative')
-        msg['Subject'] = f"{otp_code} is your TaskWallet Password Reset Code"
-        msg['From'] = f"TaskWallet Security <{BREVO_SENDER_EMAIL}>"
-        msg['To'] = to_email
-
-        html_content = f"""
-        <div style="background-color: #04060b; color: #f1f5f9; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, sans-serif; text-align: center;">
-            <div style="max-width: 480px; margin: 0 auto; background-color: #0a0e17; border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 35px 25px;">
-                <h1 style="font-size: 24px; font-weight: normal; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px;">TASK<span style="color: #38bdf8; font-style: italic; text-transform: lowercase;">wallet</span></h1>
-                <p style="color: #94a3b8; font-size: 13px; margin-bottom: 25px;">পাসওয়ার্ড রিসেট ভেরিফিকেশন কোড</p>
-                
-                <div style="background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.3); border-radius: 16px; padding: 18px; margin-bottom: 25px;">
-                    <span style="font-size: 36px; font-weight: 900; letter-spacing: 8px; color: #38bdf8; font-family: monospace;">{otp_code}</span>
-                </div>
-                
-                <p style="color: #94a3b8; font-size: 12px; line-height: 1.6; margin-bottom: 20px;">
-                    এই কোডটি আগামী ১৫ মিনিটের জন্য কার্যকর থাকবে। আপনি যদি এই অনুরোধ না করে থাকেন, তবে মেসেজটি এড়িয়ে যান।
-                </p>
-                <div style="border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 15px;">
-                    <p style="color: #f59e0b; font-size: 11px;">⚠️ ইনবক্সে না পেলে অবশ্যই আপনার জিমেইলের <strong>Spam / Junk</strong> ফোল্ডার চেক করুন।</p>
-                </div>
-            </div>
-        </div>
-        """
-        msg.attach(MIMEText(html_content, 'html'))
-
-        server = smtplib.SMTP('smtp-relay.brevo.com', 587, timeout=10)
-        server.starttls()
-        server.login(BREVO_SMTP_LOGIN, BREVO_SMTP_KEY)
-        server.sendmail(BREVO_SENDER_EMAIL, to_email, msg.as_string())
-        server.quit()
-        return True
-    except Exception as e:
-        print("SMTP Error:", e)
-        return False
 
 
 # ==========================================================
