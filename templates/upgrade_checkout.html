@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .fintech-input-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.2s ease-in-out;
+    }
+    .fintech-input-box:focus-within {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+        background: rgba(255, 255, 255, 0.05);
+    }
+</style>
+
+<div class="max-w-sm mx-auto py-2 space-y-4 pb-16">
+
+    <!-- Top Action Row -->
+    <div class="flex items-center justify-between px-1">
+        <a href="/upgrade" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95 shadow-sm">
+            <i class="fa-solid fa-arrow-left text-[10px] text-blue-500"></i>
+            <span>প্যাকেজ পরিবর্তন</span>
+        </a>
+        <span class="text-[10px] font-gotham uppercase tracking-wider text-slate-400">Step 2: Payment</span>
+    </div>
+
+    <!-- Order Summary Card -->
+    <div class="fintech-card rounded-2xl p-5 border border-white/10 space-y-2 text-center">
+        <span class="text-[10px] font-gotham text-slate-400 uppercase tracking-wider block">নির্বাচিত প্যাকেজ</span>
+        <h2 class="font-classic-seasons text-2xl font-bold text-white uppercase">{{ tier_info.name }}</h2>
+        <div class="text-3xl font-gotham font-black text-sky-400 pt-1">৳ {{ tier_info.price }}</div>
+        <span class="text-[10px] text-slate-400 block">মেয়াদ: ১৫ দিন</span>
+    </div>
+
+    <!-- Payment Gateway Instructions -->
+    <div class="fintech-card rounded-2xl p-4 border border-white/10 space-y-3">
+        <span class="text-xs font-semibold text-white block">পেমেন্ট করার নিয়ম:</span>
+        <p class="text-[11px] text-slate-400 leading-relaxed">
+            নিচের যেকোনো একটি নাম্বারে <strong>Send Money</strong> করে <strong>৳{{ tier_info.price }}</strong> পাঠান। এরপর নিচের ফর্মে সেন্ডার নাম্বার ও TrxID লিখে সাবমিট করুন।
+        </p>
+
+        <!-- bKash / Nagad Number Box with 1-Click Copy -->
+        <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-between">
+            <div>
+                <span class="text-[9px] text-pink-400 uppercase font-gotham font-bold block">bKash Personal</span>
+                <span id="bkashNum" class="font-mono text-xs font-bold text-white">01618897806</span>
+            </div>
+            <button onclick="copyNumber('bkashNum')" class="bg-white/10 hover:bg-white/20 text-white text-[10px] font-gotham px-3 py-1.5 rounded-lg transition active:scale-95">
+                কপি
+            </button>
+        </div>
+    </div>
+
+    <!-- Checkout Form -->
+    <form action="/upgrade/checkout/{{ tier }}" method="POST" class="space-y-3.5">
+        <div class="space-y-1">
+            <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">যে নাম্বার থেকে টাকা পাঠিয়েছেন</label>
+            <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5">
+                <i class="fa-solid fa-phone text-slate-500 text-xs w-4 text-center"></i>
+                <input type="text" name="sender_number" required placeholder="01XXXXXXXXX" 
+                       class="w-full bg-transparent text-xs font-gotham text-slate-100 focus:outline-none placeholder-slate-600">
+            </div>
+        </div>
+
+        <div class="space-y-1">
+            <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">ট্রানজেকশন আইডি (TrxID)</label>
+            <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5">
+                <i class="fa-solid fa-receipt text-slate-500 text-xs w-4 text-center"></i>
+                <input type="text" name="trx_id" required placeholder="যেমন: BK987X21" 
+                       class="w-full bg-transparent text-xs font-gotham text-slate-100 focus:outline-none placeholder-slate-600 uppercase">
+            </div>
+        </div>
+
+        <button type="submit" 
+                class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-3.5 px-4 rounded-2xl shadow-lg shadow-blue-600/25 transition mt-2 flex items-center justify-center gap-2">
+            <span>পেমেন্ট তথ্য সাবমিট করুন</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </button>
+    </form>
+
+</div>
+
+<script>
+function copyNumber(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        alert("নাম্বার কপি হয়েছে: " + text);
+    });
+}
+</script>
+{% endblock %}
