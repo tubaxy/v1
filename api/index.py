@@ -768,6 +768,68 @@ def sponsor():
 
     return render_template('sponsor.html', is_logged_in=is_logged_in, user=user)
 
+# ==========================================================
+# ANNOUNCEMENTS CONTROLLER (/announcements)
+# ==========================================================
+@app.route('/announcements')
+def announcements():
+    sb = get_supabase()
+    
+    # পেজ ভিউ হলে ডাটাবেসে ভিউ কাউন্ট +১ বাড়ানো
+    try:
+        sb.rpc('increment_announcement_views').execute()
+    except Exception:
+        pass
+
+    # পোস্টগুলো আনা (নতুন পোস্ট সবার উপরে)
+    posts = sb.table('announcements').select('*').order('id', desc=True).execute().data or []
+
+    # ইউজার অ্যাডমিন কিনা চেক (শুধুমাত্র অ্যাডমিন ভিউ কাউন্ট ও পোস্ট করার ফরম দেখবে)
+    is_admin = False
+    if session.get('user_id'):
+        u = sb.table('users').select('email').eq('id', session['user_id']).single().execute().data
+        if u and u.get('email') == 'admin@gmail.com' and session.get('is_admin'):
+            is_admin = True
+
+    return render_template('announcements.html', posts=posts, is_admin=is_admin)
+
+@app.route('/admin/announcement/create', methods=['POST'])
+@admin_required
+def admin_create_announcement():
+    sb = get_supabase()
+    caption = request.form.get('caption', '').strip()
+    link_url = request.form.get('link_url', '').strip()
+    link_title = request.form.get('link_title', '').strip() or 'বিস্তারিত দেখুন'
+    image_file = request.files.get('image')
+
+    if not caption:
+        flash("ক্যাপশন দেওয়া আবশ্যক!", "danger")
+        return redirect(url_for('announcements'))
+
+    image_url = None
+    # ইমেজ ImgBB-তে আপলোড করা
+    if image_file and image_file.filename != '':
+        image_url = upload_to_imgbb(image_file.read())
+
+    sb.table('announcements').insert({
+        'caption': caption,
+        'image_url': image_url,
+        'link_url': link_url if link_url else None,
+        'link_title': link_title if link_url else None
+    }).execute()
+
+    flash("🎉 অ্যানাউন্সমেন্ট সফলভাবে প্রকাশ করা হয়েছে!", "success")
+    return redirect(url_for('announcements'))
+
+@app.route('/admin/announcement/<int:post_id>/delete', methods=['POST'])
+@admin_required
+def admin_delete_announcement(post_id):
+    sb = get_supabase()
+    sb.table('announcements').delete().eq('id', post_id).execute()
+    flash("পোস্টটি মুছে ফেলা হয়েছে!", "info")
+    return redirect(url_for('announcements'))
+    
+
 @app.route('/help')
 def help_page():
     sb = get_supabase()
