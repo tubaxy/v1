@@ -985,6 +985,63 @@ def admin_gmail():
 
     return render_template('admin/gmail.html', submitted=submitted_tasks, all_tasks=all_tasks)
 
+
+# ==========================================================
+# REFERRAL LEADERBOARD CONTROLLER (/leaderboard)
+# ==========================================================
+@app.route('/leaderboard')
+def referral_leaderboard():
+    sb = get_supabase()
+    user_id = session.get('user_id')
+    my_stats = None
+    leaders = []
+
+    try:
+        # ১. সরাসরি ডেটাবেস ফাংশন থেকে টপ ৩০ রেফারার আনা
+        res = sb.rpc('get_referral_leaderboard', {'limit_count': 30}).execute()
+        leaders = res.data or []
+    except Exception:
+        # ফলব্যাক ব্যাকআপ (যদি কখনো RPC কল মিস হয়)
+        users_res = sb.table('users').select('id, name, avatar_url, referral_code').eq('is_banned', False).execute().data or []
+        all_refs = sb.table('users').select('referred_by').not_.is_('referred_by', 'null').execute().data or []
+        
+        ref_counts = {}
+        for r in all_refs:
+            c = r.get('referred_by')
+            ref_counts[c] = ref_counts.get(c, 0) + 1
+
+        for u in users_res:
+            c = ref_counts.get(u['referral_code'], 0)
+            if c > 0:
+                leaders.append({
+                    'user_id': u['id'],
+                    'name': u['name'],
+                    'avatar_url': u.get('avatar_url'),
+                    'referral_code': u['referral_code'],
+                    'referral_count': c
+                })
+        leaders.sort(key=lambda x: x['referral_count'], reverse=True)
+        leaders = leaders[:30]
+
+    # ২. লগইন করা ইউজারের নিজস্ব পজিশন ও রেফার হিসাব
+    if user_id:
+        curr_user = sb.table('users').select('id, name, avatar_url, referral_code').eq('id', user_id).single().execute().data
+        if curr_user:
+            my_ref_count = len(sb.table('users').select('id').eq('referred_by', curr_user['referral_code']).execute().data or [])
+            my_rank = "30+"
+            for idx, item in enumerate(leaders):
+                if item['user_id'] == user_id:
+                    my_rank = f"#{idx + 1}"
+                    break
+            my_stats = {
+                'name': curr_user['name'],
+                'avatar_url': curr_user.get('avatar_url'),
+                'referral_count': my_ref_count,
+                'rank': my_rank
+            }
+
+    return render_template('leaderboard.html', leaders=leaders, my_stats=my_stats)
+    
 @app.route('/admin/gmail/<int:task_id>/approve', methods=['POST'])
 @admin_required
 def admin_gmail_approve(task_id):
