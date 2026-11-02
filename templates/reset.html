@@ -1,0 +1,401 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .fintech-input-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.2s ease-in-out;
+    }
+    .fintech-input-box:focus-within {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+        background: rgba(255, 255, 255, 0.05);
+    }
+    .classic-gradient-text {
+        background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 35%, #38bdf8 65%, #ffffff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+</style>
+
+<div class="max-w-sm mx-auto py-2 space-y-4">
+
+    <!-- Top Action Row (Left: Back to Login | Right: Support Headphone) -->
+    <div class="flex items-center justify-between px-1">
+        <a href="/login" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95 shadow-sm">
+            <i class="fa-solid fa-arrow-left text-[10px] text-blue-500"></i>
+            <span>লগইন</span>
+        </a>
+
+        <a href="https://t.me/micro_earnx" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] text-slate-400 hover:text-slate-200 text-xs font-gotham transition active:scale-95">
+            <i class="fa-solid fa-headset text-blue-400 text-xs"></i>
+            <span>সাপোর্ট</span>
+        </a>
+    </div>
+
+    <!-- Title Header -->
+    <div class="text-center py-1 select-none">
+        <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal tracking-wide classic-gradient-text">
+            Reset Password
+        </h1>
+        <p class="text-xs text-slate-400 font-gotham font-light mt-1">অ্যাকাউন্ট রিকভারি ও ভেরিফিকেশন</p>
+    </div>
+
+    <!-- STEP 0: Do you have an account question -->
+    <div id="stepInitialQuestion" class="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-5 text-center space-y-4">
+        <div class="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center mx-auto text-base">
+            <i class="fa-solid fa-circle-question"></i>
+        </div>
+        <h3 class="text-sm font-semibold text-slate-200 leading-snug">
+            আমাদের ওয়েবসাইটে কি আপনার অ্যাকাউন্ট আছে?
+        </h3>
+        <div class="grid grid-cols-2 gap-2.5 pt-1">
+            <button onclick="handleHasAccount(true)" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-gotham font-semibold text-xs py-3 rounded-xl transition active:scale-95 shadow-md shadow-blue-600/20">
+                হ্যাঁ, আছে
+            </button>
+            <button onclick="handleHasAccount(false)" class="w-full bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 font-gotham text-xs py-3 rounded-xl transition border border-white/[0.08]">
+                না, নেই
+            </button>
+        </div>
+    </div>
+
+    <!-- STEP 1: Enter Email -->
+    <div id="stepEmailInput" class="hidden space-y-3">
+        <div class="space-y-1">
+            <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">আপনার ইমেইল দিন</label>
+            <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5">
+                <i class="fa-solid fa-envelope text-slate-500 text-xs w-4 text-center"></i>
+                <input type="email" id="resetEmail" required placeholder="user@gmail.com" 
+                       class="w-full bg-transparent text-xs font-gotham text-slate-100 focus:outline-none placeholder-slate-600">
+            </div>
+        </div>
+        <button onclick="checkEmailAndProceed()" id="btnCheckEmail" class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-3.5 rounded-2xl shadow-lg shadow-blue-600/25 transition flex items-center justify-center gap-2">
+            <span>পরবর্তী ধাপ</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </button>
+    </div>
+
+    <!-- STEP 2: Choose Method (Code vs Support) -->
+    <div id="stepChooseMethod" class="hidden bg-white/[0.03] border border-white/[0.08] rounded-2xl p-5 space-y-4">
+        <span class="text-xs font-semibold text-slate-200 block text-center">আপনি কীভাবে রিসেট করতে চান?</span>
+        
+        <!-- Method A: Code -->
+        <button onclick="sendResetCode()" class="w-full p-3.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-left transition flex items-start gap-3 group">
+            <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 mt-0.5">
+                <i class="fa-solid fa-paper-plane text-xs"></i>
+            </div>
+            <div>
+                <span class="text-xs font-semibold text-slate-200 block group-hover:text-blue-400 transition">ইমেইলে কোড পাঠিয়ে</span>
+                <span class="text-[10px] text-slate-500 block leading-relaxed mt-0.5">আমরা আপনাকে ইমেইল পাঠাব। ইমেইলটি যদি ভুয়া হয়ে থাকে তাহলে কোড পাবেন না।</span>
+            </div>
+        </button>
+
+        <!-- Method B: Support -->
+        <a href="https://t.me/micro_earnx" target="_blank" class="w-full p-3.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-left transition flex items-start gap-3 group">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                <i class="fa-solid fa-headset text-xs"></i>
+            </div>
+            <div>
+                <span class="text-xs font-semibold text-slate-200 block group-hover:text-emerald-400 transition">সাপোর্টে মেসেজ দিয়ে</span>
+                <span class="text-[10px] text-slate-500 block leading-relaxed mt-0.5">সরাসরি টেলিগ্রাম সাপোর্টে কথা বলে পাসওয়ার্ড রিসেট করিয়ে নিন।</span>
+            </div>
+        </a>
+    </div>
+
+    <!-- STEP 3: Enter OTP -->
+    <div id="stepOtpInput" class="hidden bg-white/[0.03] border border-white/[0.08] rounded-2xl p-5 space-y-4">
+        <div class="text-center space-y-1">
+            <span class="text-xs font-semibold text-slate-200 block">৬ ডিজিটের কোড দিন</span>
+            <p class="text-[10px] text-slate-400" id="otpNoticeText">আপনার ইমেইলে কোড পাঠানো হয়েছে</p>
+            <p class="text-[10px] text-amber-400 font-medium">⚠️ ইনবক্সে না পেলে অবশ্যই <strong>Spam / Junk</strong> ফোল্ডার চেক করুন।</p>
+        </div>
+
+        <div class="fintech-input-box rounded-2xl px-4 py-3 text-center">
+            <input type="text" id="otpCodeInput" maxlength="6" placeholder="• • • • • •" 
+                   class="w-full bg-transparent text-lg font-mono font-black text-center text-blue-400 tracking-[0.3em] focus:outline-none">
+        </div>
+
+        <button onclick="verifyOtpCode()" id="btnVerifyOtp" class="w-full bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-gotham font-semibold text-xs py-3.5 rounded-xl shadow-lg shadow-blue-600/25 transition">
+            কোড যাচাই করুন
+        </button>
+
+        <!-- Resend Section (90-sec timer & max 2 limits) -->
+        <div class="text-center pt-1 border-t border-white/[0.06]">
+            <span id="resendTimerText" class="text-[10px] text-slate-500 font-gotham block mb-1">
+                পুনরায় কোড পাঠাতে অপেক্ষা করুন: <span id="countdownSec" class="text-blue-400 font-bold">90</span>s
+            </span>
+            <button id="btnResendOtp" disabled onclick="resendOtpCode()" class="text-xs text-slate-600 font-medium cursor-not-allowed transition">
+                কোড পুনরায় পাঠান (Resend)
+            </button>
+        </div>
+    </div>
+
+    <!-- STEP 4: Set New Password -->
+    <div id="stepNewPassword" class="hidden space-y-3">
+        <div class="space-y-1">
+            <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">নতুন পাসওয়ার্ড</label>
+            <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5">
+                <i class="fa-solid fa-lock text-slate-500 text-xs w-4 text-center"></i>
+                <input type="password" id="newPassInput" required placeholder="সর্বনিম্ন ৬ অক্ষর" 
+                       class="w-full bg-transparent text-xs font-gotham text-slate-100 focus:outline-none placeholder-slate-600">
+            </div>
+        </div>
+
+        <div class="space-y-1">
+            <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">পাসওয়ার্ড নিশ্চিত করুন</label>
+            <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5">
+                <i class="fa-solid fa-shield-halved text-slate-500 text-xs w-4 text-center"></i>
+                <input type="password" id="confirmPassInput" required placeholder="একই পাসওয়ার্ড আবার লিখুন" 
+                       class="w-full bg-transparent text-xs font-gotham text-slate-100 focus:outline-none placeholder-slate-600">
+            </div>
+        </div>
+
+        <button onclick="confirmNewPassword()" id="btnConfirmPass" class="w-full bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-gotham font-semibold text-xs py-3.5 rounded-2xl shadow-lg shadow-blue-600/25 transition">
+            পাসওয়ার্ড পরিবর্তন সম্পন্ন করুন
+        </button>
+    </div>
+
+</div>
+
+<!-- MODAL: No Account Found -->
+<div id="modalNoAccount" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="w-full max-w-xs bg-[#0a0e17] border border-white/10 rounded-3xl p-6 text-center space-y-4 shadow-2xl">
+        <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center mx-auto text-xl">
+            <i class="fa-solid fa-user-xmark"></i>
+        </div>
+        <div class="space-y-1">
+            <h4 class="text-sm font-semibold text-white">অ্যাকাউন্ট পাওয়া যায়নি</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">আপনার কোনো অ্যাকাউন্ট খোলা নেই, অ্যাকাউন্ট খুলতে সাইন-আপ পেইজে যান।</p>
+        </div>
+        <a href="/" class="block w-full bg-blue-600 hover:bg-blue-500 text-white font-gotham font-semibold text-xs py-3 rounded-xl transition shadow">
+            সাইন-আপ পেইজে যান
+        </a>
+    </div>
+</div>
+
+<!-- MODAL: Google Social Account Warning -->
+<div id="modalSocialAccount" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="w-full max-w-xs bg-[#0a0e17] border border-white/10 rounded-3xl p-6 text-center space-y-4 shadow-2xl">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center mx-auto text-xl">
+            <i class="fa-brands fa-google"></i>
+        </div>
+        <div class="space-y-1">
+            <h4 class="text-sm font-semibold text-white">Google দিয়ে লগইন করুন</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">আপনি Continue with Google-এর মাধ্যমে অ্যাকাউন্ট খুলেছেন। লগইন পেইজে গিয়ে গুগলে চেষ্টা করুন অথবা সাপোর্টে মেসেজ দিন।</p>
+        </div>
+        <div class="space-y-2 pt-1">
+            <a href="/login" class="block w-full bg-blue-600 hover:bg-blue-500 text-white font-gotham font-semibold text-xs py-2.5 rounded-xl transition">
+                লগইন পেইজে যান
+            </a>
+            <a href="https://t.me/micro_earnx" target="_blank" class="block w-full bg-white/[0.04] text-slate-300 font-gotham text-xs py-2 rounded-xl transition border border-white/[0.08]">
+                সাপোর্টে কথা বলুন
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: Success & 10s Countdown Redirect -->
+<div id="modalSuccess" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="w-full max-w-xs bg-[#0a0e17] border border-emerald-500/30 rounded-3xl p-6 text-center space-y-4 shadow-2xl">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto text-xl">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <div class="space-y-1">
+            <h4 class="text-sm font-semibold text-white">পাসওয়ার্ড পরিবর্তিত হয়েছে!</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">আপনার অ্যাকাউন্টের নতুন পাসওয়ার্ড সফলভাবে সেভ করা হয়েছে।</p>
+            <p class="text-[11px] text-blue-400 font-gotham font-medium pt-2">
+                <span id="redirectSeconds">10</span> সেকেন্ড পর লগইন পেইজে নেওয়া হবে...
+            </p>
+        </div>
+        <a href="/login" class="block w-full bg-blue-600 hover:bg-blue-500 text-white font-gotham font-semibold text-xs py-3 rounded-xl transition shadow">
+            এখনই লগইন করুন
+        </a>
+    </div>
+</div>
+
+<script>
+let verifiedEmail = "";
+let cooldownTimer = null;
+let secondsRemaining = 90;
+let attemptsCount = 0;
+
+function showModal(id) {
+    const el = document.getElementById(id);
+    el.classList.remove('opacity-0', 'pointer-events-none');
+    el.classList.add('opacity-100');
+}
+
+function handleHasAccount(hasAccount) {
+    if (hasAccount) {
+        document.getElementById('stepInitialQuestion').classList.add('hidden');
+        document.getElementById('stepEmailInput').classList.remove('hidden');
+    } else {
+        showModal('modalNoAccount');
+    }
+}
+
+function checkEmailAndProceed() {
+    const email = document.getElementById('resetEmail').value.trim().toLowerCase();
+    if (!email) {
+        alert("ইমেইল দিন!");
+        return;
+    }
+    const btn = document.getElementById('btnCheckEmail');
+    btn.disabled = true;
+    btn.innerText = "যাচাই করা হচ্ছে...";
+
+    fetch('/reset/check-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email })
+    })
+    .then(r => r.json())
+    .then(data => {
+        btn.disabled = false;
+        btn.innerHTML = '<span>পরবর্তী ধাপ</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>';
+
+        if (data.status === 'not_registered') {
+            showModal('modalNoAccount');
+        } else if (data.status === 'social_account') {
+            showModal('modalSocialAccount');
+        } else if (data.status === 'limit_exceeded') {
+            alert(data.message);
+        } else if (data.success) {
+            verifiedEmail = email;
+            attemptsCount = data.attempts || 1;
+            document.getElementById('stepEmailInput').classList.add('hidden');
+            document.getElementById('stepOtpInput').classList.remove('hidden');
+            start90SecTimer();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(() => {
+        btn.disabled = false;
+        btn.innerText = "পরবর্তী ধাপ";
+        alert("সার্ভার ত্রুটি, পুনরায় চেষ্টা করুন!");
+    });
+}
+
+function start90SecTimer() {
+    secondsRemaining = 90;
+    const timerText = document.getElementById('resendTimerText');
+    const countdownEl = document.getElementById('countdownSec');
+    const resendBtn = document.getElementById('btnResendOtp');
+
+    resendBtn.disabled = true;
+    resendBtn.className = "text-xs text-slate-600 font-medium cursor-not-allowed transition";
+
+    if (cooldownTimer) clearInterval(cooldownTimer);
+
+    cooldownTimer = setInterval(() => {
+        secondsRemaining--;
+        if (countdownEl) countdownEl.innerText = secondsRemaining;
+
+        if (secondsRemaining <= 0) {
+            clearInterval(cooldownTimer);
+            if (attemptsCount >= 2) {
+                timerText.innerHTML = '<span class="text-amber-400">সর্বোচ্চ ২ বার পাঠানো শেষ। স্প্যাম ফোল্ডার চেক করুন।</span>';
+            } else {
+                timerText.innerText = "এখন পুনরায় কোড পাঠাতে পারেন:";
+                resendBtn.disabled = false;
+                resendBtn.className = "text-xs text-blue-400 hover:text-blue-300 font-semibold cursor-pointer underline transition";
+            }
+        }
+    }, 1000);
+}
+
+function resendOtpCode() {
+    const btn = document.getElementById('btnResendOtp');
+    btn.disabled = true;
+    btn.innerText = "পাঠানো হচ্ছে...";
+
+    fetch('/reset/resend-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: verifiedEmail })
+    })
+    .then(r => r.json())
+    .then(data => {
+        alert(data.message);
+        if (data.success) {
+            attemptsCount = 2;
+            start90SecTimer();
+        }
+    });
+}
+
+function verifyOtpCode() {
+    const code = document.getElementById('otpCodeInput').value.trim();
+    if (code.length !== 6) {
+        alert("৬ ডিজিটের সঠিক কোড লিখুন!");
+        return;
+    }
+
+    const btn = document.getElementById('btnVerifyOtp');
+    btn.disabled = true;
+    btn.innerText = "যাচাই হচ্ছে...";
+
+    fetch('/reset/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: verifiedEmail, code: code })
+    })
+    .then(r => r.json())
+    .then(data => {
+        btn.disabled = false;
+        btn.innerText = "কোড যাচাই করুন";
+        if (data.success) {
+            document.getElementById('stepOtpInput').classList.add('hidden');
+            document.getElementById('stepNewPassword').classList.remove('hidden');
+        } else {
+            alert(data.message);
+        }
+    });
+}
+
+function confirmNewPassword() {
+    const p1 = document.getElementById('newPassInput').value.trim();
+    const p2 = document.getElementById('confirmPassInput').value.trim();
+
+    if (p1.length < 6) {
+        alert("পাসওয়ার্ড সর্বনিম্ন ৬ অক্ষর হতে হবে!");
+        return;
+    }
+    if (p1 !== p2) {
+        alert("উভয় পাসওয়ার্ড হুবহু মেলেনি!");
+        return;
+    }
+
+    const btn = document.getElementById('btnConfirmPass');
+    btn.disabled = true;
+    btn.innerText = "সংরক্ষণ হচ্ছে...";
+
+    fetch('/reset/confirm-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: p1 })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            showModal('modalSuccess');
+            let sec = 10;
+            const secEl = document.getElementById('redirectSeconds');
+            const interval = setInterval(() => {
+                sec--;
+                if (secEl) secEl.innerText = sec;
+                if (sec <= 0) {
+                    clearInterval(interval);
+                    window.location.href = "/login";
+                }
+            }, 1000);
+        } else {
+            btn.disabled = false;
+            btn.innerText = "পাসওয়ার্ড পরিবর্তন সম্পন্ন করুন";
+            alert(data.message);
+        }
+    });
+}
+</script>
+{% endblock %}
