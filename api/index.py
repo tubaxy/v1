@@ -30,18 +30,20 @@ app.config['SESSION_REFRESH_EACH_REQUEST'] = True
 @app.before_request
 def make_session_permanent():
     session.permanent = True
-
+    
 class VercelPathFixer:
     def __init__(self, wsgi_app):
         self.wsgi_app = wsgi_app
 
     def __call__(self, environ, start_response):
-        real_path = environ.get('HTTP_X_FORWARDED_URI') or environ.get('HTTP_X_MATCHED_PATH')
-        if real_path:
-            environ['PATH_INFO'] = real_path.split('?')[0]
+        # আসল রিকোয়েস্ট পাথ ঠিক রাখা
+        raw_uri = environ.get('HTTP_X_FORWARDED_URI') or environ.get('REQUEST_URI') or ''
+        if raw_uri:
+            environ['PATH_INFO'] = raw_uri.split('?')[0]
         return self.wsgi_app(environ, start_response)
 
 app.wsgi_app = VercelPathFixer(app.wsgi_app)
+
 
 SUPABASE_URL = os.getenv("SUPABASE_URL", "")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
@@ -200,6 +202,7 @@ def google_auth():
     return redirect(google_auth_url)
 
 @app.route('/auth/google/callback')
+@app.route('/auth/google/callback/')
 def google_callback():
     code = request.args.get('code')
     if not code:
