@@ -232,6 +232,74 @@ def auto_release_expired_gmail_tasks(sb):
     }).eq('status', 'locked').lt('locked_at', two_hours_ago).execute()
 
 
+
+
+# ==========================================================
+# VIP TIERS CONFIGURATION
+# ==========================================================
+TIER_CONFIG = {
+    'wood': {
+        'name': 'Wood (কাঠ)',
+        'price': 0,
+        'validity_days': None, # Lifetime
+        'min_withdraw': 500,
+        'withdraw_time': '6 Hours',
+        'ref_required': 5,
+        'daily_free': 0,
+        'spin_quiz_mult': 1.0,
+        'badge_color': 'amber',
+        'accent': '#b45309'
+    },
+    'bronze': {
+        'name': 'Bronze (ব্রোঞ্জ)',
+        'price': 110,
+        'validity_days': 15,
+        'min_withdraw': 300,
+        'withdraw_time': '3 Hours',
+        'ref_required': 3,
+        'daily_free': 10,
+        'spin_quiz_mult': 1.0,
+        'badge_color': 'orange',
+        'accent': '#ea580c'
+    },
+    'silver': {
+        'name': 'Silver (সিলভার)',
+        'price': 250,
+        'validity_days': 15,
+        'min_withdraw': 150,
+        'withdraw_time': '1 Hour',
+        'ref_required': 1,
+        'daily_free': 23,
+        'spin_quiz_mult': 1.0,
+        'badge_color': 'slate',
+        'accent': '#94a3b8'
+    },
+    'gold': {
+        'name': 'Gold (গোল্ড)',
+        'price': 400,
+        'validity_days': 15,
+        'min_withdraw': 50,
+        'withdraw_time': '30 Mins',
+        'ref_required': 0,
+        'daily_free': 30,
+        'spin_quiz_mult': 1.5,
+        'badge_color': 'yellow',
+        'accent': '#f59e0b'
+    },
+    'diamond': {
+        'name': 'Diamond (ডায়মন্ড)',
+        'price': 700,
+        'validity_days': 15,
+        'min_withdraw': 20,
+        'withdraw_time': '2 Mins',
+        'ref_required': 0,
+        'daily_free': 55,
+        'spin_quiz_mult': 2.0,
+        'badge_color': 'cyan',
+        'accent': '#06b6d4'
+    }
+}
+
 # ==========================================================
 # PASSWORD RESET SYSTEM (/reset)
 # ==========================================================
@@ -349,6 +417,199 @@ def reset_resend_otp():
         "attempts": 2,
         "message": "দ্বিতীয়বারের মতো কোড পাঠানো হয়েছে। এটিই শেষ কোড। অবশ্যই Spam বক্স চেক করবেন।"
     })
+
+
+
+
+
+# ==========================================================
+# USER UPGRADE CONTROLLERS
+# ==========================================================
+@app.route('/upgrade')
+@login_required
+def upgrade_page():
+    sb = get_supabase()
+    user_id = session['user_id']
+    user = sb.table('users').select('*').eq('id', user_id).single().execute().data
+
+    # মেয়াদোত্তীর্ণ টিয়ার যাচাই
+    current_tier = user.get('tier') or 'wood'
+    expires_at = user.get('tier_expires_at')
+    is_expired = False
+    if expires_at and current_tier != 'wood':
+        exp_dt = datetime.fromisoformat(expires_at.replace('Z', '+00:00'))
+        if datetime.now(timezone.utc) > exp_dt:
+            is_expired = True
+            sb.table('users').update({'tier': 'wood', 'tier_expires_at': None}).eq('id', user_id).execute()
+            current_tier = 'wood'
+
+    # ব্যবহারকারীর অ্যাডমিন অনুমোদিত কোনো প্যাকেজ ক্লেইমের জন্য অপেক্ষা করছে কিনা
+    ready_to_claim = sb.table('upgrade_requests').select('*')\
+        .eq('user_id', user_id)\
+        .eq('status', 'approved')\
+        .order('id', desc=True).limit(1).execute().data
+    
+    pending_req = sb.table('upgrade_requests').select('*')\
+        .eq('user_id', user_id)\
+        .eq('status', 'pending')\
+        .order('id', desc=True).limit(1).execute().data
+
+    # দৈনিক ফ্রি রিওয়ার্ড ক্লেইম চেক
+    can_claim_daily = False
+    daily_reward_amount = TIER_CONFIG.get(current_tier, {}).get('daily_free', 0)
+    if daily_reward_amount > 0:
+        last_claim = user.get('last_daily_claim')
+        if not last_claim:
+            can_claim_daily = True
+        else:
+            last_claim_dt = datetime.fromisoformat(last_claim.replace('Z', '+00:00'))
+            if (datetime.now(timezone.utc) - last_claim_dt).total_seconds() >= 86400:
+                can_claim_daily = True
+
+    return render_template(
+        'upgrade.html',
+        user=user,
+        current_tier=current_tier,
+        tier_config=TIER_CONFIG,
+        ready_to_claim=ready_to_claim[0] if ready_to_claim else None,
+        pending_req=pending_req[0] if pending_req else None,
+        can_claim_daily=can_claim_daily,
+        daily_reward_amount=daily_reward_amount
+    )
+
+@app.route('/upgrade/checkout/<tier_name>', methods=['GET', 'POST'])
+@login_required
+def upgrade_checkout(tier_name):
+    tier_name = tier_name.lower()
+    if tier_name not in TIER_CONFIG or tier_name == 'wood':
+        flash("অবৈধ প্যাকেজ নির্বাচন!", "danger")
+        return redirect(url_for('upgrade_page'))
+
+    tier_info = TIER_CONFIG[tier_name]
+    sb = get_supabase()
+    user_id = session['user_id']
+    user = sb.table('users').select('*').eq('id', user_id).single().execute().data
+
+    if request.method == 'POST':
+        sender_number = request.form.get('sender_number', '').strip()
+        trx_id = request.form.get('trx_id', '').strip()
+
+        if not sender_number or not trx_id:
+            flash("সবগুলো তথ্য সঠিকভাবে পূরণ করুন!", "danger")
+            return redirect(url_for('upgrade_checkout', tier_name=tier_name))
+
+        # ডুপ্লিকেট ট্রানজেকশন চেক
+        dup_trx = sb.table('upgrade_requests').select('id').eq('trx_id', trx_id).execute().data
+        if dup_trx:
+            flash("এই TrxID দিয়ে ইতিমধ্যে একটি রিকোয়েস্ট জমা দেওয়া হয়েছে!", "danger")
+            return redirect(url_for('upgrade_checkout', tier_name=tier_name))
+
+        sb.table('upgrade_requests').insert({
+            'user_id': user_id,
+            'tier': tier_name,
+            'price': tier_info['price'],
+            'sender_number': sender_number,
+            'trx_id': trx_id,
+            'status': 'pending'
+        }).execute()
+
+        flash("🎉 পেমেন্ট রিকোয়েস্ট সফলভাবে জমা হয়েছে! অ্যাডমিন যাচাই করে অনুমোদন দেওয়ার পর প্যাকেজ ক্লেইম করতে পারবেন।", "success")
+        return redirect(url_for('upgrade_page'))
+
+    return render_template('upgrade_checkout.html', user=user, tier=tier_name, tier_info=tier_info)
+
+@app.route('/upgrade/claim-tier/<int:req_id>', methods=['POST'])
+@login_required
+def upgrade_claim_tier(req_id):
+    sb = get_supabase()
+    user_id = session['user_id']
+
+    req = sb.table('upgrade_requests').select('*')\
+        .eq('id', req_id)\
+        .eq('user_id', user_id)\
+        .eq('status', 'approved').single().execute().data
+
+    if not req:
+        flash("অনুমোদিত কোনো প্যাকেজ পাওয়া যায়নি!", "danger")
+        return redirect(url_for('upgrade_page'))
+
+    tier_name = req['tier']
+    validity = TIER_CONFIG[tier_name]['validity_days'] or 15
+    expires_at = (datetime.now(timezone.utc) + timedelta(days=validity)).isoformat()
+
+    # ইউজারের টিয়ার আপডেট ও রিকোয়েস্ট স্ট্যাটাস claimed করা
+    sb.table('users').update({
+        'tier': tier_name,
+        'tier_expires_at': expires_at
+    }).eq('id', user_id).execute()
+
+    sb.table('upgrade_requests').update({'status': 'claimed'}).eq('id', req_id).execute()
+
+    flash(f"🎉 অভিনন্দন! আপনার {TIER_CONFIG[tier_name]['name']} সফলভাবে সক্রিয় হয়েছে।", "success")
+    return redirect(url_for('upgrade_page'))
+
+@app.route('/upgrade/claim-daily', methods=['POST'])
+@login_required
+def upgrade_claim_daily():
+    sb = get_supabase()
+    user_id = session['user_id']
+    user = sb.table('users').select('*').eq('id', user_id).single().execute().data
+
+    current_tier = user.get('tier', 'wood')
+    daily_reward = TIER_CONFIG.get(current_tier, {}).get('daily_free', 0)
+
+    if daily_reward <= 0:
+        return jsonify({"success": False, "message": "আপনার বর্তমান প্যাকেজে কোনো দৈনিক ফ্রি রিওয়ার্ড নেই!"})
+
+    last_claim = user.get('last_daily_claim')
+    if last_claim:
+        last_claim_dt = datetime.fromisoformat(last_claim.replace('Z', '+00:00'))
+        if (datetime.now(timezone.utc) - last_claim_dt).total_seconds() < 86400:
+            return jsonify({"success": False, "message": "আপনি ইতিমধ্যে আজকের ফ্রি রিওয়ার্ড নিয়ে নিয়েছেন!"})
+
+    new_bal = float(user['balance']) + float(daily_reward)
+    sb.table('users').update({
+        'balance': new_bal,
+        'last_daily_claim': datetime.now(timezone.utc).isoformat()
+    }).eq('id', user_id).execute()
+
+    return jsonify({
+        "success": True,
+        "reward": daily_reward,
+        "new_balance": new_bal,
+        "message": f"🎉 ৳{daily_reward:.2f} সফলভাবে আপনার মূল ব্যালেন্সে যোগ হয়েছে!"
+    })
+
+# ==========================================================
+# ADMIN UPGRADE CONTROLLERS
+# ==========================================================
+@app.route('/admin/upgrades')
+@admin_required
+def admin_upgrades_list():
+    sb = get_supabase()
+    reqs = sb.table('upgrade_requests').select('*, users(name, email)')\
+        .order('id', desc=True).limit(50).execute().data or []
+    return render_template('admin/upgrades.html', requests=reqs, tier_config=TIER_CONFIG)
+
+@app.route('/admin/upgrades/<int:req_id>/approve', methods=['POST'])
+@admin_required
+def admin_upgrade_approve(req_id):
+    sb = get_supabase()
+    sb.table('upgrade_requests').update({
+        'status': 'approved',
+        'approved_at': datetime.now(timezone.utc).isoformat()
+    }).eq('id', req_id).execute()
+    flash("প্যাকেজ পেমেন্ট অ্যাপ্রুভ করা হয়েছে! ইউজার এখন ক্লেইম করতে পারবে।", "success")
+    return redirect(url_for('admin_upgrades_list'))
+
+@app.route('/admin/upgrades/<int:req_id>/reject', methods=['POST'])
+@admin_required
+def admin_upgrade_reject(req_id):
+    sb = get_supabase()
+    sb.table('upgrade_requests').update({'status': 'rejected'}).eq('id', req_id).execute()
+    flash("প্যাকেজ পেমেন্ট রিজেক্ট করা হয়েছে!", "warning")
+    return redirect(url_for('admin_upgrades_list'))
+    
 
 @app.route('/reset/verify-otp', methods=['POST'])
 def reset_verify_otp():
