@@ -1,110 +1,115 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
-    /* Native App List Transition */
-    .task-feed-card {
+    .task-mission-card {
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(24px);
         transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
     }
-    .task-feed-card:hover {
+    .task-mission-card:hover {
+        border-color: rgba(56, 189, 248, 0.35);
+        background: rgba(255, 255, 255, 0.045);
         transform: translateY(-2px);
-        box-shadow: 0 12px 30px -5px rgba(225, 29, 72, 0.1), 0 4px 10px -2px rgba(0, 0, 0, 0.03);
-        border-color: rgba(225, 29, 72, 0.25);
+        box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.8);
     }
+    .task-filter-active {
+        background: #2563eb !important;
+        color: #ffffff !important;
+        border-color: #3b82f6 !important;
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35) !important;
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
 
-<div class="max-w-xl mx-auto space-y-4 pb-14">
+<div class="max-w-xl mx-auto space-y-5 pb-24">
 
-    <!-- Header & Back Button -->
+    <!-- Top Action Row -->
     <div class="flex items-center justify-between px-1">
-        <a href="/allwork" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-[#E11D48] transition">
-            <i class="fa-solid fa-arrow-left"></i>
-            <span>আর্নিং সেন্টারে ফিরুন</span>
+        <a href="/allwork" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95 shadow-sm">
+            <i class="fa-solid fa-arrow-left text-[10px] text-blue-500"></i>
+            <span>আর্নিং হাব</span>
         </a>
-        <span class="text-[10px] font-black bg-rose-50 text-[#E11D48] px-3 py-1 rounded-full border border-rose-100 uppercase tracking-wider flex items-center gap-1 shadow-sm">
-            <i class="fa-solid fa-bolt text-xs"></i> টাস্ক ফিড
-        </span>
+
+        <div class="flex items-center gap-2">
+            <span class="text-[10px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+                Active Missions
+            </span>
+        </div>
     </div>
 
-    <!-- ================= 1. MISSION HERO & LIVE SEARCH CARD ================= -->
-    <div class="bg-gradient-to-tr from-slate-950 via-slate-900 to-slate-950 text-white rounded-[32px] p-5 sm:p-6 shadow-xl border border-slate-800 space-y-4 relative overflow-hidden">
-        
-        <!-- Ambient Glow -->
-        <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-[#E11D48]/25 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Title Section (The Seasons Classic Typography) -->
+    <div class="text-center py-1 select-none space-y-1">
+        <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
+            Daily <span class="text-slate-400 font-light italic lowercase text-xl">missions</span>
+        </h1>
+        <p class="text-xs text-slate-400 font-gotham font-light">সহজ কাজ সম্পন্ন করে সরাসরি আপনার ওয়ালেটে পেমেন্ট বুঝে নিন</p>
+    </div>
 
-        <div class="flex items-center justify-between relative z-10">
-            <div>
-                <span class="text-[9px] font-mono tracking-widest text-slate-400 font-bold uppercase block mb-0.5">
-                    DAILY TASK MISSION
-                </span>
-                <h1 class="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
-                    আজকের কাজের তালিকা
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                </h1>
-            </div>
+    <!-- ================= 1. SEARCH & CATEGORY FILTER HUB ================= -->
+    <div class="p-3.5 rounded-[24px] bg-white/[0.025] border border-white/[0.08] space-y-3">
         
+        <!-- Live Instant Search Input -->
+        <div class="relative">
+            <input type="text" id="taskSearchInput" onkeyup="searchTasksLive()" 
+                   placeholder="কাজের নাম বা প্ল্যাটফর্ম লিখে খুঁজুন..." 
+                   class="w-full bg-white/[0.03] border border-white/[0.08] text-xs font-gotham text-slate-100 placeholder-slate-500 px-3.5 py-2.5 pl-9 rounded-xl focus:outline-none focus:border-blue-500 transition">
+            <i class="fa-solid fa-magnifying-glass text-slate-500 text-xs absolute left-3 top-3"></i>
         </div>
 
-        <!-- Realtime Live Search Input -->
-        <div class="relative z-10">
-            <input type="text" id="taskSearchInput" onkeyup="searchTasksLive()" placeholder="কাজের নাম লিখে খুঁজুন (যেমন: YouTube, Facebook...)" 
-                class="w-full px-4 py-3 pl-10 rounded-2xl bg-white/10 border border-white/15 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-rose-500/40 focus:border-[#E11D48] transition backdrop-blur-md">
-            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
+        <!-- Filter Pills Bar -->
+        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar text-[11px] font-gotham">
+            <button onclick="applyFilter('all', this)" class="filter-pill task-filter-active px-3.5 py-1.5 rounded-xl transition whitespace-nowrap">
+                সকল কাজ ({{ tasks|length }})
+            </button>
+            <button onclick="applySortHighRate(this)" class="filter-pill px-3 py-1.5 rounded-xl bg-white/[0.03] text-slate-400 border border-white/[0.06] hover:text-white transition whitespace-nowrap">
+                <i class="fa-solid fa-bolt text-amber-400 text-[10px] mr-1"></i> সর্বোচ্চ রেট
+            </button>
+            <button onclick="applyFilter('youtube', this)" class="filter-pill px-3 py-1.5 rounded-xl bg-white/[0.03] text-slate-400 border border-white/[0.06] hover:text-white transition whitespace-nowrap">
+                YouTube
+            </button>
+            <button onclick="applyFilter('facebook', this)" class="filter-pill px-3 py-1.5 rounded-xl bg-white/[0.03] text-slate-400 border border-white/[0.06] hover:text-white transition whitespace-nowrap">
+                Facebook
+            </button>
+            <button onclick="applyFilter('telegram', this)" class="filter-pill px-3 py-1.5 rounded-xl bg-white/[0.03] text-slate-400 border border-white/[0.06] hover:text-white transition whitespace-nowrap">
+                Telegram
+            </button>
+            <button onclick="applyFilter('app', this)" class="filter-pill px-3 py-1.5 rounded-xl bg-white/[0.03] text-slate-400 border border-white/[0.06] hover:text-white transition whitespace-nowrap">
+                Apps & Web
+            </button>
         </div>
 
     </div>
 
-    <!-- ================= 2. CATEGORY & SORTING PILLS ================= -->
-    <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar text-xs font-bold px-0.5">
-        <button onclick="applyFilter('all', this)" class="filter-pill px-4 py-2 rounded-xl transition whitespace-nowrap bg-[#E11D48] text-white shadow-sm">
-            সব কাজ ({{ tasks|length }})
-        </button>
-        <button onclick="applySortHighRate(this)" class="filter-pill px-3.5 py-2 rounded-xl transition whitespace-nowrap bg-white border border-slate-200 text-slate-600 hover:bg-slate-50">
-            <i class="fa-solid fa-fire text-amber-500 mr-1"></i> সর্বোচ্চ রেট
-        </button>
-        <button onclick="applyFilter('youtube', this)" class="filter-pill px-3.5 py-2 rounded-xl transition whitespace-nowrap bg-white border border-slate-200 text-slate-600 hover:bg-slate-50">
-            <i class="fa-brands fa-youtube text-red-500 mr-1"></i> YouTube
-        </button>
-        <button onclick="applyFilter('facebook', this)" class="filter-pill px-3.5 py-2 rounded-xl transition whitespace-nowrap bg-white border border-slate-200 text-slate-600 hover:bg-slate-50">
-            <i class="fa-brands fa-facebook text-blue-600 mr-1"></i> Facebook
-        </button>
-        <button onclick="applyFilter('telegram', this)" class="filter-pill px-3.5 py-2 rounded-xl transition whitespace-nowrap bg-white border border-slate-200 text-slate-600 hover:bg-slate-50">
-            <i class="fa-brands fa-telegram text-sky-500 mr-1"></i> Telegram
-        </button>
-    </div>
-
-    <!-- ================= 3. MODERN APP-STYLE TASK FEED ================= -->
+    <!-- ================= 2. TASKS MISSION FEED ================= -->
     <div id="tasksFeedContainer" class="space-y-3">
         {% for task in tasks %}
         
-        <!-- Category & Platform Detection -->
+        <!-- Platform Category Auto Detection -->
         {% set cat = 'general' %}
-        {% if 'youtube' in task.title|lower or 'youtube' in task.link|lower %}
+        {% if 'youtube' in task.title|lower or 'youtube' in task.link|lower or 'youtu.be' in task.link|lower %}
             {% set cat = 'youtube' %}
-        {% elif 'facebook' in task.title|lower or 'facebook' in task.link|lower %}
+        {% elif 'facebook' in task.title|lower or 'facebook' in task.link|lower or 'fb.' in task.link|lower %}
             {% set cat = 'facebook' %}
         {% elif 'telegram' in task.title|lower or 't.me' in task.link|lower %}
             {% set cat = 'telegram' %}
-        {% elif 'app' in task.title|lower or 'play.google' in task.link|lower %}
+        {% elif 'app' in task.title|lower or 'play.google' in task.link|lower or 'download' in task.title|lower %}
             {% set cat = 'app' %}
         {% endif %}
 
-        <!-- Modern Task Feed Card Item -->
-        <div class="task-feed-item bg-white border border-slate-200/90 rounded-[26px] p-4 sm:p-4.5 shadow-sm task-feed-card flex items-center justify-between gap-3 group relative overflow-hidden"
+        <div class="task-mission-item task-mission-card rounded-[24px] p-4 sm:p-4.5 flex items-center justify-between gap-3 group"
              data-category="{{ cat }}"
              data-amount="{{ task.amount }}"
              data-title="{{ task.title|lower }}">
             
-            <!-- Left: Platform Icon & Task Details -->
-            <div class="flex items-start gap-3 min-w-0">
-                
-                <!-- 3D Platform Icon Badge -->
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shrink-0 shadow-sm group-hover:scale-105 transition duration-200
-                    {% if cat == 'youtube' %} bg-red-50 text-red-600 border border-red-100
-                    {% elif cat == 'facebook' %} bg-blue-50 text-blue-600 border border-blue-100
-                    {% elif cat == 'telegram' %} bg-sky-50 text-sky-500 border border-sky-100
-                    {% elif cat == 'app' %} bg-emerald-50 text-emerald-600 border border-emerald-100
-                    {% else %} bg-rose-50 text-[#E11D48] border border-rose-100 {% endif %}">
-                    
+            <!-- Left Info: Platform Icon + Details -->
+            <div class="flex items-center gap-3.5 min-w-0">
+                <!-- Sleek Monochromatic Platform Icon -->
+                <div class="w-12 h-12 rounded-2xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-slate-200 text-lg shrink-0 group-hover:border-sky-500/40 group-hover:text-sky-400 transition">
                     {% if cat == 'youtube' %}<i class="fa-brands fa-youtube"></i>
                     {% elif cat == 'facebook' %}<i class="fa-brands fa-facebook"></i>
                     {% elif cat == 'telegram' %}<i class="fa-brands fa-telegram"></i>
@@ -112,43 +117,35 @@
                     {% else %}<i class="fa-solid fa-briefcase"></i>{% endif %}
                 </div>
 
-                <!-- Text Details -->
-                <div class="min-w-0 leading-tight">
-                    
+                <!-- Text Info -->
+                <div class="leading-tight min-w-0">
                     <!-- Micro Badges -->
-                    <div class="flex items-center gap-1.5 mb-1 flex-wrap">
-                        <span class="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full
-                            {% if cat == 'youtube' %} bg-red-50 text-red-600
-                            {% elif cat == 'facebook' %} bg-blue-50 text-blue-600
-                            {% elif cat == 'telegram' %} bg-sky-50 text-sky-500
-                            {% else %} bg-slate-100 text-slate-600 {% endif %}">
+                    <div class="flex items-center gap-1.5 mb-1">
+                        <span class="text-[9px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-white/[0.04] border border-white/[0.08] text-slate-400">
                             {{ cat|upper }}
                         </span>
-                        <span class="text-[9px] font-bold text-slate-400 flex items-center gap-1">
-                            <i class="fa-regular fa-clock text-[8px]"></i> ২-৩ মিনিট
-                        </span>
-                        <span class="text-[9px] font-bold text-emerald-600 flex items-center gap-0.5">
-                            <i class="fa-solid fa-circle-check text-[8px]"></i> ভেরিফাইড
+                        <span class="text-[9px] font-gotham text-slate-500">২-৩ মিনিট</span>
+                        <span class="text-[9px] font-gotham text-emerald-400 flex items-center gap-0.5">
+                            <i class="fa-solid fa-circle-check text-[8px]"></i> Verified
                         </span>
                     </div>
 
                     <!-- Title -->
-                    <h3 class="font-black text-slate-900 text-xs sm:text-sm line-clamp-1 group-hover:text-[#E11D48] transition">
+                    <h3 class="text-xs sm:text-sm font-semibold text-slate-100 truncate group-hover:text-white transition" title="{{ task.title }}">
                         {{ task.title }}
                     </h3>
 
-                    <!-- Reward Text -->
-                    <span class="text-sm font-black text-emerald-600 block mt-1 tabular-nums">
+                    <!-- Reward Amount -->
+                    <div class="font-gotham font-black text-sm text-emerald-400 tabular-nums mt-1">
                         + ৳ {{ "%.2f"|format(task.amount) }}
-                    </span>
+                    </div>
                 </div>
-
             </div>
 
-            <!-- Right: Action CTA Button -->
-            <div class="shrink-0 pl-1">
+            <!-- Right Action: Start Button (10% Electric Blue Accent) -->
+            <div class="shrink-0 text-right">
                 <a href="/task/{{ task.id }}" 
-                   class="bg-[#E11D48] hover:bg-[#BE123C] active:scale-95 text-white font-extrabold text-xs px-4 py-2.5 rounded-2xl shadow-md shadow-rose-500/25 flex items-center gap-1.5 transition">
+                   class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-gotham font-semibold text-xs px-4 py-2.5 rounded-xl transition shadow-lg shadow-blue-600/25">
                     <span>শুরু করুন</span>
                     <i class="fa-solid fa-arrow-right text-[9px]"></i>
                 </a>
@@ -157,29 +154,29 @@
         </div>
         {% else %}
         <!-- Empty State -->
-        <div class="bg-white border border-rose-100 rounded-[32px] p-10 text-center text-slate-400 shadow-sm space-y-2">
-            <div class="w-14 h-14 mx-auto rounded-3xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl mb-1">
-                <i class="fa-solid fa-circle-check"></i>
+        <div class="p-10 rounded-[28px] bg-white/[0.02] border border-white/[0.06] text-center text-slate-500 space-y-2 select-none">
+            <div class="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mx-auto text-xl text-slate-400 mb-1">
+                <i class="fa-solid fa-clipboard-check"></i>
             </div>
-            <h3 class="text-sm font-black text-slate-800">সব কাজ সম্পন্ন হয়েছে!</h3>
-            <p class="text-xs text-slate-400">বর্তমানে কোনো কাজ বাকি নেই। নতুন কাজ আসলে তালিকায় দেখতে পাবেন।</p>
+            <h4 class="text-sm font-semibold text-slate-200">সব কাজ সম্পন্ন হয়েছে!</h4>
+            <p class="text-xs text-slate-400">বর্তমানে কোনো টাস্ক বাকি নেই। নতুন কাজ আসার সাথে সাথে এখানে দেখতে পাবেন।</p>
         </div>
         {% endfor %}
     </div>
 
 </div>
 
-<!-- REALTIME CLIENT-SIDE SEARCH & FILTER CONTROLLER -->
+<!-- ================= JAVASCRIPT: INSTANT SEARCH & FILTER ENGINE ================= -->
 <script>
-// 1. Live Instant Search (Typing Search)
+// 1. Live Real-time Search
 function searchTasksLive() {
-    const query = document.getElementById('taskSearchInput').value.trim().toLowerCase();
-    const items = document.querySelectorAll('.task-feed-item');
+    const q = document.getElementById('taskSearchInput').value.trim().toLowerCase();
+    const items = document.querySelectorAll('.task-mission-item');
 
     items.forEach(item => {
-        const title = item.getAttribute('data-title');
-        const cat = item.getAttribute('data-category');
-        if (title.includes(query) || cat.includes(query)) {
+        const title = item.getAttribute('data-title') || '';
+        const cat = item.getAttribute('data-category') || '';
+        if (!q || title.includes(q) || cat.includes(q)) {
             item.style.display = 'flex';
         } else {
             item.style.display = 'none';
@@ -187,14 +184,14 @@ function searchTasksLive() {
     });
 }
 
-// 2. Filter by Category
+// 2. Category Filter Switcher
 function applyFilter(category, btn) {
     document.querySelectorAll('.filter-pill').forEach(b => {
-        b.className = "filter-pill px-3.5 py-2 rounded-xl transition whitespace-nowrap bg-white border border-slate-200 text-slate-600 hover:bg-slate-50";
+        b.className = "filter-pill px-3 py-1.5 rounded-xl bg-white/[0.03] text-slate-400 border border-white/[0.06] hover:text-white transition whitespace-nowrap";
     });
-    btn.className = "filter-pill px-4 py-2 rounded-xl transition whitespace-nowrap bg-[#E11D48] text-white shadow-sm";
+    btn.className = "filter-pill task-filter-active px-3.5 py-1.5 rounded-xl transition whitespace-nowrap";
 
-    const items = document.querySelectorAll('.task-feed-item');
+    const items = document.querySelectorAll('.task-mission-item');
     items.forEach(item => {
         const itemCat = item.getAttribute('data-category');
         if (category === 'all' || itemCat === category) {
@@ -205,20 +202,20 @@ function applyFilter(category, btn) {
     });
 }
 
-// 3. Sort by Highest Reward (Amount Descending)
+// 3. Sort by Highest Reward (Descending)
 function applySortHighRate(btn) {
     document.querySelectorAll('.filter-pill').forEach(b => {
-        b.className = "filter-pill px-3.5 py-2 rounded-xl transition whitespace-nowrap bg-white border border-slate-200 text-slate-600 hover:bg-slate-50";
+        b.className = "filter-pill px-3 py-1.5 rounded-xl bg-white/[0.03] text-slate-400 border border-white/[0.06] hover:text-white transition whitespace-nowrap";
     });
-    btn.className = "filter-pill px-4 py-2 rounded-xl transition whitespace-nowrap bg-amber-500 text-white shadow-sm";
+    btn.className = "filter-pill task-filter-active px-3.5 py-1.5 rounded-xl transition whitespace-nowrap";
 
     const container = document.getElementById('tasksFeedContainer');
-    const items = Array.from(document.querySelectorAll('.task-feed-item'));
+    const items = Array.from(document.querySelectorAll('.task-mission-item'));
 
     items.sort((a, b) => {
         const amountA = parseFloat(a.getAttribute('data-amount')) || 0;
         const amountB = parseFloat(b.getAttribute('data-amount')) || 0;
-        return amountB - amountA; // Descending
+        return amountB - amountA;
     });
 
     items.forEach(item => {
