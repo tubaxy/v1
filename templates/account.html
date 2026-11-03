@@ -76,7 +76,7 @@
         <p class="text-xs text-slate-400 font-gotham font-light">আপনার ব্যক্তিগত আইডি, বিবরণী ও রেফারেল ব্যবস্থাপনা</p>
     </div>
 
-    <!-- ================= 1. THE "PROFILE ID" CARD WITH DOWNLOAD ICON ================= -->
+    <!-- ================= 1. THE "PROFILE ID" CARD WITH DIRECT DOWNLOAD ICON ================= -->
     <div class="space-y-3">
         <div class="flex items-center justify-between px-1">
             <div class="flex items-center gap-2">
@@ -89,7 +89,7 @@
                     {{ current_tier|upper }} TIER
                 </a>
 
-                <!-- 👉 DOWNLOAD ICON BUTTON (DIRECT 1-CLICK HD DOWNLOAD) 👈 -->
+                <!-- 1-Click HD Download Button -->
                 <button onclick="downloadProfileIdCard()" id="downloadCardBtn" 
                         class="w-8 h-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-sky-400 flex items-center justify-center transition active:scale-95 shadow-sm"
                         title="Profile ID ছবি ডাউনলোড করুন">
@@ -174,7 +174,7 @@
                 <h3 class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-200">Profile Details</h3>
             </div>
             
-            <!-- 👉 EDIT PROFILE BUTTON (OPENS POPUP MODAL) 👈 -->
+            <!-- Open Edit Modal Button -->
             <button onclick="openEditModal()" 
                     class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600/15 hover:bg-blue-600/25 border border-blue-500/30 text-sky-400 text-xs font-gotham font-semibold transition active:scale-95">
                 <i class="fa-solid fa-pen-to-square text-[10px]"></i>
@@ -218,7 +218,7 @@
             </div>
         </div>
 
-        <!-- Details Grid (Read-only Presentation) -->
+        <!-- Details Grid -->
         <div class="grid grid-cols-2 gap-2.5 pt-2 text-xs font-gotham">
             <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                 <span class="text-[9px] text-slate-500 uppercase tracking-wider block mb-0.5">Member Tier</span>
@@ -264,9 +264,56 @@
         </div>
     </div>
 
+    <!-- ================= 4. AT THE END: TELEGRAM CHANNEL & SUPPORT CTA ================= -->
+    <div class="space-y-3 pt-1">
+        
+        <!-- Official Telegram Channel Card -->
+        <a href="https://t.me/micro_earn_x" target="_blank" 
+           class="group fintech-card rounded-[26px] p-4.5 flex items-center justify-between gap-3 border-sky-500/20 bg-sky-500/[0.02] hover:bg-sky-500/[0.06] transition active:scale-[0.99]">
+            <div class="flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-2xl bg-sky-500/15 border border-sky-500/30 text-sky-400 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition shadow-sm">
+                    <i class="fa-brands fa-telegram"></i>
+                </div>
+                <div class="leading-tight">
+                    <div class="flex items-center gap-1.5 mb-0.5">
+                        <span class="text-xs font-bold text-white">অফিসিয়াল টেলিগ্রাম চ্যানেল</span>
+                        <span class="text-[8px] font-gotham bg-sky-400/20 text-sky-300 border border-sky-400/30 px-1.5 py-0.2 rounded-full font-bold">UPDATES</span>
+                    </div>
+                    <p class="text-[10px] text-slate-400">সকল পেমেন্ট প্রুফ ও নতুন কাজের নোটিশ সবার আগে দেখতে জয়েন করুন</p>
+                </div>
+            </div>
+            <div class="shrink-0 text-sky-400 text-xs flex items-center gap-1 font-gotham font-semibold pr-1">
+                <span>জয়েন করুন</span>
+                <i class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-0.5 transition"></i>
+            </div>
+        </a>
+
+        <!-- 24/7 Dedicated Headphone Support Card -->
+        <a href="https://t.me/micro_earnx" target="_blank" 
+           class="group fintech-card rounded-[26px] p-4.5 flex items-center justify-between gap-3 border-blue-500/20 bg-blue-500/[0.02] hover:bg-blue-500/[0.06] transition active:scale-[0.99]">
+            <div class="flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-2xl bg-blue-600/15 border border-blue-500/30 text-sky-400 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition shadow-sm">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <div class="leading-tight">
+                    <div class="flex items-center gap-1.5 mb-0.5">
+                        <span class="text-xs font-bold text-white">২৪/৭ কাস্টমার সাপোর্ট</span>
+                        <span class="text-[8px] font-gotham bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 px-1.5 py-0.2 rounded-full font-bold">LIVE</span>
+                    </div>
+                    <p class="text-[10px] text-slate-400">উইথড্র বা অ্যাকাউন্ট সংক্রান্ত যেকোনো সমস্যায় সরাসরি কথা বলুন</p>
+                </div>
+            </div>
+            <div class="shrink-0 text-sky-400 text-xs flex items-center gap-1 font-gotham font-semibold pr-1">
+                <span>মেসেজ দিন</span>
+                <i class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-0.5 transition"></i>
+            </div>
+        </a>
+
+    </div>
+
 </div>
 
-<!-- ================= 4. POPUP MODAL: EDIT PROFILE FORM ================= -->
+<!-- ================= 5. POPUP MODAL: EDIT PROFILE FORM ================= -->
 <div id="editProfileModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
     <div class="w-full max-w-sm bg-[#0a0e17] border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4 transform scale-95 transition-transform duration-300" id="editModalCard">
         
@@ -330,7 +377,7 @@
     </div>
 </div>
 
-<!-- ================= JAVASCRIPT: MODAL, COPY & 100% RELIABLE DOWNLOAD FIX ================= -->
+<!-- ================= JAVASCRIPT: ERROR-FREE ROUNDRECT & DOWNLOAD ENGINE ================= -->
 <script>
 // 1. Edit Profile Modal Controller
 function openEditModal() {
@@ -372,7 +419,7 @@ function copyProfileRefLink() {
     });
 }
 
-// ================= 4. BUG-FREE MOBILE-SAFE PROFILE ID DOWNLOAD ENGINE =================
+// ================= 4. 100% FIXED BUG-FREE CANVAS EXPORT =================
 function downloadProfileIdCard() {
     const btn = document.getElementById('downloadCardBtn');
     const canvas = document.getElementById('exportCanvas');
@@ -389,13 +436,14 @@ function downloadProfileIdCard() {
 
     const cardX = 140, cardY = 55, cardW = 920, cardH = 565, radius = 32;
 
-    function roundRect(ctx, x, y, w, h, r) {
+    // 👉 100% FIXED ROUNDRECT (EXACT 5 ARGUMENTS ON EVERY ARCTO) 👈
+    function drawPerfectRoundRect(ctx, x, y, w, h, r) {
         ctx.beginPath();
         ctx.moveTo(x + r, y);
         ctx.arcTo(x + w, y, x + w, y + h, r);
         ctx.arcTo(x + w, y + h, x, y + h, r);
         ctx.arcTo(x, y + h, x, y, r);
-        ctx.arcTo(x, y + x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
         ctx.closePath();
     }
 
@@ -413,7 +461,7 @@ function downloadProfileIdCard() {
         gradTop = "#07293d"; gradBottom = "#020a12"; borderColor = "rgba(56, 189, 248, 0.5)"; tierColor = "#38bdf8";
     }
 
-    roundRect(ctx, cardX, cardY, cardW, cardH, radius);
+    drawPerfectRoundRect(ctx, cardX, cardY, cardW, cardH, radius);
     const cardGrad = ctx.createRadialGradient(cardX + cardW/2, cardY, 50, cardX + cardW/2, cardY + cardH, 600);
     cardGrad.addColorStop(0, gradTop);
     cardGrad.addColorStop(1, gradBottom);
@@ -478,7 +526,6 @@ function downloadProfileIdCard() {
     const avatarCenterY = cardY + cardH - 52;
     const avatarRadius = 28;
 
-    // Mobile-Safe Download Handler (Attaches to DOM to bypass mobile browser security restrictions)
     function executeDownload() {
         try {
             canvas.toBlob(function(blob) {
@@ -525,13 +572,11 @@ function downloadProfileIdCard() {
         executeDownload();
     }
 
-    // CORS-Safe Image Loader with Cache Busting
     {% if user.avatar_url %}
         const img = new Image();
         img.crossOrigin = "anonymous";
         let isImageLoaded = false;
         
-        // 1.5s timeout safety
         const timer = setTimeout(() => {
             if (!isImageLoaded) drawFallbackInitials();
         }, 1500);
@@ -565,7 +610,6 @@ function downloadProfileIdCard() {
             drawFallbackInitials();
         };
 
-        // Anti-CORS Cache Bust
         img.src = "{{ user.avatar_url }}" + (("{{ user.avatar_url }}".indexOf('?') > -1 ? '&' : '?') + 'cors=' + Date.now());
     {% else %}
         drawFallbackInitials();
