@@ -19,41 +19,56 @@
         background: rgba(255, 255, 255, 0.05);
     }
 
-    /* Dynamic Profile ID Card Themes */
-    .id-theme-wood {
-        background: radial-gradient(circle at 100% 0%, rgba(180, 83, 9, 0.3) 0%, rgba(15, 23, 42, 0.95) 55%, #04060b 100%);
-        border: 1px solid rgba(180, 83, 9, 0.4);
+    /* ================= ELITE TITANIUM CARD PREVIEW THEMES ================= */
+    .elite-card-base {
+        position: relative;
+        background-color: #05070d;
+        border-radius: 28px;
+        box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.95);
+        overflow: hidden;
+        user-select: none;
+        transition: all 0.3s ease;
     }
-    .badge-id-wood { color: #f59e0b; background: rgba(180, 83, 9, 0.15); border: 1px solid rgba(180, 83, 9, 0.3); }
 
-    .id-theme-bronze {
-        background: radial-gradient(circle at 100% 0%, rgba(234, 88, 12, 0.35) 0%, rgba(20, 15, 30, 0.95) 55%, #04060b 100%);
-        border: 1px solid rgba(234, 88, 12, 0.45);
+    /* 1. Wood / Carbon Obsidian */
+    .elite-theme-wood {
+        background: radial-gradient(circle at 100% 0%, rgba(180, 83, 9, 0.18) 0%, rgba(15, 23, 42, 0.95) 55%, #05070d 100%);
+        border: 1px solid rgba(180, 83, 9, 0.35);
     }
-    .badge-id-bronze { color: #fb923c; background: rgba(234, 88, 12, 0.15); border: 1px solid rgba(234, 88, 12, 0.35); }
+    .badge-elite-wood { color: #d97706; background: rgba(180, 83, 9, 0.12); border: 1px solid rgba(180, 83, 9, 0.3); }
 
-    .id-theme-silver {
-        background: radial-gradient(circle at 100% 0%, rgba(148, 163, 184, 0.3) 0%, rgba(15, 23, 42, 0.95) 55%, #04060b 100%);
-        border: 1px solid rgba(226, 232, 240, 0.4);
+    /* 2. Bronze Cuprum Metal */
+    .elite-theme-bronze {
+        background: radial-gradient(circle at 100% 0%, rgba(234, 88, 12, 0.22) 0%, rgba(18, 15, 28, 0.95) 55%, #05070d 100%);
+        border: 1px solid rgba(234, 88, 12, 0.4);
     }
-    .badge-id-silver { color: #f1f5f9; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); }
+    .badge-elite-bronze { color: #fb923c; background: rgba(234, 88, 12, 0.12); border: 1px solid rgba(234, 88, 12, 0.35); }
 
-    .id-theme-gold {
-        background: radial-gradient(circle at 100% 0%, rgba(245, 158, 11, 0.4) 0%, rgba(25, 20, 35, 0.95) 55%, #04060b 100%);
-        border: 1px solid rgba(245, 158, 11, 0.6);
-        box-shadow: 0 20px 50px -10px rgba(245, 158, 11, 0.25);
+    /* 3. Silver Rhodium / Platinum Metal */
+    .elite-theme-silver {
+        background: radial-gradient(circle at 100% 0%, rgba(203, 213, 225, 0.2) 0%, rgba(15, 23, 42, 0.95) 55%, #05070d 100%);
+        border: 1px solid rgba(226, 232, 240, 0.35);
     }
-    .badge-id-gold { color: #fcd34d; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.5); }
+    .badge-elite-silver { color: #f1f5f9; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.25); }
 
-    .id-theme-diamond {
-        background: radial-gradient(circle at 100% 0%, rgba(6, 182, 212, 0.45) 0%, rgba(10, 20, 45, 0.95) 55%, #04060b 100%);
-        border: 1px solid rgba(56, 189, 248, 0.6);
-        box-shadow: 0 20px 50px -10px rgba(56, 189, 248, 0.3);
+    /* 4. Gold Premier 24K Champagne */
+    .elite-theme-gold {
+        background: radial-gradient(circle at 100% 0%, rgba(245, 158, 11, 0.28) 0%, rgba(26, 20, 10, 0.95) 55%, #05070d 100%);
+        border: 1px solid rgba(245, 158, 11, 0.5);
+        box-shadow: 0 25px 60px -15px rgba(245, 158, 11, 0.22);
     }
-    .badge-id-diamond { color: #38bdf8; background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(56, 189, 248, 0.5); }
+    .badge-elite-gold { color: #fcd34d; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); }
+
+    /* 5. Diamond Reserve Ice Prism */
+    .elite-theme-diamond {
+        background: radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.32) 0%, rgba(8, 20, 40, 0.95) 55%, #05070d 100%);
+        border: 1px solid rgba(56, 189, 248, 0.55);
+        box-shadow: 0 25px 60px -15px rgba(56, 189, 248, 0.25);
+    }
+    .badge-elite-diamond { color: #38bdf8; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.45); }
 </style>
 
-<div class="max-w-xl mx-auto space-y-5 pb-24">
+<div class="max-w-xl mx-auto space-y-6 pb-24">
 
     <!-- Top Action Row -->
     <div class="flex items-center justify-between px-1">
@@ -62,77 +77,104 @@
             <span>ড্যাশবোর্ড</span>
         </a>
 
-        <span class="text-[10px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
-            <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
-            Profile Center
-        </span>
+        <div class="flex items-center gap-2">
+            <span class="text-[10px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+                Digital Asset Card
+            </span>
+        </div>
     </div>
 
     <!-- Title Section -->
     <div class="text-center py-1 select-none space-y-1">
         <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
-            Profile <span class="text-slate-400 font-light italic lowercase text-xl">identity</span>
+            Elite <span class="text-slate-400 font-light italic lowercase text-xl">Identity</span>
         </h1>
-        <p class="text-xs text-slate-400 font-gotham font-light">আপনার ব্যক্তিগত আইডি, বিবরণী ও রেফারেল ব্যবস্থাপনা</p>
+        <p class="text-xs text-slate-400 font-gotham font-light">আপনার এক্সক্লুসিভ ডিজিটাল প্রাইভেট মেম্বারশিপ কার্ড</p>
     </div>
 
-    <!-- ================= 1. THE "PROFILE ID" CARD WITH DIRECT DOWNLOAD ICON ================= -->
+    <!-- ================= 1. THE REDESIGNED ELITE TITANIUM PROFILE ID CARD ================= -->
     <div class="space-y-3">
         <div class="flex items-center justify-between px-1">
             <div class="flex items-center gap-2">
-                <i class="fa-solid fa-id-card text-sky-400 text-xs"></i>
-                <h3 class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-300">Profile ID Card</h3>
+                <i class="fa-solid fa-gem text-sky-400 text-xs"></i>
+                <h3 class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-300">Titanium Credential</h3>
             </div>
             
             <div class="flex items-center gap-2">
-                <a href="/upgrade" class="badge-id-{{ current_tier }} px-2.5 py-0.5 rounded-full font-gotham text-[10px] font-bold uppercase tracking-wider transition hover:scale-105">
-                    {{ current_tier|upper }} TIER
+                <a href="/upgrade" class="badge-elite-{{ current_tier }} px-2.5 py-0.5 rounded-full font-gotham text-[10px] font-bold uppercase tracking-wider transition hover:scale-105">
+                    {% if current_tier == 'diamond' %}DIAMOND RESERVE
+                    {% elif current_tier == 'gold' %}GOLD PREMIER
+                    {% elif current_tier == 'silver' %}SILVER EXECUTIVE
+                    {% elif current_tier == 'bronze' %}BRONZE ACCESS
+                    {% else %}STANDARD ACCESS{% endif %}
                 </a>
 
                 <!-- 1-Click HD Download Button -->
                 <button onclick="downloadProfileIdCard()" id="downloadCardBtn" 
                         class="w-8 h-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-sky-400 flex items-center justify-center transition active:scale-95 shadow-sm"
-                        title="Profile ID ছবি ডাউনলোড করুন">
+                        title="কার্ডটি HD ছবি হিসেবে ডাউনলোড করুন">
                     <i class="fa-solid fa-download text-xs"></i>
                 </button>
             </div>
         </div>
 
-        <!-- 16:9 Aspect Ratio Profile ID Card Preview -->
-        <div class="id-theme-{{ current_tier }} relative w-full aspect-[16/9] rounded-[28px] p-5 sm:p-6 flex flex-col justify-between overflow-hidden shadow-2xl select-none transition-all duration-300">
+        <!-- 16:9 Aspect Ratio Elite Card Preview -->
+        <div class="elite-card-base elite-theme-{{ current_tier }} w-full aspect-[16/9] p-5 sm:p-6 flex flex-col justify-between select-none">
             
-            <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-transparent pointer-events-none"></div>
+            <!-- Metallic Sheen Glass Reflection -->
+            <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-transparent pointer-events-none"></div>
 
-            <!-- Top Row: Brand Hologram Chip + ID -->
+            <!-- Top Row: Brand & NFC Contactless Wave -->
             <div class="flex items-center justify-between relative z-10">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-6 rounded-md bg-gradient-to-tr from-amber-300/40 via-amber-200/80 to-yellow-500/40 border border-amber-300/60 shadow-inner flex items-center justify-center">
-                        <div class="w-4 h-3 border border-amber-800/40 rounded-xs"></div>
-                    </div>
-                    <span class="font-classic-seasons font-normal text-white text-base sm:text-lg tracking-[0.08em] uppercase">
-                        TASK<span class="italic font-light lowercase text-slate-300 text-sm">wallet</span>
+                <div class="leading-tight">
+                    <span class="font-classic-seasons font-normal text-white text-lg sm:text-xl tracking-[0.08em] uppercase block">
+                        TASK<span class="italic font-light lowercase text-slate-400 text-base">wallet</span>
+                    </span>
+                    <span class="font-gotham text-[8px] sm:text-[9px] tracking-[0.2em] uppercase text-slate-400 block mt-0.5">
+                        Private Client • Asset Passport
                     </span>
                 </div>
 
-                <span class="font-gotham text-[10px] sm:text-xs font-bold text-slate-400 tracking-wider">
-                    ID: #{{ "%05d"|format(user.id) }}
-                </span>
-            </div>
-
-            <!-- Center: Balance -->
-            <div class="relative z-10 my-auto py-1">
-                <span class="font-gotham text-[10px] text-slate-400 uppercase tracking-widest block mb-0.5">
-                    Account Balance
-                </span>
-                <div class="font-gotham font-black text-3xl sm:text-5xl text-white tracking-tight tabular-nums drop-shadow-md">
-                    ৳ {{ "%.2f"|format(user.balance) }}
+                <!-- NFC Contactless Symbol & Security Chip -->
+                <div class="flex items-center gap-3">
+                    <div class="text-slate-400 opacity-60 text-base" title="Contactless">
+                        <i class="fa-solid fa-wifi rotate-90"></i>
+                    </div>
+                    <span class="font-mono text-[10px] sm:text-xs font-semibold text-slate-400 tracking-wider">
+                        #{{ "%05d"|format(user.id) }}
+                    </span>
                 </div>
             </div>
 
-            <!-- Bottom: User Info & Status -->
-            <div class="flex items-center justify-between relative z-10 pt-2 border-t border-white/[0.08]">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-800 border-2 border-white/20 overflow-hidden shadow-inner shrink-0 flex items-center justify-center text-xs font-bold text-white">
+            <!-- Middle Row: Realistic Gold EMV Microchip & Card Number -->
+            <div class="relative z-10 my-auto flex items-center justify-between pt-1">
+                <!-- 3D Luxury Gold/Palladium EMV Chip -->
+                <div class="w-11 h-8 sm:w-12 sm:h-9 rounded-lg bg-gradient-to-br from-amber-300 via-yellow-500 to-amber-700 p-0.5 shadow-md border border-amber-300/40 shrink-0">
+                    <div class="w-full h-full border border-black/30 rounded-md relative flex items-center justify-center">
+                        <div class="w-full h-px bg-black/30 absolute"></div>
+                        <div class="h-full w-px bg-black/30 absolute"></div>
+                        <div class="w-4 h-4 rounded-full border border-black/30 bg-amber-400/80"></div>
+                    </div>
+                </div>
+
+                <!-- Elegant Asset Balance / Liquid Capital -->
+                <div class="text-right">
+                    <span class="font-gotham text-[9px] uppercase tracking-widest text-slate-400 block mb-0.5">
+                        Liquid Capital
+                    </span>
+                    <div class="font-gotham font-black text-2xl sm:text-4xl text-white tracking-tight tabular-nums">
+                        ৳ {{ "%.2f"|format(user.balance) }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Row: Cardholder Name, Masked ID & Status -->
+            <div class="relative z-10 pt-2 border-t border-white/[0.08] flex items-end justify-between">
+                
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <!-- Medallion Photo Frame -->
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-900 border border-white/30 overflow-hidden shadow-md shrink-0 flex items-center justify-center text-xs font-bold text-white">
                         {% if user.avatar_url %}
                             <img src="{{ user.avatar_url }}" alt="{{ user.name }}" class="w-full h-full object-cover">
                         {% else %}
@@ -140,28 +182,30 @@
                         {% endif %}
                     </div>
                     
-                    <div class="leading-tight">
-                        <span class="font-classic-seasons text-xs sm:text-sm text-white font-normal uppercase tracking-wide block truncate max-w-[150px] sm:max-w-[200px]">
+                    <div class="leading-tight min-w-0">
+                        <span class="font-gotham text-[8px] uppercase tracking-widest text-slate-400 block">CARDHOLDER</span>
+                        <span class="font-classic-seasons text-xs sm:text-sm text-white font-normal uppercase tracking-wider block truncate max-w-[140px] sm:max-w-[200px]">
                             {{ user.name }}
                         </span>
-                        <span class="font-mono text-[9px] sm:text-[10px] text-slate-400">
-                            @{{ user.referral_code }}
+                        <span class="font-mono text-[9px] text-slate-400 block mt-0.5">
+                            TW •••• •••• {{ "%04d"|format(user.id) }}
                         </span>
                     </div>
                 </div>
 
-                <div class="text-right">
-                    <span class="text-[8px] font-gotham text-slate-500 block uppercase tracking-wider">TIER STATUS</span>
+                <div class="text-right shrink-0">
+                    <span class="font-gotham text-[8px] text-slate-400 uppercase tracking-widest block">SECURITY STATUS</span>
                     <span class="font-gotham text-[10px] font-bold text-emerald-400 flex items-center justify-end gap-1">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                        {{ current_tier|upper }}
+                        VERIFIED
                     </span>
                 </div>
+
             </div>
 
         </div>
 
-        <!-- Hidden Canvas For HD Export -->
+        <!-- Hidden Canvas For 1200x675 HD Export -->
         <canvas id="exportCanvas" width="1200" height="675" class="hidden"></canvas>
     </div>
 
@@ -170,8 +214,8 @@
         
         <div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
             <div class="flex items-center gap-2">
-                <i class="fa-solid fa-user-gear text-sky-400 text-xs"></i>
-                <h3 class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-200">Profile Details</h3>
+                <i class="fa-solid fa-user-shield text-sky-400 text-xs"></i>
+                <h3 class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-200">Account Credentials</h3>
             </div>
             
             <!-- Open Edit Modal Button -->
@@ -221,7 +265,7 @@
         <!-- Details Grid -->
         <div class="grid grid-cols-2 gap-2.5 pt-2 text-xs font-gotham">
             <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                <span class="text-[9px] text-slate-500 uppercase tracking-wider block mb-0.5">Member Tier</span>
+                <span class="text-[9px] text-slate-500 uppercase tracking-wider block mb-0.5">Membership Tier</span>
                 <span class="font-semibold text-slate-200 uppercase">{{ current_tier }}</span>
             </div>
             <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
@@ -359,7 +403,7 @@
 
             <!-- Email (Readonly) -->
             <div class="space-y-1">
-                <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-500 ml-1">ইমেইল (অপরিবর্তনযোগ্য)</label>
+                <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">ইমেইল (অপরিবর্তনযোগ্য)</label>
                 <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 opacity-60 cursor-not-allowed">
                     <i class="fa-solid fa-lock text-slate-500 text-xs w-4 text-center"></i>
                     <input type="email" value="{{ user.email }}" readonly 
@@ -377,7 +421,7 @@
     </div>
 </div>
 
-<!-- ================= JAVASCRIPT: ERROR-FREE ROUNDRECT & DOWNLOAD ENGINE ================= -->
+<!-- ================= JAVASCRIPT: LUXURY TITANIUM CANVAS 2D EXPORTER ================= -->
 <script>
 // 1. Edit Profile Modal Controller
 function openEditModal() {
@@ -419,7 +463,7 @@ function copyProfileRefLink() {
     });
 }
 
-// ================= 4. 100% FIXED BUG-FREE CANVAS EXPORT =================
+// ================= 4. LUXURY TITANIUM CARD EXPORTER (1200x675 HD) =================
 function downloadProfileIdCard() {
     const btn = document.getElementById('downloadCardBtn');
     const canvas = document.getElementById('exportCanvas');
@@ -430,101 +474,162 @@ function downloadProfileIdCard() {
     const W = 1200;
     const H = 675;
 
-    // Dark Background
-    ctx.fillStyle = "#04060b";
+    // 1. Deep Obsidian Matte Outer Canvas
+    ctx.fillStyle = "#020408";
     ctx.fillRect(0, 0, W, H);
 
-    const cardX = 140, cardY = 55, cardW = 920, cardH = 565, radius = 32;
+    const cardX = 140, cardY = 55, cardW = 920, cardH = 565, radius = 34;
 
-    // 👉 100% FIXED ROUNDRECT (EXACT 5 ARGUMENTS ON EVERY ARCTO) 👈
-    function drawPerfectRoundRect(ctx, x, y, w, h, r) {
-        ctx.beginPath();
-        ctx.moveTo(x + r, y);
-        ctx.arcTo(x + w, y, x + w, y + h, r);
-        ctx.arcTo(x + w, y + h, x, y + h, r);
-        ctx.arcTo(x, y + h, x, y, r);
-        ctx.arcTo(x, y, x + w, y, r);
-        ctx.closePath();
+    function drawPerfectRoundRect(c, x, y, w, h, r) {
+        c.beginPath();
+        c.moveTo(x + r, y);
+        c.arcTo(x + w, y, x + w, y + h, r);
+        c.arcTo(x + w, y + h, x, y + h, r);
+        c.arcTo(x, y + h, x, y, r);
+        c.arcTo(x, y, x + w, y, r);
+        c.closePath();
     }
 
-    // Dynamic Tier Color Palette
+    // Tier Elite Configuration
     const tier = "{{ current_tier }}";
-    let gradTop = "#191e2b", gradBottom = "#0a0c12", borderColor = "rgba(255, 255, 255, 0.12)", tierColor = "#38bdf8";
+    let accentColor = "#38bdf8", secondaryColor = "#0284c7", badgeLabel = "STANDARD ACCESS", cardBorder = "rgba(255, 255, 255, 0.15)";
+    let bgGradCenter = "#0d1424";
 
-    if (tier === 'bronze') {
-        gradTop = "#33160a"; gradBottom = "#0c0806"; borderColor = "rgba(234, 88, 12, 0.4)"; tierColor = "#fb923c";
-    } else if (tier === 'silver') {
-        gradTop = "#242933"; gradBottom = "#0c0e12"; borderColor = "rgba(226, 232, 240, 0.4)"; tierColor = "#f1f5f9";
+    if (tier === 'diamond') {
+        accentColor = "#38bdf8"; secondaryColor = "#06b6d4"; badgeLabel = "DIAMOND RESERVE • VIP";
+        cardBorder = "rgba(56, 189, 248, 0.55)"; bgGradCenter = "#071e33";
     } else if (tier === 'gold') {
-        gradTop = "#382806"; gradBottom = "#0e0a02"; borderColor = "rgba(245, 158, 11, 0.5)"; tierColor = "#fcd34d";
-    } else if (tier === 'diamond') {
-        gradTop = "#07293d"; gradBottom = "#020a12"; borderColor = "rgba(56, 189, 248, 0.5)"; tierColor = "#38bdf8";
+        accentColor = "#fbbf24"; secondaryColor = "#d97706"; badgeLabel = "GOLD PREMIER • VIP";
+        cardBorder = "rgba(251, 191, 36, 0.55)"; bgGradCenter = "#261a06";
+    } else if (tier === 'silver') {
+        accentColor = "#f1f5f9"; secondaryColor = "#94a3b8"; badgeLabel = "SILVER EXECUTIVE";
+        cardBorder = "rgba(226, 232, 240, 0.45)"; bgGradCenter = "#141a24";
+    } else if (tier === 'bronze') {
+        accentColor = "#fb923c"; secondaryColor = "#c2410c"; badgeLabel = "BRONZE ACCESS";
+        cardBorder = "rgba(251, 146, 60, 0.4)"; bgGradCenter = "#211108";
     }
 
+    // 2. Ambient Tier Spotlight Behind Card
+    const ambientGlow = ctx.createRadialGradient(cardX + cardW - 100, cardY + 50, 20, cardX + cardW - 100, cardY + 50, 450);
+    ambientGlow.addColorStop(0, accentColor + "33");
+    ambientGlow.addColorStop(1, "transparent");
+    ctx.fillStyle = ambientGlow;
+    ctx.fillRect(cardX - 50, cardY - 50, cardW + 100, cardH + 100);
+
+    // 3. Card Base Body (Brushed Titanium Glass)
     drawPerfectRoundRect(ctx, cardX, cardY, cardW, cardH, radius);
-    const cardGrad = ctx.createRadialGradient(cardX + cardW/2, cardY, 50, cardX + cardW/2, cardY + cardH, 600);
-    cardGrad.addColorStop(0, gradTop);
-    cardGrad.addColorStop(1, gradBottom);
+    const cardGrad = ctx.createRadialGradient(cardX + cardW * 0.8, cardY + 40, 40, cardX + cardW * 0.4, cardY + cardH, 650);
+    cardGrad.addColorStop(0, bgGradCenter);
+    cardGrad.addColorStop(0.55, "#060912");
+    cardGrad.addColorStop(1, "#030408");
     ctx.fillStyle = cardGrad;
     ctx.fill();
 
     ctx.lineWidth = 2.5;
-    ctx.strokeStyle = borderColor;
+    ctx.strokeStyle = cardBorder;
     ctx.stroke();
 
-    // Top Header
+    // 4. Subtle Guilloché Lattice Security Lines
+    ctx.save();
+    drawPerfectRoundRect(ctx, cardX, cardY, cardW, cardH, radius);
+    ctx.clip();
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.02)";
+    ctx.lineWidth = 1;
+    for (let i = -cardH; i < cardW + cardH; i += 28) {
+        ctx.beginPath();
+        ctx.moveTo(cardX + i, cardY);
+        ctx.lineTo(cardX + i + cardH, cardY + cardH);
+        ctx.stroke();
+    }
+    ctx.restore();
+
+    // 5. TOP ROW: Brand Identity & NFC Wave
     ctx.textAlign = "left";
-    ctx.font = "normal 30px 'Georgia', serif";
+    ctx.font = "normal 34px 'Georgia', serif";
     ctx.fillStyle = "#ffffff";
-    ctx.fillText("TASKWALLET PROFILE ID", cardX + 60, cardY + 70);
+    ctx.fillText("TASKWALLET", cardX + 65, cardY + 75);
 
+    ctx.font = "bold 11px 'Arial'";
+    ctx.fillStyle = "#94a3b8";
+    ctx.fillText("PRIVATE WEALTH MANAGEMENT • DIGITAL CREDENTIAL", cardX + 68, cardY + 102);
+
+    // Top Right NFC Symbol & Member ID
     ctx.textAlign = "right";
-    ctx.font = "bold 18px 'Courier New', monospace";
-    ctx.fillStyle = "#94a3b8";
-    ctx.fillText("MEMBER #{{ '%05d'|format(user.id) }}", cardX + cardW - 60, cardY + 70);
+    ctx.font = "bold 15px 'Courier New', monospace";
+    ctx.fillStyle = "#64748b";
+    ctx.fillText("))) NFC  #{{ '%05d'|format(user.id) }}", cardX + cardW - 65, cardY + 75);
 
-    // Center Balance
-    ctx.textAlign = "center";
-    ctx.font = "bold 16px 'Arial'";
-    ctx.fillStyle = "#94a3b8";
-    ctx.fillText("ACCOUNT WALLET BALANCE", cardX + cardW / 2, cardY + 230);
+    // Tier Ribbon
+    ctx.font = "bold 13px 'Arial'";
+    ctx.fillStyle = accentColor;
+    ctx.fillText(badgeLabel, cardX + cardW - 65, cardY + 102);
 
-    ctx.font = "900 76px 'Arial'";
-    ctx.fillStyle = "#ffffff";
-    ctx.fillText("৳ {{ '%.2f'|format(user.balance) }}", cardX + cardW / 2, cardY + 315);
+    // 6. MIDDLE ROW: 3D Gold EMV Microchip
+    const chipX = cardX + 65, chipY = cardY + 160, chipW = 80, chipH = 58;
+    const chipGrad = ctx.createLinearGradient(chipX, chipY, chipX + chipW, chipY + chipH);
+    chipGrad.addColorStop(0, "#fef08a");
+    chipGrad.addColorStop(0.4, "#eab308");
+    chipGrad.addColorStop(1, "#854d0e");
+    ctx.fillStyle = chipGrad;
+    drawPerfectRoundRect(ctx, chipX, chipY, chipW, chipH, 8);
+    ctx.fill();
 
-    // Bottom Divider
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+    ctx.strokeStyle = "rgba(0, 0, 0, 0.35)";
     ctx.lineWidth = 1.5;
     ctx.beginPath();
-    ctx.moveTo(cardX + 50, cardY + cardH - 105);
-    ctx.lineTo(cardX + cardW - 50, cardY + cardH - 105);
+    ctx.moveTo(chipX + chipW / 2, chipY); ctx.lineTo(chipX + chipW / 2, chipY + chipH);
+    ctx.moveTo(chipX, chipY + chipH / 2); ctx.lineTo(chipX + chipW, chipY + chipH / 2);
+    ctx.arc(chipX + chipW / 2, chipY + chipH / 2, 12, 0, Math.PI * 2);
     ctx.stroke();
 
-    // Tier Status
+    // Right Side: Liquid Capital / Balance Display
     ctx.textAlign = "right";
     ctx.font = "bold 13px 'Arial'";
     ctx.fillStyle = "#64748b";
-    ctx.fillText("TIER STATUS", cardX + cardW - 60, cardY + cardH - 65);
+    ctx.fillText("LIQUID ASSETS / CAPACITY", cardX + cardW - 65, cardY + 195);
 
-    ctx.font = "bold 18px 'Arial'";
-    ctx.fillStyle = tierColor;
-    ctx.fillText("● {{ current_tier|upper }} VIP", cardX + cardW - 60, cardY + cardH - 40);
-
-    // Name & Handle
-    ctx.textAlign = "left";
-    ctx.font = "bold 22px 'Arial'";
+    ctx.font = "900 66px 'Arial'";
     ctx.fillStyle = "#ffffff";
-    ctx.fillText("{{ user.name }}", cardX + 130, cardY + cardH - 62);
+    ctx.fillText("৳ {{ '%.2f'|format(user.balance) }}", cardX + cardW - 65, cardY + 265);
 
-    ctx.font = "bold 16px 'Courier New', monospace";
-    ctx.fillStyle = "#94a3b8";
-    ctx.fillText("@{{ user.referral_code }}", cardX + 130, cardY + cardH - 38);
+    // 7. CARD NUMBER FORMAT: TW •••• •••• #0001
+    ctx.textAlign = "left";
+    ctx.font = "bold 24px 'Courier New', monospace";
+    ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+    ctx.fillText("TW •••• •••• •••• {{ '%04d'|format(user.id) }}", cardX + 65, cardY + 360);
 
-    // Avatar Setup
-    const avatarCenterX = cardX + 80;
+    // 8. BOTTOM ROW: Divider Line
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(cardX + 50, cardY + cardH - 110);
+    ctx.lineTo(cardX + cardW - 50, cardY + cardH - 110);
+    ctx.stroke();
+
+    // Bottom Right Security Seal
+    ctx.textAlign = "right";
+    ctx.font = "bold 11px 'Arial'";
+    ctx.fillStyle = "#64748b";
+    ctx.fillText("AUTHENTICATION SEAL", cardX + cardW - 65, cardY + cardH - 68);
+
+    ctx.font = "bold 16px 'Arial'";
+    ctx.fillStyle = "#10b981";
+    ctx.fillText("● VERIFIED ELITE", cardX + cardW - 65, cardY + cardH - 42);
+
+    // Bottom Left: Cardholder Name & Handle
+    ctx.textAlign = "left";
+    ctx.font = "bold 11px 'Arial'";
+    ctx.fillStyle = "#64748b";
+    ctx.fillText("AUTHORIZED CARDHOLDER", cardX + 140, cardY + cardH - 68);
+
+    ctx.font = "bold 24px 'Georgia', serif";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("{{ user.name|upper }}", cardX + 140, cardY + cardH - 40);
+
+    // 9. Medallion Avatar Frame
+    const avatarCenterX = cardX + 90;
     const avatarCenterY = cardY + cardH - 52;
-    const avatarRadius = 28;
+    const avatarRadius = 32;
 
     function executeDownload() {
         try {
@@ -537,7 +642,7 @@ function downloadProfileIdCard() {
                 }
 
                 const a = document.createElement('a');
-                a.download = `TaskWallet_Profile_ID_{{ user.name }}.png`;
+                a.download = `TaskWallet_Elite_Credential_{{ user.name }}.png`;
                 a.href = downloadUrl;
                 document.body.appendChild(a);
                 a.click();
@@ -548,7 +653,7 @@ function downloadProfileIdCard() {
                 }
 
                 btn.disabled = false;
-                alert("✓ Profile ID কার্ডটি সফলভাবে ডাউনলোড হয়েছে!");
+                alert("✓ আপনার Elite Titanium ID সফলভাবে ডাউনলোড হয়েছে!");
             }, "image/png");
         } catch(err) {
             btn.disabled = false;
@@ -559,16 +664,16 @@ function downloadProfileIdCard() {
     function drawFallbackInitials() {
         ctx.beginPath();
         ctx.arc(avatarCenterX, avatarCenterY, avatarRadius, 0, Math.PI * 2);
-        ctx.fillStyle = "#1e293b";
+        ctx.fillStyle = "#0a0f1d";
         ctx.fill();
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.3)";
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = accentColor;
+        ctx.lineWidth = 2.5;
         ctx.stroke();
 
         ctx.fillStyle = "#ffffff";
-        ctx.font = "900 24px 'Arial'";
+        ctx.font = "bold 26px 'Arial'";
         ctx.textAlign = "center";
-        ctx.fillText("{{ user.name[:1] }}", avatarCenterX, avatarCenterY + 8);
+        ctx.fillText("{{ user.name[:1] }}", avatarCenterX, avatarCenterY + 9);
         executeDownload();
     }
 
@@ -594,8 +699,8 @@ function downloadProfileIdCard() {
 
                 ctx.beginPath();
                 ctx.arc(avatarCenterX, avatarCenterY, avatarRadius, 0, Math.PI * 2);
-                ctx.strokeStyle = borderColor;
-                ctx.lineWidth = 2;
+                ctx.strokeStyle = accentColor;
+                ctx.lineWidth = 2.5;
                 ctx.stroke();
 
                 executeDownload();
