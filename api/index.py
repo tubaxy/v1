@@ -1602,7 +1602,6 @@ def dashboard():
 
 @app.route('/tasks')
 @login_required
-@kyc_required
 def tasks():
     sb = get_supabase()
     user_id = session['user_id']
@@ -1737,7 +1736,6 @@ def scratch_page():
     
 @app.route('/withdraw', methods=['GET', 'POST'])
 @login_required
-@kyc_required
 def withdraw():
     sb = get_supabase()
     user_id = session['user_id']
