@@ -126,18 +126,6 @@ def kyc_required(f):
         user = sb.table('users').select('email').eq('id', user_id).single().execute().data
         if user and user.get('email') == 'admin@gmail.com':
             return f(*args, **kwargs)
-
-        kyc_res = sb.table('kyc_requests').select('status').eq('user_id', user_id).order('id', desc=True).limit(1).execute().data
-        
-        is_approved = False
-        if kyc_res and kyc_res[0].get('status') == 'approved':
-            is_approved = True
-
-        if not is_approved:
-            flash("⚠️ এই পেজে প্রবেশ করতে ও কাজ করতে হলে প্রথমে এককালীন ৫০৳ ফি দিয়ে কেওয়াইসি (KYC) ভেরিফিকেশন সম্পন্ন করতে হবে!", "warning")
-            return redirect(url_for('kyc_page'))
-
-        return f(*args, **kwargs)
     return decorated_function
 
 def login_required(f):
