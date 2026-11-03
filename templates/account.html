@@ -2,7 +2,6 @@
 {% block content %}
 {% set current_tier = user.tier|lower if user.tier else 'wood' %}
 
-
 <style>
     .fintech-card {
         background: rgba(255, 255, 255, 0.025);
@@ -285,4 +284,292 @@
             <!-- Avatar Upload Inside Modal -->
             <div class="flex flex-col items-center text-center">
                 <div class="relative group cursor-pointer">
-                    <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-white/20 shadow-xl bg-slate-900 flex
+                    <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-white/20 shadow-xl bg-slate-900 flex items-center justify-center">
+                        {% if user.avatar_url %}
+                            <img id="avatarModalPreview" src="{{ user.avatar_url }}" alt="{{ user.name }}" class="w-full h-full object-cover">
+                        {% else %}
+                            <img id="avatarModalPreview" src="https://ui-avatars.com/api/?name={{ user.name }}&background=0f172a&color=fff&size=128" alt="{{ user.name }}" class="w-full h-full object-cover">
+                        {% endif %}
+                    </div>
+                    
+                    <label for="avatarInput" class="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center text-[10px] shadow-md cursor-pointer transition active:scale-95 border-2 border-[#0a0e17]" title="ছবি বাছুন">
+                        <i class="fa-solid fa-camera"></i>
+                    </label>
+                    <input type="file" name="avatar" id="avatarInput" accept="image/*" class="hidden" onchange="previewAvatarImage(this)">
+                </div>
+                <span class="text-[10px] text-slate-400 mt-2">ছবি পরিবর্তনের জন্য ক্যামেরায় ক্লিক করুন</span>
+            </div>
+
+            <!-- Full Name Input -->
+            <div class="space-y-1">
+                <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">আপনার পূর্ণ নাম</label>
+                <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5">
+                    <i class="fa-solid fa-user text-slate-500 text-xs w-4 text-center"></i>
+                    <input type="text" name="name" value="{{ user.name }}" required 
+                           class="w-full bg-transparent text-xs font-gotham text-white focus:outline-none placeholder-slate-600">
+                </div>
+            </div>
+
+            <!-- Email (Readonly) -->
+            <div class="space-y-1">
+                <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-500 ml-1">ইমেইল (অপরিবর্তনযোগ্য)</label>
+                <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 opacity-60 cursor-not-allowed">
+                    <i class="fa-solid fa-lock text-slate-500 text-xs w-4 text-center"></i>
+                    <input type="email" value="{{ user.email }}" readonly 
+                           class="w-full bg-transparent text-xs font-mono text-slate-400 focus:outline-none cursor-not-allowed">
+                </div>
+            </div>
+
+            <button type="submit" 
+                    class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-3.5 px-4 rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-floppy-disk text-xs"></i>
+                <span>পরিবর্তন সংরক্ষণ করুন</span>
+            </button>
+        </form>
+
+    </div>
+</div>
+
+<!-- ================= JAVASCRIPT: MODAL, COPY & 100% RELIABLE DOWNLOAD FIX ================= -->
+<script>
+// 1. Edit Profile Modal Controller
+function openEditModal() {
+    const modal = document.getElementById('editProfileModal');
+    const card = document.getElementById('editModalCard');
+    modal.classList.remove('opacity-0', 'pointer-events-none');
+    modal.classList.add('opacity-100');
+    card.classList.remove('scale-95');
+    card.classList.add('scale-100');
+}
+
+function closeEditModal() {
+    const modal = document.getElementById('editProfileModal');
+    const card = document.getElementById('editModalCard');
+    modal.classList.add('opacity-0', 'pointer-events-none');
+    modal.classList.remove('opacity-100');
+    card.classList.add('scale-95');
+    card.classList.remove('scale-100');
+}
+
+// 2. Avatar Preview in Modal
+function previewAvatarImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('avatarModalPreview').src = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// 3. Copy Referral Link
+function copyProfileRefLink() {
+    const input = document.getElementById('profileRefLink');
+    input.select();
+    input.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(input.value).then(() => {
+        alert("🎉 রেফারেল লিংক কপি হয়েছে!");
+    });
+}
+
+// ================= 4. BUG-FREE MOBILE-SAFE PROFILE ID DOWNLOAD ENGINE =================
+function downloadProfileIdCard() {
+    const btn = document.getElementById('downloadCardBtn');
+    const canvas = document.getElementById('exportCanvas');
+    const ctx = canvas.getContext('2d');
+
+    btn.disabled = true;
+
+    const W = 1200;
+    const H = 675;
+
+    // Dark Background
+    ctx.fillStyle = "#04060b";
+    ctx.fillRect(0, 0, W, H);
+
+    const cardX = 140, cardY = 55, cardW = 920, cardH = 565, radius = 32;
+
+    function roundRect(ctx, x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y + x, y, r);
+        ctx.closePath();
+    }
+
+    // Dynamic Tier Color Palette
+    const tier = "{{ current_tier }}";
+    let gradTop = "#191e2b", gradBottom = "#0a0c12", borderColor = "rgba(255, 255, 255, 0.12)", tierColor = "#38bdf8";
+
+    if (tier === 'bronze') {
+        gradTop = "#33160a"; gradBottom = "#0c0806"; borderColor = "rgba(234, 88, 12, 0.4)"; tierColor = "#fb923c";
+    } else if (tier === 'silver') {
+        gradTop = "#242933"; gradBottom = "#0c0e12"; borderColor = "rgba(226, 232, 240, 0.4)"; tierColor = "#f1f5f9";
+    } else if (tier === 'gold') {
+        gradTop = "#382806"; gradBottom = "#0e0a02"; borderColor = "rgba(245, 158, 11, 0.5)"; tierColor = "#fcd34d";
+    } else if (tier === 'diamond') {
+        gradTop = "#07293d"; gradBottom = "#020a12"; borderColor = "rgba(56, 189, 248, 0.5)"; tierColor = "#38bdf8";
+    }
+
+    roundRect(ctx, cardX, cardY, cardW, cardH, radius);
+    const cardGrad = ctx.createRadialGradient(cardX + cardW/2, cardY, 50, cardX + cardW/2, cardY + cardH, 600);
+    cardGrad.addColorStop(0, gradTop);
+    cardGrad.addColorStop(1, gradBottom);
+    ctx.fillStyle = cardGrad;
+    ctx.fill();
+
+    ctx.lineWidth = 2.5;
+    ctx.strokeStyle = borderColor;
+    ctx.stroke();
+
+    // Top Header
+    ctx.textAlign = "left";
+    ctx.font = "normal 30px 'Georgia', serif";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("TASKWALLET PROFILE ID", cardX + 60, cardY + 70);
+
+    ctx.textAlign = "right";
+    ctx.font = "bold 18px 'Courier New', monospace";
+    ctx.fillStyle = "#94a3b8";
+    ctx.fillText("MEMBER #{{ '%05d'|format(user.id) }}", cardX + cardW - 60, cardY + 70);
+
+    // Center Balance
+    ctx.textAlign = "center";
+    ctx.font = "bold 16px 'Arial'";
+    ctx.fillStyle = "#94a3b8";
+    ctx.fillText("ACCOUNT WALLET BALANCE", cardX + cardW / 2, cardY + 230);
+
+    ctx.font = "900 76px 'Arial'";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("৳ {{ '%.2f'|format(user.balance) }}", cardX + cardW / 2, cardY + 315);
+
+    // Bottom Divider
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(cardX + 50, cardY + cardH - 105);
+    ctx.lineTo(cardX + cardW - 50, cardY + cardH - 105);
+    ctx.stroke();
+
+    // Tier Status
+    ctx.textAlign = "right";
+    ctx.font = "bold 13px 'Arial'";
+    ctx.fillStyle = "#64748b";
+    ctx.fillText("TIER STATUS", cardX + cardW - 60, cardY + cardH - 65);
+
+    ctx.font = "bold 18px 'Arial'";
+    ctx.fillStyle = tierColor;
+    ctx.fillText("● {{ current_tier|upper }} VIP", cardX + cardW - 60, cardY + cardH - 40);
+
+    // Name & Handle
+    ctx.textAlign = "left";
+    ctx.font = "bold 22px 'Arial'";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("{{ user.name }}", cardX + 130, cardY + cardH - 62);
+
+    ctx.font = "bold 16px 'Courier New', monospace";
+    ctx.fillStyle = "#94a3b8";
+    ctx.fillText("@{{ user.referral_code }}", cardX + 130, cardY + cardH - 38);
+
+    // Avatar Setup
+    const avatarCenterX = cardX + 80;
+    const avatarCenterY = cardY + cardH - 52;
+    const avatarRadius = 28;
+
+    // Mobile-Safe Download Handler (Attaches to DOM to bypass mobile browser security restrictions)
+    function executeDownload() {
+        try {
+            canvas.toBlob(function(blob) {
+                let downloadUrl;
+                if (!blob) {
+                    downloadUrl = canvas.toDataURL("image/png");
+                } else {
+                    downloadUrl = URL.createObjectURL(blob);
+                }
+
+                const a = document.createElement('a');
+                a.download = `TaskWallet_Profile_ID_{{ user.name }}.png`;
+                a.href = downloadUrl;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+
+                if (blob) {
+                    setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+                }
+
+                btn.disabled = false;
+                alert("✓ Profile ID কার্ডটি সফলভাবে ডাউনলোড হয়েছে!");
+            }, "image/png");
+        } catch(err) {
+            btn.disabled = false;
+            alert("ডাউনলোড সম্পন্ন করা যায়নি। পুনরায় চেষ্টা করুন।");
+        }
+    }
+
+    function drawFallbackInitials() {
+        ctx.beginPath();
+        ctx.arc(avatarCenterX, avatarCenterY, avatarRadius, 0, Math.PI * 2);
+        ctx.fillStyle = "#1e293b";
+        ctx.fill();
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.3)";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "900 24px 'Arial'";
+        ctx.textAlign = "center";
+        ctx.fillText("{{ user.name[:1] }}", avatarCenterX, avatarCenterY + 8);
+        executeDownload();
+    }
+
+    // CORS-Safe Image Loader with Cache Busting
+    {% if user.avatar_url %}
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        let isImageLoaded = false;
+        
+        // 1.5s timeout safety
+        const timer = setTimeout(() => {
+            if (!isImageLoaded) drawFallbackInitials();
+        }, 1500);
+
+        img.onload = function() {
+            isImageLoaded = true;
+            clearTimeout(timer);
+            try {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(avatarCenterX, avatarCenterY, avatarRadius, 0, Math.PI * 2);
+                ctx.clip();
+                ctx.drawImage(img, avatarCenterX - avatarRadius, avatarCenterY - avatarRadius, avatarRadius * 2, avatarRadius * 2);
+                ctx.restore();
+
+                ctx.beginPath();
+                ctx.arc(avatarCenterX, avatarCenterY, avatarRadius, 0, Math.PI * 2);
+                ctx.strokeStyle = borderColor;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                executeDownload();
+            } catch(e) {
+                drawFallbackInitials();
+            }
+        };
+
+        img.onerror = function() {
+            isImageLoaded = true;
+            clearTimeout(timer);
+            drawFallbackInitials();
+        };
+
+        // Anti-CORS Cache Bust
+        img.src = "{{ user.avatar_url }}" + (("{{ user.avatar_url }}".indexOf('?') > -1 ? '&' : '?') + 'cors=' + Date.now());
+    {% else %}
+        drawFallbackInitials();
+    {% endif %}
+}
+</script>
+{% endblock %}
