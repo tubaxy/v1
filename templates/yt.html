@@ -1,47 +1,97 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="max-w-4xl mx-auto space-y-5 pb-12">
+<style>
+    .cinema-card {
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(24px);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        overflow: hidden;
+    }
+    .cinema-card:hover {
+        border-color: rgba(56, 189, 248, 0.35);
+        transform: translateY(-3px);
+        box-shadow: 0 16px 40px -15px rgba(0, 0, 0, 0.85);
+    }
+    .cinema-thumb {
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cinema-card:hover .cinema-thumb {
+        transform: scale(1.05);
+    }
 
-    <!-- Header & Back Button -->
+    /* Ambient Cinema Theater Frame */
+    .theater-frame {
+        background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.18) 0%, rgba(10, 15, 29, 0.95) 60%, #04060b 100%);
+        border: 1px solid rgba(56, 189, 248, 0.25);
+        box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    }
+
+    /* Laser Timer Glow Bar */
+    .timer-laser-bar {
+        box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+    }
+</style>
+
+<div class="max-w-4xl mx-auto space-y-6 pb-24">
+
+    <!-- Top Action Row -->
     <div class="flex items-center justify-between px-1">
-        <a href="/app" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-[#E11D48] transition">
-            <i class="fa-solid fa-arrow-left"></i>
-            <span>ড্যাশবোর্ডে ফিরুন</span>
+        <a href="/allwork" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95 shadow-sm">
+            <i class="fa-solid fa-arrow-left text-[10px] text-blue-500"></i>
+            <span>আর্নিং হাব</span>
         </a>
+
         <div class="flex items-center gap-2">
-            <span class="bg-red-50 text-red-600 text-xs font-extrabold px-3 py-1 rounded-full border border-red-100 flex items-center gap-1.5 shadow-sm">
-                <i class="fa-brands fa-youtube text-sm"></i>
-                <span>উপলব্ধ ভিডিও: {{ total_available }} টি</span>
+            <span class="text-[10px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+                {{ total_available }} Streams Active
             </span>
         </div>
     </div>
 
-    <!-- Active Video Player Box (Initially Hidden) -->
-    <div id="playerSection" class="hidden bg-white border border-rose-100 rounded-[32px] p-5 sm:p-6 shadow-xl shadow-rose-100/50 relative overflow-hidden transition-all duration-300">
+    <!-- Title Section (The Seasons Classic Typography) -->
+    <div class="text-center py-1 select-none space-y-1">
+        <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
+            Video <span class="text-slate-400 font-light italic lowercase text-xl">streams</span>
+        </h1>
+        <p class="text-xs text-slate-400 font-gotham font-light">৩০ সেকেন্ড ভিডিও স্ট্রিম দেখে সরাসরি আপনার ওয়ালেটে ক্যাশ যোগ করুন</p>
+    </div>
+
+    <!-- ================= 1. CINEMA THEATER PLAYER SECTION (INITIALLY HIDDEN) ================= -->
+    <div id="playerSection" class="hidden theater-frame rounded-[32px] p-5 sm:p-6 space-y-4 transition-all duration-300">
         
-        <!-- Player Top Bar -->
-        <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-3">
-            <div class="leading-tight">
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">ভিডিও প্লেয়ার</span>
-                <h4 id="nowPlayingTitle" class="text-xs sm:text-sm font-bold text-slate-800 line-clamp-1">ভিডিও চলছে...</h4>
+        <!-- Player Header Bar -->
+        <div class="flex items-center justify-between border-b border-white/[0.08] pb-3">
+            <div class="flex items-center gap-2.5 min-w-0 pr-2">
+                <div class="w-8 h-8 rounded-xl bg-red-600/15 border border-red-500/30 text-red-400 flex items-center justify-center text-xs shrink-0">
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+                <div class="min-w-0 leading-tight">
+                    <span class="text-[9px] font-gotham uppercase tracking-wider text-slate-400 block">Now Streaming</span>
+                    <h4 id="nowPlayingTitle" class="text-xs sm:text-sm font-semibold text-white truncate">ভিডিও চলছে...</h4>
+                </div>
             </div>
             
-            <div class="flex items-center gap-2">
-                <!-- Direct Open in YouTube App Button (Fallback) -->
+            <div class="flex items-center gap-2 shrink-0">
+                <!-- Open in App Fallback -->
                 <a id="directYtLink" href="#" target="_blank" 
-                   class="bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold px-3 py-1.5 rounded-xl border border-red-200 flex items-center gap-1.5 shadow-sm transition">
-                    <i class="fa-brands fa-youtube text-xs"></i>
-                    <span>YouTube অ্যাপে দেখুন</span>
+                   class="bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-slate-300 hover:text-white text-[11px] font-gotham font-semibold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-brands fa-youtube text-red-500 text-xs"></i>
+                    <span class="hidden sm:inline">YouTube অ্যাপে দেখুন</span>
                 </a>
 
-                <button onclick="closePlayer()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center text-xs transition">
+                <!-- Close Player Button -->
+                <button onclick="closePlayer()" 
+                        class="w-8 h-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-white flex items-center justify-center text-xs transition border border-white/[0.08]" 
+                        title="প্লেয়ার বন্ধ করুন">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Embedded 16:9 Video (Using Privacy-Enhanced No-Cookie to Bypass Google Block) -->
-        <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-inner">
+        <!-- 16:9 Video Frame with Privacy Bypass -->
+        <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-2xl border border-white/10">
             <iframe id="ytIframe" class="w-full h-full" src="" frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 referrerpolicy="strict-origin-when-cross-origin"
@@ -49,90 +99,115 @@
             </iframe>
         </div>
 
-        <!-- 30-Second Countdown & Claim Bar -->
-        <div class="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 bg-rose-50/50 p-4 rounded-2xl border border-rose-100">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center font-black text-sm shadow-sm" id="timerBadge">
-                    30
+        <!-- 30-Second Laser Countdown & Claim Console -->
+        <div class="p-4 rounded-2xl bg-white/[0.025] border border-white/[0.08] space-y-3">
+            
+            <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center gap-2.5">
+                    <div id="timerBadge" class="w-8 h-8 rounded-xl bg-blue-600/20 border border-blue-500/30 text-sky-400 font-gotham font-black text-xs flex items-center justify-center tabular-nums">
+                        30
+                    </div>
+                    <div class="leading-tight">
+                        <span id="timerStatusText" class="text-xs font-semibold text-slate-200 block">ভিডিওটি ৩০ সেকেন্ড দেখুন</span>
+                        <span class="text-[10px] text-slate-500">টাইমার শেষ হলে ক্লেইম বাটন আনলক হবে</span>
+                    </div>
                 </div>
-                <div>
-                    <span class="text-xs font-bold text-slate-800 block" id="timerStatusText">ভিডিওটি ৩০ সেকেন্ড দেখুন</span>
-                    <span class="text-[10px] text-slate-400">প্লে না হলে উপরের "YouTube অ্যাপে দেখুন" বাটনে ট্যাপ করুন</span>
-                </div>
+
+                <span class="text-[11px] font-gotham font-bold text-sky-400 tabular-nums" id="timerSecondsRemaining">
+                    30s Remaining
+                </span>
+            </div>
+
+            <!-- Animated Laser Progress Bar -->
+            <div class="w-full bg-white/[0.04] rounded-full h-1.5 overflow-hidden">
+                <div id="timerProgressBar" class="bg-gradient-to-r from-blue-600 via-sky-400 to-emerald-400 timer-laser-bar h-full w-0 transition-all duration-1000 linear"></div>
             </div>
 
             <!-- Claim Button (Unlocks after 30s) -->
             <button id="claimBtn" disabled onclick="claimCurrentVideo()" 
-                class="w-full sm:w-auto bg-slate-300 cursor-not-allowed text-slate-500 text-xs font-extrabold px-6 py-3 rounded-xl transition flex items-center justify-center gap-2">
+                class="w-full bg-white/[0.03] cursor-not-allowed text-slate-500 font-gotham font-semibold text-xs py-3.5 px-4 rounded-xl border border-white/[0.06] transition flex items-center justify-center gap-2 shadow-md">
                 <i class="fa-solid fa-lock text-xs"></i>
                 <span id="claimBtnText">অপেক্ষা করুন (৩০ সে.)</span>
             </button>
+
         </div>
     </div>
 
-    <!-- Available Video Cards Grid (Only Unwatched Videos) -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <!-- ================= 2. CINEMA TILES GRID ================= -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
         {% for v in videos %}
-        <div id="video-card-{{ v.id }}" class="bg-white border border-rose-50/80 rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between group">
+        <div id="video-card-{{ v.id }}" class="cinema-card rounded-[26px] flex flex-col justify-between group select-none">
             
-            <!-- Video Thumbnail -->
-            <div class="relative aspect-video overflow-hidden bg-slate-100">
+            <!-- Video Thumbnail & Floating Badges -->
+            <div class="relative aspect-video overflow-hidden bg-black/60">
                 <img src="https://img.youtube.com/vi/{{ v.video_id }}/hqdefault.jpg" 
                      alt="{{ v.title }}" 
-                     class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                <span class="absolute top-2 right-2 bg-black/75 backdrop-blur-md text-white text-[10px] font-black px-2 py-0.5 rounded-lg">
-                    ৩০ সে.
+                     class="cinema-thumb w-full h-full object-cover">
+                
+                <!-- Dark Gradient Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none"></div>
+
+                <!-- 30s Tag (Top Left) -->
+                <span class="absolute top-2.5 left-2.5 font-gotham text-[9px] font-bold px-2 py-0.5 rounded-full bg-black/70 text-slate-300 border border-white/10 backdrop-blur-md">
+                    <i class="fa-regular fa-clock text-[8px] mr-0.5"></i> 30s
                 </span>
-                <span class="absolute bottom-2 left-2 bg-emerald-500 text-white text-xs font-extrabold px-2.5 py-1 rounded-lg shadow-sm">
-                    ৳ {{ "%.2f"|format(v.amount) }}
+
+                <!-- Reward Amount Floating Pill (Bottom Right) -->
+                <span class="absolute bottom-2.5 right-2.5 font-gotham text-xs font-black px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 backdrop-blur-md shadow-lg tabular-nums">
+                    + ৳ {{ "%.2f"|format(v.amount) }}
                 </span>
             </div>
 
-            <!-- Content & Actions -->
-            <div class="p-4 flex flex-col justify-between flex-1">
-                <h4 class="text-xs font-bold text-slate-800 line-clamp-2 mb-3 leading-snug">
+            <!-- Content & Action -->
+            <div class="p-4 flex flex-col justify-between flex-1 space-y-3">
+                <h4 class="text-xs font-semibold text-slate-200 line-clamp-2 leading-relaxed group-hover:text-white transition" title="{{ v.title }}">
                     {{ v.title }}
                 </h4>
 
                 <button onclick="startWatching('{{ v.id }}', '{{ v.video_id }}', '{{ v.title }}', '{{ v.amount }}')" 
-                    class="w-full bg-[#E11D48] hover:bg-[#BE123C] active:scale-95 text-white text-xs font-bold py-2.5 rounded-xl transition shadow-md shadow-rose-500/20 flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-play text-xs"></i> 
+                    class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-2.5 px-4 rounded-xl transition shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-play text-[10px]"></i>
                     <span>ভিডিও দেখুন ও আয় করুন</span>
                 </button>
             </div>
 
         </div>
         {% else %}
-        <!-- Empty State -->
-        <div class="col-span-full bg-white border border-rose-50 rounded-[32px] p-12 text-center text-slate-400 shadow-sm space-y-2">
-            <div class="w-16 h-16 mx-auto rounded-3xl bg-emerald-50 text-emerald-500 flex items-center justify-center text-2xl mb-2">
+        <!-- All Caught Up Empty State -->
+        <div class="col-span-full cinema-card rounded-[32px] p-12 text-center text-slate-400 space-y-3 select-none">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl shadow-inner">
                 <i class="fa-solid fa-circle-check"></i>
             </div>
-            <h3 class="text-sm font-black text-slate-800">আপনি সব ভিডিও ইতিমধ্যে দেখে ফেলেছেন!</h3>
-            <p class="text-xs text-slate-400">নতুন ভিডিও আসার সাথে সাথে এই তালিকায় দেখতে পাবেন।</p>
+            <div class="space-y-1">
+                <h3 class="text-sm font-semibold text-white">সব ভিডিও দেখা সম্পন্ন হয়েছে!</h3>
+                <p class="text-xs text-slate-400">নতুন ভিডিও যুক্ত হওয়ার সাথে সাথে এই পেজে স্বয়ংক্রিয়ভাবে দেখতে পাবেন।</p>
+            </div>
             <div class="pt-2">
-                <a href="/allwork" class="inline-block bg-[#E11D48] text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-sm">
-                    অন্যান্য কাজ করুন
+                <a href="/allwork" class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white font-gotham font-semibold text-xs px-5 py-2.5 rounded-xl transition shadow-lg shadow-blue-600/25 active:scale-95">
+                    <span>অন্যান্য কাজ দেখুন</span>
+                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
                 </a>
             </div>
         </div>
         {% endfor %}
     </div>
 
-    <!-- Pagination -->
+    <!-- ================= 3. DARK GLASS PAGINATION ================= -->
     {% if total_available > 0 %}
-    <div class="flex items-center justify-center gap-3 pt-4">
+    <div class="flex items-center justify-center gap-2 pt-2 font-gotham select-none text-xs">
         {% if page > 1 %}
-        <a href="?page={{ page - 1 }}" class="bg-white border border-slate-200 text-slate-700 font-bold text-xs px-4 py-2 rounded-xl hover:bg-slate-50 transition">
-            &laquo; আগের পাতা
+        <a href="?page={{ page - 1 }}" class="px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] text-slate-300 transition">
+            &laquo; Prev
         </a>
         {% endif %}
         
-        <span class="text-xs font-bold text-slate-400">পৃষ্ঠা {{ page }}</span>
+        <span class="px-3 py-1.5 rounded-xl bg-white/[0.02] border border-white/[0.04] text-slate-500 font-mono">
+            Page {{ page }}
+        </span>
         
         {% if has_next %}
-        <a href="?page={{ page + 1 }}" class="bg-white border border-slate-200 text-slate-700 font-bold text-xs px-4 py-2 rounded-xl hover:bg-slate-50 transition">
-            পরের পাতা &raquo;
+        <a href="?page={{ page + 1 }}" class="px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] text-slate-300 transition">
+            Next &raquo;
         </a>
         {% endif %}
     </div>
@@ -140,7 +215,7 @@
 
 </div>
 
-<!-- 30-SECOND TIMER & CLAIM SCRIPT -->
+<!-- ================= JAVASCRIPT: THEATER MODE & 30S TIMER ENGINE ================= -->
 <script>
 let currentWatchId = null;
 let currentAmount = 0;
@@ -154,42 +229,61 @@ function startWatching(id, vid, title, amount) {
     currentAmount = amount;
     secondsRemaining = 30;
 
-    // Show Player & Set Direct YouTube Fallback Link
-    document.getElementById('playerSection').classList.remove('hidden');
+    // Reveal Player Section & Set Fallbacks
+    const playerSec = document.getElementById('playerSection');
+    playerSec.classList.remove('hidden');
     document.getElementById('nowPlayingTitle').innerText = title;
     document.getElementById('directYtLink').href = `https://www.youtube.com/watch?v=${vid}`;
 
-    // Privacy-Enhanced URL to bypass Google Account restrictions
+    // Privacy-Enhanced Embedded Video
     document.getElementById('ytIframe').src = `https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1`;
 
     const timerBadge = document.getElementById('timerBadge');
-    const timerText = document.getElementById('timerStatusText');
+    const timerStatusText = document.getElementById('timerStatusText');
+    const timerProgress = document.getElementById('timerProgressBar');
+    const secondsRemainingText = document.getElementById('timerSecondsRemaining');
     const claimBtn = document.getElementById('claimBtn');
     const claimBtnText = document.getElementById('claimBtnText');
 
+    // Reset Controls
     claimBtn.disabled = true;
-    claimBtn.className = "w-full sm:w-auto bg-slate-300 cursor-not-allowed text-slate-500 text-xs font-extrabold px-6 py-3 rounded-xl transition flex items-center justify-center gap-2";
+    claimBtn.className = "w-full bg-white/[0.03] cursor-not-allowed text-slate-500 font-gotham font-semibold text-xs py-3.5 px-4 rounded-xl border border-white/[0.06] transition flex items-center justify-center gap-2 shadow-md";
     claimBtnText.innerText = `অপেক্ষা করুন (${secondsRemaining} সে.)`;
     timerBadge.innerText = secondsRemaining;
-    timerText.innerText = `ভিডিওটি ৩০ সেকেন্ড মনোযোগ দিয়ে দেখুন`;
+    timerBadge.className = "w-8 h-8 rounded-xl bg-blue-600/20 border border-blue-500/30 text-sky-400 font-gotham font-black text-xs flex items-center justify-center tabular-nums";
+    timerStatusText.innerText = "ভিডিওটি ৩০ সেকেন্ড দেখুন";
+    timerProgress.style.width = "0%";
+    secondsRemainingText.innerText = `${secondsRemaining}s Remaining`;
 
-    document.getElementById('playerSection').scrollIntoView({ behavior: 'smooth' });
+    // Smooth Scroll into Player
+    playerSec.scrollIntoView({ behavior: 'smooth' });
 
     // 30 Seconds Countdown Timer
     watchTimer = setInterval(() => {
         secondsRemaining--;
         timerBadge.innerText = secondsRemaining;
         claimBtnText.innerText = `অপেক্ষা করুন (${secondsRemaining} সে.)`;
+        secondsRemainingText.innerText = `${secondsRemaining}s Remaining`;
+        
+        // Update Progress Bar Percentage
+        const percentage = ((30 - secondsRemaining) / 30) * 100;
+        timerProgress.style.width = `${percentage}%`;
 
         if (secondsRemaining <= 0) {
             clearInterval(watchTimer);
-            timerBadge.innerText = "✓";
-            timerBadge.className = "w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-black text-sm shadow-sm";
-            timerText.innerText = `সময় শেষ! আপনার টাকা ক্লেইম করুন`;
+            
+            // Completed Unlock State
+            timerBadge.innerHTML = '<i class="fa-solid fa-check text-xs text-emerald-400"></i>';
+            timerBadge.className = "w-8 h-8 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center";
+            timerStatusText.innerText = "সময় সম্পন্ন! আপনার টাকা ক্লেইম করুন";
+            secondsRemainingText.innerText = "Ready to Claim";
+            timerProgress.style.width = "100%";
 
+            // Enable 10% Blue / Emerald Accent Claim Button
             claimBtn.disabled = false;
-            claimBtn.className = "w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold px-6 py-3 rounded-xl transition shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 active:scale-95";
+            claimBtn.className = "w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-bold text-xs py-3.5 px-4 rounded-xl transition shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 cursor-pointer";
             claimBtnText.innerText = `🎉 ৳ ${parseFloat(currentAmount).toFixed(2)} ক্লেইম করুন`;
+            claimBtn.querySelector('i').className = "fa-solid fa-gift text-xs";
         }
     }, 1000);
 }
@@ -206,12 +300,12 @@ function claimCurrentVideo() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ video_id: currentWatchId })
     })
-    .then(res => res.json())
+    .then(r => r.json())
     .then(data => {
         if (data.success) {
             alert(data.message);
             closePlayer();
-            window.location.reload(); // রিলোড হয়ে দেখা ভিডিওটি তালিকা থেকে পার্মানেন্ট হাইড হয়ে যাবে
+            window.location.reload(); // দেখা ভিডিও ১০০% হাইড হবে এবং ব্যালেন্স রিলোড হবে
         } else {
             alert(data.message);
             claimBtn.disabled = false;
@@ -219,7 +313,7 @@ function claimCurrentVideo() {
         }
     })
     .catch(() => {
-        alert("সার্ভার ত্রুটি! কিছুক্ষণ পর চেষ্টা করুন।");
+        alert("সার্ভার ত্রুটি! কিছুক্ষণ পর আবার চেষ্টা করুন।");
         claimBtn.disabled = false;
         claimBtn.innerText = "পুনরায় চেষ্টা করুন";
     });
