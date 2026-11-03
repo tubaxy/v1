@@ -1,483 +1,625 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="max-w-xl mx-auto space-y-5 pb-14">
+<style>
+    .fintech-card {
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(24px);
+    }
+    .history-row {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        transition: all 0.2s ease;
+    }
+    .history-row:hover {
+        background: rgba(255, 255, 255, 0.045);
+        border-color: rgba(255, 255, 255, 0.12);
+    }
+    .tab-pill-active {
+        background: #2563eb !important;
+        color: #ffffff !important;
+        border-color: #3b82f6 !important;
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35) !important;
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
 
-    <!-- Header & Back Button -->
+<div class="max-w-xl mx-auto space-y-5 pb-24">
+
+    <!-- Top Action Row -->
     <div class="flex items-center justify-between px-1">
-        <a href="/app" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-[#E11D48] transition">
-            <i class="fa-solid fa-arrow-left"></i>
-            <span>ড্যাশবোর্ডে ফিরুন</span>
+        <a href="/app" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95 shadow-sm">
+            <i class="fa-solid fa-arrow-left text-[10px] text-blue-500"></i>
+            <span>ড্যাশবোর্ড</span>
         </a>
-        <span class="text-[11px] font-black text-slate-400 uppercase tracking-wider">রেকর্ড ও রিপোর্ট</span>
+
+        <span class="text-[10px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+            Audit & Statement
+        </span>
     </div>
 
-    <!-- Tab Buttons -->
-    <div class="grid grid-cols-2 gap-1.5 p-1.5 bg-white border border-rose-100 rounded-2xl shadow-sm">
-        <button id="btnWithdrawTab" onclick="switchHistoryTab('withdraw')" 
-                class="py-2.5 text-xs font-black rounded-xl transition bg-[#E11D48] text-white shadow-sm flex items-center justify-center gap-2">
-            <i class="fa-solid fa-money-bill-transfer"></i>
-            <span>উইথড্রয়াল হিস্ট্রি</span>
+    <!-- Title Header -->
+    <div class="text-center py-1 select-none space-y-1">
+        <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
+            Financial <span class="text-slate-400 font-light italic lowercase text-xl">statement</span>
+        </h1>
+        <p class="text-xs text-slate-400 font-gotham font-light">আপনার ওয়ালেটের আয়, উত্তোলন ও বিস্তারিত লেনদেন রিপোর্ট</p>
+    </div>
+
+    <!-- ================= 1. FINANCIAL SUMMARY METRICS (4 TILES) ================= -->
+    <div class="grid grid-cols-2 gap-2.5 font-gotham select-none">
+        
+        <!-- Total Payouts -->
+        <div class="fintech-card rounded-2xl p-3.5 space-y-1">
+            <div class="flex items-center justify-between">
+                <span class="text-[9px] uppercase tracking-wider text-slate-400 font-semibold">Total Paid Out</span>
+                <i class="fa-solid fa-circle-check text-emerald-400 text-xs"></i>
+            </div>
+            <div class="text-lg sm:text-xl font-black text-emerald-400 tabular-nums">
+                ৳ {{ "%.2f"|format(summary.total_withdrawn) }}
+            </div>
+            <span class="text-[9px] text-slate-500 block">সফল উত্তোলন</span>
+        </div>
+
+        <!-- Pending Payouts -->
+        <div class="fintech-card rounded-2xl p-3.5 space-y-1">
+            <div class="flex items-center justify-between">
+                <span class="text-[9px] uppercase tracking-wider text-slate-400 font-semibold">Processing</span>
+                <i class="fa-solid fa-clock-rotate-left text-amber-400 text-xs"></i>
+            </div>
+            <div class="text-lg sm:text-xl font-black text-amber-400 tabular-nums">
+                ৳ {{ "%.2f"|format(summary.pending_withdrawals) }}
+            </div>
+            <span class="text-[9px] text-slate-500 block">উত্তোলন প্রক্রিয়াধীন</span>
+        </div>
+
+        <!-- Tasks Earnings -->
+        <div class="fintech-card rounded-2xl p-3.5 space-y-1">
+            <div class="flex items-center justify-between">
+                <span class="text-[9px] uppercase tracking-wider text-slate-400 font-semibold">Task Rewards</span>
+                <i class="fa-solid fa-list-check text-sky-400 text-xs"></i>
+            </div>
+            <div class="text-lg sm:text-xl font-black text-white tabular-nums">
+                ৳ {{ "%.2f"|format(summary.total_task_earned) }}
+            </div>
+            <span class="text-[9px] text-slate-500 block">টাস্ক থেকে আয়</span>
+        </div>
+
+        <!-- Games / Perks Bonus -->
+        <div class="fintech-card rounded-2xl p-3.5 space-y-1">
+            <div class="flex items-center justify-between">
+                <span class="text-[9px] uppercase tracking-wider text-slate-400 font-semibold">Games & Bonus</span>
+                <i class="fa-solid fa-gift text-pink-400 text-xs"></i>
+            </div>
+            <div class="text-lg sm:text-xl font-black text-sky-400 tabular-nums">
+                ৳ {{ "%.2f"|format(summary.total_games_earned) }}
+            </div>
+            <span class="text-[9px] text-slate-500 block">স্পিন, কুইজ ও বোনাস</span>
+        </div>
+
+    </div>
+
+    <!-- ================= 2. LIVE SEARCH & STATUS FILTER ================= -->
+    <div class="fintech-card rounded-2xl p-3 space-y-2.5">
+        <div class="relative">
+            <input type="text" id="historySearchInput" onkeyup="filterHistoryItems()" 
+                   placeholder="ট্রানজেকশন আইডি বা টাস্কের নাম দিয়ে খুঁজুন..." 
+                   class="w-full bg-white/[0.03] border border-white/[0.08] text-xs font-gotham text-slate-100 placeholder-slate-500 px-3.5 py-2 pl-9 rounded-xl focus:outline-none focus:border-blue-500 transition">
+            <i class="fa-solid fa-magnifying-glass text-slate-500 text-xs absolute left-3 top-2.5"></i>
+        </div>
+
+        <!-- Filter Status Pills -->
+        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar text-[11px] font-gotham">
+            <button onclick="setStatusFilter('all', this)" class="status-pill px-3 py-1 rounded-lg bg-blue-600 text-white font-semibold shadow-sm">
+                সকল (All)
+            </button>
+            <button onclick="setStatusFilter('approved', this)" class="status-pill px-3 py-1 rounded-lg bg-white/[0.03] text-slate-400 border border-white/[0.06] hover:text-white">
+                অনুমোদিত
+            </button>
+            <button onclick="setStatusFilter('pending', this)" class="status-pill px-3 py-1 rounded-lg bg-white/[0.03] text-slate-400 border border-white/[0.06] hover:text-white">
+                প্রসেসিং
+            </button>
+            <button onclick="setStatusFilter('rejected', this)" class="status-pill px-3 py-1 rounded-lg bg-white/[0.03] text-slate-400 border border-white/[0.06] hover:text-white">
+                বাতিল
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= 3. FOUR INTERACTIVE CATEGORY TABS ================= -->
+    <div class="grid grid-cols-4 gap-1.5 p-1 bg-white/[0.02] border border-white/[0.08] rounded-2xl text-[11px] font-gotham font-semibold text-slate-400 select-none">
+        <button id="tabBtn-payouts" onclick="switchCategoryTab('payouts')" class="tab-pill tab-pill-active py-2 rounded-xl transition flex flex-col items-center gap-0.5">
+            <i class="fa-solid fa-wallet text-xs"></i>
+            <span>উইথড্র</span>
         </button>
-        <button id="btnTaskTab" onclick="switchHistoryTab('tasks')" 
-                class="py-2.5 text-xs font-bold rounded-xl transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-2">
-            <i class="fa-solid fa-list-check"></i>
-            <span>টাস্ক হিস্ট্রি</span>
+        <button id="tabBtn-tasks" onclick="switchCategoryTab('tasks')" class="tab-pill py-2 rounded-xl transition hover:text-white flex flex-col items-center gap-0.5">
+            <i class="fa-solid fa-list-check text-xs"></i>
+            <span>টাস্ক ({{ task_subs|length }})</span>
+        </button>
+        <button id="tabBtn-games" onclick="switchCategoryTab('games')" class="tab-pill py-2 rounded-xl transition hover:text-white flex flex-col items-center gap-0.5">
+            <i class="fa-solid fa-dharmachakra text-xs"></i>
+            <span>বোনাস</span>
+        </button>
+        <button id="tabBtn-refs" onclick="switchCategoryTab('refs')" class="tab-pill py-2 rounded-xl transition hover:text-white flex flex-col items-center gap-0.5">
+            <i class="fa-solid fa-user-plus text-xs"></i>
+            <span>রেফারেল</span>
         </button>
     </div>
 
-    <!-- ================= 1. WITHDRAWAL HISTORY ================= -->
-    <div id="withdrawHistorySection" class="space-y-3">
+    <!-- ================= SECTION A: PAYOUTS (WITHDRAWALS) ================= -->
+    <div id="section-payouts" class="space-y-2.5">
         {% for w in withdrawals %}
-        <div class="bg-white rounded-[28px] p-5 border border-rose-50/80 shadow-sm flex items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-2xl bg-rose-50 text-[#E11D48] flex items-center justify-center text-base shrink-0 shadow-sm">
-                    <i class="fa-solid fa-receipt"></i>
+        <div class="history-item history-row rounded-2xl p-4 flex items-center justify-between gap-3"
+             data-title="{{ w.method|lower }} {{ w.account_number }}"
+             data-id="{{ w.id }}"
+             data-status="{{ w.status }}">
+            
+            <!-- Left Info -->
+            <div class="flex items-center gap-3 min-w-0">
+                <div class="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-slate-300 shrink-0 text-sm">
+                    <i class="fa-solid fa-receipt text-sky-400"></i>
                 </div>
-                <div class="leading-tight">
-                    <span class="text-sm font-black text-slate-900 block">৳ {{ "%.2f"|format(w.amount) }}</span>
-                    <span class="text-[11px] text-slate-400 font-medium">{{ w.method }} • {{ w.account_number }}</span>
-                    <span class="text-[10px] text-slate-400 font-mono block mt-0.5">
-                        {{ w.created_at[:10] }}
-                    </span>
+                <div class="leading-tight min-w-0">
+                    <div class="flex items-center gap-2">
+                        <span class="font-gotham font-bold text-sm text-white tabular-nums">৳ {{ "%.2f"|format(w.amount) }}</span>
+                        <!-- Status Badge -->
+                        {% if w.status == 'approved' %}
+                            <span class="text-[9px] font-gotham font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.2 rounded-full">Paid</span>
+                        {% elif w.status == 'pending' %}
+                            <span class="text-[9px] font-gotham font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.2 rounded-full">Processing</span>
+                        {% else %}
+                            <span class="text-[9px] font-gotham font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-0.2 rounded-full">Rejected</span>
+                        {% endif %}
+                    </div>
+                    <span class="text-[11px] text-slate-400 font-gotham block mt-0.5">{{ w.method }} • {{ w.account_number }}</span>
+                    <span class="text-[10px] font-mono text-slate-500 mt-0.5 block">TRX #{{ w.id }} • {{ w.created_at[:10] }}</span>
                 </div>
             </div>
 
-            <div class="flex flex-col items-end gap-1.5 shrink-0">
-                <!-- Status Badge -->
-                {% if w.status == 'approved' %}
-                    <span class="text-[10px] font-extrabold bg-emerald-50 text-emerald-600 px-2.5 py-0.5 rounded-full border border-emerald-100">
-                        সফল
-                    </span>
-                {% elif w.status == 'pending' %}
-                    <span class="text-[10px] font-extrabold bg-amber-50 text-amber-600 px-2.5 py-0.5 rounded-full border border-amber-100">
-                        প্রসেসিং
-                    </span>
-                {% else %}
-                    <span class="text-[10px] font-extrabold bg-rose-50 text-rose-600 px-2.5 py-0.5 rounded-full border border-rose-100">
-                        বাতিল
-                    </span>
-                {% endif %}
-
-                <!-- VIEW RECEIPT BUTTON -->
-                <button onclick="openReceiptModal('{{ w.id }}', '{{ w.amount }}', '{{ w.method }}', '{{ w.account_number }}', '{{ w.status }}', '{{ w.created_at[:10] }}')"
-                        class="bg-slate-900 hover:bg-slate-800 active:scale-95 text-white font-extrabold text-[10px] px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fa-solid fa-receipt text-[10px] text-rose-500"></i>
-                    <span>রসিদ দেখুন</span>
+            <!-- Right Action (View Voucher Button) -->
+            <div class="shrink-0 text-right">
+                <button onclick="openVoucherModal('{{ w.id }}', '{{ w.amount }}', '{{ w.method }}', '{{ w.account_number }}', '{{ w.status }}', '{{ w.created_at[:10] }}')" 
+                        class="bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-gotham font-semibold text-[10px] px-3 py-1.5 rounded-xl transition shadow-md shadow-blue-600/25 flex items-center gap-1.5">
+                    <i class="fa-solid fa-file-invoice text-[9px]"></i>
+                    <span>রসিদ</span>
                 </button>
             </div>
         </div>
         {% else %}
-        <div class="bg-white rounded-[32px] p-10 text-center text-slate-400 border border-rose-50/80 shadow-sm">
-            <i class="fa-solid fa-receipt text-3xl text-slate-200 mb-2"></i>
-            <p class="text-xs font-semibold text-slate-600">কোনো উইথড্রয়াল রেকর্ড নেই</p>
-            <p class="text-[10px] mt-0.5">টাকা তুলতে ড্যাশবোর্ডে গিয়ে রিকোয়েস্ট করুন।</p>
+        <div class="fintech-card rounded-2xl p-8 text-center text-slate-500 space-y-1">
+            <i class="fa-solid fa-wallet text-2xl mb-1 block opacity-40"></i>
+            <p class="text-xs">এখনো কোনো উইথড্রয়াল রেকর্ড নেই।</p>
         </div>
         {% endfor %}
     </div>
 
-    <!-- ================= 2. TASK SUBMISSION HISTORY ================= -->
-    <div id="taskHistorySection" class="space-y-3 hidden">
+    <!-- ================= SECTION B: MICRO TASKS ================= -->
+    <div id="section-tasks" class="space-y-2.5 hidden">
         {% for t in task_subs %}
-        <div class="bg-white rounded-[28px] p-5 border border-rose-50/80 shadow-sm flex items-center justify-between gap-3">
-            <div class="leading-tight max-w-[65%]">
-                <span class="text-xs font-extrabold text-slate-900 block truncate mb-1">
+        <div class="history-item history-row rounded-2xl p-4 flex items-center justify-between gap-3"
+             data-title="{{ t.tasks.title|lower }}"
+             data-id="{{ t.id }}"
+             data-status="{{ t.status }}">
+            
+            <div class="leading-tight min-w-0 max-w-[65%]">
+                <h4 class="text-xs font-semibold text-slate-200 truncate mb-1" title="{{ t.tasks.title }}">
                     {{ t.tasks.title }}
-                </span>
-                <span class="text-[11px] font-black text-emerald-600 block">
-                    +৳ {{ "%.2f"|format(t.tasks.amount) }}
-                </span>
-                <span class="text-[10px] text-slate-400 font-mono mt-0.5 block">
-                    {{ t.created_at[:10] }}
-                </span>
+                </h4>
+                <div class="flex items-center gap-2">
+                    <span class="font-gotham font-bold text-xs text-emerald-400">+৳ {{ "%.2f"|format(t.tasks.amount) }}</span>
+                    <span class="text-[10px] font-mono text-slate-500">{{ t.created_at[:10] }}</span>
+                </div>
             </div>
 
             <div class="flex flex-col items-end gap-1.5 shrink-0">
                 {% if t.status == 'approved' %}
-                    <span class="text-[10px] font-extrabold bg-emerald-50 text-emerald-600 px-2.5 py-0.5 rounded-full border border-emerald-100">
-                        অনুমোদিত
-                    </span>
+                    <span class="text-[9px] font-gotham font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full">Approved</span>
                 {% elif t.status == 'pending' %}
-                    <span class="text-[10px] font-extrabold bg-amber-50 text-amber-600 px-2.5 py-0.5 rounded-full border border-amber-100">
-                        রিভিউ চলছে
-                    </span>
+                    <span class="text-[9px] font-gotham font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-full">In Review</span>
                 {% else %}
-                    <span class="text-[10px] font-extrabold bg-rose-50 text-rose-600 px-2.5 py-0.5 rounded-full border border-rose-100">
-                        রিজেক্টেড
-                    </span>
+                    <span class="text-[9px] font-gotham font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-0.5 rounded-full">Rejected</span>
                 {% endif %}
 
-                <a href="{{ t.proof_url }}" target="_blank" 
-                   class="bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-[10px] px-2.5 py-1 rounded-lg transition">
-                    প্রুফ ছবি
+                {% if t.proof_url %}
+                <a href="{{ t.proof_url }}" target="_blank" class="text-[10px] text-sky-400 hover:text-sky-300 font-gotham flex items-center gap-1">
+                    <i class="fa-regular fa-image text-[9px]"></i> প্রুফ ছবি
                 </a>
+                {% endif %}
             </div>
         </div>
         {% else %}
-        <div class="bg-white rounded-[32px] p-10 text-center text-slate-400 border border-rose-50/80 shadow-sm">
-            <i class="fa-solid fa-list-check text-3xl text-slate-200 mb-2"></i>
-            <p class="text-xs font-semibold text-slate-600">কোনো টাস্কের হিস্ট্রি নেই</p>
+        <div class="fintech-card rounded-2xl p-8 text-center text-slate-500 space-y-1">
+            <i class="fa-solid fa-list-check text-2xl mb-1 block opacity-40"></i>
+            <p class="text-xs">কোনো টাস্ক সাবমিশন রেকর্ড নেই।</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- ================= SECTION C: GAMES & BONUS ACTIVITY ================= -->
+    <div id="section-games" class="space-y-2.5 hidden">
+        {% for a in daily_acts %}
+        <div class="history-item history-row rounded-2xl p-3.5 flex items-center justify-between gap-3"
+             data-title="{{ a.activity_type }}"
+             data-id="{{ a.id }}"
+             data-status="approved">
+            
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-slate-200 shrink-0 text-sm">
+                    {% if a.activity_type == 'spin' %}<i class="fa-solid fa-dharmachakra text-amber-400"></i>
+                    {% elif a.activity_type == 'scratch' %}<i class="fa-solid fa-gift text-emerald-400"></i>
+                    {% elif a.activity_type == 'quiz' %}<i class="fa-solid fa-brain text-pink-400"></i>
+                    {% else %}<i class="fa-solid fa-gem text-sky-400"></i>{% endif %}
+                </div>
+                <div class="leading-tight">
+                    <span class="text-xs font-semibold text-slate-200 uppercase font-gotham">
+                        {% if a.activity_type == 'spin' %}Lucky Spin Reward
+                        {% elif a.activity_type == 'scratch' %}Scratch Card Cash
+                        {% elif a.activity_type == 'quiz' %}Math Quiz Bonus
+                        {% else %}Daily Tier Perk{% endif %}
+                    </span>
+                    <span class="text-[10px] font-mono text-slate-500 block mt-0.5">{{ a.created_at[:16] }}</span>
+                </div>
+            </div>
+
+            <div class="text-right">
+                <span class="font-gotham font-black text-xs text-sky-400 block">+৳ {{ "%.2f"|format(a.reward_earned) }}</span>
+                <span class="text-[9px] font-gotham text-slate-400">Credited</span>
+            </div>
+        </div>
+        {% else %}
+        <div class="fintech-card rounded-2xl p-8 text-center text-slate-500 space-y-1">
+            <i class="fa-solid fa-dharmachakra text-2xl mb-1 block opacity-40"></i>
+            <p class="text-xs">কোনো গেম বা বোনাস হিস্ট্রি নেই।</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- ================= SECTION D: REFERRALS ================= -->
+    <div id="section-refs" class="space-y-2.5 hidden">
+        {% for r in referrals %}
+        <div class="history-item history-row rounded-2xl p-3.5 flex items-center justify-between gap-3"
+             data-title="{{ r.name|lower }} {{ r.email|lower }}"
+             data-id="{{ loop.index }}"
+             data-status="approved">
+            
+            <div class="flex items-center gap-3 min-w-0">
+                <div class="w-9 h-9 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center font-gotham font-bold text-xs text-slate-200 shrink-0">
+                    {{ r.name[:1] }}
+                </div>
+                <div class="leading-tight min-w-0">
+                    <span class="text-xs font-semibold text-slate-200 block truncate">{{ r.name }}</span>
+                    <span class="text-[10px] font-mono text-slate-500 truncate block">{{ r.email[:3] }}•••••{{ r.email[-10:] }}</span>
+                </div>
+            </div>
+
+            <div class="text-right shrink-0">
+                <span class="font-gotham font-bold text-xs text-emerald-400 block">+৳15.00</span>
+                <span class="text-[9px] font-mono text-slate-500">{{ r.created_at[:10] }}</span>
+            </div>
+        </div>
+        {% else %}
+        <div class="fintech-card rounded-2xl p-8 text-center text-slate-500 space-y-1">
+            <i class="fa-solid fa-user-plus text-2xl mb-1 block opacity-40"></i>
+            <p class="text-xs">এখনো কোনো সফল রেফারেল নেই।</p>
         </div>
         {% endfor %}
     </div>
 
 </div>
 
-<!-- ================= PORTRAIT RECEIPT MODAL (আসল রসিদ লুক) ================= -->
-<div id="receiptModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-    <div class="w-full max-w-sm bg-white rounded-[32px] p-5 shadow-2xl border border-rose-50 space-y-4 transform scale-95 transition-transform duration-300 overflow-hidden" id="modalCardBox">
+<!-- ================= OFFICIAL DIGITAL PAYMENT VOUCHER MODAL ================= -->
+<div id="voucherModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="w-full max-w-sm bg-[#0a0e17] border border-white/10 rounded-3xl p-5 shadow-2xl space-y-4 transform scale-95 transition-transform duration-300" id="voucherCardBox">
         
         <!-- Modal Top Bar -->
-        <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
-            <h3 class="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                <i class="fa-solid fa-receipt text-[#E11D48]"></i> অফিসিয়াল পেমেন্ট ভাউচার
-            </h3>
-            <button onclick="closeReceiptModal()" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center text-xs">
+        <div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
+            <span class="font-classic-seasons text-sm text-white uppercase tracking-wider">
+                Official <span class="text-slate-400 font-light italic lowercase text-xs">voucher</span>
+            </span>
+            <button onclick="closeVoucherModal()" class="w-7 h-7 rounded-full bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-white flex items-center justify-center text-xs transition">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
 
-        <!-- PORTRAIT RECEIPT TICKET (Modern Clean White Paper Voucher) -->
-        <div class="bg-[#fafbfc] border border-slate-200 rounded-2xl p-5 relative shadow-inner text-slate-800 space-y-4">
+        <!-- VOUCHER TICKET (Dark Luxury Glass Ticket) -->
+        <div class="bg-[#050811] border border-white/[0.08] rounded-2xl p-5 text-slate-200 space-y-4 relative overflow-hidden">
             
-            <!-- Receipt Header -->
-            <div class="text-center border-b border-dashed border-slate-200 pb-3">
-                <div class="flex items-center justify-center gap-1.5 mb-1">
-                    <div class="w-5 h-5 rounded-full bg-[#E11D48] text-white flex items-center justify-center text-[10px]">
-                        <i class="fa-solid fa-fire"></i>
-                    </div>
-                    <span class="font-black text-sm tracking-wide text-slate-900">MICRO<span class="text-[#E11D48]">EARNX</span></span>
-                </div>
-                <span class="text-[9px] uppercase tracking-widest text-slate-400 font-bold block">Payment Receipt Voucher</span>
-                <span class="text-[10px] font-mono text-slate-500 font-bold" id="mTrxId">TRX #00000</span>
+            <!-- Watermark Background Logo -->
+            <div class="text-center border-b border-dashed border-white/[0.08] pb-3">
+                <span class="font-classic-seasons text-lg text-white uppercase tracking-widest block">
+                    TASK<span class="font-light italic text-sky-400 lowercase text-sm">wallet</span>
+                </span>
+                <span class="text-[9px] font-gotham uppercase tracking-widest text-slate-500 block mt-0.5">Automated Settlement Voucher</span>
+                <span class="text-[10px] font-mono text-sky-400 font-bold block mt-1" id="vTrxId">TRX #00000</span>
             </div>
 
-            <!-- Big Amount in Center -->
+            <!-- Big Payout Amount -->
             <div class="text-center py-1">
-                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-0.5">মোট উত্তোলিত অর্থ</span>
-                <h2 class="text-3xl font-black text-slate-900 tracking-tight" id="mAmount">৳ 0.00</h2>
-                <div class="mt-1.5" id="mStatusBadgeContainer"></div>
+                <span class="text-[9px] font-gotham uppercase tracking-wider text-slate-400 block mb-0.5">Disbursed Amount</span>
+                <h2 class="font-gotham text-3xl font-black text-white tracking-tight tabular-nums" id="vAmount">৳ 0.00</h2>
+                <div class="mt-2" id="vStatusBadgeBox"></div>
             </div>
 
-            <!-- Receipt Breakdown Table -->
-            <div class="border-t border-b border-dashed border-slate-200 py-3 space-y-2 text-xs">
+            <!-- Details Breakdown -->
+            <div class="border-t border-b border-dashed border-white/[0.08] py-3 space-y-2 text-xs font-gotham">
                 <div class="flex justify-between">
                     <span class="text-slate-400 font-medium">পেমেন্ট মেথড</span>
-                    <span class="font-bold text-slate-800" id="mMethod">bKash Personal</span>
+                    <span class="font-bold text-white" id="vMethod">bKash Personal</span>
                 </div>
                 <div class="flex justify-between">
                     <span class="text-slate-400 font-medium">অ্যাকাউন্ট নাম্বার</span>
-                    <span class="font-mono font-bold text-slate-800" id="mAccount">017xxxxxxxx</span>
+                    <span class="font-mono font-bold text-white" id="vAccount">017XXXXXXXX</span>
                 </div>
                 <div class="flex justify-between">
                     <span class="text-slate-400 font-medium">হিসাবধারীর নাম</span>
-                    <span class="font-bold text-slate-800">{{ user.name }}</span>
+                    <span class="font-bold text-white">{{ user.name }}</span>
                 </div>
                 <div class="flex justify-between">
                     <span class="text-slate-400 font-medium">তারিখ</span>
-                    <span class="font-mono text-slate-600" id="mDate">2026-03-29</span>
+                    <span class="font-mono text-slate-400" id="vDate">2026-11-03</span>
                 </div>
             </div>
 
-            <!-- Receipt Barcode & Stamp Footer -->
+            <!-- Simulated Barcode Footer -->
             <div class="text-center pt-1 space-y-1">
-                <!-- Barcode Graphic Simulation -->
-                <div class="flex items-center justify-center gap-1 h-7 opacity-70">
-                    <span class="w-1 h-full bg-slate-800"></span>
-                    <span class="w-0.5 h-full bg-slate-800"></span>
-                    <span class="w-1.5 h-full bg-slate-800"></span>
-                    <span class="w-0.5 h-full bg-slate-800"></span>
-                    <span class="w-2 h-full bg-slate-800"></span>
-                    <span class="w-0.5 h-full bg-slate-800"></span>
-                    <span class="w-1 h-full bg-slate-800"></span>
-                    <span class="w-1.5 h-full bg-slate-800"></span>
-                    <span class="w-0.5 h-full bg-slate-800"></span>
-                    <span class="w-2 h-full bg-slate-800"></span>
-                    <span class="w-1 h-full bg-slate-800"></span>
+                <div class="flex items-center justify-center gap-1 h-6 opacity-70">
+                    <span class="w-1 h-full bg-slate-300"></span><span class="w-0.5 h-full bg-slate-300"></span>
+                    <span class="w-1.5 h-full bg-slate-300"></span><span class="w-0.5 h-full bg-slate-300"></span>
+                    <span class="w-2 h-full bg-slate-300"></span><span class="w-0.5 h-full bg-slate-300"></span>
+                    <span class="w-1 h-full bg-slate-300"></span><span class="w-1.5 h-full bg-slate-300"></span>
+                    <span class="w-2 h-full bg-slate-300"></span><span class="w-1 h-full bg-slate-300"></span>
                 </div>
-                <span class="text-[9px] font-mono text-slate-400 block tracking-widest">*VERIFIED-PAYOUT-SLIP*</span>
+                <span class="text-[8px] font-mono text-slate-500 block tracking-widest">*TASKWALLET-SETTLEMENT-VERIFIED*</span>
             </div>
 
         </div>
 
-        <!-- Hidden Native Canvas for Exporting High-Res Portrait PNG -->
-        <canvas id="receiptExportCanvas" width="700" height="1050" class="hidden"></canvas>
+        <!-- Hidden Canvas for HD Image Export -->
+        <canvas id="voucherExportCanvas" width="700" height="1050" class="hidden"></canvas>
 
-        <!-- Export Action Button -->
-        <button onclick="exportReceiptAsImage()" id="btnExportReceipt"
-                class="w-full bg-[#E11D48] hover:bg-[#BE123C] active:scale-95 text-white font-black text-xs py-3.5 px-4 rounded-2xl shadow-lg shadow-rose-500/25 flex items-center justify-center gap-2 transition">
+        <!-- 1-Click HD Image Download Button -->
+        <button onclick="downloadVoucherHD()" id="btnDownloadVoucher" 
+                class="w-full bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-gotham font-semibold text-xs py-3.5 px-4 rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2">
             <i class="fa-solid fa-download text-xs"></i>
-            <span id="btnExportText">রসিদ ছবি ডাউনলোড করুন (Export PNG)</span>
+            <span id="btnDownloadText">রসিদ ছবি ডাউনলোড করুন (HD PNG)</span>
         </button>
 
     </div>
 </div>
 
-<!-- ================= INLINE SCRIPT ENGINE (NO EXTERNAL DEPENDENCY) ================= -->
+<!-- ================= JAVASCRIPT CONTROLLERS ================= -->
 <script>
 let currentModalData = {};
 
-function switchHistoryTab(tab) {
-    const withSec = document.getElementById('withdrawHistorySection');
-    const taskSec = document.getElementById('taskHistorySection');
-    const withBtn = document.getElementById('btnWithdrawTab');
-    const taskBtn = document.getElementById('btnTaskTab');
+// 1. Category Tab Switcher
+function switchCategoryTab(tab) {
+    const tabs = ['payouts', 'tasks', 'games', 'refs'];
+    tabs.forEach(t => {
+        document.getElementById(`section-${t}`).classList.add('hidden');
+        document.getElementById(`tabBtn-${t}`).className = "tab-pill py-2 rounded-xl transition hover:text-white flex flex-col items-center gap-0.5";
+    });
 
-    if (tab === 'withdraw') {
-        withSec.classList.remove('hidden');
-        taskSec.classList.add('hidden');
-        withBtn.className = "py-2.5 text-xs font-black rounded-xl transition bg-[#E11D48] text-white shadow-sm flex items-center justify-center gap-2";
-        taskBtn.className = "py-2.5 text-xs font-bold rounded-xl transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-2";
-    } else {
-        withSec.classList.add('hidden');
-        taskSec.classList.remove('hidden');
-        withBtn.className = "py-2.5 text-xs font-bold rounded-xl transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-2";
-        taskBtn.className = "py-2.5 text-xs font-black rounded-xl transition bg-[#E11D48] text-white shadow-sm flex items-center justify-center gap-2";
-    }
+    document.getElementById(`section-${tab}`).classList.remove('hidden');
+    document.getElementById(`tabBtn-${tab}`).className = "tab-pill tab-pill-active py-2 rounded-xl transition flex flex-col items-center gap-0.5";
+    filterHistoryItems();
 }
 
-function openReceiptModal(id, amount, method, account, status, date) {
+// 2. Real-time Search & Status Filter
+let activeStatusFilter = 'all';
+
+function setStatusFilter(status, btn) {
+    activeStatusFilter = status;
+    document.querySelectorAll('.status-pill').forEach(b => {
+        b.className = "status-pill px-3 py-1 rounded-lg bg-white/[0.03] text-slate-400 border border-white/[0.06] hover:text-white";
+    });
+    btn.className = "status-pill px-3 py-1 rounded-lg bg-blue-600 text-white font-semibold shadow-sm";
+    filterHistoryItems();
+}
+
+function filterHistoryItems() {
+    const q = document.getElementById('historySearchInput').value.trim().toLowerCase();
+    const visibleSection = document.querySelector('[id^="section-"]:not(.hidden)');
+    if (!visibleSection) return;
+
+    const rows = visibleSection.querySelectorAll('.history-item');
+    rows.forEach(r => {
+        const title = (r.getAttribute('data-title') || '').toLowerCase();
+        const id = (r.getAttribute('data-id') || '').toLowerCase();
+        const status = (r.getAttribute('data-status') || '').toLowerCase();
+
+        const matchesQuery = !q || title.includes(q) || id.includes(q);
+        const matchesStatus = activeStatusFilter === 'all' || status === activeStatusFilter;
+
+        if (matchesQuery && matchesStatus) {
+            r.style.display = 'flex';
+        } else {
+            r.style.display = 'none';
+        }
+    });
+}
+
+// 3. Official Voucher Modal
+function openVoucherModal(id, amount, method, account, status, date) {
     currentModalData = { id, amount, method, account, status, date };
 
-    document.getElementById('mTrxId').innerText = `TRX #${String(id).padStart(5, '0')}`;
-    document.getElementById('mAmount').innerText = `৳ ${parseFloat(amount).toFixed(2)}`;
-    document.getElementById('mMethod').innerText = method;
-    document.getElementById('mAccount').innerText = account;
-    document.getElementById('mDate').innerText = date;
+    document.getElementById('vTrxId').innerText = `TRX #${String(id).padStart(5, '0')}`;
+    document.getElementById('vAmount').innerText = `৳ ${parseFloat(amount).toFixed(2)}`;
+    document.getElementById('vMethod').innerText = method;
+    document.getElementById('vAccount').innerText = account;
+    document.getElementById('vDate').innerText = date;
 
-    const badgeBox = document.getElementById('mStatusBadgeContainer');
+    const badgeBox = document.getElementById('vStatusBadgeBox');
     if (status === 'approved') {
-        badgeBox.innerHTML = '<span class="text-[10px] font-black bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full uppercase">✓ Payment Successful</span>';
+        badgeBox.innerHTML = '<span class="text-[9px] font-gotham font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-0.5 rounded-full uppercase">✓ Settlement Cleared</span>';
     } else if (status === 'pending') {
-        badgeBox.innerHTML = '<span class="text-[10px] font-black bg-amber-100 text-amber-700 px-3 py-1 rounded-full uppercase">⏳ Processing</span>';
+        badgeBox.innerHTML = '<span class="text-[9px] font-gotham font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 px-3 py-0.5 rounded-full uppercase">⏳ In Processing</span>';
     } else {
-        badgeBox.innerHTML = '<span class="text-[10px] font-black bg-rose-100 text-rose-700 px-3 py-1 rounded-full uppercase">✕ Request Rejected</span>';
+        badgeBox.innerHTML = '<span class="text-[9px] font-gotham font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20 px-3 py-0.5 rounded-full uppercase">✕ Request Rejected</span>';
     }
 
-    const modal = document.getElementById('receiptModal');
-    const box = document.getElementById('modalCardBox');
+    const modal = document.getElementById('voucherModal');
+    const box = document.getElementById('voucherCardBox');
     modal.classList.remove('opacity-0', 'pointer-events-none');
     modal.classList.add('opacity-100');
     box.classList.remove('scale-95');
     box.classList.add('scale-100');
 }
 
-function closeReceiptModal() {
-    const modal = document.getElementById('receiptModal');
-    const box = document.getElementById('modalCardBox');
+function closeVoucherModal() {
+    const modal = document.getElementById('voucherModal');
+    const box = document.getElementById('voucherCardBox');
     modal.classList.add('opacity-0', 'pointer-events-none');
     modal.classList.remove('opacity-100');
     box.classList.add('scale-95');
     box.classList.remove('scale-100');
 }
 
-// ================= 100% NATIVE PORTRAIT RECEIPT EXPORTER (NO HANGING) =================
-function exportReceiptAsImage() {
-    const btn = document.getElementById('btnExportReceipt');
-    const btnText = document.getElementById('btnExportText');
-    const canvas = document.getElementById('receiptExportCanvas');
+// 4. Client-side Native Canvas HD Voucher PNG Generator
+function downloadVoucherHD() {
+    const btn = document.getElementById('btnDownloadVoucher');
+    const btnText = document.getElementById('btnDownloadText');
+    const canvas = document.getElementById('voucherExportCanvas');
     const ctx = canvas.getContext('2d');
 
     btn.disabled = true;
     btnText.innerText = "রসিদ তৈরি হচ্ছে...";
 
-    try {
-        const W = 700;
-        const H = 1050;
+    const W = 700;
+    const H = 1050;
 
-        // 1. Soft Backdrop Background
-        ctx.fillStyle = "#e2e8f0";
-        ctx.fillRect(0, 0, W, H);
+    // Dark Obsidian Backdrop
+    ctx.fillStyle = "#04060b";
+    ctx.fillRect(0, 0, W, H);
 
-        // 2. Portrait Paper Slip Box
-        const padX = 50;
-        const padY = 40;
-        const rW = W - padX * 2;
-        const rH = H - padY * 2;
-        const rRadius = 24;
+    // Frosted Paper Slip
+    const padX = 50, padY = 45;
+    const rW = W - padX * 2, rH = H - padY * 2;
+    ctx.fillStyle = "#0a0e17";
+    ctx.beginPath();
+    ctx.roundRect(padX, padY, rW, rH, 24);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
 
-        // Rounded Paper helper
-        ctx.beginPath();
-        ctx.moveTo(padX + rRadius, padY);
-        ctx.lineTo(padX + rW - rRadius, padY);
-        ctx.arcTo(padX + rW, padY, padX + rW, padY + rRadius, rRadius);
-        ctx.lineTo(padX + rW, padY + rH - rRadius);
-        ctx.arcTo(padX + rW, padY + rH, padX + rW - rRadius, padY + rH, rRadius);
-        ctx.lineTo(padX + rRadius, padY + rH);
-        ctx.arcTo(padX, padY + rH, padX, padY + rH - rRadius, rRadius);
-        ctx.lineTo(padX, padY + rRadius);
-        ctx.arcTo(padX, padY, padX + rRadius, padY, rRadius);
-        ctx.closePath();
+    // Brand Header
+    ctx.textAlign = "center";
+    ctx.font = "normal 32px 'Georgia', serif";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("TASKWALLET", W / 2, padY + 70);
 
-        ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 13px 'Arial'";
+    ctx.fillStyle = "#38bdf8";
+    ctx.fillText("AUTOMATED FINANCIAL CLEARING VOUCHER", W / 2, padY + 100);
+
+    ctx.font = "bold 15px 'Courier New', monospace";
+    ctx.fillStyle = "#94a3b8";
+    ctx.fillText(`TRX #${String(currentModalData.id).padStart(5, '0')}`, W / 2, padY + 125);
+
+    // Dashed Divider 1
+    ctx.setLineDash([8, 6]);
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+    ctx.beginPath();
+    ctx.moveTo(padX + 30, padY + 160);
+    ctx.lineTo(padX + rW - 30, padY + 160);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Big Amount
+    ctx.font = "bold 14px 'Arial'";
+    ctx.fillStyle = "#94a3b8";
+    ctx.fillText("উত্তোলিত অর্থ (Disbursed Amount)", W / 2, padY + 220);
+
+    ctx.font = "900 62px 'Arial'";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText(`৳ ${parseFloat(currentModalData.amount).toFixed(2)}`, W / 2, padY + 295);
+
+    // Status Badge
+    ctx.beginPath();
+    ctx.roundRect(W / 2 - 120, padY + 325, 240, 36, 18);
+    if (currentModalData.status === 'approved') {
+        ctx.fillStyle = "rgba(16, 185, 129, 0.2)";
         ctx.fill();
-        ctx.strokeStyle = "#cbd5e1";
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        // 3. Brand Header
-        ctx.beginPath();
-        ctx.arc(W / 2 - 80, padY + 60, 18, 0, Math.PI * 2);
-        ctx.fillStyle = "#E11D48";
+        ctx.fillStyle = "#34d399";
+        ctx.font = "bold 14px 'Arial'";
+        ctx.fillText("✓ SETTLEMENT CLEARED", W / 2, padY + 348);
+    } else {
+        ctx.fillStyle = "rgba(245, 158, 11, 0.2)";
         ctx.fill();
-
-        ctx.fillStyle = "#ffffff";
-        ctx.font = "bold 16px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText("⚡", W / 2 - 80, padY + 66);
-
-        ctx.textAlign = "left";
-        ctx.font = "900 24px Arial";
-        ctx.fillStyle = "#0f172a";
-        ctx.fillText("MICRO", W / 2 - 50, padY + 68);
-        ctx.fillStyle = "#E11D48";
-        ctx.fillText("EARNX", W / 2 + 42, padY + 68);
-
-        ctx.textAlign = "center";
-        ctx.font = "bold 12px Arial";
-        ctx.fillStyle = "#94a3b8";
-        ctx.fillText("OFFICIAL PAYMENT VOUCHER", W / 2, padY + 98);
-
-        ctx.font = "bold 14px Courier, monospace";
-        ctx.fillStyle = "#64748b";
-        ctx.fillText(`TRX #${String(currentModalData.id).padStart(5, '0')}`, W / 2, padY + 120);
-
-        // 4. Dashed Divider 1
-        ctx.setLineDash([8, 6]);
-        ctx.strokeStyle = "#cbd5e1";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(padX + 30, padY + 150);
-        ctx.lineTo(padX + rW - 30, padY + 150);
-        ctx.stroke();
-        ctx.setLineDash([]);
-
-        // 5. Big Center Amount
-        ctx.font = "bold 14px Arial";
-        ctx.fillStyle = "#64748b";
-        ctx.fillText("উত্তোলিত মোট টাকা (Amount)", W / 2, padY + 200);
-
-        ctx.font = "900 58px Arial";
-        ctx.fillStyle = "#0f172a";
-        ctx.fillText(`৳ ${parseFloat(currentModalData.amount).toFixed(2)}`, W / 2, padY + 275);
-
-        // Status Badge Pill
-        const badgeY = padY + 315;
-        ctx.beginPath();
-        ctx.roundRect(W / 2 - 120, badgeY - 22, 240, 36, 18);
-        if (currentModalData.status === 'approved') {
-            ctx.fillStyle = "#d1fae5";
-            ctx.fill();
-            ctx.fillStyle = "#065f46";
-            ctx.font = "bold 14px Arial";
-            ctx.fillText("✓ PAYMENT SUCCESSFUL", W / 2, badgeY + 2);
-        } else if (currentModalData.status === 'pending') {
-            ctx.fillStyle = "#fef3c7";
-            ctx.fill();
-            ctx.fillStyle = "#92400e";
-            ctx.font = "bold 14px Arial";
-            ctx.fillText("⏳ PROCESSING REQUEST", W / 2, badgeY + 2);
-        } else {
-            ctx.fillStyle = "#fee2e2";
-            ctx.fill();
-            ctx.fillStyle = "#991b1b";
-            ctx.font = "bold 14px Arial";
-            ctx.fillText("✕ REQUEST REJECTED", W / 2, badgeY + 2);
-        }
-
-        // 6. Dashed Divider 2
-        ctx.setLineDash([8, 6]);
-        ctx.strokeStyle = "#cbd5e1";
-        ctx.beginPath();
-        ctx.moveTo(padX + 30, padY + 380);
-        ctx.lineTo(padX + rW - 30, padY + 380);
-        ctx.stroke();
-        ctx.setLineDash([]);
-
-        // 7. Breakdown Table Data (2 Columns)
-        const rowStartY = padY + 440;
-        const lineSpacing = 55;
-        const leftX = padX + 50;
-        const rightX = padX + rW - 50;
-
-        const receiptRows = [
-            ["পেমেন্ট মাধ্যম", currentModalData.method],
-            ["অ্যাকাউন্ট নাম্বার", currentModalData.account],
-            ["প্রাপকের নাম", "{{ user.name }}"],
-            ["রেফার কোড", "@{{ user.referral_code }}"],
-            ["তারিখ ও সময়", currentModalData.date],
-            ["ভেরিফিকেশন গেটওয়ে", "MicroEarnX Auto Payout"]
-        ];
-
-        receiptRows.forEach((row, i) => {
-            const currentY = rowStartY + i * lineSpacing;
-            ctx.textAlign = "left";
-            ctx.font = "500 16px Arial";
-            ctx.fillStyle = "#64748b";
-            ctx.fillText(row[0], leftX, currentY);
-
-            ctx.textAlign = "right";
-            ctx.font = "bold 17px Arial";
-            ctx.fillStyle = "#0f172a";
-            ctx.fillText(row[1], rightX, currentY);
-        });
-
-        // 8. Dashed Divider 3
-        ctx.setLineDash([8, 6]);
-        ctx.strokeStyle = "#cbd5e1";
-        ctx.beginPath();
-        ctx.moveTo(padX + 30, padY + 790);
-        ctx.lineTo(padX + rW - 30, padY + 790);
-        ctx.stroke();
-        ctx.setLineDash([]);
-
-        // 9. Realistic Barcode
-        const barY = padY + 830;
-        const barStartX = W / 2 - 130;
-        const barWidths = [3, 1, 4, 2, 6, 2, 1, 5, 2, 4, 1, 3, 5, 2, 1, 4, 2, 6, 3, 1, 4, 2, 5, 1];
-        let curX = barStartX;
-        
-        ctx.fillStyle = "#1e293b";
-        barWidths.forEach(bw => {
-            ctx.fillRect(curX, barY, bw, 45);
-            curX += bw + 3;
-        });
-
-        ctx.textAlign = "center";
-        ctx.font = "bold 13px Courier, monospace";
-        ctx.fillStyle = "#64748b";
-        ctx.fillText("*MX-OFFICIAL-VERIFIED-PAYOUT*", W / 2, barY + 68);
-
-        ctx.font = "500 13px Arial";
-        ctx.fillStyle = "#94a3b8";
-        ctx.fillText("MicroEarnX এর সাথে থাকার জন্য ধন্যবাদ।", W / 2, padY + rH - 25);
-
-        // 10. Blob-Based Safe File Download (Works 100% on Android, iOS & Desktop)
-        canvas.toBlob(function(blob) {
-            if (!blob) {
-                alert("ইমেজ তৈরিতে সমস্যা হয়েছে!");
-                btn.disabled = false;
-                btnText.innerText = "রসিদ ছবি ডাউনলোড করুন (Export PNG)";
-                return;
-            }
-            const blobUrl = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = blobUrl;
-            a.download = `MicroEarnX_Voucher_TRX_${currentModalData.id}.png`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(blobUrl);
-
-            btn.disabled = false;
-            btnText.innerText = "রসিদ ছবি ডাউনলোড করুন (Export PNG)";
-        }, 'image/png');
-
-    } catch (err) {
-        console.error(err);
-        alert("ত্রুটি: " + err.message);
-        btn.disabled = false;
-        btnText.innerText = "রসিদ ছবি ডাউনলোড করুন (Export PNG)";
+        ctx.fillStyle = "#fbbf24";
+        ctx.font = "bold 14px 'Arial'";
+        ctx.fillText("⏳ IN PROCESSING", W / 2, padY + 348);
     }
+
+    // Dashed Divider 2
+    ctx.setLineDash([8, 6]);
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+    ctx.beginPath();
+    ctx.moveTo(padX + 30, padY + 395);
+    ctx.lineTo(padX + rW - 30, padY + 395);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Breakdown Details Table
+    const rowStartY = padY + 450;
+    const spacing = 55;
+    const rows = [
+        ["পেমেন্ট মাধ্যম", currentModalData.method],
+        ["অ্যাকাউন্ট নাম্বার", currentModalData.account],
+        ["প্রাপকের নাম", "{{ user.name }}"],
+        ["রেফার কোড", "@{{ user.referral_code }}"],
+        ["লেনদেন তারিখ", currentModalData.date],
+        ["ভেরিফিকেশন গেটওয়ে", "TaskWallet Automated Engine"]
+    ];
+
+    rows.forEach((r, idx) => {
+        const y = rowStartY + idx * spacing;
+        ctx.textAlign = "left";
+        ctx.font = "bold 15px 'Arial'";
+        ctx.fillStyle = "#94a3b8";
+        ctx.fillText(r[0], padX + 45, y);
+
+        ctx.textAlign = "right";
+        ctx.font = "bold 16px 'Arial'";
+        ctx.fillStyle = "#ffffff";
+        ctx.fillText(r[1], padX + rW - 45, y);
+    });
+
+    // Dashed Divider 3
+    ctx.setLineDash([8, 6]);
+    ctx.beginPath();
+    ctx.moveTo(padX + 30, padY + 795);
+    ctx.lineTo(padX + rW - 30, padY + 795);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Barcode Simulation
+    const barY = padY + 830;
+    const barStartX = W / 2 - 130;
+    const widths = [3, 1, 4, 2, 6, 2, 1, 5, 2, 4, 1, 3, 5, 2, 1, 4, 2, 6, 3, 1, 4, 2, 5, 1];
+    let curX = barStartX;
+    ctx.fillStyle = "#e2e8f0";
+    widths.forEach(bw => {
+        ctx.fillRect(curX, barY, bw, 45);
+        curX += bw + 3;
+    });
+
+    ctx.textAlign = "center";
+    ctx.font = "bold 12px 'Courier New', monospace";
+    ctx.fillStyle = "#64748b";
+    ctx.fillText("*TW-OFFICIAL-VERIFIED-PAYOUT*", W / 2, barY + 68);
+
+    canvas.toBlob(blob => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `TaskWallet_Voucher_TRX_${currentModalData.id}.png`;
+        a.click();
+        URL.revokeObjectURL(url);
+        btn.disabled = false;
+        btnText.innerText = "রসিদ ছবি ডাউনলোড করুন (HD PNG)";
+    }, 'image/png');
 }
 </script>
 {% endblock %}
