@@ -1874,6 +1874,9 @@ def admin_task_delete(task_id):
     flash("টাস্কটি স্থায়ীভাবে মুছে ফেলা হয়েছে!", "success")
     return redirect(url_for('admin_task'))
 
+# ==========================================================
+# USER FINANCIAL HISTORY & STATEMENT CONTROLLER (/history)
+# ==========================================================
 @app.route('/history')
 @login_required
 def history():
@@ -1881,18 +1884,46 @@ def history():
     user_id = session['user_id']
     user = sb.table('users').select('*').eq('id', user_id).single().execute().data
 
-    task_subs = sb.table('submissions').select('*, tasks(title, amount)') \
-        .eq('user_id', user_id).order('id', desc=True).execute().data or []
+    # ১. উইথড্রয়াল হিস্ট্রি
     withdrawals = sb.table('withdrawals').select('*') \
         .eq('user_id', user_id).order('id', desc=True).execute().data or []
+
+    # ২. টাস্ক সাবমিশন হিস্ট্রি
+    task_subs = sb.table('submissions').select('*, tasks(title, amount)') \
+        .eq('user_id', user_id).order('id', desc=True).execute().data or []
+
+    # ৩. গেম ও দৈনিক বোনাস হিস্ট্রি (স্পিন, স্ক্র্যাচ, কুইজ)
+    daily_acts = sb.table('daily_activities').select('*') \
+        .eq('user_id', user_id).order('id', desc=True).limit(50).execute().data or []
+
+    # ৪. রেফারেল হিস্ট্রি
+    referrals = sb.table('users').select('name, email, created_at') \
+        .eq('referred_by', user.get('referral_code', '')) \
+        .order('id', desc=True).limit(50).execute().data or []
+
+    # ৫. ফাইন্যান্সিয়াল সামারি হিসাব
+    total_withdrawn = sum(float(w['amount']) for w in withdrawals if w.get('status') == 'approved')
+    pending_withdrawals = sum(float(w['amount']) for w in withdrawals if w.get('status') == 'pending')
+    total_task_earned = sum(float(t['tasks']['amount']) for t in task_subs if t.get('status') == 'approved' and t.get('tasks'))
+    total_games_earned = sum(float(d.get('reward_earned', 0)) for d in daily_acts)
+
+    summary = {
+        'total_withdrawn': total_withdrawn,
+        'pending_withdrawals': pending_withdrawals,
+        'total_task_earned': total_task_earned,
+        'total_games_earned': total_games_earned
+    }
 
     return render_template(
         'history.html', 
         user=user, 
+        withdrawals=withdrawals,
         task_subs=task_subs, 
-        withdrawals=withdrawals
+        daily_acts=daily_acts,
+        referrals=referrals,
+        summary=summary
     )
-
+    
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
     if 'user_id' not in session:
