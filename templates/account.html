@@ -19,49 +19,41 @@
         background: rgba(255, 255, 255, 0.05);
     }
 
-    /* ================= PROFILE ID DYNAMIC TIER THEMES ================= */
-    /* 1. Wood Theme */
+    /* Dynamic Profile ID Card Themes */
     .id-theme-wood {
         background: radial-gradient(circle at 100% 0%, rgba(180, 83, 9, 0.3) 0%, rgba(15, 23, 42, 0.95) 55%, #04060b 100%);
         border: 1px solid rgba(180, 83, 9, 0.4);
-        box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.85);
     }
     .badge-id-wood { color: #f59e0b; background: rgba(180, 83, 9, 0.15); border: 1px solid rgba(180, 83, 9, 0.3); }
 
-    /* 2. Bronze Theme */
     .id-theme-bronze {
         background: radial-gradient(circle at 100% 0%, rgba(234, 88, 12, 0.35) 0%, rgba(20, 15, 30, 0.95) 55%, #04060b 100%);
         border: 1px solid rgba(234, 88, 12, 0.45);
-        box-shadow: 0 20px 50px -15px rgba(234, 88, 12, 0.25);
     }
     .badge-id-bronze { color: #fb923c; background: rgba(234, 88, 12, 0.15); border: 1px solid rgba(234, 88, 12, 0.35); }
 
-    /* 3. Silver Theme */
     .id-theme-silver {
         background: radial-gradient(circle at 100% 0%, rgba(148, 163, 184, 0.3) 0%, rgba(15, 23, 42, 0.95) 55%, #04060b 100%);
         border: 1px solid rgba(226, 232, 240, 0.4);
-        box-shadow: 0 20px 50px -15px rgba(148, 163, 184, 0.25);
     }
     .badge-id-silver { color: #f1f5f9; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); }
 
-    /* 4. Gold Theme */
     .id-theme-gold {
         background: radial-gradient(circle at 100% 0%, rgba(245, 158, 11, 0.4) 0%, rgba(25, 20, 35, 0.95) 55%, #04060b 100%);
         border: 1px solid rgba(245, 158, 11, 0.6);
-        box-shadow: 0 25px 60px -10px rgba(245, 158, 11, 0.3);
+        box-shadow: 0 20px 50px -10px rgba(245, 158, 11, 0.25);
     }
     .badge-id-gold { color: #fcd34d; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.5); }
 
-    /* 5. Diamond Theme */
     .id-theme-diamond {
         background: radial-gradient(circle at 100% 0%, rgba(6, 182, 212, 0.45) 0%, rgba(10, 20, 45, 0.95) 55%, #04060b 100%);
         border: 1px solid rgba(56, 189, 248, 0.6);
-        box-shadow: 0 25px 60px -10px rgba(56, 189, 248, 0.35);
+        box-shadow: 0 20px 50px -10px rgba(56, 189, 248, 0.3);
     }
     .badge-id-diamond { color: #38bdf8; background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(56, 189, 248, 0.5); }
 </style>
 
-<div class="max-w-xl mx-auto space-y-6 pb-24">
+<div class="max-w-xl mx-auto space-y-5 pb-24">
 
     <!-- Top Action Row -->
     <div class="flex items-center justify-between px-1">
@@ -70,12 +62,10 @@
             <span>ড্যাশবোর্ড</span>
         </a>
 
-        <div class="flex items-center gap-2">
-            <span class="text-[10px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
-                Member Hub
-            </span>
-        </div>
+        <span class="text-[10px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+            Profile Center
+        </span>
     </div>
 
     <!-- Title Section -->
@@ -83,37 +73,39 @@
         <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
             Profile <span class="text-slate-400 font-light italic lowercase text-xl">identity</span>
         </h1>
-        <p class="text-xs text-slate-400 font-gotham font-light">আপনার ডিজিটাল আইডি ও ব্যক্তিগত অ্যাকাউন্ট ম্যানেজমেন্ট</p>
+        <p class="text-xs text-slate-400 font-gotham font-light">আপনার ব্যক্তিগত আইডি, বিবরণী ও রেফারেল ব্যবস্থাপনা</p>
     </div>
 
-    <!-- ================= 1. THE REDESIGNED DYNAMIC "PROFILE ID" CARD ================= -->
+    <!-- ================= 1. THE "PROFILE ID" CARD WITH DOWNLOAD ICON ================= -->
     <div class="space-y-3">
         <div class="flex items-center justify-between px-1">
             <div class="flex items-center gap-2">
                 <i class="fa-solid fa-id-card text-sky-400 text-xs"></i>
-                <h3 class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-300">Profile ID</h3>
+                <h3 class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-300">Profile ID Card</h3>
             </div>
-            <a href="/upgrade" class="badge-id-{{ current_tier }} px-2.5 py-0.5 rounded-full font-gotham text-[10px] font-bold uppercase tracking-wider transition hover:scale-105">
-                {{ current_tier|upper }} TIER
-            </a>
+            
+            <div class="flex items-center gap-2">
+                <a href="/upgrade" class="badge-id-{{ current_tier }} px-2.5 py-0.5 rounded-full font-gotham text-[10px] font-bold uppercase tracking-wider transition hover:scale-105">
+                    {{ current_tier|upper }} TIER
+                </a>
+
+                <!-- 👉 DOWNLOAD ICON BUTTON (DIRECT 1-CLICK HD DOWNLOAD) 👈 -->
+                <button onclick="downloadProfileIdCard()" id="downloadCardBtn" 
+                        class="w-8 h-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-sky-400 flex items-center justify-center transition active:scale-95 shadow-sm"
+                        title="Profile ID ছবি ডাউনলোড করুন">
+                    <i class="fa-solid fa-download text-xs"></i>
+                </button>
+            </div>
         </div>
 
-        <!-- The 16:9 Aspect Ratio Smart Profile ID Card Preview -->
+        <!-- 16:9 Aspect Ratio Profile ID Card Preview -->
         <div class="id-theme-{{ current_tier }} relative w-full aspect-[16/9] rounded-[28px] p-5 sm:p-6 flex flex-col justify-between overflow-hidden shadow-2xl select-none transition-all duration-300">
             
-            <!-- Metallic Hologram Sheen Overlay -->
             <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-transparent pointer-events-none"></div>
 
-            <!-- Geometric Watermark Overlay -->
-            <svg class="absolute -right-6 top-1/2 -translate-y-1/2 w-56 h-56 text-white/[0.03] pointer-events-none" viewBox="0 0 200 200" fill="currentColor">
-                <path d="M100 15 L180 60 L180 140 L100 185 L20 140 L20 60 Z" stroke="currentColor" stroke-width="2" fill="none"/>
-                <path d="M100 35 L160 70 L160 130 L100 165 L40 130 L40 70 Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            </svg>
-
-            <!-- Card Top: Brand & Chip + ID -->
+            <!-- Top Row: Brand Hologram Chip + ID -->
             <div class="flex items-center justify-between relative z-10">
                 <div class="flex items-center gap-2.5">
-                    <!-- Smart Hologram Chip -->
                     <div class="w-8 h-6 rounded-md bg-gradient-to-tr from-amber-300/40 via-amber-200/80 to-yellow-500/40 border border-amber-300/60 shadow-inner flex items-center justify-center">
                         <div class="w-4 h-3 border border-amber-800/40 rounded-xs"></div>
                     </div>
@@ -127,7 +119,7 @@
                 </span>
             </div>
 
-            <!-- Card Center: Balance & Status -->
+            <!-- Center: Balance -->
             <div class="relative z-10 my-auto py-1">
                 <span class="font-gotham text-[10px] text-slate-400 uppercase tracking-widest block mb-0.5">
                     Account Balance
@@ -137,7 +129,7 @@
                 </div>
             </div>
 
-            <!-- Card Bottom: User Avatar & Name & Tier -->
+            <!-- Bottom: User Info & Status -->
             <div class="flex items-center justify-between relative z-10 pt-2 border-t border-white/[0.08]">
                 <div class="flex items-center gap-2.5">
                     <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-800 border-2 border-white/20 overflow-hidden shadow-inner shrink-0 flex items-center justify-center text-xs font-bold text-white">
@@ -169,302 +161,127 @@
 
         </div>
 
-        <!-- Hidden Native Canvas for High-Resolution Card Export -->
+        <!-- Hidden Canvas For HD Export -->
         <canvas id="exportCanvas" width="1200" height="675" class="hidden"></canvas>
-
-        <!-- Download Action Button -->
-        <button onclick="downloadProfileIdCard()" id="downloadCardBtn"
-            class="w-full bg-white/[0.04] hover:bg-white/[0.08] active:scale-[0.98] border border-white/10 text-slate-200 font-gotham font-semibold text-xs py-3 rounded-2xl transition flex items-center justify-center gap-2 shadow-sm">
-            <i class="fa-solid fa-cloud-arrow-down text-sky-400 text-xs"></i>
-            <span id="btnText">Profile ID ছবি হিসেবে ডাউনলোড করুন (HD)</span>
-        </button>
     </div>
 
-    <!-- ================= 2. PROFILE EDIT FORM (NO SOCIAL CONNECT) ================= -->
-    <div class="fintech-card rounded-[28px] p-5 sm:p-6 space-y-5">
+    <!-- ================= 2. PROFILE DETAILS (READ-ONLY VIEW WITH EDIT BUTTON) ================= -->
+    <div class="fintech-card rounded-[28px] p-5 sm:p-6 space-y-4">
         
-        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+        <div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-user-gear text-sky-400 text-xs"></i>
+                <h3 class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-200">Profile Details</h3>
+            </div>
             
-            <!-- User Avatar & Camera Picker -->
-            <div class="flex flex-col items-center text-center pb-2">
-                <div class="relative group cursor-pointer">
-                    <!-- Avatar Frame -->
-                    <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-white/20 shadow-xl bg-slate-900 flex items-center justify-center">
-                        {% if user.avatar_url %}
-                            <img id="avatarPreview" src="{{ user.avatar_url }}" alt="{{ user.name }}" class="w-full h-full object-cover">
-                        {% else %}
-                            <img id="avatarPreview" src="https://ui-avatars.com/api/?name={{ user.name }}&background=0f172a&color=fff&size=128" alt="{{ user.name }}" class="w-full h-full object-cover">
-                        {% endif %}
-                    </div>
-                    
-                    <!-- Floating Camera Button -->
-                    <label for="avatarInput" class="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center text-[10px] shadow-md cursor-pointer transition active:scale-95 border-2 border-[#04060b]" title="ছবি পরিবর্তন করুন">
-                        <i class="fa-solid fa-camera"></i>
-                    </label>
-                    <input type="file" name="avatar" id="avatarInput" accept="image/*" class="hidden" onchange="previewAvatar(this)">
-                </div>
-
-                <div class="mt-2.5">
-                    <h3 class="font-classic-seasons text-base font-normal text-white uppercase tracking-wider flex items-center justify-center gap-1.5">
-                        {{ user.name }}
-                        <i class="fa-solid fa-circle-check text-sky-400 text-xs" title="Verified Member"></i>
-                    </h3>
-                    <p class="font-mono text-xs text-slate-400 mt-0.5">{{ user.email }}</p>
-                </div>
-            </div>
-
-            <!-- Stats Mini Bar (Gotham Numbers) -->
-            <div class="w-full bg-white/[0.03] border border-white/[0.06] rounded-2xl py-3 px-2 grid grid-cols-3 divide-x divide-white/[0.06] text-center font-gotham">
-                <div>
-                    <span class="text-[9px] text-slate-400 uppercase tracking-wider block mb-0.5">ব্যালেন্স</span>
-                    <span class="text-xs font-bold text-white tabular-nums">৳ {{ "%.2f"|format(user.balance) }}</span>
-                </div>
-                <div>
-                    <span class="text-[9px] text-slate-400 uppercase tracking-wider block mb-0.5">রেফারেল</span>
-                    <span class="text-xs font-bold text-sky-400 tabular-nums">{{ ref_count }} জন</span>
-                </div>
-                <div>
-                    <span class="text-[9px] text-slate-400 uppercase tracking-wider block mb-0.5">সম্পন্ন টাস্ক</span>
-                    <span class="text-xs font-bold text-emerald-400 tabular-nums">{{ completed_tasks }} টি</span>
-                </div>
-            </div>
-
-            <!-- Personal Info Fields (No Social Links) -->
-            <div class="space-y-3 pt-2">
-                <span class="text-[10px] font-gotham uppercase tracking-wider text-slate-400 block ml-1">
-                    ব্যক্তিগত তথ্য
-                </span>
-
-                <!-- Full Name -->
-                <div class="space-y-1">
-                    <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-500 ml-1">পূর্ণ নাম</label>
-                    <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5">
-                        <i class="fa-solid fa-user text-slate-500 text-xs w-4 text-center"></i>
-                        <input type="text" name="name" value="{{ user.name }}" required 
-                            class="w-full bg-transparent text-xs font-gotham text-slate-100 focus:outline-none placeholder-slate-600">
-                    </div>
-                </div>
-
-                <!-- Email (Readonly) -->
-                <div class="space-y-1">
-                    <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-500 ml-1">ইমেইল অ্যাড্রেস</label>
-                    <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 opacity-60 cursor-not-allowed">
-                        <i class="fa-solid fa-lock text-slate-500 text-xs w-4 text-center"></i>
-                        <input type="email" value="{{ user.email }}" readonly 
-                            class="w-full bg-transparent text-xs font-mono text-slate-400 focus:outline-none cursor-not-allowed">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Device Security Notice -->
-            <div class="p-3 bg-white/[0.02] border border-white/[0.06] rounded-xl text-[10px] text-slate-400 flex items-center gap-2.5">
-                <i class="fa-solid fa-shield-halved text-sky-400 text-xs shrink-0"></i>
-                <span>ডিভাইস ফিঙ্গারপ্রিন্ট সক্রিয়। ১ ডিভাইসে ১টি অ্যাকাউন্ট সুরক্ষিত।</span>
-            </div>
-
-            <!-- Submit Button (10% Blue Accent) -->
-            <button type="submit" 
-                class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-3.5 px-4 rounded-2xl shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2">
-                <i class="fa-solid fa-floppy-disk text-xs"></i>
-                <span>প্রোফাইল তথ্য সেভ করুন</span>
+            <!-- 👉 EDIT PROFILE BUTTON (OPENS POPUP MODAL) 👈 -->
+            <button onclick="openEditModal()" 
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600/15 hover:bg-blue-600/25 border border-blue-500/30 text-sky-400 text-xs font-gotham font-semibold transition active:scale-95">
+                <i class="fa-solid fa-pen-to-square text-[10px]"></i>
+                <span>Edit Profile</span>
             </button>
+        </div>
 
-        </form>
-
-    </div>
-
-    <!-- ================= EXCLUSIVE ADMIN ACCESS BUTTON (ONLY FOR admin@gmail.com) ================= -->
-    {% if user.email == 'admin@gmail.com' %}
-    <div class="fintech-card rounded-2xl p-4 border-blue-500/30 flex items-center justify-between gap-3">
-        <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-blue-600/20 text-sky-400 flex items-center justify-center text-sm shrink-0">
-                <i class="fa-solid fa-sliders"></i>
+        <!-- User Identity Row -->
+        <div class="flex items-center gap-3.5 pt-1">
+            <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-white/20 bg-slate-900 shrink-0 flex items-center justify-center text-lg font-bold text-white shadow-md">
+                {% if user.avatar_url %}
+                    <img src="{{ user.avatar_url }}" alt="{{ user.name }}" class="w-full h-full object-cover">
+                {% else %}
+                    {{ user.name[:1] }}
+                {% endif %}
             </div>
-            <div class="leading-tight">
-                <span class="text-xs font-bold text-white block">সুপার অ্যাডমিন প্যানেল</span>
-                <span class="text-[10px] text-slate-400">সিস্টেম কন্ট্রোল ও ম্যানেজমেন্ট হাব</span>
+            <div class="leading-tight min-w-0">
+                <h4 class="font-classic-seasons text-base text-white uppercase tracking-wide truncate">
+                    {{ user.name }}
+                </h4>
+                <p class="font-mono text-xs text-slate-400 truncate mt-0.5">{{ user.email }}</p>
+                <span class="inline-flex items-center gap-1 font-gotham text-[10px] text-emerald-400 mt-1">
+                    <i class="fa-solid fa-circle-check text-[9px]"></i> ভেরিফাইড মেম্বার (#{{ "%05d"|format(user.id) }})
+                </span>
             </div>
         </div>
-        <a href="/admin" class="bg-blue-600 hover:bg-blue-500 text-white font-gotham font-bold text-xs px-4 py-2 rounded-xl transition shadow active:scale-95 shrink-0">
-            প্যানেলে যান
-        </a>
+
+        <!-- 3-Stats Mini Bar -->
+        <div class="w-full bg-white/[0.03] border border-white/[0.06] rounded-2xl py-3 px-2 grid grid-cols-3 divide-x divide-white/[0.06] text-center font-gotham">
+            <div>
+                <span class="text-[9px] text-slate-400 uppercase tracking-wider block mb-0.5">ব্যালেন্স</span>
+                <span class="text-xs font-bold text-white tabular-nums">৳ {{ "%.2f"|format(user.balance) }}</span>
+            </div>
+            <div>
+                <span class="text-[9px] text-slate-400 uppercase tracking-wider block mb-0.5">রেফারেল</span>
+                <span class="text-xs font-bold text-sky-400 tabular-nums">{{ ref_count }} জন</span>
+            </div>
+            <div>
+                <span class="text-[9px] text-slate-400 uppercase tracking-wider block mb-0.5">টাস্ক</span>
+                <span class="text-xs font-bold text-emerald-400 tabular-nums">{{ completed_tasks }} টি</span>
+            </div>
+        </div>
+
+        <!-- Details Grid (Read-only Presentation) -->
+        <div class="grid grid-cols-2 gap-2.5 pt-2 text-xs font-gotham">
+            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                <span class="text-[9px] text-slate-500 uppercase tracking-wider block mb-0.5">Member Tier</span>
+                <span class="font-semibold text-slate-200 uppercase">{{ current_tier }}</span>
+            </div>
+            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                <span class="text-[9px] text-slate-500 uppercase tracking-wider block mb-0.5">Joined Date</span>
+                <span class="font-mono text-slate-300 text-[11px]">{{ user.created_at[:10] }}</span>
+            </div>
+        </div>
+
     </div>
-    {% endif %}
+
+    <!-- ================= 3. REFERRAL LINK & CODE BOX ================= -->
+    <div class="fintech-card rounded-[28px] p-5 space-y-3">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-blue-500/10 border border-blue-500/20 text-sky-400 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </div>
+                <h3 class="text-xs font-semibold text-white">রেফারেল লিংক ও কোড</h3>
+            </div>
+            <span class="font-mono text-[10px] text-sky-400 bg-sky-500/10 border border-sky-500/20 px-2.5 py-0.5 rounded-full font-bold">
+                {{ user.referral_code }}
+            </span>
+        </div>
+
+        <p class="text-[11px] text-slate-400 leading-relaxed">
+            বন্ধুদের ইনভাইট করুন। প্রতি সফল রেফারেলে আপনার অ্যাকাউন্টে সরাসরি <strong class="text-white font-gotham">৳১৫.০০</strong> জমা হবে।
+        </p>
+
+        <!-- Referral Link Input with 1-Click Copy -->
+        <div class="flex items-center gap-2 pt-1">
+            <input type="text" id="profileRefLink" readonly 
+                   value="{{ request.host_url }}?ref={{ user.referral_code }}" 
+                   class="flex-1 bg-white/[0.03] border border-white/[0.08] text-slate-300 text-xs font-mono px-3.5 py-2.5 rounded-xl focus:outline-none">
+            
+            <button onclick="copyProfileRefLink()" 
+                    class="bg-blue-600 hover:bg-blue-500 active:scale-95 text-white text-xs font-gotham font-semibold px-4 py-2.5 rounded-xl transition shadow-md shadow-blue-600/30 flex items-center gap-1.5 shrink-0">
+                <i class="fa-regular fa-copy text-[11px]"></i>
+                <span>কপি</span>
+            </button>
+        </div>
+    </div>
 
 </div>
 
-<!-- ================= 100% NATIVE DYNAMIC PROFILE ID CANVAS EXPORTER ================= -->
-<script>
-function downloadProfileIdCard() {
-    const btn = document.getElementById('downloadCardBtn');
-    const btnText = document.getElementById('btnText');
-    const canvas = document.getElementById('exportCanvas');
-    const ctx = canvas.getContext('2d');
+<!-- ================= 4. POPUP MODAL: EDIT PROFILE FORM ================= -->
+<div id="editProfileModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="w-full max-w-sm bg-[#0a0e17] border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4 transform scale-95 transition-transform duration-300" id="editModalCard">
+        
+        <div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
+            <span class="font-classic-seasons text-sm text-white uppercase tracking-wider">
+                Edit <span class="text-slate-400 font-light italic lowercase text-xs">Profile</span>
+            </span>
+            <button onclick="closeEditModal()" class="w-7 h-7 rounded-full bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-white flex items-center justify-center text-xs transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
 
-    btn.disabled = true;
-    btnText.innerText = "কার্ড তৈরি হচ্ছে...";
-
-    const W = 1200;
-    const H = 675;
-
-    // 1. Dark Canvas Backdrop
-    ctx.fillStyle = "#04060b";
-    ctx.fillRect(0, 0, W, H);
-
-    // 2. Floating ID Card Geometry
-    const cardX = 140, cardY = 55, cardW = 920, cardH = 565, radius = 32;
-
-    function roundRect(ctx, x, y, w, h, r) {
-        ctx.beginPath();
-        ctx.moveTo(x + r, y);
-        ctx.arcTo(x + w, y, x + w, y + h, r);
-        ctx.arcTo(x + w, y + h, x, y + h, r);
-        ctx.arcTo(x, y + h, x, y, r);
-        ctx.arcTo(x, y + x, y, r);
-        ctx.closePath();
-    }
-
-    // Dynamic Tier Color Themes for Canvas
-    const tier = "{{ current_tier }}";
-    let gradTop = "#191e2b", gradBottom = "#0a0c12", borderColor = "rgba(255, 255, 255, 0.12)", tierColor = "#38bdf8";
-
-    if (tier === 'bronze') {
-        gradTop = "#33160a"; gradBottom = "#0c0806"; borderColor = "rgba(234, 88, 12, 0.4)"; tierColor = "#fb923c";
-    } else if (tier === 'silver') {
-        gradTop = "#242933"; gradBottom = "#0c0e12"; borderColor = "rgba(226, 232, 240, 0.4)"; tierColor = "#f1f5f9";
-    } else if (tier === 'gold') {
-        gradTop = "#382806"; gradBottom = "#0e0a02"; borderColor = "rgba(245, 158, 11, 0.5)"; tierColor = "#fcd34d";
-    } else if (tier === 'diamond') {
-        gradTop = "#07293d"; gradBottom = "#020a12"; borderColor = "rgba(56, 189, 248, 0.5)"; tierColor = "#38bdf8";
-    }
-
-    roundRect(ctx, cardX, cardY, cardW, cardH, radius);
-    const cardGrad = ctx.createRadialGradient(cardX + cardW/2, cardY, 50, cardX + cardW/2, cardY + cardH, 600);
-    cardGrad.addColorStop(0, gradTop);
-    cardGrad.addColorStop(1, gradBottom);
-    ctx.fillStyle = cardGrad;
-    ctx.fill();
-
-    ctx.lineWidth = 2.5;
-    ctx.strokeStyle = borderColor;
-    ctx.stroke();
-
-    // 3. Top Row: Brand & ID
-    ctx.textAlign = "left";
-    ctx.font = "normal 30px 'Georgia', serif";
-    ctx.fillStyle = "#ffffff";
-    ctx.fillText("TASKWALLET PROFILE ID", cardX + 60, cardY + 70);
-
-    ctx.textAlign = "right";
-    ctx.font = "bold 18px 'Courier New', monospace";
-    ctx.fillStyle = "#94a3b8";
-    ctx.fillText("MEMBER #{{ '%05d'|format(user.id) }}", cardX + cardW - 60, cardY + 70);
-
-    // 4. Center: Account Balance
-    ctx.textAlign = "center";
-    ctx.font = "bold 16px 'Arial'";
-    ctx.fillStyle = "#94a3b8";
-    ctx.fillText("ACCOUNT WALLET BALANCE", cardX + cardW / 2, cardY + 230);
-
-    ctx.font = "900 76px 'Arial'";
-    ctx.fillStyle = "#ffffff";
-    ctx.fillText("৳ {{ '%.2f'|format(user.balance) }}", cardX + cardW / 2, cardY + 315);
-
-    // 5. Bottom Row: Divider Line
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(cardX + 50, cardY + cardH - 105);
-    ctx.lineTo(cardX + cardW - 50, cardY + cardH - 105);
-    ctx.stroke();
-
-    // Bottom Right: Tier Status
-    ctx.textAlign = "right";
-    ctx.font = "bold 13px 'Arial'";
-    ctx.fillStyle = "#64748b";
-    ctx.fillText("TIER STATUS", cardX + cardW - 60, cardY + cardH - 65);
-
-    ctx.font = "bold 18px 'Arial'";
-    ctx.fillStyle = tierColor;
-    ctx.fillText("● {{ current_tier|upper }} VIP", cardX + cardW - 60, cardY + cardH - 40);
-
-    // Bottom Left: User Name & Handle
-    ctx.textAlign = "left";
-    ctx.font = "bold 22px 'Arial'";
-    ctx.fillStyle = "#ffffff";
-    ctx.fillText("{{ user.name }}", cardX + 130, cardY + cardH - 62);
-
-    ctx.font = "bold 16px 'Courier New', monospace";
-    ctx.fillStyle = "#94a3b8";
-    ctx.fillText("@{{ user.referral_code }}", cardX + 130, cardY + cardH - 38);
-
-    // 6. Draw User Avatar / Initial
-    const avatarCenterX = cardX + 80;
-    const avatarCenterY = cardY + cardH - 52;
-    const avatarRadius = 28;
-
-    function finishDownload() {
-        canvas.toBlob(function(blob) {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.download = `TaskWallet_Profile_ID_{{ user.name }}.png`;
-            a.href = url;
-            a.click();
-            URL.revokeObjectURL(url);
-            btn.disabled = false;
-            btnText.innerText = "Profile ID ছবি হিসেবে ডাউনলোড করুন (HD)";
-        }, "image/png");
-    }
-
-    function drawFallbackAvatar() {
-        ctx.beginPath();
-        ctx.arc(avatarCenterX, avatarCenterY, avatarRadius, 0, Math.PI * 2);
-        ctx.fillStyle = "#1e293b";
-        ctx.fill();
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.3)";
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        ctx.fillStyle = "#ffffff";
-        ctx.font = "900 24px 'Arial'";
-        ctx.textAlign = "center";
-        ctx.fillText("{{ user.name[:1] }}", avatarCenterX, avatarCenterY + 8);
-        finishDownload();
-    }
-
-    {% if user.avatar_url %}
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.onload = function() {
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(avatarCenterX, avatarCenterY, avatarRadius, 0, Math.PI * 2);
-            ctx.clip();
-            ctx.drawImage(img, avatarCenterX - avatarRadius, avatarCenterY - avatarRadius, avatarRadius * 2, avatarRadius * 2);
-            ctx.restore();
-
-            ctx.beginPath();
-            ctx.arc(avatarCenterX, avatarCenterY, avatarRadius, 0, Math.PI * 2);
-            ctx.strokeStyle = borderColor;
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            finishDownload();
-        };
-        img.onerror = drawFallbackAvatar;
-        img.src = "{{ user.avatar_url }}";
-    {% else %}
-        drawFallbackAvatar();
-    {% endif %}
-}
-
-function previewAvatar(input) {
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('avatarPreview').src = e.target.result;
-        }
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-</script>
-{% endblock %}
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            
+            <!-- Avatar Upload Inside Modal -->
+            <div class="flex flex-col items-center text-center">
+                <div class="relative group cursor-pointer">
+                    <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-white/20 shadow-xl bg-slate-900 flex
