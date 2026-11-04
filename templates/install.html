@@ -1,156 +1,244 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="max-w-xl mx-auto space-y-8 pb-16">
+<style>
+    .fintech-card {
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(24px);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fintech-card:hover {
+        border-color: rgba(56, 189, 248, 0.35);
+    }
 
-    <!-- Header & Back Button -->
+    /* Ambient Hero Glow */
+    .install-hero-glow {
+        background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.22) 0%, rgba(6, 182, 212, 0.1) 45%, rgba(10, 15, 29, 0.95) 75%, #04060b 100%);
+        border: 1px solid rgba(56, 189, 248, 0.28);
+        box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    }
+
+    /* App Icon Holographic Frame */
+    .app-icon-frame {
+        box-shadow: 0 0 25px rgba(56, 189, 248, 0.35), inset 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+</style>
+
+<div class="max-w-xl mx-auto space-y-6 pb-24">
+
+    <!-- Top Action Row -->
     <div class="flex items-center justify-between px-1">
-        <a href="/app" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-[#E11D48] transition">
-            <i class="fa-solid fa-arrow-left"></i>
-            <span>ড্যাশবোর্ডে ফিরুন</span>
+        <a href="/app" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95 shadow-sm">
+            <i class="fa-solid fa-arrow-left text-[10px] text-blue-500"></i>
+            <span>ড্যাশবোর্ড</span>
         </a>
-        <span class="text-[10px] font-black bg-rose-50 text-[#E11D48] px-3 py-1 rounded-full border border-rose-100 uppercase tracking-wider flex items-center gap-1">
-            <i class="fa-solid fa-mobile-screen-button text-xs"></i> অফিসিয়াল মোবাইল অ্যাপ
-        </span>
+
+        <div class="flex items-center gap-2">
+            <span class="text-[10px] font-gotham font-semibold tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                PWA Core v2.6
+            </span>
+        </div>
     </div>
 
-    <!-- ================= 1. HERO APP DOWNLOAD CARD ================= -->
-    <div class="bg-white rounded-[32px] p-6 sm:p-8 shadow-2xl shadow-rose-200/50 border border-rose-50/80 text-center space-y-4 relative overflow-hidden">
+    <!-- ================= 1. HERO APP INSTALL CONSOLE ================= -->
+    <div class="install-hero-glow rounded-[32px] p-6 sm:p-8 text-center space-y-5 select-none relative overflow-hidden">
         
-        <!-- App Logo with Ring -->
+        <!-- Holographic App Icon with Bezel -->
         <div class="relative w-20 h-20 mx-auto">
-            <div class="w-full h-full rounded-3xl border-4 border-rose-100 shadow-xl overflow-hidden bg-white p-1">
-                <img src="https://i.ibb.co/1JbqCDHq/Add-Text-10-10-03-15-45.jpg" alt="MicroEarnX App" class="w-full h-full object-cover rounded-2xl">
+            <div class="w-full h-full rounded-3xl bg-gradient-to-tr from-[#0a0f1d] via-[#1e293b] to-[#0a0f1d] border-2 border-white/20 p-1 app-icon-frame flex items-center justify-center shadow-2xl">
+                <div class="w-full h-full rounded-2xl bg-[#04060b] flex flex-col items-center justify-center border border-white/10">
+                    <span class="font-classic-seasons text-xl text-white font-normal uppercase tracking-wider">TW</span>
+                    <span class="font-gotham text-[7px] text-sky-400 tracking-widest uppercase">APP</span>
+                </div>
             </div>
-            <!-- Online Green Badge -->
-            <span class="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-2 border-white rounded-full flex items-center justify-center text-[10px] text-white">
-                <i class="fa-solid fa-check"></i>
+            <!-- Online Radar Dot -->
+            <span class="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-2 border-[#04060b] rounded-full flex items-center justify-center text-[9px] text-white shadow-md">
+                <i class="fa-solid fa-bolt"></i>
             </span>
         </div>
 
-        <div>
-            <h1 class="text-2xl font-black text-slate-900 tracking-tight">MicroEarnX অ্যাপ ইনস্টল করুন</h1>
-            <p class="text-xs text-slate-400 mt-1">প্লে-স্টোর ছাড়াই ১-ক্লিকে সরাসরি ফোনে ইনস্টল করুন (মাত্র ১ MB)</p>
+        <!-- Headline & Subtitle -->
+        <div class="space-y-1.5">
+            <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
+                Install <span class="text-slate-400 font-light italic lowercase text-2xl">TaskWallet</span>
+            </h1>
+            <p class="text-xs text-slate-300 font-gotham font-light max-w-sm mx-auto leading-relaxed">
+                প্লে-স্টোর ছাড়াই সরাসরি আপনার ফোনের হোমস্ক্রিনে ইনস্টল করুন (মাত্র ১ MB সাইজ)।
+            </p>
         </div>
 
-        <!-- 1-CLICK DYNAMIC INSTALL BUTTON -->
-        <button id="nativeInstallBtn" onclick="triggerNativeInstall()" 
-                class="w-full bg-[#E11D48] hover:bg-[#BE123C] active:scale-95 text-white font-black text-xs sm:text-sm py-4 px-6 rounded-2xl shadow-xl shadow-rose-500/25 flex items-center justify-center gap-2.5 transition">
-            <i class="fa-solid fa-download text-sm"></i>
-            <span id="installBtnText">সরাসরি ফোনে অ্যাপ ইনস্টল করুন (Install App)</span>
-        </button>
+        <!-- 👉 1-CLICK DYNAMIC INSTALL BUTTON (COBALT BLUE ACCENT) 👈 -->
+        <div class="pt-1">
+            <button id="nativeInstallBtn" onclick="triggerNativeInstall()" 
+                    class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs sm:text-sm py-4 px-6 rounded-2xl shadow-xl shadow-blue-600/35 transition flex items-center justify-center gap-2.5">
+                <i class="fa-solid fa-download text-sm"></i>
+                <span id="installBtnText">সরাসরি ফোনে ইনস্টল করুন (Install App)</span>
+            </button>
+        </div>
 
-        <!-- App Features Highlights -->
-        <div class="grid grid-cols-3 gap-2 pt-2 text-center text-xs">
-            <div class="p-2.5 rounded-2xl bg-slate-50 border border-slate-100">
-                <i class="fa-solid fa-bolt text-amber-500 text-sm mb-1 block"></i>
-                <span class="text-[10px] font-bold text-slate-700 block">০ সেকেন্ড লোডিং</span>
+        <!-- 3 Performance Pillars -->
+        <div class="grid grid-cols-3 gap-2 pt-2 font-gotham text-center select-none">
+            <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                <span class="text-sky-400 font-black text-xs sm:text-sm block tabular-nums">0.2s</span>
+                <span class="text-[9px] text-slate-400 font-medium block">Instant Launch</span>
             </div>
-            <div class="p-2.5 rounded-2xl bg-slate-50 border border-slate-100">
-                <i class="fa-solid fa-memory text-indigo-500 text-sm mb-1 block"></i>
-                <span class="text-[10px] font-bold text-slate-700 block">১ MB সাইজ</span>
+            <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                <span class="text-emerald-400 font-black text-xs sm:text-sm block tabular-nums">~1 MB</span>
+                <span class="text-[9px] text-slate-400 font-medium block">Zero Storage</span>
             </div>
-            <div class="p-2.5 rounded-2xl bg-slate-50 border border-slate-100">
-                <i class="fa-solid fa-shield-halved text-emerald-500 text-sm mb-1 block"></i>
-                <span class="text-[10px] font-bold text-slate-700 block">১০০% নিরাপদ</span>
+            <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                <span class="text-amber-400 font-black text-xs sm:text-sm block tabular-nums">100%</span>
+                <span class="text-[9px] text-slate-400 font-medium block">Bank-Grade PWA</span>
             </div>
         </div>
 
     </div>
 
-    <!-- ================= 2. WHY USE OUR APP? (ফিচারসমূহ) ================= -->
-    <div class="bg-white rounded-[32px] p-6 sm:p-8 shadow-xl border border-rose-50/80 space-y-4">
-        <h3 class="text-base font-black text-slate-900 flex items-center gap-2">
-            <i class="fa-solid fa-star text-amber-500"></i> অ্যাপ ব্যবহারের সুবিধা কী কী?
-        </h3>
+    <!-- ================= 2. WHY USE OUR APP? (সুবিধাসমূহ) ================= -->
+    <div class="fintech-card rounded-[28px] p-5 sm:p-6 space-y-4">
+        <div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
+            <span class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-star text-amber-400"></i> অ্যাপ ব্যবহারের সুবিধাসমূহ
+            </span>
+            <span class="text-[10px] font-gotham text-slate-500">Core Features</span>
+        </div>
 
-        <div class="space-y-3 text-xs">
-            <div class="flex items-start gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100">
-                <div class="w-8 h-8 rounded-xl bg-rose-50 text-[#E11D48] flex items-center justify-center shrink-0 text-sm">
+        <div class="space-y-3 text-xs leading-relaxed">
+            
+            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04] flex items-start gap-3.5">
+                <div class="w-9 h-9 rounded-xl bg-blue-600/15 border border-blue-500/30 text-sky-400 flex items-center justify-center shrink-0 text-sm">
                     <i class="fa-solid fa-hand-pointer"></i>
                 </div>
                 <div>
-                    <h4 class="font-black text-slate-900 text-xs">১-ট্যাপে সরাসরি ওপেন</h4>
-                    <p class="text-slate-500 text-[11px] mt-0.5">বারবার ব্রাউজারে লিংক টাইপ করার ঝামেলা নেই। মোবাইলের হোমস্ক্রিন থেকে এক ক্লিকেই অ্যাপ ওপেন হবে।</p>
+                    <h4 class="font-bold text-white text-xs">১-ট্যাপে সরাসরি এক্সেস</h4>
+                    <p class="text-slate-400 text-[11px] mt-0.5">ব্রাউজারে বারবার ওয়েবসাইট লিংক টাইপ করার ঝামেলা নেই। মোবাইলের হোমস্ক্রিন থেকে এক ক্লিকেই অ্যাপ ওপেন হবে।</p>
                 </div>
             </div>
 
-            <div class="flex items-start gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100">
-                <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 text-sm">
+            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04] flex items-start gap-3.5">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shrink-0 text-sm">
                     <i class="fa-solid fa-lock-open"></i>
                 </div>
                 <div>
-                    <h4 class="font-black text-slate-900 text-xs">অটো-লগইন প্রোটেকশন</h4>
-                    <p class="text-slate-500 text-[11px] mt-0.5">অ্যাপে একবার লগইন করলে বারবার লগআউট হবে না। ৬০ দিন একটানা নিরাপদ লগইন স্টেট বজায় থাকবে।</p>
+                    <h4 class="font-bold text-white text-xs">৬০ দিনের পার্মানেন্ট অটো-লগইন</h4>
+                    <p class="text-slate-400 text-[11px] mt-0.5">অ্যাপে একবার লগইন করলে বারবার লগআউট হওয়ার ভয় নেই। নিরাপদ স্টেট ৬০ দিন স্থায়ী থাকবে।</p>
                 </div>
             </div>
 
-            <div class="flex items-start gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100">
-                <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 text-sm">
+            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04] flex items-start gap-3.5">
+                <div class="w-9 h-9 rounded-xl bg-purple-500/15 border border-purple-500/30 text-purple-400 flex items-center justify-center shrink-0 text-sm">
                     <i class="fa-solid fa-bell"></i>
                 </div>
                 <div>
-                    <h4 class="font-black text-slate-900 text-xs">নতুন কাজের দ্রুত আপডেট</h4>
-                    <p class="text-slate-500 text-[11px] mt-0.5">নতুন কোনো হাই-পেয়িং টাস্ক বা স্পনসরশিপ আসলে অ্যাপ ব্যবহারকারীরা সবার আগে নোটিফিকেশন পাবেন।</p>
+                    <h4 class="font-bold text-white text-xs">নতুন কাজের তাৎক্ষণিক নোটিফিকেশন</h4>
+                    <p class="text-slate-400 text-[11px] mt-0.5">নতুন কোনো হাই-পেয়িং টাস্ক বা রিওয়ার্ড আসলে অ্যাপ ইউজাররা সবার আগে আপডেট পাবেন।</p>
                 </div>
             </div>
+
         </div>
     </div>
 
-    <!-- ================= 3. STEP-BY-STEP INSTALL INSTRUCTIONS ================= -->
-    <div class="bg-white rounded-[32px] p-6 sm:p-8 shadow-xl border border-rose-50/80 space-y-4">
-        <h3 class="text-base font-black text-slate-900 flex items-center gap-2">
-            <i class="fa-solid fa-circle-question text-blue-500"></i> বাটন কাজ না করলে ম্যানুয়ালি ইনস্টলের নিয়ম
-        </h3>
-
-        <!-- Android Guide -->
-        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2 text-xs">
-            <span class="font-black text-slate-900 flex items-center gap-1.5 text-xs">
-                <i class="fa-brands fa-android text-emerald-600 text-sm"></i> অ্যান্ড্রয়েড (Google Chrome):
+    <!-- ================= 3. STEP-BY-STEP MANUAL INSTALL INSTRUCTIONS ================= -->
+    <div class="fintech-card rounded-[28px] p-5 sm:p-6 space-y-4">
+        <div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
+            <span class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-circle-question text-sky-400"></i> বাটন কাজ না করলে ম্যানুয়াল ইনস্টল
             </span>
-            <p class="text-slate-600 leading-relaxed text-[11px]">
-                ক্রোম ব্রাউজারের উপরে ডান পাশে থাকা <strong>৩টি ডট (Three Dots ⋮)</strong> মেনুতে চাপ দিন &gt; এরপর <strong>"Install App"</strong> অথবা <strong>"Add to Home Screen"</strong> অপশনে ক্লিক করলেই অ্যাপ ফোনে সেভ হয়ে যাবে।
-            </p>
+            <span class="text-[10px] font-gotham text-slate-500">Manual Guide</span>
         </div>
 
-        <!-- iPhone Guide -->
-        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2 text-xs">
-            <span class="font-black text-slate-900 flex items-center gap-1.5 text-xs">
-                <i class="fa-brands fa-apple text-slate-900 text-sm"></i> আইফোন (Safari Browser):
-            </span>
-            <p class="text-slate-600 leading-relaxed text-[11px]">
-                সাফারি ব্রাউজারের নিচে থাকা <strong>শেয়ার আইকন (Share Button ⎋)</strong> এ চাপ দিন &gt; একটু নিচে স্ক্রল করে <strong>"Add to Home Screen" (+)</strong> সিলেক্ট করুন &gt; উপরে <strong>"Add"</strong> বাটনে ক্লিক করুন।
-            </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs leading-relaxed">
+            
+            <!-- Android Chrome Guide -->
+            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04] space-y-1.5">
+                <span class="font-bold text-white flex items-center gap-2 text-xs">
+                    <i class="fa-brands fa-android text-emerald-400 text-sm"></i> অ্যান্ড্রয়েড (Google Chrome):
+                </span>
+                <p class="text-slate-400 text-[11px]">
+                    ক্রোম ব্রাউজারের উপরে ডান পাশে থাকা <strong>৩টি ডট (⋮)</strong> মেনুতে চাপ দিন &gt; এরপর <strong>"Install App"</strong> অথবা <strong>"Add to Home screen"</strong> অপশনে ক্লিক করুন।
+                </p>
+            </div>
+
+            <!-- iOS Safari Guide -->
+            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04] space-y-1.5">
+                <span class="font-bold text-white flex items-center gap-2 text-xs">
+                    <i class="fa-brands fa-apple text-slate-200 text-sm"></i> আইফোন (Safari Browser):
+                </span>
+                <p class="text-slate-400 text-[11px]">
+                    সাফারি ব্রাউজারের নিচে থাকা <strong>শেয়ার বাটন (⎋)</strong> এ চাপ দিন &gt; নিচে স্ক্রল করে <strong>"Add to Home Screen" (+)</strong> সিলেক্ট করে উপরে <strong>"Add"</strong> চাপুন।
+                </p>
+            </div>
+
         </div>
     </div>
+
+    <!-- ================= 4. TELEGRAM COMMUNITY DESK ================= -->
+    <a href="https://t.me/micro_earnx" target="_blank" 
+       class="fintech-card rounded-[24px] p-4 flex items-center justify-between gap-3 border-sky-500/20 bg-sky-500/[0.02] hover:bg-sky-500/[0.06] transition active:scale-[0.99] select-none">
+        <div class="flex items-center gap-3.5">
+            <div class="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-500/30 text-sky-400 flex items-center justify-center text-base shrink-0">
+                <i class="fa-brands fa-telegram"></i>
+            </div>
+            <div class="leading-tight">
+                <span class="text-xs font-bold text-white block">অ্যাপ ইনস্টলে কোনো সমস্যা হলে</span>
+                <span class="text-[10px] text-slate-400">টেলিগ্রামে মেসেজ দিয়ে সরাসরি হেল্প নিন</span>
+            </div>
+        </div>
+        <div class="shrink-0 text-sky-400 text-xs flex items-center gap-1 font-gotham font-semibold pr-1">
+            <span>সহায়তা</span>
+            <i class="fa-solid fa-arrow-right text-[9px]"></i>
+        </div>
+    </a>
 
 </div>
 
-<!-- ================= PWA NATIVE INSTALL TRIGGER ENGINE ================= -->
+<!-- ================= JAVASCRIPT: NATIVE PWA INSTALL TRIGGER ================= -->
 <script>
-let deferredPrompt;
+let deferredInstallPrompt;
+const installBtn = document.getElementById('nativeInstallBtn');
+const installBtnText = document.getElementById('installBtnText');
 
+// Check if app is already running in Standalone PWA mode
+function checkAppInstalledState() {
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    if (isStandalone && installBtn) {
+        installBtn.disabled = true;
+        installBtn.className = "w-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-gotham font-bold text-xs sm:text-sm py-4 px-6 rounded-2xl flex items-center justify-center gap-2.5 cursor-default";
+        installBtnText.innerText = "✓ App Is Already Installed & Running";
+        installBtn.querySelector('i').className = "fa-solid fa-circle-check text-emerald-400";
+    }
+}
+
+checkAppInstalledState();
+
+// Capture native browser PWA prompt
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
-    deferredPrompt = e;
-    const btn = document.getElementById('nativeInstallBtn');
-    if (btn) {
-        btn.classList.add('animate-pulse');
+    deferredInstallPrompt = e;
+    if (installBtn && !window.matchMedia('(display-mode: standalone)').matches) {
+        installBtn.classList.add('shadow-blue-500/40');
     }
 });
 
 function triggerNativeInstall() {
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
+    if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
-                alert('🎉 অভিনন্দন! MicroEarnX অ্যাপটি আপনার ফোনে ইনস্টল হচ্ছে।');
+                alert('🎉 অভিনন্দন! TaskWallet অ্যাপটি আপনার ফোনে ইনস্টল হচ্ছে।');
+                checkAppInstalledState();
             }
-            deferredPrompt = null;
+            deferredInstallPrompt = null;
         });
     } else {
-        // Fallback for browsers that don't trigger prompt automatically
-        alert('আপনার ব্রাউজারের থ্রি-ডট (⋮) মেনু থেকে "Install App" বা "Add to Home screen" চাপুন।');
+        // Fallback for browsers without direct prompt event
+        alert("আপনার ব্রাউজারের থ্রি-ডট (⋮) মেনু থেকে 'Install App' অথবা 'Add to Home screen' অপশনে চাপ দিন।");
     }
 }
+
+window.addEventListener('appinstalled', () => {
+    checkAppInstalledState();
+});
 </script>
 {% endblock %}
