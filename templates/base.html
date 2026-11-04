@@ -28,31 +28,19 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Classic Luxury "The Seasons" Serif */
         .font-classic-seasons {
             font-family: 'The Seasons', 'Cormorant Garamond', Georgia, serif;
             letter-spacing: 0.04em;
         }
 
-        /* Clean "Gotham" Geometric Sans */
         .font-gotham {
             font-family: 'Gotham', 'Montserrat', -apple-system, sans-serif;
             letter-spacing: -0.01em;
         }
 
-        /* Deep Matte Obsidian Background */
         body {
             background-color: #04060b;
             color: #f1f5f9;
-        }
-
-        /* Liquid Frosted Glass */
-        .classic-glass {
-            background: rgba(10, 14, 23, 0.78);
-            backdrop-filter: blur(28px) saturate(190%);
-            -webkit-backdrop-filter: blur(28px) saturate(190%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
         }
 
         .header-glass {
@@ -62,24 +50,126 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* ================= 10% ELECTRIC BLUE WATER DOCK STYLING ================= */
-        .water-droplet-btn {
-            background: radial-gradient(circle at 35% 30%, #38bdf8 0%, #2563eb 50%, #1d4ed8 100%);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.6), inset 0 2px 4px rgba(255,255,255,0.4);
+        /* ================= 🌊 LIQUID BLUE WATER BOTTOM DOCK ================= */
+        .classic-glass-dock {
+            background: rgba(10, 15, 29, 0.82);
+            backdrop-filter: blur(28px) saturate(210%);
+            -webkit-backdrop-filter: blur(28px) saturate(210%);
+            border: 1px solid rgba(56, 189, 248, 0.22);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.85), 0 0 25px rgba(37, 99, 235, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            position: relative;
         }
 
+        /* Liquid water reflection line on top of the dock */
+        .classic-glass-dock::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.7), transparent);
+            pointer-events: none;
+        }
+
+        /* 1. Organic Liquid Water Droplet Morphing (Center Work Button) */
+        @keyframes water-fluid-morph {
+            0% {
+                border-radius: 42% 58% 62% 38% / 45% 50% 50% 55%;
+                box-shadow: 0 0 25px rgba(56, 189, 248, 0.65), inset 0 3px 6px rgba(255, 255, 255, 0.7), inset 0 -4px 8px rgba(29, 78, 216, 0.85);
+                transform: translateY(0);
+            }
+            33% {
+                border-radius: 58% 42% 40% 60% / 55% 45% 55% 45%;
+                box-shadow: 0 0 30px rgba(37, 99, 235, 0.8), inset 0 4px 8px rgba(255, 255, 255, 0.8), inset 0 -3px 6px rgba(6, 182, 212, 0.85);
+                transform: translateY(-2px);
+            }
+            66% {
+                border-radius: 45% 55% 58% 42% / 40% 60% 40% 60%;
+                box-shadow: 0 0 25px rgba(6, 182, 212, 0.7), inset 0 3px 6px rgba(255, 255, 255, 0.7), inset 0 -4px 8px rgba(37, 99, 235, 0.85);
+                transform: translateY(1px);
+            }
+            100% {
+                border-radius: 42% 58% 62% 38% / 45% 50% 50% 55%;
+                box-shadow: 0 0 25px rgba(56, 189, 248, 0.65), inset 0 3px 6px rgba(255, 255, 255, 0.7), inset 0 -4px 8px rgba(29, 78, 216, 0.85);
+                transform: translateY(0);
+            }
+        }
+
+        .liquid-water-droplet {
+            animation: water-fluid-morph 6s infinite ease-in-out;
+            background: radial-gradient(circle at 35% 25%, #38bdf8 0%, #2563eb 45%, #1e40af 80%, #0f172a 100%);
+            border: 1.5px solid rgba(255, 255, 255, 0.45);
+            position: relative;
+        }
+
+        /* Double Expanding Blue Water Ripples */
+        @keyframes water-pulse-ring {
+            0% { transform: scale(0.85); opacity: 0.8; }
+            50% { transform: scale(1.35); opacity: 0.25; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+        .liquid-ripple-ring {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid rgba(56, 189, 248, 0.55);
+            animation: water-pulse-ring 3s cubic-bezier(0.1, 0.7, 0.3, 1) infinite;
+            pointer-events: none;
+        }
+
+        /* 2. Fluid Liquid Blue Water Pool on Hover & Active */
         .water-nav-item {
             position: relative;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            border-radius: 18px;
+            padding: 6px 14px;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
+        /* Expanding translucent blue water pool */
+        .water-nav-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 90%, rgba(56, 189, 248, 0.35) 0%, rgba(37, 99, 235, 0.18) 50%, transparent 80%);
+            opacity: 0;
+            transform: scale(0.6) translateY(8px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: inherit;
+            pointer-events: none;
+        }
+        .water-nav-item:hover::before {
+            opacity: 0.8;
+            transform: scale(1) translateY(0);
+        }
+        .water-nav-item.active::before {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            background: radial-gradient(circle at 50% 85%, rgba(56, 189, 248, 0.45) 0%, rgba(37, 99, 235, 0.25) 55%, transparent 85%);
+        }
+
         .water-nav-item.active {
             color: #38bdf8 !important;
             filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.75));
         }
 
-        /* Water Ripple Rings for Headphone Support */
-        @keyframes water-ring {
+        /* Water droplet indicator dot below active item */
+        .water-nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 3px;
+            border-radius: 9999px;
+            background: #38bdf8;
+            box-shadow: 0 0 10px #38bdf8, 0 0 18px #2563eb;
+        }
+
+        /* Headphone Support Water Ripple */
+        @keyframes support-ring {
             0% { transform: scale(0.9); opacity: 0.7; }
             50% { transform: scale(1.3); opacity: 0; }
             100% { transform: scale(1.45); opacity: 0; }
@@ -89,12 +179,12 @@
             position: absolute;
             inset: -4px;
             border-radius: 9999px;
-            border: 1.5px solid rgba(56, 189, 248, 0.5);
-            animation: water-ring 2.6s infinite cubic-bezier(0.1, 0.7, 0.3, 1);
+            border: 1.5px solid rgba(56, 189, 248, 0.55);
+            animation: support-ring 2.6s infinite cubic-bezier(0.1, 0.7, 0.3, 1);
             pointer-events: none;
         }
 
-        /* On-Screen Floating Flash Notification Animation */
+        /* Floating Flash Toast Animation */
         @keyframes toastSlideDown {
             0% { opacity: 0; transform: translateY(-20px) scale(0.95); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
@@ -235,12 +325,11 @@
             </button>
         </div>
 
-        <!-- 🌟 PROMINENT USER PROFILE PIC & WALLET CARD IN DRAWER 🌟 -->
+        <!-- User Profile Pic & Assets in Drawer -->
         <div class="pt-3 pb-2">
             {% if current_user %}
             <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-3.5 space-y-3">
                 <div class="flex items-center gap-3">
-                    <!-- User Avatar -->
                     <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-sky-400/40 bg-slate-900 shrink-0 flex items-center justify-center text-sm font-bold text-white shadow-lg shadow-sky-500/10">
                         {% if current_user.avatar_url %}
                             <img src="{{ current_user.avatar_url }}" alt="{{ current_user.name }}" class="w-full h-full object-cover">
@@ -280,10 +369,9 @@
             {% endif %}
         </div>
 
-        <!-- 🌟 ALL NAVIGATION LINKS IN DRAWER (COMPLETE DIRECTORY) 🌟 -->
+        <!-- All Navigation Links in Drawer -->
         <nav class="flex-1 py-2 space-y-3 overflow-y-auto pr-1 text-xs font-medium no-scrollbar">
             
-            <!-- Category 1: Main Suite -->
             <div class="space-y-0.5">
                 <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
                     প্রধান মেনু
@@ -310,7 +398,6 @@
                 </a>
             </div>
 
-            <!-- Category 2: Earning Modules -->
             <div class="space-y-0.5 pt-1 border-t border-white/[0.04]">
                 <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
                     আর্নিং হাব
@@ -341,7 +428,6 @@
                 </a>
             </div>
 
-            <!-- Category 3: VIP & Growth -->
             <div class="space-y-0.5 pt-1 border-t border-white/[0.04]">
                 <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
                     ভিআইপি ও নেটওয়ার্ক
@@ -360,7 +446,6 @@
                 </a>
             </div>
 
-            <!-- Category 4: Services & Community -->
             <div class="space-y-0.5 pt-1 border-t border-white/[0.04]">
                 <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
                     সেবা ও সাপোর্ট
@@ -381,8 +466,6 @@
                     <i class="fa-solid fa-mobile-screen-button w-4 text-center text-slate-400"></i>
                     <span>অ্যাপ ইনস্টল করুন (PWA)</span>
                 </a>
-                
-                <!-- 👉 UPDATED OFFICIAL TELEGRAM COMMUNITY LINKS 👈 -->
                 <a href="https://t.me/taskwallet_bd" target="_blank" class="flex items-center gap-3 px-3 py-2 rounded-xl text-sky-400 hover:bg-white/[0.04] transition font-semibold">
                     <i class="fa-brands fa-telegram w-4 text-center"></i>
                     <span>টেলিগ্রাম চ্যানেল (@taskwallet_bd)</span>
@@ -393,7 +476,6 @@
                 </a>
             </div>
 
-            <!-- Category 5: Admin Shortcut (Only for Root Admin) -->
             {% if current_user and current_user.email == 'admin@gmail.com' %}
             <div class="pt-1 border-t border-white/[0.04]">
                 <a href="/admin" class="flex items-center gap-3 px-3 py-2 rounded-xl bg-blue-600/10 border border-blue-500/20 text-sky-400 font-semibold transition">
@@ -423,96 +505,24 @@
     <!-- ================= 5. HEADPHONE SUPPORT BUTTON (UPDATED: @task_wallet_online) ================= -->
     <div class="fixed bottom-24 right-5 z-40">
         <a href="https://t.me/task_wallet_online" target="_blank"
-           class="support-water-pulse relative group w-12 h-12 rounded-full bg-[#0a0e17] border border-sky-400/40 text-sky-400 hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(56,189,248,0.3)]"
+           class="support-water-pulse relative group w-12 h-12 rounded-full bg-[#0a0e17] border border-sky-400/40 text-sky-400 hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(56,189,248,0.35)]"
            title="২৪/৭ কাস্টমার সাপোর্ট (@task_wallet_online)">
             <i class="fa-solid fa-headset text-lg"></i>
             <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-black"></span>
         </a>
     </div>
 
-    <!-- ================= 6. BOTTOM NAV DOCK (VIBRANT 10% ELECTRIC BLUE ACCENTS) ================= -->
+    <!-- ================= 6. 🌊 LIQUID WATER BLUE BOTTOM NAV DOCK ================= -->
     <div class="fixed bottom-3 left-0 right-0 z-40 px-3 flex justify-center pointer-events-none">
-        <nav class="classic-glass w-full max-w-md rounded-3xl px-4 py-2 flex justify-around items-center pointer-events-auto">
+        <nav class="classic-glass-dock w-full max-w-md rounded-3xl px-3 py-2 flex justify-around items-center pointer-events-auto">
             
             <!-- Home -->
-            <a href="/app" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-sky-400 transition group" data-path="/app">
+            <a href="/app" class="water-nav-item nav-item flex flex-col items-center gap-1 text-slate-400 hover:text-sky-300 transition group" data-path="/app">
                 <i class="fa-solid fa-house text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
                 <span class="text-[9px] font-gotham font-medium tracking-tight">Home</span>
             </a>
 
             <!-- History -->
-            <a href="/history" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-sky-400 transition group" data-path="/history">
+            <a href="/history" class="water-nav-item nav-item flex flex-col items-center gap-1 text-slate-400 hover:text-sky-300 transition group" data-path="/history">
                 <i class="fa-solid fa-clock-rotate-left text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
-                <span class="text-[9px] font-gotham font-medium tracking-tight">History</span>
-            </a>
-
-            <!-- Center Work Button (Water Droplet Electric Blue Morphing) -->
-            <a href="/allwork" class="nav-item -mt-5 flex flex-col items-center group active:scale-95 transition" data-path="/allwork">
-                <div class="water-droplet-btn w-12 h-12 rounded-full flex items-center justify-center text-white text-base shadow-[0_0_25px_rgba(56,189,248,0.55)]">
-                    <i class="fa-solid fa-bolt drop-shadow"></i>
-                </div>
-                <span class="text-[9px] font-gotham font-bold text-sky-400 mt-1">Work</span>
-            </a>
-
-            <!-- Payout -->
-            <a href="/withdraw" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-sky-400 transition group" data-path="/withdraw">
-                <i class="fa-solid fa-wallet text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
-                <span class="text-[9px] font-gotham font-medium tracking-tight">Payout</span>
-            </a>
-
-            <!-- Profile -->
-            <a href="/account" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-sky-400 transition group" data-path="/account">
-                <i class="fa-solid fa-user text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
-                <span class="text-[9px] font-gotham font-medium tracking-tight">Profile</span>
-            </a>
-
-        </nav>
-    </div>
-
-    <!-- SCRIPT: LEFT DRAWER, TOAST DISMISS & ACTIVE ACCENT HIGHLIGHT -->
-    <script>
-        function toggleSidebar(open) {
-            const overlay = document.getElementById('drawerOverlay');
-            const panel = document.getElementById('drawerPanel');
-            if (open) {
-                overlay.classList.remove('opacity-0', 'pointer-events-none');
-                overlay.classList.add('opacity-100');
-                panel.classList.remove('-translate-x-full');
-                panel.classList.add('translate-x-0');
-            } else {
-                overlay.classList.remove('opacity-100');
-                overlay.classList.add('opacity-0', 'pointer-events-none');
-                panel.classList.remove('translate-x-0');
-                panel.classList.add('-translate-x-full');
-            }
-        }
-
-        // Active Bottom Navigation Electric Blue Glow
-        document.addEventListener("DOMContentLoaded", function () {
-            const currentPath = window.location.pathname;
-            document.querySelectorAll('.nav-item').forEach(item => {
-                const target = item.getAttribute('data-path');
-                if (target && currentPath === target) {
-                    item.classList.remove('text-slate-400');
-                    item.classList.add('active');
-                }
-            });
-
-            // Auto-Dismiss Flash Messages after 4.5 seconds
-            setTimeout(() => {
-                document.querySelectorAll('.flash-toast').forEach(toast => {
-                    dismissToast(toast);
-                });
-            }, 4500);
-        });
-
-        function dismissToast(element) {
-            if (!element) return;
-            element.style.transition = "all 0.35s ease";
-            element.style.opacity = "0";
-            element.style.transform = "translateY(-15px) scale(0.95)";
-            setTimeout(() => element.remove(), 350);
-        }
-    </script>
-</body>
-</html>
+                <span class="text-[9px] font-gotham font-medium tracking-
