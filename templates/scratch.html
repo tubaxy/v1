@@ -5,118 +5,155 @@
     #scratchCanvas {
         touch-action: none;
     }
+
+    .fintech-card {
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(24px);
+    }
+
+    /* Ambient Glow Behind Scratch Board */
+    .scratch-ambient-glow {
+        background: radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, rgba(37, 99, 235, 0.1) 50%, transparent 75%);
+    }
+
+    /* Laser Progress Bar Glow */
+    .laser-progress-bar {
+        box-shadow: 0 0 12px rgba(52, 211, 153, 0.6);
+    }
+
+    /* Holographic Underlayer Asset Card */
+    .vault-underlayer {
+        background: radial-gradient(circle at 50% 30%, rgba(16, 185, 129, 0.3) 0%, rgba(10, 20, 25, 0.98) 65%, #04060b 100%);
+        border: 1px solid rgba(52, 211, 153, 0.4);
+    }
 </style>
 
-<div class="max-w-md mx-auto space-y-4 pb-12">
+<div class="max-w-md mx-auto space-y-5 pb-24">
 
-    <!-- Header & Back Button -->
+    <!-- Top Action Row -->
     <div class="flex items-center justify-between px-1">
-        <a href="/app" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-[#E11D48] transition">
-            <i class="fa-solid fa-arrow-left"></i>
-            <span>ড্যাশবোর্ডে ফিরুন</span>
+        <a href="/allwork" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95 shadow-sm">
+            <i class="fa-solid fa-arrow-left text-[10px] text-blue-500"></i>
+            <span>আর্নিং হাব</span>
         </a>
-        <span class="text-[10px] font-black bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full border border-emerald-200 uppercase tracking-wider flex items-center gap-1">
-            <i class="fa-solid fa-gift text-xs"></i> ইনস্ট্যান্ট ক্যাশ
+
+        <span class="text-[10px] font-gotham font-semibold tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            Instant Cash Vault
         </span>
     </div>
 
-    <!-- Main Scratch Card Container -->
-    <div class="bg-white rounded-[32px] p-6 sm:p-8 shadow-2xl shadow-rose-200/40 border border-rose-50/80 flex flex-col items-center text-center relative overflow-hidden space-y-4">
-        
-        <!-- Header Info -->
-        <div>
-            <div class="w-12 h-12 mx-auto rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl mb-2 shadow-sm">
-                <i class="fa-solid fa-gift"></i>
-            </div>
-            <h2 class="text-lg font-black text-slate-900 tracking-tight">লাকি স্ক্র্যাচ কার্ড</h2>
-            <p class="text-xs text-slate-400 mt-0.5">কার্ডটি আঙুল বা মাউস দিয়ে ঘষে উপহার উন্মোচন করুন</p>
-        </div>
+    <!-- Title Section (The Seasons Classic Typography) -->
+    <div class="text-center py-1 select-none space-y-1">
+        <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
+            Scratch <span class="text-slate-400 font-light italic lowercase text-xl">vault</span>
+        </h1>
+        <p class="text-xs text-slate-400 font-gotham font-light">কার্ডের ওপর আঙুল বা মাউস দিয়ে ঘষে ক্যাশ রিওয়ার্ড উন্মোচন করুন</p>
+    </div>
 
-        <!-- Remaining & Live Balance Grid -->
-        <div class="w-full grid grid-cols-2 gap-2 bg-slate-50 border border-slate-100 rounded-2xl p-2.5 text-xs">
-            <div class="text-left pl-2">
-                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">আজকে বাকি</span>
-                <span class="text-xs font-black text-emerald-600" id="scratchRemainingBadge">
+    <!-- Main Scratch Container -->
+    <div class="fintech-card rounded-[32px] p-5 sm:p-7 flex flex-col items-center text-center relative overflow-hidden space-y-5 shadow-2xl">
+        
+        <!-- Remaining & Live Balance Status Bar -->
+        <div class="w-full grid grid-cols-2 gap-2 bg-white/[0.025] border border-white/[0.06] rounded-2xl p-3 font-gotham text-xs select-none">
+            <div class="text-left pl-1">
+                <span class="text-[9px] text-slate-500 uppercase tracking-wider block">Cards Left</span>
+                <span class="text-xs font-bold text-emerald-400" id="scratchRemainingBadge">
                     {{ remaining }} / ৩ বার
                 </span>
             </div>
-            <div class="text-right pr-2">
-                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">বর্তমান ব্যালেন্স</span>
-                <span class="text-xs font-black text-slate-900" id="liveScratchBal">
+            <div class="text-right pr-1">
+                <span class="text-[9px] text-slate-500 uppercase tracking-wider block">Wallet Balance</span>
+                <span class="text-xs font-black text-white tabular-nums" id="liveScratchBal">
                     ৳ {{ "%.2f"|format(user.balance) }}
                 </span>
             </div>
         </div>
 
-        <!-- ================= SCRATCH BOARD (WIDTH: 290, HEIGHT: 160) ================= -->
-        <div class="relative w-[290px] h-[160px] rounded-2xl overflow-hidden shadow-xl border-2 border-emerald-100 select-none my-1">
+        <!-- ================= HOLOGRAPHIC TITANIUM SCRATCH BOARD ================= -->
+        <div class="relative w-[300px] h-[170px] select-none my-1 flex items-center justify-center">
             
-            <!-- Underlying Layer (Revealed Reward) -->
-            <div class="absolute inset-0 bg-gradient-to-tr from-emerald-600 to-teal-700 text-white flex flex-col items-center justify-center p-4">
-                <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-100 opacity-90">আপনি জিতেছেন</span>
-                <span id="revealedAmountText" class="text-4xl font-black tracking-tight my-1 drop-shadow-md">৳ ০.০০</span>
-                <span class="text-[9px] font-bold bg-white/20 text-white px-3 py-0.5 rounded-full backdrop-blur-sm">
-                    সরাসরি ওয়ালেটে যোগ হয়েছে
+            <!-- Ambient Radiance Behind Card -->
+            <div class="absolute inset-0 rounded-2xl scratch-ambient-glow pointer-events-none scale-110"></div>
+
+            <!-- Underlying Revealed Layer (Luxury Emerald Asset Vault) -->
+            <div class="vault-underlayer absolute inset-0 rounded-2xl flex flex-col items-center justify-center p-4 shadow-2xl overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-transparent pointer-events-none"></div>
+                
+                <span class="text-[9px] font-gotham uppercase tracking-[0.2em] text-emerald-400 font-semibold block">
+                    Cash Asset Unlocked
+                </span>
+                
+                <div id="revealedAmountText" class="font-gotham font-black text-4xl sm:text-5xl text-white tracking-tight my-1 tabular-nums drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]">
+                    ৳ ০.০০
+                </div>
+
+                <span class="inline-flex items-center gap-1 font-gotham text-[10px] text-emerald-300 bg-emerald-500/15 border border-emerald-500/30 px-3 py-0.5 rounded-full mt-1">
+                    <i class="fa-solid fa-circle-check text-[9px]"></i> সরাসরি ওয়ালেটে ক্রেডিট
                 </span>
             </div>
 
-            <!-- Foreground Silver Scratchable Canvas Overlay -->
-            <canvas id="scratchCanvas" width="290" height="160" 
-                    class="absolute inset-0 z-10 cursor-crosshair transition-opacity duration-700"></canvas>
+            <!-- Foreground Titanium Canvas Foil (Scratched off by user) -->
+            <canvas id="scratchCanvas" width="300" height="170" 
+                    class="absolute inset-0 z-10 cursor-crosshair rounded-2xl transition-opacity duration-700 shadow-2xl"></canvas>
 
         </div>
 
-        <!-- Scratch Live Progress Indicator -->
-        <div class="w-full space-y-1 px-4">
-            <div class="flex items-center justify-between text-[10px] text-slate-400 font-bold">
-                <span>ঘষেছেন: <span id="progressText" class="text-emerald-600">০%</span></span>
-                <span>টার্গেট: ৪০%</span>
+        <!-- Live Laser Scratch Gauge -->
+        <div class="w-full space-y-1.5 px-2 font-gotham select-none">
+            <div class="flex items-center justify-between text-[10px] text-slate-400 font-medium">
+                <span>ঘষেছেন: <span id="progressText" class="text-emerald-400 font-bold">০%</span></span>
+                <span class="text-slate-500">টার্গেট: ৪০% (Auto Unlock)</span>
             </div>
-            <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                <div id="progressBar" class="bg-gradient-to-r from-emerald-400 to-teal-500 h-full w-0 transition-all duration-150"></div>
+            
+            <div class="w-full bg-white/[0.06] rounded-full h-1.5 overflow-hidden">
+                <div id="progressBar" class="bg-gradient-to-r from-emerald-500 via-teal-400 to-sky-400 laser-progress-bar h-full w-0 transition-all duration-150"></div>
             </div>
         </div>
 
-        <!-- Action / Reset Button -->
+        <!-- Action / Reset Button (10% Electric Blue Accent) -->
         <button id="nextCardBtn" onclick="resetScratchCard()" 
-                class="w-full bg-[#E11D48] hover:bg-[#BE123C] active:scale-95 text-white font-black text-xs sm:text-sm py-4 px-4 rounded-2xl transition shadow-xl shadow-rose-500/25 flex items-center justify-center gap-2">
+                class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-3.5 px-4 rounded-xl transition shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2">
             <i class="fa-solid fa-rotate-right text-xs"></i>
-            <span>নতুন কার্ড নিন</span>
+            <span>পরবর্তী কার্ড নিন</span>
         </button>
 
-        <p class="text-[10px] text-slate-400">
-            <i class="fa-solid fa-shield-halved text-emerald-500 mr-1"></i> কার্ডের ৪০% ঘষলে স্বয়ংক্রিয়ভাবে পুরস্কার যোগ হবে
+        <p class="text-[10px] text-slate-500 font-gotham flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-shield-halved text-emerald-400 text-[10px]"></i>
+            <span>কার্ডের ৪০% ঘষলেই ক্যাশ পুরস্কার স্বয়ংক্রিয়ভাবে ক্রেডিট হবে</span>
         </p>
 
     </div>
 
 </div>
 
-<!-- ================= WINNING CELEBRATION MODAL ================= -->
-<div id="winModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-    <div class="w-full max-w-xs bg-white rounded-[32px] p-6 shadow-2xl border border-rose-50 text-center space-y-4 transform scale-90 transition-transform duration-300" id="winModalCard">
+<!-- ================= LUXURY WINNING CELEBRATION MODAL ================= -->
+<div id="winModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="w-full max-w-xs bg-[#0a0e17] border border-emerald-500/30 rounded-3xl p-6 text-center space-y-4 transform scale-90 transition-transform duration-300 shadow-2xl" id="winModalCard">
         
-        <div class="w-16 h-16 mx-auto rounded-3xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-3xl shadow-sm animate-bounce">
+        <!-- Trophy & Sparkles Icon -->
+        <div class="w-14 h-14 mx-auto rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl shadow-inner animate-bounce">
             <i class="fa-solid fa-gift"></i>
         </div>
 
         <div>
-            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest block">অভিনন্দন!</span>
-            <h3 class="text-xl font-black text-slate-900 mt-0.5">স্ক্র্যাচ রিওয়ার্ড</h3>
-            <div class="text-3xl font-black text-emerald-600 my-2" id="wonAmountDisplay">
+            <span class="text-[9px] font-gotham uppercase tracking-widest text-slate-400 block">Instant Reward</span>
+            <h3 class="font-classic-seasons text-xl text-white mt-0.5 uppercase tracking-wide">Vault Unlocked</h3>
+            <div class="text-3xl font-gotham font-black text-emerald-400 my-2 tabular-nums drop-shadow-[0_0_15px_rgba(52,211,153,0.4)]" id="wonAmountDisplay">
                 ৳ ০.০০
             </div>
-            <p class="text-xs text-slate-500">টাকাটি সরাসরি আপনার ওয়ালেটে জমা হয়েছে।</p>
+            <p class="text-xs text-slate-400">টাকাটি সরাসরি আপনার অ্যাকাউন্টের মূল ব্যালেন্সে যুক্ত হয়েছে।</p>
         </div>
 
         <button onclick="closeWinModal()" 
-                class="w-full bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs py-3 rounded-xl transition shadow">
+                class="w-full bg-blue-600 hover:bg-blue-500 text-white font-gotham font-semibold text-xs py-3 rounded-xl transition shadow-lg shadow-blue-600/30 active:scale-95">
             দারুণ! গ্রহণ করলাম
         </button>
     </div>
 </div>
 
-<!-- ================= REAL SCRATCH & PERCENTAGE CALCULATION ENGINE ================= -->
+<!-- ================= REALISTIC HOLOGRAPHIC CANVAS SCRATCH ENGINE ================= -->
 <script>
 const canvas = document.getElementById("scratchCanvas");
 const ctx = canvas.getContext("2d", { willReadFrequently: true });
@@ -126,39 +163,62 @@ let isClaimed = false;
 let currentRemaining = parseInt("{{ remaining }}") || 0;
 let checkThrottle = 0;
 
-// Draw Realistic Silver Scratch Overlay
-function drawOverlay() {
+// Draw Brushed Titanium & Micro-Lattice Hologram Foil
+function drawHolographicFoil() {
     ctx.globalCompositeOperation = "source-over";
     canvas.style.opacity = "1";
     
-    // Silver metallic gradient
-    const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    grad.addColorStop(0, "#94a3b8");
-    grad.addColorStop(0.3, "#cbd5e1");
-    grad.addColorStop(0.7, "#94a3b8");
-    grad.addColorStop(1, "#cbd5e1");
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const W = canvas.width;
+    const H = canvas.height;
 
-    // Decorative Pattern
-    ctx.fillStyle = "#64748b";
-    ctx.font = "bold 15px Arial";
+    // 1. Brushed Dark Carbon Titanium Base
+    const grad = ctx.createLinearGradient(0, 0, W, H);
+    grad.addColorStop(0, "#1e293b");
+    grad.addColorStop(0.3, "#0f172a");
+    grad.addColorStop(0.7, "#1e293b");
+    grad.addColorStop(1, "#0a0f1d");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    // 2. Guilloché Hologram Diamond Security Lattice
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.035)";
+    ctx.lineWidth = 1;
+    for (let x = -H; x < W + H; x += 16) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x + H, H);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(x + H, 0);
+        ctx.lineTo(x, H);
+        ctx.stroke();
+    }
+
+    // 3. Metallic Outer Border
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(1, 1, W - 2, H - 2);
+
+    // 4. Center Gold Emblem & Prompt
+    ctx.fillStyle = "#38bdf8";
+    ctx.font = "bold 13px 'Montserrat', sans-serif";
     ctx.textAlign = "center";
-    ctx.fillText("এখানে ঘষে উপহার নিন 🎁", canvas.width / 2, canvas.height / 2 - 5);
-    
-    ctx.font = "bold 11px Arial";
-    ctx.fillStyle = "#475569";
-    ctx.fillText("(কমপক্ষে ৪০% ঘষুন)", canvas.width / 2, canvas.height / 2 + 18);
+    ctx.fillText("✦ SCRATCH TO UNLOCK VAULT ✦", W / 2, H / 2 - 6);
+
+    ctx.fillStyle = "#94a3b8";
+    ctx.font = "500 11px 'Anek Bangla', sans-serif";
+    ctx.fillText("(কমপক্ষে ৪০% ঘষে ক্যাশ উন্মোচন করুন)", W / 2, H / 2 + 16);
 }
 
-drawOverlay();
+drawHolographicFoil();
 
-// Scratch Action (Mouse & Touch)
+// Scratch Action (Mouse & Touch Responsive)
 function scratch(e) {
     if (!isDrawing || isClaimed) return;
 
     if (currentRemaining <= 0) {
-        alert("আজকের ৩টি স্ক্র্যাচ শেষ হয়েছে! আগামীকাল আবার আসুন।");
+        alert("আজকের ৩টি স্ক্র্যাচ ইতিমধ্যে শেষ হয়েছে! আগামীকাল আবার আসুন।");
         isDrawing = false;
         return;
     }
@@ -169,13 +229,13 @@ function scratch(e) {
     const x = clientX - rect.left;
     const y = clientY - rect.top;
 
-    // Erase rubber brush (26px radius)
+    // Erase brush with smooth radius (26px)
     ctx.globalCompositeOperation = "destination-out";
     ctx.beginPath();
     ctx.arc(x, y, 26, 0, Math.PI * 2);
     ctx.fill();
 
-    // Calculate percentage every 8th move for smooth 60fps performance
+    // Sample pixels every 8th move for smooth 60fps performance
     checkThrottle++;
     if (checkThrottle % 8 === 0) {
         calculateScratchedPercentage();
@@ -189,7 +249,7 @@ function calculateScratchedPercentage() {
     const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const pixels = imgData.data;
     let transparent = 0;
-    const totalSampled = pixels.length / 16; // Sample every 4th pixel for speed
+    const totalSampled = pixels.length / 16;
 
     for (let i = 3; i < pixels.length; i += 16) {
         if (pixels[i] === 0) {
@@ -199,7 +259,7 @@ function calculateScratchedPercentage() {
 
     const percent = Math.min(100, Math.round((transparent / totalSampled) * 100));
     
-    // Update live progress bar
+    // Live Progress Updates
     document.getElementById("progressText").innerText = `${percent}%`;
     document.getElementById("progressBar").style.width = `${percent}%`;
 
@@ -208,7 +268,7 @@ function calculateScratchedPercentage() {
         isClaimed = true;
         isDrawing = false;
         
-        // Fade out canvas smoothly
+        // Liquid Dissolve Animation
         canvas.style.opacity = "0";
 
         // Call backend API
@@ -216,13 +276,13 @@ function calculateScratchedPercentage() {
     }
 }
 
-// Backend API Claim
+// Backend API Call
 function claimScratchReward() {
     fetch("/scratch", {
         method: "POST",
         headers: { "Content-Type": "application/json" }
     })
-    .then(res => res.json())
+    .then(r => r.json())
     .then(data => {
         if (!data.success) {
             alert(data.message);
@@ -230,12 +290,7 @@ function claimScratchReward() {
             return;
         }
 
-        // Fix Undefined Bug: Safely update counter
-        if (data.remaining !== undefined) {
-            currentRemaining = parseInt(data.remaining);
-        } else {
-            currentRemaining = Math.max(0, currentRemaining - 1);
-        }
+        currentRemaining = data.remaining !== undefined ? parseInt(data.remaining) : Math.max(0, currentRemaining - 1);
 
         // Update UI
         document.getElementById("revealedAmountText").innerText = `৳ ${parseFloat(data.reward).toFixed(2)}`;
@@ -256,7 +311,7 @@ function claimScratchReward() {
 // Reset For Next Card
 function resetScratchCard() {
     if (currentRemaining <= 0) {
-        alert("আজকের ৩টি কার্ড শেষ হয়েছে! আগামীকাল আবার আসুন।");
+        alert("আজকের ৩টি স্ক্র্যাচ কার্ড শেষ হয়েছে! আগামীকাল আবার আসুন।");
         return;
     }
     isClaimed = false;
@@ -264,10 +319,10 @@ function resetScratchCard() {
     document.getElementById("progressText").innerText = "০%";
     document.getElementById("progressBar").style.width = "0%";
     document.getElementById("revealedAmountText").innerText = "৳ ০.০০";
-    drawOverlay();
+    drawHolographicFoil();
 }
 
-// Winning Modal Controllers
+// Celebration Modal Handlers
 function openWinModal(amount) {
     document.getElementById("wonAmountDisplay").innerText = `৳ ${parseFloat(amount).toFixed(2)}`;
     const modal = document.getElementById("winModal");
@@ -287,7 +342,7 @@ function closeWinModal() {
     card.classList.remove("scale-100");
 }
 
-// Event Listeners for Mouse and Touch (Mobile-Friendly)
+// Mobile & Desktop Event Handlers
 canvas.addEventListener("mousedown", () => isDrawing = true);
 window.addEventListener("mouseup", () => isDrawing = false);
 canvas.addEventListener("mousemove", scratch);
