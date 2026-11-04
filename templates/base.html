@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{% block title %}TaskWallet • Classic Digital Ecosystem{% endblock %}</title>
+    <title>{% block title %}TaskWallet • Minimal Fintech & Earning Ecosystem{% endblock %}</title>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -13,7 +13,7 @@
     <!-- Fonts: Anek Bangla (Bangla), The Seasons Style (Cormorant Garamond Classic Serif), Gotham Style (Montserrat) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- PWA Config -->
     <link rel="manifest" href="/manifest.json">
@@ -46,13 +46,13 @@
             color: #f1f5f9;
         }
 
-        /* Liquid Frosted Glass (Non-colorful, Classic) */
+        /* Liquid Frosted Glass */
         .classic-glass {
-            background: rgba(10, 14, 23, 0.72);
-            backdrop-filter: blur(24px) saturate(160%);
-            -webkit-backdrop-filter: blur(24px) saturate(160%);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            background: rgba(10, 14, 23, 0.78);
+            backdrop-filter: blur(28px) saturate(190%);
+            -webkit-backdrop-filter: blur(28px) saturate(190%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
         }
 
         .header-glass {
@@ -62,67 +62,49 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* Water Liquid Morphing Animation for Center Nav */
-        @keyframes water-morph {
-            0% { border-radius: 42% 58% 60% 40% / 45% 45% 55% 55%; transform: translateY(0); }
-            33% { border-radius: 55% 45% 42% 58% / 58% 52% 48% 42%; transform: translateY(-2px); }
-            66% { border-radius: 40% 60% 55% 45% / 48% 60% 40% 52%; transform: translateY(1px); }
-            100% { border-radius: 42% 58% 60% 40% / 45% 45% 55% 55%; transform: translateY(0); }
-        }
-
+        /* ================= 10% ELECTRIC BLUE WATER DOCK STYLING ================= */
         .water-droplet-btn {
-            animation: water-morph 6s infinite ease-in-out;
-            background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.25) 0%, rgba(30, 41, 59, 0.9) 60%, rgba(15, 23, 42, 0.98) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7), inset 0 2px 4px rgba(255,255,255,0.3);
+            background: radial-gradient(circle at 35% 30%, #38bdf8 0%, #2563eb 50%, #1d4ed8 100%);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.6), inset 0 2px 4px rgba(255,255,255,0.4);
         }
 
-        /* Fluid Water Wave Glow on Bottom Dock Items */
         .water-nav-item {
             position: relative;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .water-nav-item.active {
+            color: #38bdf8 !important;
+            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.75));
         }
 
-        .water-nav-item::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
-            transform: translateX(-50%);
-            border-radius: 50%;
-            transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .water-nav-item:hover::before, .water-nav-item.active::before {
-            width: 70px;
-            height: 45px;
-            opacity: 1;
-        }
-
-        /* Water Ripple Rings for Support Orb */
+        /* Water Ripple Rings for Headphone Support */
         @keyframes water-ring {
-            0% { transform: scale(0.9); opacity: 0.6; }
-            50% { transform: scale(1.25); opacity: 0; }
-            100% { transform: scale(1.4); opacity: 0; }
+            0% { transform: scale(0.9); opacity: 0.7; }
+            50% { transform: scale(1.3); opacity: 0; }
+            100% { transform: scale(1.45); opacity: 0; }
         }
         .support-water-pulse::after {
             content: '';
             position: absolute;
             inset: -4px;
             border-radius: 9999px;
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            animation: water-ring 2.8s infinite cubic-bezier(0.1, 0.7, 0.3, 1);
+            border: 1.5px solid rgba(56, 189, 248, 0.5);
+            animation: water-ring 2.6s infinite cubic-bezier(0.1, 0.7, 0.3, 1);
             pointer-events: none;
+        }
+
+        /* On-Screen Floating Flash Notification Animation */
+        @keyframes toastSlideDown {
+            0% { opacity: 0; transform: translateY(-20px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .animate-toast-slide {
+            animation: toastSlideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
     </style>
 
-    <!-- Robust Device Fingerprint -->
+    <!-- Robust Hardware Fingerprint Engine -->
     <script>
         async function getHardwareFingerprint() {
             const parts = [
@@ -163,25 +145,50 @@
         })();
     </script>
 </head>
-<body class="selection:bg-white/10 selection:text-white relative overflow-x-hidden pb-28">
+<body class="selection:bg-blue-600/20 selection:text-sky-300 relative overflow-x-hidden pb-28">
 
-    <!-- Subtle Monochrome Background Spotlights -->
-    <div class="fixed -top-40 -left-32 w-96 h-96 bg-white/[0.02] rounded-full blur-[140px] pointer-events-none"></div>
-    <div class="fixed top-1/2 -right-40 w-96 h-96 bg-slate-500/[0.02] rounded-full blur-[160px] pointer-events-none"></div>
+    <!-- Ambient Dark Fintech Glows -->
+    <div class="fixed -top-40 -left-32 w-96 h-96 bg-blue-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="fixed top-1/2 -right-40 w-96 h-96 bg-cyan-600/10 rounded-full blur-[160px] pointer-events-none"></div>
 
-    <!-- ================= 1. HEADER (100% CLASSIC TYPOGRAPHY - NO IMAGE) ================= -->
+    <!-- ================= 1. FLOATING ON-SCREEN FLASH NOTIFICATION WIDGET ================= -->
+    <div id="flashToastContainer" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-full max-w-sm px-4 space-y-2 pointer-events-none">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-toast pointer-events-auto p-3.5 rounded-2xl border backdrop-blur-2xl shadow-2xl flex items-center justify-between gap-3 text-xs font-gotham animate-toast-slide
+                        {% if category == 'success' %}
+                            bg-[#041a14]/95 border-emerald-500/40 text-emerald-300 shadow-[0_10px_35px_rgba(16,185,129,0.25)]
+                        {% elif category == 'danger' or category == 'error' %}
+                            bg-[#20070d]/95 border-rose-500/40 text-rose-300 shadow-[0_10px_35px_rgba(244,63,94,0.25)]
+                        {% else %}
+                            bg-[#071326]/95 border-sky-500/40 text-sky-300 shadow-[0_10px_35px_rgba(56,189,248,0.25)]
+                        {% endif %}">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <i class="fa-solid {% if category == 'success' %}fa-circle-check text-emerald-400{% elif category == 'danger' or category == 'error' %}fa-circle-exclamation text-rose-400{% else %}fa-circle-info text-sky-400{% endif %} text-sm shrink-0"></i>
+                            <span class="truncate leading-relaxed font-medium">{{ message }}</span>
+                        </div>
+                        <button onclick="dismissToast(this.parentElement)" class="text-slate-400 hover:text-white shrink-0 p-1 transition">
+                            <i class="fa-solid fa-xmark text-xs"></i>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- ================= 2. HEADER ================= -->
     <header class="sticky top-0 z-40 header-glass">
         <div class="max-w-xl mx-auto px-4 h-16 flex items-center justify-between">
             
-            <!-- Left: Minimal Classic Drawer Toggle & Classic Logo -->
+            <!-- Left: Toggle Hamburger & Classic Logo -->
             <div class="flex items-center gap-3.5">
                 <button onclick="toggleSidebar(true)" 
-                        class="w-10 h-10 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] active:scale-95 border border-white/[0.08] flex items-center justify-center text-slate-300 hover:text-white transition shadow-sm" 
+                        class="w-10 h-10 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] active:scale-95 border border-white/[0.08] flex items-center justify-center text-slate-300 hover:text-white transition shadow-sm" 
                         aria-label="Open Navigation Menu">
                     <i class="fa-solid fa-bars-staggered text-sm"></i>
                 </button>
 
-                <!-- Full Classic "The Seasons" Serif Logo -->
                 <a href="/" class="flex items-baseline select-none">
                     <span class="font-classic-seasons text-2xl font-normal text-white uppercase tracking-[0.06em]">
                         Task<span class="font-light italic text-slate-400 lowercase text-xl ml-0.5">wallet</span>
@@ -189,19 +196,19 @@
                 </a>
             </div>
 
-            <!-- Right: Minimal Titanium Balance Pill -->
+            <!-- Right: Minimal Titanium Balance / Login Pill -->
             <div>
                 {% if current_user %}
                     <a href="/account" 
                        class="flex items-center gap-2 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 px-3.5 py-1.5 rounded-full transition active:scale-95 shadow-inner">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                        <span class="font-gotham font-semibold text-xs text-slate-200 tabular-nums">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span class="font-gotham font-bold text-xs text-slate-200 tabular-nums">
                             ৳ {{ "%.2f"|format(current_user.balance) }}
                         </span>
                     </a>
                 {% else %}
                     <a href="/login" 
-                       class="bg-white/10 hover:bg-white/15 text-white border border-white/20 font-gotham font-semibold text-xs px-4 py-2 rounded-xl transition active:scale-95 shadow">
+                       class="bg-blue-600 hover:bg-blue-500 text-white font-gotham font-semibold text-xs px-4 py-2 rounded-xl transition active:scale-95 shadow-md shadow-blue-600/30">
                         লগইন
                     </a>
                 {% endif %}
@@ -210,15 +217,15 @@
         </div>
     </header>
 
-    <!-- ================= 2. LEFT-OPENING DRAWER (NO COLORFUL ICONS) ================= -->
+    <!-- ================= 3. LEFT-OPENING DRAWER (WITH PROFILE PIC & ALL NAVS) ================= -->
     <div id="drawerOverlay" onclick="toggleSidebar(false)" 
          class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
 
     <aside id="drawerPanel" 
-           class="fixed top-0 left-0 h-full w-72 sm:w-80 bg-[#07090e] text-slate-200 shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-out flex flex-col p-6 border-r border-white/[0.08] rounded-r-3xl overflow-hidden">
+           class="fixed top-0 left-0 h-full w-72 sm:w-80 bg-[#07090e] text-slate-200 shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-out flex flex-col p-5 border-r border-white/[0.08] rounded-r-3xl overflow-hidden">
         
-        <!-- Drawer Top -->
-        <div class="flex items-center justify-between pb-4 border-b border-white/[0.06]">
+        <!-- Drawer Header -->
+        <div class="flex items-center justify-between pb-3.5 border-b border-white/[0.06]">
             <span class="font-classic-seasons text-lg text-white uppercase tracking-wider">
                 Task<span class="font-light italic text-slate-400 lowercase text-base">wallet</span>
             </span>
@@ -228,94 +235,179 @@
             </button>
         </div>
 
-        <!-- User Wallet Card (Monochrome Minimal) -->
-        <div class="pt-4 pb-2">
+        <!-- 🌟 PROMINENT USER PROFILE PIC & WALLET CARD IN DRAWER 🌟 -->
+        <div class="pt-3 pb-2">
             {% if current_user %}
-            <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-4 space-y-2">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <span class="text-[9px] text-slate-500 uppercase font-gotham tracking-wider block">Wallet Balance</span>
-                        <span class="font-gotham text-lg font-bold text-white">৳ {{ "%.2f"|format(current_user.balance) }}</span>
+            <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-3.5 space-y-3">
+                <div class="flex items-center gap-3">
+                    <!-- User Avatar -->
+                    <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-sky-400/40 bg-slate-900 shrink-0 flex items-center justify-center text-sm font-bold text-white shadow-lg shadow-sky-500/10">
+                        {% if current_user.avatar_url %}
+                            <img src="{{ current_user.avatar_url }}" alt="{{ current_user.name }}" class="w-full h-full object-cover">
+                        {% else %}
+                            <span class="font-gotham text-base">{{ current_user.name[:1] }}</span>
+                        {% endif %}
                     </div>
-                    <span class="text-[9px] font-gotham px-2.5 py-0.5 rounded-full bg-white/[0.05] text-slate-300 border border-white/10">
-                        Verified
-                    </span>
+
+                    <div class="leading-tight min-w-0">
+                        <span class="font-classic-seasons text-sm font-bold text-white uppercase block truncate">
+                            {{ current_user.name }}
+                        </span>
+                        <span class="font-mono text-[10px] text-slate-400 block mt-0.5">@{{ current_user.referral_code }}</span>
+                        <span class="font-gotham text-[9px] text-sky-400 font-bold block mt-0.5">UID: #{{ "%05d"|format(current_user.id) }}</span>
+                    </div>
                 </div>
-                <div class="pt-2 border-t border-white/[0.04] flex items-center justify-between text-xs text-slate-400">
-                    <span class="font-medium text-slate-300">{{ current_user.name }}</span>
-                    <span class="font-mono text-[10px] text-slate-500">@{{ current_user.referral_code }}</span>
+
+                <div class="pt-2 border-t border-white/[0.04] flex items-center justify-between font-gotham">
+                    <div>
+                        <span class="text-[8px] text-slate-500 uppercase tracking-wider block">Wallet Assets</span>
+                        <span class="text-sm font-black text-emerald-400 tabular-nums">৳ {{ "%.2f"|format(current_user.balance) }}</span>
+                    </div>
+                    <a href="/account" class="text-[10px] font-semibold text-sky-400 hover:text-sky-300 flex items-center gap-1">
+                        <span>Profile ID</span>
+                        <i class="fa-solid fa-chevron-right text-[8px]"></i>
+                    </a>
                 </div>
             </div>
             {% else %}
             <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-4 text-center space-y-2">
                 <h4 class="font-classic-seasons text-base text-white">TaskWallet</h4>
                 <p class="text-[11px] text-slate-400">কাজের মাধ্যমে সহজে উপার্জন করুন</p>
-                <a href="/login" class="block w-full bg-white text-black font-gotham font-semibold text-xs py-2.5 rounded-xl transition hover:bg-slate-200">
-                    সাইন ইন / রেজিস্ট্রেশন
+                <a href="/login" class="block w-full bg-blue-600 hover:bg-blue-500 text-white font-gotham font-semibold text-xs py-2 rounded-xl transition shadow">
+                    লগইন বা সাইন-আপ
                 </a>
             </div>
             {% endif %}
         </div>
 
-        <!-- Clean Monochromatic Nav List -->
-        <nav class="flex-1 py-3 space-y-1 overflow-y-auto pr-1 text-xs font-medium">
-            <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
-                প্রধান মেনু
-            </span>
-            <a href="/app" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
-                <i class="fa-solid fa-house w-4 text-center text-slate-400"></i>
-                <span>ড্যাশবোর্ড</span>
-            </a>
-            <a href="/allwork" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
-                <i class="fa-solid fa-bolt w-4 text-center text-slate-400"></i>
-                <span>সকল কাজ (All Work)</span>
-            </a>
-            <a href="/history" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
-                <i class="fa-solid fa-clock-rotate-left w-4 text-center text-slate-400"></i>
-                <span>উইথড্রয়াল হিস্ট্রি</span>
-            </a>
-            <a href="/withdraw" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
-                <i class="fa-solid fa-wallet w-4 text-center text-slate-400"></i>
-                <span>টাকা উত্তোলন (Payout)</span>
-            </a>
-            <a href="/account" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
-                <i class="fa-solid fa-id-card w-4 text-center text-slate-400"></i>
-                <span>ডিজিটাল মেম্বার কার্ড</span>
-            </a>
+        <!-- 🌟 ALL NAVIGATION LINKS IN DRAWER (COMPLETE DIRECTORY) 🌟 -->
+        <nav class="flex-1 py-2 space-y-3 overflow-y-auto pr-1 text-xs font-medium no-scrollbar">
+            
+            <!-- Category 1: Main Suite -->
+            <div class="space-y-0.5">
+                <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
+                    প্রধান মেনু
+                </span>
+                <a href="/app" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-house w-4 text-center text-slate-400"></i>
+                    <span>ড্যাশবোর্ড (Home)</span>
+                </a>
+                <a href="/allwork" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-bolt w-4 text-center text-slate-400"></i>
+                    <span>সকল কাজ (All Work)</span>
+                </a>
+                <a href="/withdraw" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-wallet w-4 text-center text-slate-400"></i>
+                    <span>টাকা উত্তোলন (Payout)</span>
+                </a>
+                <a href="/history" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-clock-rotate-left w-4 text-center text-slate-400"></i>
+                    <span>লেনদেন হিস্ট্রি</span>
+                </a>
+                <a href="/account" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-id-card w-4 text-center text-slate-400"></i>
+                    <span>প্রোফাইল আইডি (Profile ID)</span>
+                </a>
+            </div>
 
-            <div class="pt-2 my-2 border-t border-white/[0.04]"></div>
-            <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
-                কাজের তালিকা
-            </span>
-            <a href="/tasks" class="flex items-center gap-3.5 px-3.5 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                <i class="fa-solid fa-list-check w-4 text-center text-slate-400"></i>
-                <span>মাইক্রো টাস্ক</span>
-            </a>
-            <a href="/yt" class="flex items-center gap-3.5 px-3.5 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                <i class="fa-brands fa-youtube w-4 text-center text-slate-400"></i>
-                <span>ভিডিও ওয়াচ</span>
-            </a>
-            <a href="/spin" class="flex items-center gap-3.5 px-3.5 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                <i class="fa-solid fa-dharmachakra w-4 text-center text-slate-400"></i>
-                <span>লাকি স্পিন</span>
-            </a>
-            <a href="/scratch" class="flex items-center gap-3.5 px-3.5 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                <i class="fa-solid fa-gift w-4 text-center text-slate-400"></i>
-                <span>স্ক্র্যাচ কার্ড</span>
-            </a>
-            <a href="/quiz" class="flex items-center gap-3.5 px-3.5 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                <i class="fa-solid fa-brain w-4 text-center text-slate-400"></i>
-                <span>ম্যাথ কুইজ</span>
-            </a>
-            <a href="/refer" class="flex items-center gap-3.5 px-3.5 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                <i class="fa-solid fa-user-plus w-4 text-center text-slate-400"></i>
-                <span>রেফার করুন</span>
-            </a>
+            <!-- Category 2: Earning Modules -->
+            <div class="space-y-0.5 pt-1 border-t border-white/[0.04]">
+                <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
+                    আর্নিং হাব
+                </span>
+                <a href="/tasks" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-list-check w-4 text-center text-slate-400"></i>
+                    <span>মাইক্রো টাস্ক (Tasks)</span>
+                </a>
+                <a href="/yt" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-brands fa-youtube w-4 text-center text-slate-400"></i>
+                    <span>ভিডিও ওয়াচ (Streams)</span>
+                </a>
+                <a href="/spin" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-dharmachakra w-4 text-center text-slate-400"></i>
+                    <span>লাকি স্পিন (Spin Wheel)</span>
+                </a>
+                <a href="/scratch" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-gift w-4 text-center text-slate-400"></i>
+                    <span>স্ক্র্যাচ কার্ড (Scratch Vault)</span>
+                </a>
+                <a href="/quiz" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-brain w-4 text-center text-slate-400"></i>
+                    <span>ম্যাথ কুইজ (IQ Terminal)</span>
+                </a>
+                <a href="/refer" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-user-plus w-4 text-center text-slate-400"></i>
+                    <span>রেফারেল ও ইনভাইট</span>
+                </a>
+            </div>
+
+            <!-- Category 3: VIP & Growth -->
+            <div class="space-y-0.5 pt-1 border-t border-white/[0.04]">
+                <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
+                    ভিআইপি ও নেটওয়ার্ক
+                </span>
+                <a href="/upgrade" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-crown w-4 text-center text-amber-400"></i>
+                    <span>মেম্বারশিপ আপগ্রেড</span>
+                </a>
+                <a href="/leaderboard" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-trophy w-4 text-center text-slate-400"></i>
+                    <span>রেফারেল লিডারবোর্ড</span>
+                </a>
+                <a href="/announcements" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-bullhorn w-4 text-center text-slate-400"></i>
+                    <span>অফিসিয়াল নোটিশ হাব</span>
+                </a>
+            </div>
+
+            <!-- Category 4: Services & Community -->
+            <div class="space-y-0.5 pt-1 border-t border-white/[0.04]">
+                <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
+                    সেবা ও সাপোর্ট
+                </span>
+                <a href="/tutorial" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-circle-play w-4 text-center text-slate-400"></i>
+                    <span>কাজের ভিডিও গাইড</span>
+                </a>
+                <a href="/promote" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-chart-line w-4 text-center text-slate-400"></i>
+                    <span>বিজ্ঞাপন ও প্রমোশন</span>
+                </a>
+                <a href="/sponsor" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-handshake w-4 text-center text-slate-400"></i>
+                    <span>স্পনসরশিপ প্রোগ্রাম</span>
+                </a>
+                <a href="/install" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
+                    <i class="fa-solid fa-mobile-screen-button w-4 text-center text-slate-400"></i>
+                    <span>অ্যাপ ইনস্টল করুন (PWA)</span>
+                </a>
+                
+                <!-- 👉 UPDATED OFFICIAL TELEGRAM COMMUNITY LINKS 👈 -->
+                <a href="https://t.me/taskwallet_bd" target="_blank" class="flex items-center gap-3 px-3 py-2 rounded-xl text-sky-400 hover:bg-white/[0.04] transition font-semibold">
+                    <i class="fa-brands fa-telegram w-4 text-center"></i>
+                    <span>টেলিগ্রাম চ্যানেল (@taskwallet_bd)</span>
+                </a>
+                <a href="https://t.me/task_wallet_online" target="_blank" class="flex items-center gap-3 px-3 py-2 rounded-xl text-emerald-400 hover:bg-white/[0.04] transition font-semibold">
+                    <i class="fa-solid fa-headset w-4 text-center"></i>
+                    <span>সাপোর্ট (@task_wallet_online)</span>
+                </a>
+            </div>
+
+            <!-- Category 5: Admin Shortcut (Only for Root Admin) -->
+            {% if current_user and current_user.email == 'admin@gmail.com' %}
+            <div class="pt-1 border-t border-white/[0.04]">
+                <a href="/admin" class="flex items-center gap-3 px-3 py-2 rounded-xl bg-blue-600/10 border border-blue-500/20 text-sky-400 font-semibold transition">
+                    <i class="fa-solid fa-sliders w-4 text-center"></i>
+                    <span>অ্যাডমিন কন্ট্রোল প্যানেল</span>
+                </a>
+            </div>
+            {% endif %}
+
         </nav>
 
         {% if current_user %}
-        <div class="pt-3 border-t border-white/[0.06]">
-            <a href="/logout" class="w-full flex items-center justify-center gap-2 bg-white/[0.03] hover:bg-rose-500/10 text-slate-400 hover:text-rose-400 border border-white/[0.06] text-xs font-medium py-2.5 rounded-xl transition">
+        <div class="pt-2.5 border-t border-white/[0.06]">
+            <a href="/logout" class="w-full flex items-center justify-center gap-2 bg-white/[0.03] hover:bg-rose-500/10 text-slate-400 hover:text-rose-400 border border-white/[0.06] text-xs font-medium py-2 rounded-xl transition">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 <span>লগআউট করুন</span>
             </a>
@@ -323,65 +415,53 @@
         {% endif %}
     </aside>
 
-    <!-- ================= 3. MAIN BODY ================= -->
+    <!-- ================= 4. MAIN CONTENT ================= -->
     <main class="flex-1 max-w-xl w-full mx-auto p-4 md:py-6 relative z-10">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="mb-4 p-4 rounded-2xl text-xs font-semibold flex items-center gap-3 border backdrop-blur-md {% if category == 'success' %}bg-white/[0.04] text-emerald-400 border-emerald-500/20{% else %}bg-white/[0.04] text-rose-400 border-rose-500/20{% endif %}">
-                        <i class="fa-solid {% if category == 'success' %}fa-circle-check text-emerald-400{% else %}fa-circle-exclamation text-rose-400{% endif %} text-sm"></i>
-                        <span>{{ message }}</span>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-
         {% block content %}{% endblock %}
     </main>
 
-    <!-- ================= 4. REDESIGNED HEADPHONE SUPPORT BUTTON (WATER RIPPLE CAPSULE) ================= -->
+    <!-- ================= 5. HEADPHONE SUPPORT BUTTON (UPDATED: @task_wallet_online) ================= -->
     <div class="fixed bottom-24 right-5 z-40">
-        <a href="https://t.me/micro_earnx" target="_blank"
-           class="support-water-pulse relative group w-12 h-12 rounded-full bg-[#0a0e17] border border-white/20 text-slate-200 hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl"
-           title="২৪/৭ কাস্টমার সাপোর্ট">
-            <!-- Modern Headset Icon -->
+        <a href="https://t.me/task_wallet_online" target="_blank"
+           class="support-water-pulse relative group w-12 h-12 rounded-full bg-[#0a0e17] border border-sky-400/40 text-sky-400 hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(56,189,248,0.3)]"
+           title="২৪/৭ কাস্টমার সাপোর্ট (@task_wallet_online)">
             <i class="fa-solid fa-headset text-lg"></i>
             <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-black"></span>
         </a>
     </div>
 
-    <!-- ================= 5. WATER-ANIMATED LIQUID GLASS BOTTOM NAV DOCK ================= -->
+    <!-- ================= 6. BOTTOM NAV DOCK (VIBRANT 10% ELECTRIC BLUE ACCENTS) ================= -->
     <div class="fixed bottom-3 left-0 right-0 z-40 px-3 flex justify-center pointer-events-none">
         <nav class="classic-glass w-full max-w-md rounded-3xl px-4 py-2 flex justify-around items-center pointer-events-auto">
             
             <!-- Home -->
-            <a href="/app" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-white transition group" data-path="/app">
+            <a href="/app" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-sky-400 transition group" data-path="/app">
                 <i class="fa-solid fa-house text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
                 <span class="text-[9px] font-gotham font-medium tracking-tight">Home</span>
             </a>
 
             <!-- History -->
-            <a href="/history" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-white transition group" data-path="/history">
+            <a href="/history" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-sky-400 transition group" data-path="/history">
                 <i class="fa-solid fa-clock-rotate-left text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
                 <span class="text-[9px] font-gotham font-medium tracking-tight">History</span>
             </a>
 
-            <!-- Center Work Button (Water Droplet Morphing) -->
+            <!-- Center Work Button (Water Droplet Electric Blue Morphing) -->
             <a href="/allwork" class="nav-item -mt-5 flex flex-col items-center group active:scale-95 transition" data-path="/allwork">
-                <div class="water-droplet-btn w-12 h-12 rounded-full flex items-center justify-center text-white text-base shadow-lg">
+                <div class="water-droplet-btn w-12 h-12 rounded-full flex items-center justify-center text-white text-base shadow-[0_0_25px_rgba(56,189,248,0.55)]">
                     <i class="fa-solid fa-bolt drop-shadow"></i>
                 </div>
-                <span class="text-[9px] font-gotham font-semibold text-slate-300 mt-1">Work</span>
+                <span class="text-[9px] font-gotham font-bold text-sky-400 mt-1">Work</span>
             </a>
 
             <!-- Payout -->
-            <a href="/withdraw" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-white transition group" data-path="/withdraw">
+            <a href="/withdraw" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-sky-400 transition group" data-path="/withdraw">
                 <i class="fa-solid fa-wallet text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
                 <span class="text-[9px] font-gotham font-medium tracking-tight">Payout</span>
             </a>
 
             <!-- Profile -->
-            <a href="/account" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-white transition group" data-path="/account">
+            <a href="/account" class="water-nav-item nav-item flex flex-col items-center gap-1 py-1 px-3 text-slate-400 hover:text-sky-400 transition group" data-path="/account">
                 <i class="fa-solid fa-user text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
                 <span class="text-[9px] font-gotham font-medium tracking-tight">Profile</span>
             </a>
@@ -389,7 +469,7 @@
         </nav>
     </div>
 
-    <!-- SCRIPT: LEFT DRAWER CONTROLLER & ACTIVE NAV HIGHLIGHT -->
+    <!-- SCRIPT: LEFT DRAWER, TOAST DISMISS & ACTIVE ACCENT HIGHLIGHT -->
     <script>
         function toggleSidebar(open) {
             const overlay = document.getElementById('drawerOverlay');
@@ -407,16 +487,32 @@
             }
         }
 
+        // Active Bottom Navigation Electric Blue Glow
         document.addEventListener("DOMContentLoaded", function () {
             const currentPath = window.location.pathname;
             document.querySelectorAll('.nav-item').forEach(item => {
                 const target = item.getAttribute('data-path');
                 if (target && currentPath === target) {
                     item.classList.remove('text-slate-400');
-                    item.classList.add('text-white', 'active');
+                    item.classList.add('active');
                 }
             });
+
+            // Auto-Dismiss Flash Messages after 4.5 seconds
+            setTimeout(() => {
+                document.querySelectorAll('.flash-toast').forEach(toast => {
+                    dismissToast(toast);
+                });
+            }, 4500);
         });
+
+        function dismissToast(element) {
+            if (!element) return;
+            element.style.transition = "all 0.35s ease";
+            element.style.opacity = "0";
+            element.style.transform = "translateY(-15px) scale(0.95)";
+            setTimeout(() => element.remove(), 350);
+        }
     </script>
 </body>
 </html>
