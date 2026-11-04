@@ -1,80 +1,241 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="max-w-md mx-auto space-y-5 pb-14">
+<style>
+    .fintech-card {
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(24px);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fintech-card:hover {
+        border-color: rgba(56, 189, 248, 0.35);
+    }
 
-    <!-- Header & Back Button -->
+    /* Ambient Hero Glow */
+    .tutorial-hero-glow {
+        background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.22) 0%, rgba(6, 182, 212, 0.1) 45%, rgba(10, 15, 29, 0.95) 75%, #04060b 100%);
+        border: 1px solid rgba(56, 189, 248, 0.28);
+        box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    }
+
+    /* Pulsing Play Ripple */
+    @keyframes play-pulse {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.5); }
+        70% { transform: scale(1.05); box-shadow: 0 0 0 16px rgba(56, 189, 248, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+    }
+    .play-pulse-btn {
+        animation: play-pulse 2.2s infinite ease-in-out;
+    }
+</style>
+
+<div class="max-w-xl mx-auto space-y-6 pb-24">
+
+    <!-- Top Action Row -->
     <div class="flex items-center justify-between px-1">
-        <a href="/app" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-[#E11D48] transition">
-            <i class="fa-solid fa-arrow-left"></i>
-            <span>ড্যাশবোর্ডে ফিরুন</span>
+        <a href="/allwork" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95 shadow-sm">
+            <i class="fa-solid fa-arrow-left text-[10px] text-blue-500"></i>
+            <span>আর্নিং হাব</span>
         </a>
-        <span class="text-[10px] font-black bg-rose-50 text-[#E11D48] px-2.5 py-1 rounded-full border border-rose-100 uppercase">
-            ভিডিও গাইড
-        </span>
+
+        <div class="flex items-center gap-2">
+            <span class="text-[10px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+                Video Mastery
+            </span>
+        </div>
     </div>
 
-    <!-- Main Reel Player Card -->
-    <div class="bg-white rounded-[32px] p-5 sm:p-6 shadow-2xl shadow-rose-200/40 border border-rose-50/80 space-y-4 text-center">
+    <!-- Title Section (The Seasons Classic Typography) -->
+    <div class="text-center py-1 select-none space-y-1">
+        <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
+            Video <span class="text-slate-400 font-light italic lowercase text-xl">tutorial</span>
+        </h1>
+        <p class="text-xs text-slate-400 font-gotham font-light">কীভাবে কাজ করে ইনকাম করবেন তা ১ মিনিটে ভিডিও দেখে বুঝে নিন</p>
+    </div>
+
+    <!-- ================= 1. VIDEO TRIGGER HERO CARD ================= -->
+    <div class="tutorial-hero-glow rounded-[32px] p-6 sm:p-7 text-center space-y-5 relative overflow-hidden select-none">
         
-        <div>
-            <div class="w-10 h-10 mx-auto rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg mb-2 shadow-sm">
-                <i class="fa-brands fa-facebook"></i>
-            </div>
-            <h2 class="text-base font-black text-slate-900 tracking-tight">কীভাবে কাজ করবেন?</h2>
-            <p class="text-xs text-slate-400 mt-0.5">নিচের ফেসবুক রিলস ভিডিওটি সম্পূর্ণ দেখে নিয়ম বুঝে নিন</p>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-slate-300 font-gotham text-[10px] uppercase tracking-wider">
+            <i class="fa-solid fa-circle-play text-sky-400 text-xs"></i>
+            1-Minute Quick Guide
         </div>
 
-        <!-- Facebook Reel Embed Frame (Vertical 9:16 Aspect) -->
-        <div class="relative w-full max-w-[320px] mx-auto aspect-[9/16] rounded-2xl overflow-hidden bg-slate-900 shadow-xl border-2 border-slate-100 flex items-center justify-center">
-            
-            <iframe 
-                src="https://www.facebook.com/plugins/video.php?height=560&href={{ fb_reel_url|urlencode }}&show_text=false&width=320&autoplay=true" 
-                class="w-full h-full border-0 overflow-hidden" 
-                scrolling="no" 
-                frameborder="0" 
-                allowfullscreen="true" 
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-            </iframe>
-
+        <div class="space-y-1.5">
+            <h2 class="font-classic-seasons text-xl sm:text-2xl font-normal text-white uppercase tracking-wide">
+                কাজের সম্পূর্ণ নিয়মাবলী
+            </h2>
+            <p class="text-xs text-slate-300 font-gotham font-light max-w-sm mx-auto leading-relaxed">
+                নিচের বাটনে ক্লিক করে ফেসবুক রিলস ভিডিওটি সম্পূর্ণ দেখে কাজের সঠিক নিয়ম বুঝে নিন।
+            </p>
         </div>
 
-        <!-- 3 Quick Steps Guidance -->
-        <div class="text-left bg-slate-50 border border-slate-100 rounded-2xl p-4 space-y-2.5 text-xs text-slate-600">
-            <span class="font-extrabold text-slate-800 text-[11px] uppercase tracking-wider block">
-                <i class="fa-solid fa-list-ol text-[#E11D48] mr-1"></i> কাজের ৩টি সহজ ধাপ:
+        <!-- 👉 THE "ভিডিও দেখুন" TRIGGER BUTTON (WITH PULSING PLAY ICON) 👈 -->
+        <div class="py-2">
+            <button onclick="openVideoModal()" 
+                    class="play-pulse-btn inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-500 text-white font-gotham font-bold text-xs sm:text-sm py-4 px-8 rounded-2xl shadow-xl shadow-blue-600/35 transition active:scale-95">
+                <div class="w-7 h-7 rounded-xl bg-white/20 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-play"></i>
+                </div>
+                <span>ভিডিও দেখুন (Watch Video)</span>
+            </button>
+        </div>
+
+        <span class="text-[10px] text-slate-500 font-gotham block">
+            <i class="fa-solid fa-shield-halved text-sky-400 text-[10px] mr-1"></i> এইচডি ভিডিও প্লেয়ার ৮০vh মোডে ওপেন হবে
+        </span>
+
+    </div>
+
+    <!-- ================= 2. WORKFLOW 3-STEPS BLUEPRINT ================= -->
+    <div class="fintech-card rounded-[28px] p-5 sm:p-6 space-y-4">
+        <div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
+            <span class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-list-ol text-sky-400"></i> কাজের ৩টি সহজ ধাপ
             </span>
-
-            <div class="flex items-start gap-2">
-                <span class="w-4 h-4 rounded-full bg-rose-100 text-[#E11D48] text-[9px] font-black flex items-center justify-center shrink-0 mt-0.5">১</span>
-                <p><strong>টাস্ক সিলেক্ট করুন:</strong> টাস্ক পেজে গিয়ে কাজের নিয়ম ও শর্তাবলী ভালো করে পড়ুন।</p>
-            </div>
-
-            <div class="flex items-start gap-2">
-                <span class="w-4 h-4 rounded-full bg-rose-100 text-[#E11D48] text-[9px] font-black flex items-center justify-center shrink-0 mt-0.5">২</span>
-                <p><strong>স্ক্রিনশট নিন:</strong> কাজ শেষ করে স্পষ্ট প্রুফ স্ক্রিনশট তুলে সাবমিট করুন।</p>
-            </div>
-
-            <div class="flex items-start gap-2">
-                <span class="w-4 h-4 rounded-full bg-rose-100 text-[#E11D48] text-[9px] font-black flex items-center justify-center shrink-0 mt-0.5">৩</span>
-                <p><strong>টাকা তুলুন:</strong> ব্যালেন্স ৫০০ টাকা ও ৪টি রেফারেল পূর্ণ হলে বিকাশ বা নগদে উইথড্র দিন।</p>
-            </div>
+            <span class="text-[10px] font-gotham text-slate-500">Workflow</span>
         </div>
 
-        <!-- Action Button: Start Working -->
+        <div class="space-y-2.5 text-xs leading-relaxed">
+            
+            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04] flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-blue-600/20 text-sky-400 font-gotham font-black text-xs flex items-center justify-center border border-blue-500/30 shrink-0 mt-0.5">১</span>
+                <div>
+                    <h4 class="font-bold text-white text-xs">টাস্ক নির্বাচন করুন</h4>
+                    <p class="text-slate-400 text-[11px] mt-0.5">টাস্ক হাব বা আর্নিং জোনে গিয়ে কাজের বিবরণ ও নির্দেশনা ভালো করে পড়ে নিন।</p>
+                </div>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04] flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 font-gotham font-black text-xs flex items-center justify-center border border-emerald-500/30 shrink-0 mt-0.5">২</span>
+                <div>
+                    <h4 class="font-bold text-white text-xs">প্রমাণের স্ক্রিনশট নিন</h4>
+                    <p class="text-slate-400 text-[11px] mt-0.5">নির্দেশনা অনুযায়ী কাজটি শেষ করে স্পষ্ট স্ক্রিনশট তুলে সাবমিট করুন।</p>
+                </div>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04] flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 font-gotham font-black text-xs flex items-center justify-center border border-amber-500/30 shrink-0 mt-0.5">৩</span>
+                <div>
+                    <h4 class="font-bold text-white text-xs">টাকা উত্তোলন (Payout)</h4>
+                    <p class="text-slate-400 text-[11px] mt-0.5">কাজ রিভিউ শেষে ব্যালেন্সে টাকা যোগ হবে এবং বিকাশ, নগদ বা রকেটে তুলে নিন।</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= 3. QUICK ACTIONS ================= -->
+    <div class="space-y-3">
+        <!-- Start Working CTA Button -->
         <a href="/tasks" 
-           class="w-full bg-[#E11D48] hover:bg-[#BE123C] active:scale-95 text-white font-black text-xs py-3.5 px-4 rounded-2xl shadow-lg shadow-rose-500/25 flex items-center justify-center gap-2 transition">
-            <i class="fa-solid fa-play text-xs"></i>
+           class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-3.5 px-4 rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-bolt text-xs"></i>
             <span>কাজ শুরু করতে এখানে চাপুন</span>
         </a>
 
-        <!-- Help Support -->
-        <a href="https://t.me/your_support_channel" target="_blank" 
-           class="w-full bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold text-xs py-3 px-4 rounded-2xl shadow-sm flex items-center justify-center gap-2 transition">
-            <i class="fa-brands fa-telegram text-sky-500 text-base"></i>
-            <span>ভিডিও বুঝতে না পারলে টেলিগ্রামে হেল্প নিন</span>
+        <!-- Telegram Support CTA -->
+        <a href="https://t.me/micro_earnx" target="_blank" 
+           class="fintech-card rounded-2xl p-4 flex items-center justify-between gap-3 border-sky-500/20 bg-sky-500/[0.02] hover:bg-sky-500/[0.06] transition active:scale-[0.99] select-none">
+            <div class="flex items-center gap-3.5">
+                <div class="w-9 h-9 rounded-xl bg-sky-500/15 border border-sky-500/30 text-sky-400 flex items-center justify-center text-sm shrink-0">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <div class="leading-tight">
+                    <span class="text-xs font-bold text-white block">ভিডিও বুঝতে কোনো সমস্যা হচ্ছে?</span>
+                    <span class="text-[10px] text-slate-400">টেলিগ্রাম সাপোর্টে মেসেজ দিয়ে সরাসরি হেল্প নিন</span>
+                </div>
+            </div>
+            <i class="fa-solid fa-arrow-right text-xs text-sky-400 mr-1"></i>
         </a>
-
     </div>
 
 </div>
+
+<!-- ================= 4. POPUP MODAL: 80VH VIDEO PLAYER ================= -->
+<div id="videoPopupModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+    
+    <!-- 80vh Height Container Modal -->
+    <div class="w-full max-w-sm sm:max-w-md h-[80vh] bg-[#0a0e17] border border-white/10 rounded-3xl p-4 sm:p-5 flex flex-col shadow-2xl space-y-3 transform scale-95 transition-transform duration-300 relative overflow-hidden" id="videoModalCard">
+        
+        <!-- Modal Top Bar -->
+        <div class="flex items-center justify-between border-b border-white/[0.08] pb-2.5 shrink-0">
+            <div class="flex items-center gap-2">
+                <i class="fa-brands fa-facebook text-blue-500 text-sm"></i>
+                <span class="font-classic-seasons text-xs text-white uppercase tracking-wider">
+                    Tutorial <span class="text-slate-400 font-light italic lowercase">Player</span>
+                </span>
+            </div>
+            
+            <button onclick="closeVideoModal()" 
+                    class="w-7 h-7 rounded-full bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-white flex items-center justify-center text-xs transition border border-white/[0.06]"
+                    title="বন্ধ করুন">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- 80vh Video Viewer Area (Preserves Full Height in Modal) -->
+        <div class="flex-1 w-full rounded-2xl overflow-hidden bg-black/90 border border-white/[0.06] relative flex items-center justify-center shadow-inner">
+            <iframe id="tutorialVideoIframe" 
+                    src="" 
+                    class="w-full h-full border-0 rounded-xl" 
+                    scrolling="no" 
+                    frameborder="0" 
+                    allowfullscreen="true" 
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+            </iframe>
+        </div>
+
+        <!-- Modal Bottom Bar (Fallback Link) -->
+        <div class="shrink-0 flex items-center justify-between pt-1 text-[11px] font-gotham text-slate-400">
+            <span>প্লে না হলে লিংকে চাপুন:</span>
+            <a href="{{ fb_reel_url }}" target="_blank" class="text-sky-400 hover:underline flex items-center gap-1 font-semibold">
+                <span>Facebook-এ খুলুন</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<!-- ================= JAVASCRIPT: 80VH MODAL CONTROLLER ================= -->
+<script>
+const videoEmbedUrl = "https://www.facebook.com/plugins/video.php?height=560&href={{ fb_reel_url|urlencode }}&show_text=false&width=320&autoplay=true";
+
+function openVideoModal() {
+    const modal = document.getElementById('videoPopupModal');
+    const card = document.getElementById('videoModalCard');
+    const iframe = document.getElementById('tutorialVideoIframe');
+
+    // Set embed URL on open to start playing
+    iframe.src = videoEmbedUrl;
+
+    modal.classList.remove('opacity-0', 'pointer-events-none');
+    modal.classList.add('opacity-100');
+    card.classList.remove('scale-95');
+    card.classList.add('scale-100');
+}
+
+function closeVideoModal() {
+    const modal = document.getElementById('videoPopupModal');
+    const card = document.getElementById('videoModalCard');
+    const iframe = document.getElementById('tutorialVideoIframe');
+
+    // Clear iframe src on close to stop sound immediately
+    iframe.src = "";
+
+    modal.classList.add('opacity-0', 'pointer-events-none');
+    modal.classList.remove('opacity-100');
+    card.classList.add('scale-95');
+    card.classList.remove('scale-100');
+}
+
+// Close when clicking outside of modal card
+document.getElementById('videoPopupModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeVideoModal();
+    }
+});
+</script>
 {% endblock %}
