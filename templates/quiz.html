@@ -6,15 +6,20 @@
         border: 1px solid rgba(255, 255, 255, 0.08);
         backdrop-filter: blur(24px);
     }
-
-    /* Ambient Glow Behind Wheel */
-    .wheel-ambient-glow {
-        background: radial-gradient(circle, rgba(56, 189, 248, 0.18) 0%, rgba(37, 99, 235, 0.08) 50%, transparent 75%);
+    .math-terminal-box {
+        background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.2) 0%, rgba(10, 15, 29, 0.95) 70%, #04060b 100%);
+        border: 1px solid rgba(56, 189, 248, 0.25);
+        box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.12);
     }
-
-    /* Outer Titanium Rim */
-    .titanium-rim {
-        box-shadow: 0 0 35px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(255, 255, 255, 0.15);
+    .quiz-opt-btn {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .quiz-opt-btn:hover:not(:disabled) {
+        border-color: rgba(56, 189, 248, 0.4);
+        background: rgba(255, 255, 255, 0.06);
+        transform: translateY(-2px);
     }
 </style>
 
@@ -27,239 +32,207 @@
             <span>আর্নিং হাব</span>
         </a>
 
-        <span class="text-[10px] font-gotham font-semibold tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-            Daily Vault
+        <span class="text-[10px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+            Brain Terminal
         </span>
     </div>
 
     <!-- Title Section -->
     <div class="text-center py-1 select-none space-y-1">
         <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
-            Lucky <span class="text-slate-400 font-light italic lowercase text-xl">roulette</span>
+            Math <span class="text-slate-400 font-light italic lowercase text-xl">challenge</span>
         </h1>
-        <p class="text-xs text-slate-400 font-gotham font-light">চাকা ঘুরিয়ে প্রতি স্পিনে জিতে নিন নিশ্চিত ওয়ালেট ক্যাশ</p>
+        <p class="text-xs text-slate-400 font-gotham font-light">অংক সমাধান করে প্রতি সঠিক উত্তরে জিতে নিন ৳৩.০০ - ৳৬.০০ ক্যাশ</p>
     </div>
 
-    <!-- Main Spin Card -->
-    <div class="fintech-card rounded-[32px] p-5 sm:p-7 flex flex-col items-center text-center relative overflow-hidden space-y-4 shadow-2xl">
+    <!-- Main Quiz Card -->
+    <div class="fintech-card rounded-[32px] p-5 sm:p-7 space-y-4 shadow-2xl">
         
-        <!-- Live Remaining & Balance Status Bar -->
+        <!-- Remaining & Live Balance Status Bar -->
         <div class="w-full grid grid-cols-2 gap-2 bg-white/[0.025] border border-white/[0.06] rounded-2xl p-3 font-gotham text-xs select-none">
             <div class="text-left pl-1">
-                <span class="text-[9px] text-slate-500 uppercase tracking-wider block">Spins Left</span>
+                <span class="text-[9px] text-slate-500 uppercase tracking-wider block">Daily Limit</span>
                 <span class="text-xs font-bold text-sky-400" id="remainingBadge">
-                    {{ remaining }} / ৩ বার
+                    {{ remaining }} / ৫ বার
                 </span>
             </div>
             <div class="text-right pr-1">
                 <span class="text-[9px] text-slate-500 uppercase tracking-wider block">Wallet Balance</span>
-                <span class="text-xs font-black text-emerald-400 tabular-nums" id="liveUserBal">
+                <span class="text-xs font-black text-emerald-400 tabular-nums" id="liveBalText">
                     ৳ {{ "%.2f"|format(user.balance) }}
                 </span>
             </div>
         </div>
 
-        <!-- ================= LUXURY TITANIUM WHEEL CONTAINER ================= -->
-        <div class="relative w-72 h-72 my-3 flex items-center justify-center select-none">
+        <!-- ================= THE NEURAL MATH CONSOLE ================= -->
+        <div class="math-terminal-box rounded-[28px] p-6 text-center space-y-4 relative overflow-hidden">
             
-            <!-- Ambient Backlight -->
-            <div class="absolute inset-0 rounded-full wheel-ambient-glow pointer-events-none scale-125"></div>
+            <span class="text-[9px] font-gotham uppercase tracking-[0.2em] text-slate-400 block font-semibold">
+                Solve The Expression
+            </span>
 
-            <!-- Top Indicator Pointer (Electric Cyan Laser Pin) -->
-            <div class="absolute -top-3.5 z-30 flex flex-col items-center drop-shadow-[0_0_12px_#38bdf8]">
-                <i class="fa-solid fa-location-pin text-sky-400 text-3xl"></i>
+            <!-- Massive Math Formula Display -->
+            <div class="font-gotham font-black text-4xl sm:text-5xl text-white tracking-tight py-1 tabular-nums drop-shadow-md" id="questionText">
+                {{ question }} = ?
             </div>
 
-            <!-- Outer Beveled Metallic Ring -->
-            <div class="absolute inset-0 rounded-full border-4 border-slate-700/80 titanium-rim pointer-events-none"></div>
-
-            <!-- Rotating Canvas Wheel -->
-            <canvas id="wheelCanvas" width="280" height="280" 
-                    class="rounded-full shadow-2xl transition-transform duration-[4200ms] ease-out"></canvas>
-
-            <!-- Center Metallic Hub Cap -->
-            <div class="absolute inset-0 m-auto w-14 h-14 rounded-full bg-gradient-to-tr from-[#0a0f1d] to-[#1e293b] border-2 border-white/20 shadow-xl flex items-center justify-center z-20 pointer-events-none">
-                <span class="font-gotham font-black text-[10px] tracking-wider text-sky-400">TW</span>
+            <!-- 20-Second Laser Countdown Progress Bar -->
+            <div class="space-y-1.5 pt-1">
+                <div class="w-full bg-white/[0.06] rounded-full h-1.5 overflow-hidden">
+                    <div id="quizTimerBar" class="bg-gradient-to-r from-blue-600 via-sky-400 to-emerald-400 h-full w-full transition-all duration-1000 linear"></div>
+                </div>
+                <div class="flex items-center justify-between text-[10px] font-gotham text-slate-400">
+                    <span>Speed Challenge</span>
+                    <span id="timerSecondsText" class="text-sky-400 font-bold tabular-nums">20s remaining</span>
+                </div>
             </div>
 
         </div>
 
-        <!-- Spin Action Button (10% Blue Accent) -->
-        <button id="spinBtn" onclick="triggerSpinWheel()" 
-                class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-3.5 px-4 rounded-xl transition shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2">
-            <i class="fa-solid fa-play text-[10px]"></i>
-            <span id="spinBtnLabel">স্পিন শুরু করুন</span>
-        </button>
+        <!-- 4 Multiple Choice Option Buttons -->
+        <div class="grid grid-cols-2 gap-2.5 pt-1" id="optionsContainer">
+            {% for opt in options %}
+            <button onclick="submitQuizAnswer('{{ opt }}', this)" 
+                    class="quiz-opt-btn font-gotham font-bold text-lg text-white py-3.5 px-4 rounded-2xl transition active:scale-95 shadow-sm">
+                {{ opt }}
+            </button>
+            {% endfor %}
+        </div>
 
-        <p class="text-[10px] text-slate-500 font-gotham flex items-center gap-1.5 justify-center">
-            <i class="fa-solid fa-shield-halved text-sky-400 text-[10px]"></i>
-            <span>জিতে নেওয়া টাকা সরাসরি মূল ব্যালেন্সে যোগ হয়</span>
-        </p>
+        <!-- Live Feedback Banner -->
+        <div id="feedbackBanner" class="hidden p-3.5 rounded-xl text-xs font-semibold text-center leading-relaxed"></div>
+
+        <!-- Next Question Button (10% Blue Accent) -->
+        <button id="nextQuestionBtn" onclick="loadNextQuestion()" 
+                class="hidden w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-3.5 rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2">
+            <span>পরবর্তী অংক সমাধান করুন</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </button>
 
     </div>
 
-</div>
-
-<!-- ================= LUXURY REWARD CELEBRATION MODAL ================= -->
-<div id="winModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-    <div class="w-full max-w-xs bg-[#0a0e17] border border-amber-500/30 rounded-3xl p-6 text-center space-y-4 transform scale-90 transition-transform duration-300 shadow-2xl" id="winModalCard">
-        
-        <!-- Trophy Glow -->
-        <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center text-2xl shadow-inner animate-bounce">
-            <i class="fa-solid fa-trophy"></i>
-        </div>
-
-        <div>
-            <span class="text-[9px] font-gotham uppercase tracking-widest text-slate-400 block">Congratulations!</span>
-            <h3 class="font-classic-seasons text-xl text-white mt-0.5 uppercase tracking-wide">Roulette Reward</h3>
-            <div class="text-3xl font-gotham font-black text-amber-400 my-2 tabular-nums" id="wonAmountDisplay">
-                ৳ ০.০০
-            </div>
-            <p class="text-xs text-slate-400">টাকাটি সফলভাবে আপনার ওয়ালেটে ক্রেডিট করা হয়েছে।</p>
-        </div>
-
-        <button onclick="closeWinModal()" 
-                class="w-full bg-blue-600 hover:bg-blue-500 text-white font-gotham font-semibold text-xs py-3 rounded-xl transition shadow-lg shadow-blue-600/30 active:scale-95">
-            দারুণ! গ্রহণ করলাম
-        </button>
-    </div>
 </div>
 
 <script>
-// Titanium & Neon Dual-Tone Slices (No cheap rainbow colors!)
-const slices = [
-    { label: "৳০.৫০", value: 0.50, bg: "#090d16", text: "#38bdf8" },
-    { label: "৳১.০০", value: 1.00, bg: "#131b2e", text: "#fbbf24" },
-    { label: "৳১.৫০", value: 1.50, bg: "#090d16", text: "#34d399" },
-    { label: "৳২.০০", value: 2.00, bg: "#131b2e", text: "#38bdf8" },
-    { label: "৳৩.০০", value: 3.00, bg: "#090d16", text: "#f1f5f9" },
-    { label: "৳৫.০০", value: 5.00, bg: "#131b2e", text: "#fbbf24" }
-];
+let remainingCount = parseInt("{{ remaining }}") || 0;
+let isAnswered = false;
+let quizTimer = null;
+let secondsLeft = 20;
 
-const canvas = document.getElementById("wheelCanvas");
-const ctx = canvas.getContext("2d");
-const totalSlices = slices.length;
-const arc = (2 * Math.PI) / totalSlices;
+function startTimer() {
+    if (quizTimer) clearInterval(quizTimer);
+    secondsLeft = 20;
+    const bar = document.getElementById('quizTimerBar');
+    const text = document.getElementById('timerSecondsText');
 
-let currentRemaining = parseInt("{{ remaining }}") || 0;
-let isSpinning = false;
-let currentRotation = 0;
+    quizTimer = setInterval(() => {
+        secondsLeft--;
+        text.innerText = `${secondsLeft}s remaining`;
+        bar.style.width = `${(secondsLeft / 20) * 100}%`;
 
-function drawWheel() {
-    const W = canvas.width, H = canvas.height;
-    const centerX = W / 2, centerY = H / 2;
-    const radius = W / 2 - 6;
-
-    ctx.clearRect(0, 0, W, H);
-
-    for (let i = 0; i < totalSlices; i++) {
-        const angle = i * arc;
-        
-        ctx.beginPath();
-        ctx.fillStyle = slices[i].bg;
-        ctx.moveTo(centerX, centerY);
-        ctx.arc(centerX, centerY, radius, angle, angle + arc, false);
-        ctx.lineTo(centerX, centerY);
-        ctx.fill();
-
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-
-        ctx.save();
-        ctx.translate(centerX, centerY);
-        ctx.rotate(angle + arc / 2);
-        
-        ctx.textAlign = "right";
-        ctx.fillStyle = slices[i].text;
-        ctx.font = "bold 14px 'Montserrat', sans-serif";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
-        ctx.shadowBlur = 4;
-        ctx.fillText(slices[i].label, radius - 22, 5);
-        ctx.restore();
-    }
+        if (secondsLeft <= 0) {
+            clearInterval(quizTimer);
+            if (!isAnswered) {
+                timeOutFailed();
+            }
+        }
+    }, 1000);
 }
 
-drawWheel();
+startTimer();
 
-function triggerSpinWheel() {
-    if (isSpinning) return;
-    if (currentRemaining <= 0) {
-        alert("আজকের ৩টি স্পিন সম্পন্ন হয়েছে! আগামীকাল আবার আসুন।");
+function timeOutFailed() {
+    isAnswered = true;
+    disableButtons();
+    showFeedback(false, "সময় শেষ! ২০ সেকেন্ডের মধ্যে সঠিক উত্তর সিলেক্ট করতে হবে।");
+    document.getElementById('nextQuestionBtn').classList.remove('hidden');
+}
+
+function submitQuizAnswer(selectedAns, btnElement) {
+    if (isAnswered) return;
+    if (remainingCount <= 0) {
+        alert("আজকের ৫টি কুইজ সম্পন্ন হয়েছে! ২৪ ঘণ্টা পর আবার আসুন।");
         return;
     }
 
-    const spinBtn = document.getElementById("spinBtn");
-    const spinBtnLabel = document.getElementById("spinBtnLabel");
+    isAnswered = true;
+    clearInterval(quizTimer);
+    disableButtons();
 
-    isSpinning = true;
-    spinBtn.disabled = true;
-    spinBtnLabel.innerText = "স্পিন হচ্ছে...";
-
-    fetch("/spin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" }
+    fetch('/quiz/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ answer: selectedAns })
     })
     .then(r => r.json())
     .then(data => {
         if (!data.success) {
             alert(data.message);
-            isSpinning = false;
-            spinBtn.disabled = false;
-            spinBtnLabel.innerText = "স্পিন শুরু করুন";
             return;
         }
 
-        currentRemaining = data.remaining !== undefined ? parseInt(data.remaining) : Math.max(0, currentRemaining - 1);
+        if (data.remaining !== undefined) {
+            remainingCount = data.remaining;
+            document.getElementById('remainingBadge').innerText = `${remainingCount} / ৫ বার`;
+        }
 
-        const wonIndex = slices.findIndex(s => s.value === parseFloat(data.reward));
-        const targetSlice = wonIndex !== -1 ? wonIndex : 0;
+        if (data.correct) {
+            btnElement.className = "quiz-opt-btn font-gotham font-bold text-lg py-3.5 px-4 rounded-2xl bg-emerald-500/20 border-emerald-500 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.3)]";
+            document.getElementById('liveBalText').innerText = `৳ ${parseFloat(data.new_balance).toFixed(2)}`;
+            showFeedback(true, data.message);
+        } else {
+            btnElement.className = "quiz-opt-btn font-gotham font-bold text-lg py-3.5 px-4 rounded-2xl bg-rose-500/20 border-rose-500 text-rose-400 shadow-[0_0_20px_rgba(244,63,94,0.3)]";
+            showFeedback(false, data.message);
+        }
 
-        const sliceDeg = 360 / totalSlices;
-        const targetDeg = (360 - (targetSlice * sliceDeg) - (sliceDeg / 2) - 90 + 360) % 360;
-        const extraRounds = 1800 + Math.floor(Math.random() * 360);
-        const finalRotation = currentRotation + extraRounds + targetDeg;
-        currentRotation = finalRotation;
-
-        canvas.style.transform = `rotate(${finalRotation}deg)`;
-
-        setTimeout(() => {
-            document.getElementById("remainingBadge").innerText = `${currentRemaining} / ৩ বার`;
-            document.getElementById("liveUserBal").innerText = `৳ ${parseFloat(data.new_balance).toFixed(2)}`;
-
-            openWinModal(data.reward);
-
-            isSpinning = false;
-            spinBtn.disabled = false;
-            spinBtnLabel.innerText = currentRemaining > 0 ? "আবার স্পিন করুন" : "স্পিন শেষ";
-        }, 4300);
+        if (remainingCount > 0) {
+            document.getElementById('nextQuestionBtn').classList.remove('hidden');
+        }
     })
     .catch(() => {
-        alert("সার্ভার ত্রুটি! কিছুক্ষণ পর আবার চেষ্টা করুন।");
-        isSpinning = false;
-        spinBtn.disabled = false;
-        spinBtnLabel.innerText = "স্পিন শুরু করুন";
+        alert("সার্ভার ত্রুটি! পেজটি রিফ্রেশ দিন।");
     });
 }
 
-function openWinModal(amount) {
-    document.getElementById("wonAmountDisplay").innerText = `৳ ${parseFloat(amount).toFixed(2)}`;
-    const modal = document.getElementById("winModal");
-    const card = document.getElementById("winModalCard");
-    modal.classList.remove("opacity-0", "pointer-events-none");
-    modal.classList.add("opacity-100");
-    card.classList.remove("scale-90");
-    card.classList.add("scale-100");
+function showFeedback(isSuccess, text) {
+    const banner = document.getElementById('feedbackBanner');
+    banner.classList.remove('hidden', 'bg-emerald-500/10', 'text-emerald-400', 'border-emerald-500/20', 'bg-rose-500/10', 'text-rose-400', 'border-rose-500/20');
+    if (isSuccess) {
+        banner.className = "p-3.5 rounded-xl text-xs font-semibold text-center leading-relaxed bg-emerald-500/10 border border-emerald-500/20 text-emerald-400";
+    } else {
+        banner.className = "p-3.5 rounded-xl text-xs font-semibold text-center leading-relaxed bg-rose-500/10 border border-rose-500/20 text-rose-400";
+    }
+    banner.innerText = text;
 }
 
-function closeWinModal() {
-    const modal = document.getElementById("winModal");
-    const card = document.getElementById("winModalCard");
-    modal.classList.add("opacity-0", "pointer-events-none");
-    modal.classList.remove("opacity-100");
-    card.classList.add("scale-90");
-    card.classList.remove("scale-100");
+function disableButtons() {
+    document.querySelectorAll('.quiz-opt-btn').forEach(btn => btn.disabled = true);
+}
+
+function loadNextQuestion() {
+    if (remainingCount <= 0) return;
+
+    fetch('/quiz/next', { method: 'POST' })
+    .then(r => r.json())
+    .then(data => {
+        isAnswered = false;
+        document.getElementById('questionText').innerText = `${data.question} = ?`;
+        document.getElementById('feedbackBanner').classList.add('hidden');
+        document.getElementById('nextQuestionBtn').classList.add('hidden');
+
+        const container = document.getElementById('optionsContainer');
+        container.innerHTML = '';
+        data.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = "quiz-opt-btn font-gotham font-bold text-lg text-white py-3.5 px-4 rounded-2xl transition active:scale-95 shadow-sm";
+            btn.innerText = opt;
+            btn.onclick = function() { submitQuizAnswer(opt, btn); };
+            container.appendChild(btn);
+        });
+
+        startTimer();
+    });
 }
 </script>
 {% endblock %}
