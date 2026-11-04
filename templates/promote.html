@@ -1,302 +1,324 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="max-w-4xl mx-auto space-y-12 pb-16">
+<style>
+    .fintech-card {
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(24px);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fintech-card:hover {
+        border-color: rgba(56, 189, 248, 0.35);
+    }
+    .fintech-input-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.2s ease-in-out;
+    }
+    .fintech-input-box:focus-within {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+        background: rgba(255, 255, 255, 0.05);
+    }
 
-    <!-- ================= 1. HERO SALES SECTION ================= -->
-    <div class="text-center space-y-4 pt-4 px-2">
-        <div class="inline-flex items-center gap-2 bg-rose-50 border border-rose-200 text-[#E11D48] text-xs font-black px-4 py-1.5 rounded-full shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-[#E11D48] animate-pulse"></span>
-            ১০০% রিয়েল ও অর্গানিক ট্রাফিকের নিশ্চয়তা
+    /* Ambient Hero Glow */
+    .promote-hero-glow {
+        background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.2) 0%, rgba(6, 182, 212, 0.1) 40%, rgba(10, 15, 29, 0.95) 70%, #04060b 100%);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    }
+</style>
+
+<div class="max-w-xl mx-auto space-y-6 pb-24">
+
+    <!-- Top Action Row -->
+    <div class="flex items-center justify-between px-1">
+        <a href="/allwork" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95 shadow-sm">
+            <i class="fa-solid fa-arrow-left text-[10px] text-blue-500"></i>
+            <span>আর্নিং হাব</span>
+        </a>
+
+        <div class="flex items-center gap-2">
+            <span class="text-[10px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+                Growth Studio
+            </span>
+        </div>
+    </div>
+
+    <!-- ================= 1. HERO SALES BANNER ================= -->
+    <div class="promote-hero-glow rounded-[32px] p-6 sm:p-7 text-center space-y-4 select-none relative overflow-hidden">
+        
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-slate-300 font-gotham text-[10px] uppercase tracking-wider">
+            <i class="fa-solid fa-bullhorn text-sky-400 text-xs"></i>
+            100% Real Organic Traffic
         </div>
 
-        <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-            আপনার পেজ, চ্যানেল বা ব্যবসাকে <br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#E11D48] via-rose-500 to-amber-500">
-                নিয়ে যান সাফল্যের শীর্ষে!
-            </span>
-        </h1>
-
-        <p class="text-xs sm:text-sm text-slate-500 max-w-2xl mx-auto leading-relaxed">
-            কোনো বট বা ফেইক সফটওয়্যার নয়! আমাদের হাজার হাজার একটিভ রিয়েল ইউজারের মাধ্যমে ফেসবুক পেজ মনিটাইজেশন বুস্ট, টেলিগ্রাম মেম্বার গ্রোথ কিংবা যেকোনো কাস্টম জব ক্যাম্পেইন পরিচালনা করুন সম্পূর্ণ নিরাপদে।
-        </p>
-
-        <!-- Trust Badges Bar -->
-        <div class="flex flex-wrap items-center justify-center gap-4 pt-2 text-xs font-bold text-slate-700">
-            <span class="flex items-center gap-1.5 bg-white border border-slate-200 px-3 py-1.5 rounded-xl shadow-sm">
-                <i class="fa-solid fa-circle-check text-emerald-500"></i> ১০০% অর্গানিক মানুষ
-            </span>
-            <span class="flex items-center gap-1.5 bg-white border border-slate-200 px-3 py-1.5 rounded-xl shadow-sm">
-                <i class="fa-solid fa-sliders text-[#E11D48]"></i> সম্পূর্ণ কন্ট্রোল আপনার হাতে
-            </span>
-            <span class="flex items-center gap-1.5 bg-white border border-slate-200 px-3 py-1.5 rounded-xl shadow-sm">
-                <i class="fa-solid fa-headset text-indigo-500"></i> ডেডিকেটেড ম্যানেজার সাপোর্ট
-            </span>
+        <div class="space-y-1.5">
+            <h1 class="font-classic-seasons text-2xl sm:text-4xl font-normal text-white uppercase tracking-wider leading-tight">
+                Traffic & Growth <span class="text-slate-400 font-light italic lowercase text-2xl sm:text-3xl">studio</span>
+            </h1>
+            <p class="text-xs text-slate-300 font-gotham font-light max-w-md mx-auto leading-relaxed">
+                কোনো বট নয়—আমাদের হাজার হাজার সক্রিয় আসল মানুষের মাধ্যমে পেজ মনিটাইজেশন, চ্যানেল মেম্বার ও কাস্টম ক্যাম্পেইন পরিচালনা করুন।
+            </p>
         </div>
 
-        <div class="pt-4">
-            <a href="#contactSection" class="inline-flex items-center gap-2 bg-[#E11D48] hover:bg-[#BE123C] active:scale-95 text-white font-black text-xs sm:text-sm py-4 px-8 rounded-2xl shadow-xl shadow-rose-500/25 transition">
-                <span>প্রমোশন ক্যাম্পেইন শুরু করুন</span>
-                <i class="fa-solid fa-arrow-down text-xs"></i>
+        <!-- 3-Pill Trust Highlights -->
+        <div class="grid grid-cols-3 gap-2 pt-1 font-gotham text-[11px]">
+            <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center">
+                <i class="fa-solid fa-user-check text-emerald-400 text-xs mb-1 block"></i>
+                <span class="text-slate-200 font-semibold block">রিয়েল ইউজার</span>
+                <span class="text-[9px] text-slate-500">No Bots</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center">
+                <i class="fa-solid fa-shield-halved text-sky-400 text-xs mb-1 block"></i>
+                <span class="text-slate-200 font-semibold block">পলিসি সেফ</span>
+                <span class="text-[9px] text-slate-500">100% Secure</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center">
+                <i class="fa-solid fa-headset text-amber-400 text-xs mb-1 block"></i>
+                <span class="text-slate-200 font-semibold block">লাইভ সাপোর্ট</span>
+                <span class="text-[9px] text-slate-500">24/7 Director</span>
+            </div>
+        </div>
+
+        <div class="pt-2">
+            <a href="#contactSection" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-gotham font-semibold text-xs py-3.5 px-6 rounded-xl transition shadow-lg shadow-blue-600/30">
+                <span>ক্যাম্পেইন অর্ডার করুন</span>
+                <i class="fa-solid fa-arrow-down text-[10px]"></i>
             </a>
         </div>
+
     </div>
 
-    <!-- ================= 2. SERVICES WE PROVIDE ================= -->
-    <div class="space-y-6">
-        <div class="text-center">
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">আমাদের প্রিমিয়াম সার্ভিসেস</span>
-            <h2 class="text-2xl font-black text-slate-900 tracking-tight">আপনি যা যা প্রমোট করতে পারবেন</h2>
+    <!-- ================= 2. SERVICES SUITE (৬টি প্রিমিয়াম সার্ভিস) ================= -->
+    <div class="space-y-3">
+        <div class="flex items-center justify-between px-1">
+            <span class="text-[10px] font-gotham font-bold uppercase tracking-widest text-slate-500">
+                Advertising Suites
+            </span>
+            <span class="text-[10px] font-gotham text-sky-400">All Platforms</span>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             
-            <!-- Service 1: Facebook Monetization -->
-            <div class="bg-white border border-rose-100 rounded-[28px] p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between">
-                <div>
-                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-4">
-                        <i class="fa-brands fa-facebook"></i>
-                    </div>
-                    <h3 class="font-black text-slate-900 text-sm mb-2">ফেসবুক পেজ মনিটাইজেশন বুস্ট</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        ফেসবুক পেজের জন্য ৬০,০০০ মিনিট রিয়েল ওয়াচটাইম এবং ৫,০০০+ সক্রিয় ফলোয়ার গ্যারান্টি সহকারে সম্পন্ন করুন। পলিসি ইস্যু ছাড়া নিরাপদ মনিটাইজেশন।
-                    </p>
+            <!-- Service 1: Facebook -->
+            <div class="fintech-card rounded-[24px] p-4.5 space-y-2">
+                <div class="w-9 h-9 rounded-xl bg-blue-600/10 border border-blue-500/20 text-blue-400 flex items-center justify-center text-sm">
+                    <i class="fa-brands fa-facebook"></i>
                 </div>
-                <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] font-bold text-emerald-600 flex items-center gap-1">
-                    <i class="fa-solid fa-shield-halved"></i> গ্যারান্টিড ওয়াচটাইম ও ফলোয়ার
-                </div>
+                <h3 class="text-xs font-semibold text-white">ফেসবুক পেজ মনিটাইজেশন বুস্ট</h3>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                    ৬০,০০০ মিনিট রিয়েল ওয়াচটাইম এবং ৫,০০০+ সক্রিয় ফলোয়ার দিয়ে কোনো পলিসি ইস্যু ছাড়া নিরাপদ মনিটাইজেশন সম্পন্ন করুন।
+                </p>
+                <span class="inline-block font-gotham text-[10px] text-emerald-400 font-semibold pt-1">
+                    ✓ Guaranteed Watchtime
+                </span>
             </div>
 
-            <!-- Service 2: Telegram Members -->
-            <div class="bg-white border border-rose-100 rounded-[28px] p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between">
-                <div>
-                    <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-500 flex items-center justify-center text-xl mb-4">
-                        <i class="fa-brands fa-telegram"></i>
-                    </div>
-                    <h3 class="font-black text-slate-900 text-sm mb-2">টেলিগ্রাম চ্যানেল মেম্বার গ্রোথ</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        ট্রেডিং, নিউজ, গেমিং কিংবা যেকোনো টেলিগ্রাম চ্যানেলে একটিভ বাংলাদেশি ও গ্লোবাল রিয়েল মেম্বার যুক্ত করুন। কোনো ড্রপ হবে না।
-                    </p>
+            <!-- Service 2: Telegram -->
+            <div class="fintech-card rounded-[24px] p-4.5 space-y-2">
+                <div class="w-9 h-9 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center text-sm">
+                    <i class="fa-brands fa-telegram"></i>
                 </div>
-                <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] font-bold text-sky-600 flex items-center gap-1">
-                    <i class="fa-solid fa-users"></i> ১০০% নন-ড্রপ রিয়েল ইউজার
-                </div>
+                <h3 class="text-xs font-semibold text-white">টেলিগ্রাম চ্যানেল মেম্বার গ্রোথ</h3>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                    ট্রেডিং, নিউজ বা যেকোনো টেলিগ্রাম চ্যানেলে সক্রিয় বাংলাদেশি ও গ্লোবাল নন-ড্রপ রিয়েল মেম্বার যুক্ত করুন।
+                </p>
+                <span class="inline-block font-gotham text-[10px] text-sky-400 font-semibold pt-1">
+                    ✓ Non-Drop Active Leads
+                </span>
             </div>
 
-            <!-- Service 3: Custom Micro Tasks & Jobs -->
-            <div class="bg-white border border-rose-100 rounded-[28px] p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between">
-                <div>
-                    <div class="w-12 h-12 rounded-2xl bg-rose-50 text-[#E11D48] flex items-center justify-center text-xl mb-4">
-                        <i class="fa-solid fa-briefcase"></i>
-                    </div>
-                    <h3 class="font-black text-slate-900 text-sm mb-2">কাস্টম জব ও টাস্ক পোস্টিং</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        অ্যাপ ডাউনলোড, ফাইভ-স্টার রিভিউ, ওয়েবসাইট সাইন-আপ কিংবা সার্ভে ফিল-আপ। যেকোনো ধরণের কাস্টম কাজ দিয়ে রিয়েল রেজাল্ট নিন।
-                    </p>
+            <!-- Service 3: Custom Tasks -->
+            <div class="fintech-card rounded-[24px] p-4.5 space-y-2">
+                <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-amber-400 flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-list-check"></i>
                 </div>
-                <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] font-bold text-[#E11D48] flex items-center gap-1">
-                    <i class="fa-solid fa-image"></i> স্ক্রিনশট প্রুফ ভেরিফিকেশন
-                </div>
+                <h3 class="text-xs font-semibold text-white">কাস্টম জব ও মাইক্রো টাস্ক</h3>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                    অ্যাপ ইনস্টল, ফাইভ-স্টার রিভিউ, সাইট সাইন-আপ বা সার্ভে ফিল-আপ—স্ক্রিনশট প্রুফ ভেরিফিকেশন সহ যেকোনো কাজ চালান।
+                </p>
+                <span class="inline-block font-gotham text-[10px] text-amber-400 font-semibold pt-1">
+                    ✓ Proof Screenshot Audit
+                </span>
             </div>
 
-            <!-- Service 4: YouTube Growth -->
-            <div class="bg-white border border-rose-100 rounded-[28px] p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between">
-                <div>
-                    <div class="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-xl mb-4">
-                        <i class="fa-brands fa-youtube"></i>
-                    </div>
-                    <h3 class="font-black text-slate-900 text-sm mb-2">ইউটিউব ভিউ ও ওয়াচটাইম</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        রিয়েল অডিয়েন্স দিয়ে ৩০+ সেকেন্ড বা ফুল ওয়াচটাইম ক্যাম্পেইন। ইউটিউব অ্যালগরিদমে অর্গানিক বুস্ট পাওয়ার সেরা উপায়।
-                    </p>
+            <!-- Service 4: YouTube -->
+            <div class="fintech-card rounded-[24px] p-4.5 space-y-2">
+                <div class="w-9 h-9 rounded-xl bg-red-600/10 border border-red-500/20 text-red-400 flex items-center justify-center text-sm">
+                    <i class="fa-brands fa-youtube"></i>
                 </div>
-                <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] font-bold text-red-600 flex items-center gap-1">
-                    <i class="fa-solid fa-play"></i> অ্যালগরিদম ফ্রেন্ডলি ট্রাফিক
-                </div>
+                <h3 class="text-xs font-semibold text-white">ইউটিউব ভিউ ও ওয়াচটাইম</h3>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                    আসল অডিয়েন্স দিয়ে হাই-রিটেনশন ভিডিও ওয়াচ ক্যাম্পেইন। ইউটিউব অ্যালগরিদমে অর্গানিক বুস্ট পাওয়ার সেরা উপায়।
+                </p>
+                <span class="inline-block font-gotham text-[10px] text-red-400 font-semibold pt-1">
+                    ✓ Algorithm Safe Views
+                </span>
             </div>
 
-            <!-- Service 5: App Promotion & Rating -->
-            <div class="bg-white border border-rose-100 rounded-[28px] p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between">
-                <div>
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl mb-4">
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-                    <h3 class="font-black text-slate-900 text-sm mb-2">প্লে-স্টোর অ্যাপ রেটিং ও ইনস্টল</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        প্লে-স্টোরে আপনার অ্যাপের র‍্যাংক বাড়াতে অর্গানিক ডাউনলোড এবং ফাইভ স্টার পজিটিভ ফিডব্যাক ক্যাম্পেইন চালান।
-                    </p>
+            <!-- Service 5: App Rating -->
+            <div class="fintech-card rounded-[24px] p-4.5 space-y-2">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-star"></i>
                 </div>
-                <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] font-bold text-emerald-600 flex items-center gap-1">
-                    <i class="fa-solid fa-arrow-trend-up"></i> প্লে-স্টোর র‍্যাংকিং বুস্ট
-                </div>
+                <h3 class="text-xs font-semibold text-white">প্লে-স্টোর অ্যাপ ইনস্টল ও রেটিং</h3>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                    প্লে-স্টোরে আপনার অ্যাপের র‍্যাংক বাড়াতে অর্গানিক ডাউনলোড এবং ফাইভ স্টার পজিটিভ ফিডব্যাক ক্যাম্পেইন চালান।
+                </p>
+                <span class="inline-block font-gotham text-[10px] text-emerald-400 font-semibold pt-1">
+                    ✓ 5-Star Store Feedback
+                </span>
             </div>
 
-            <!-- Service 6: Website Traffic -->
-            <div class="bg-white border border-rose-100 rounded-[28px] p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between">
-                <div>
-                    <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl mb-4">
-                        <i class="fa-solid fa-globe"></i>
-                    </div>
-                    <h3 class="font-black text-slate-900 text-sm mb-2">অর্গানিক ওয়েবসাইট ভিজিটর</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        ব্লগ বা ইকমার্স সাইটে ইউনিক অরিজিনাল ভিজিটর পাঠান। সাইটের ট্রাফিক গ্রোথ এবং গুগল সার্চ কনসোলে ইম্প্রেশন বাড়ান।
-                    </p>
+            <!-- Service 6: Web Traffic -->
+            <div class="fintech-card rounded-[24px] p-4.5 space-y-2">
+                <div class="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-globe"></i>
                 </div>
-                <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] font-bold text-purple-600 flex items-center gap-1">
-                    <i class="fa-solid fa-chart-line"></i> হাই-রিটেনশন ভিজিটর
-                </div>
+                <h3 class="text-xs font-semibold text-white">অর্গানিক ওয়েবসাইট ভিজিটর</h3>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                    ব্লগ বা ই-কমার্স সাইটে ইউনিক অরিজিনাল ভিজিটর পাঠান। সাইটের ট্রাফিক গ্রোথ এবং গুগল সার্চ কনসোলে ইম্প্রেশন বাড়ান।
+                </p>
+                <span class="inline-block font-gotham text-[10px] text-purple-400 font-semibold pt-1">
+                    ✓ Direct & Search Traffic
+                </span>
             </div>
 
         </div>
     </div>
 
-    <!-- ================= 3. CLIENT REVIEWS (টেস্টিমোনিয়াল সেকশন) ================= -->
-    <div class="bg-white rounded-[32px] p-6 sm:p-10 border border-rose-100 shadow-sm space-y-6">
-        <div class="text-center">
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">সন্তুষ্ট ক্লায়েন্টদের মতামত</span>
-            <h2 class="text-2xl font-black text-slate-900 tracking-tight">আমাদের ওপর কেন আস্থা রাখবেন?</h2>
+    <!-- ================= 3. CLIENT REVIEWS & SOCIAL PROOF ================= -->
+    <div class="fintech-card rounded-[28px] p-5 sm:p-6 space-y-4">
+        <div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
+            <span class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-200">
+                Verified Client Reviews
+            </span>
+            <div class="flex text-amber-400 text-[10px]">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="space-y-3">
             
-            <!-- Review 1 -->
-            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col justify-between">
-                <div>
-                    <div class="flex text-amber-400 text-xs mb-3">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-xs text-slate-600 leading-relaxed italic">
-                        "আমার ফেসবুক পেজের ৬০ হাজার মিনিট ওয়াচটাইম মাত্র ৩ দিনে সম্পূর্ণ হয়েছে এবং কোনো পলিসি ইস্যু ছাড়াই পেজ মনিটাইজ হয়েছে! অসাধারণ সার্ভিস।"
-                    </p>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-200/60 flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 font-bold text-xs flex items-center justify-center">ত</div>
-                    <div>
-                        <span class="text-xs font-black text-slate-800 block">তন্ময় হাসান</span>
-                        <span class="text-[10px] text-slate-400">কন্টেন্ট ক্রিয়েটর</span>
-                    </div>
+            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04] space-y-2">
+                <p class="text-xs text-slate-300 italic leading-relaxed">
+                    "আমার পেজের ৬০ হাজার মিনিট ওয়াচটাইম মাত্র ৩ দিনে শেষ হয়েছে এবং কোনো পলিসি ইস্যু ছাড়াই পেজ মনিটাইজ হয়েছে!"
+                </p>
+                <div class="flex items-center justify-between text-[11px] text-slate-400 font-gotham">
+                    <span class="text-white font-semibold">তন্ময় হাসান</span>
+                    <span class="text-slate-500">Facebook Creator</span>
                 </div>
             </div>
 
-            <!-- Review 2 -->
-            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col justify-between">
-                <div>
-                    <div class="flex text-amber-400 text-xs mb-3">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-xs text-slate-600 leading-relaxed italic">
-                        "টেলিগ্রাম চ্যানেলে ৫০০০ একটিভ মেম্বার নিয়েছি। এক মাস হয়ে গেল, কোনো মেম্বার ড্রপ হয়নি। প্রতিটি ইউজার আসল ও রেসপন্সিভ।"
-                    </p>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-200/60 flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 font-bold text-xs flex items-center justify-center">শ</div>
-                    <div>
-                        <span class="text-xs font-black text-slate-800 block">শাহরিয়ার কবির</span>
-                        <span class="text-[10px] text-slate-400">ট্রেডার ও চ্যানেল ওনার</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Review 3 -->
-            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col justify-between">
-                <div>
-                    <div class="flex text-amber-400 text-xs mb-3">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-xs text-slate-600 leading-relaxed italic">
-                        "আমার ই-কমার্স অ্যাপের ১০০০+ ইনস্টল ও রিভিউ ক্যাম্পেইন চালিয়েছি। প্লে-স্টোরে অ্যাপের র‍্যাংক বেড়েছে এবং সেলস আগের চেয়ে দ্বিগুণ!"
-                    </p>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-200/60 flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 font-bold text-xs flex items-center justify-center">আ</div>
-                    <div>
-                        <span class="text-xs font-black text-slate-800 block">আফরোজা সুলতানা</span>
-                        <span class="text-[10px] text-slate-400">অনলাইন উদ্যোক্তা</span>
-                    </div>
+            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04] space-y-2">
+                <p class="text-xs text-slate-300 italic leading-relaxed">
+                    "টেলিগ্রাম চ্যানেলে ৫০০০ মেম্বার নেওয়ার পর ১ মাস হয়ে গেল, কোনো ড্রপ হয়নি। প্রতিটি ইউজার আসল ও রেসপন্সিভ।"
+                </p>
+                <div class="flex items-center justify-between text-[11px] text-slate-400 font-gotham">
+                    <span class="text-white font-semibold">শাহরিয়ার কবির</span>
+                    <span class="text-slate-500">Telegram Trader</span>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- ================= 4. CONTACT / LEAD FORM (LOGIN PROTECTED) ================= -->
-    <div id="contactSection" class="bg-white rounded-[32px] p-6 sm:p-10 border border-rose-100 shadow-xl relative overflow-hidden">
+    <!-- ================= 4. CAMPAIGN ORDER FORM (LOGIN PROTECTED) ================= -->
+    <div id="contactSection" class="fintech-card rounded-[28px] p-5 sm:p-6 space-y-4">
         
-        <div class="text-center mb-6">
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">ক্যাম্পেইন রিকোয়েস্ট</span>
-            <h2 class="text-2xl font-black text-slate-900 tracking-tight">আপনার প্রমোশন প্রয়োজন জানান</h2>
-            <p class="text-xs text-slate-500 mt-1">তথ্য দিন, আমাদের টিম আপনার সাথে সরাসরি হোয়াটসঅ্যাপ বা ফোনে যোগাযোগ করবে।</p>
+        <div class="border-b border-white/[0.06] pb-3">
+            <span class="font-classic-seasons text-sm text-white uppercase tracking-wider block">
+                Campaign <span class="text-slate-400 font-light italic lowercase text-xs">Submission</span>
+            </span>
+            <p class="text-xs text-slate-400 font-gotham font-light mt-0.5">আপনার রিকোয়ারমেন্ট দিন, আমাদের টিম দ্রুত আপনার সাথে যোগাযোগ করবে</p>
         </div>
 
         {% if is_logged_in %}
-        <!-- LOGGED-IN: REAL CONTACT FORM -->
-        <form action="/promote" method="POST" class="max-w-lg mx-auto space-y-4">
+        <form action="/promote" method="POST" class="space-y-3.5">
             
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 ml-1">আপনার নাম</label>
-                    <input type="text" name="name" value="{{ user.name if user else '' }}" required placeholder="পূর্ণ নাম"
-                        class="w-full px-4 py-3 rounded-2xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-[#E11D48] transition bg-slate-50/40">
+                <div class="space-y-1">
+                    <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">আপনার নাম</label>
+                    <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5">
+                        <i class="fa-solid fa-user text-slate-500 text-xs w-4 text-center"></i>
+                        <input type="text" name="name" value="{{ user.name if user else '' }}" required placeholder="আপনার নাম" 
+                               class="w-full bg-transparent text-xs font-gotham text-white focus:outline-none placeholder-slate-600">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 ml-1">ইমেইল</label>
-                    <input type="email" name="email" value="{{ user.email if user else '' }}" required placeholder="email@gmail.com"
-                        class="w-full px-4 py-3 rounded-2xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-[#E11D48] transition bg-slate-50/40">
+
+                <div class="space-y-1">
+                    <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">ইমেইল</label>
+                    <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5">
+                        <i class="fa-solid fa-envelope text-slate-500 text-xs w-4 text-center"></i>
+                        <input type="email" name="email" value="{{ user.email if user else '' }}" required placeholder="email@gmail.com" 
+                               class="w-full bg-transparent text-xs font-gotham text-white focus:outline-none placeholder-slate-600">
+                    </div>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 ml-1">মোবাইল / WhatsApp নাম্বার</label>
-                    <input type="text" name="phone" required placeholder="017xxxxxxxx"
-                        class="w-full px-4 py-3 rounded-2xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-[#E11D48] transition bg-slate-50/40">
+                <div class="space-y-1">
+                    <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">মোবাইল / WhatsApp</label>
+                    <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5">
+                        <i class="fa-solid fa-phone text-slate-500 text-xs w-4 text-center"></i>
+                        <input type="text" name="phone" required placeholder="01XXXXXXXXX" 
+                               class="w-full bg-transparent text-xs font-mono text-white focus:outline-none placeholder-slate-600">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 ml-1">সার্ভিস ক্যাটাগরি</label>
-                    <select name="service_type" required
-                        class="w-full px-4 py-3 rounded-2xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-[#E11D48] transition bg-slate-50/40">
-                        <option value="Facebook Monetization">Facebook পেজ মনিটাইজেশন বুস্ট</option>
-                        <option value="Telegram Growth">Telegram চ্যানেল মেম্বার গ্রোথ</option>
-                        <option value="Custom Task Job">কাস্টম জব / টাস্ক ক্যাম্পেইন</option>
-                        <option value="YouTube Promotion">YouTube ওয়াচটাইম ও ভিউ</option>
-                        <option value="App Install & Review">প্লে-স্টোর অ্যাপ ইনস্টল ও রিভিউ</option>
-                        <option value="Website Traffic">ওয়েবসাইট অর্গানিক ট্রাফিক</option>
-                        <option value="Other Promotion">অন্যান্য প্রমোশন</option>
-                    </select>
+
+                <div class="space-y-1">
+                    <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">সার্ভিস ক্যাটাগরি</label>
+                    <div class="fintech-input-box rounded-2xl px-3.5 py-2.5">
+                        <select name="service_type" required class="w-full bg-transparent text-xs font-gotham text-white focus:outline-none">
+                            <option value="Facebook Monetization" class="bg-[#0a0e17] text-white">Facebook পেজ মনিটাইজেশন বুস্ট</option>
+                            <option value="Telegram Growth" class="bg-[#0a0e17] text-white">Telegram চ্যানেল মেম্বার গ্রোথ</option>
+                            <option value="Custom Task Job" class="bg-[#0a0e17] text-white">কাস্টম জব / টাস্ক ক্যাম্পেইন</option>
+                            <option value="YouTube Promotion" class="bg-[#0a0e17] text-white">YouTube ওয়াচটাইম ও ভিউ</option>
+                            <option value="App Install & Review" class="bg-[#0a0e17] text-white">প্লে-স্টোর অ্যাপ ইনস্টল ও রিভিউ</option>
+                            <option value="Website Traffic" class="bg-[#0a0e17] text-white">ওয়েবসাইট অর্গানিক ট্রাফিক</option>
+                            <option value="Other Promotion" class="bg-[#0a0e17] text-white">অন্যান্য কাস্টম প্রমোশন</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
-            <div>
-                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 ml-1">কাজের বিস্তারিত বিবরণ (Requirement)</label>
-                <textarea name="requirement" rows="4" required placeholder="আপনার পেজ বা চ্যানেলের লিংক, টার্গেট মেম্বার বা ওয়াচটাইমের পরিমাণ এবং বাজেট বিস্তারিত লিখুন..."
-                    class="w-full px-4 py-3 rounded-2xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-[#E11D48] transition bg-slate-50/40"></textarea>
+            <div class="space-y-1">
+                <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">
+                    কাজের বিবরণ ও বাজেট (Requirement)
+                </label>
+                <div class="fintech-input-box rounded-2xl p-3">
+                    <textarea name="requirement" rows="3" required 
+                              placeholder="আপনার পেজ বা চ্যানেলের লিংক, টার্গেট মেম্বার বা ওয়াচটাইমের পরিমাণ এবং সম্ভাব্য বাজেট লিখুন..." 
+                              class="w-full bg-transparent text-xs text-slate-100 placeholder-slate-600 focus:outline-none resize-none leading-relaxed"></textarea>
+                </div>
             </div>
 
             <button type="submit" 
-                class="w-full bg-[#E11D48] hover:bg-[#BE123C] active:scale-95 text-white font-black text-xs sm:text-sm py-4 px-4 rounded-2xl shadow-xl shadow-rose-500/25 transition flex items-center justify-center gap-2">
-                <i class="fa-solid fa-paper-plane text-xs"></i>
+                    class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-3.5 px-4 rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2 mt-2">
+                <i class="fa-solid fa-paper-plane text-[10px]"></i>
                 <span>প্রমোশন রিকোয়েস্ট জমা দিন</span>
             </button>
         </form>
 
         {% else %}
-        <!-- NOT LOGGED IN: BEAUTIFUL LOCKED CARD (লগইন ছাড়া ফর্ম পাওয়া যাবে না) -->
-        <div class="max-w-md mx-auto p-8 rounded-3xl bg-slate-50 border border-slate-200 text-center space-y-4">
-            <div class="w-16 h-16 mx-auto rounded-full bg-rose-50 text-[#E11D48] flex items-center justify-center text-2xl shadow-sm">
+        <!-- LOCKED STATE: PROMPT LOGIN -->
+        <div class="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] text-center space-y-3">
+            <div class="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center mx-auto text-base">
                 <i class="fa-solid fa-lock"></i>
             </div>
-            
             <div class="space-y-1">
-                <h3 class="text-base font-black text-slate-900">ফর্মটি পূরণ করতে লগইন আবশ্যক</h3>
-                <p class="text-xs text-slate-500 leading-relaxed">
-                    নিরাপত্তা ও সঠিক যোগাযোগের স্বার্থে প্রমোশন ফরম সাবমিট করতে আপনার MicroEarnX অ্যাকাউন্টে লগইন থাকতে হবে।
+                <h4 class="text-xs font-semibold text-white">ফর্ম পূরণ করতে লগইন প্রয়োজন</h4>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                    সঠিক ট্র্যাকিং ও দ্রুত ক্যাম্পেইন কনফার্মেশনের জন্য আপনার TaskWallet অ্যাকাউন্টে লগইন থাকা আবশ্যক।
                 </p>
             </div>
-
-            <div class="pt-2 flex items-center justify-center gap-3">
-                <a href="/" class="flex-1 bg-[#E11D48] hover:bg-[#BE123C] text-white font-extrabold text-xs py-3 rounded-2xl shadow-md transition">
+            <div class="pt-1 flex items-center justify-center gap-2.5">
+                <a href="/login" class="bg-blue-600 hover:bg-blue-500 text-white font-gotham font-semibold text-xs py-2 px-5 rounded-xl transition shadow">
                     লগইন করুন
                 </a>
-                <a href="/?tab=register" class="flex-1 bg-white hover:bg-slate-100 border border-slate-200 text-slate-800 font-extrabold text-xs py-3 rounded-2xl transition">
+                <a href="/" class="bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 font-gotham text-xs py-2 px-4 rounded-xl transition border border-white/[0.08]">
                     নতুন অ্যাকাউন্ট
                 </a>
             </div>
@@ -305,14 +327,23 @@
 
     </div>
 
-    <!-- Direct Telegram Fast Help Button -->
-    <div class="text-center pt-2">
-        <a href="https://t.me/your_support_channel" target="_blank" 
-           class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold text-xs py-3 px-6 rounded-2xl shadow-sm transition">
-            <i class="fa-brands fa-telegram text-sky-500 text-base"></i>
-            <span>সরাসরি টেলিগ্রামে ম্যানেজারের সাথে কথা বলুন</span>
-        </a>
-    </div>
+    <!-- ================= 5. DIRECT TELEGRAM ADVERTISING DESK ================= -->
+    <a href="https://t.me/micro_earnx" target="_blank" 
+       class="fintech-card rounded-[24px] p-4 flex items-center justify-between gap-3 border-sky-500/20 bg-sky-500/[0.02] hover:bg-sky-500/[0.06] transition active:scale-[0.99] select-none">
+        <div class="flex items-center gap-3.5">
+            <div class="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-500/30 text-sky-400 flex items-center justify-center text-base shrink-0">
+                <i class="fa-brands fa-telegram"></i>
+            </div>
+            <div class="leading-tight">
+                <span class="text-xs font-bold text-white block">সরাসরি ক্যাম্পেইন ডিরেক্টরের সাথে কথা বলুন</span>
+                <span class="text-[10px] text-slate-400">টেলিগ্রামে বাজেট ডিল ও ইনস্ট্যান্ট ক্যাম্পেইন রান করতে মেসেজ দিন</span>
+            </div>
+        </div>
+        <div class="shrink-0 text-sky-400 text-xs flex items-center gap-1 font-gotham font-semibold pr-1">
+            <span>কথা বলুন</span>
+            <i class="fa-solid fa-arrow-right text-[9px]"></i>
+        </div>
+    </a>
 
 </div>
 {% endblock %}
