@@ -525,4 +525,81 @@
             <!-- History -->
             <a href="/history" class="water-nav-item nav-item flex flex-col items-center gap-1 text-slate-400 hover:text-sky-300 transition group" data-path="/history">
                 <i class="fa-solid fa-clock-rotate-left text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
-                <span class="text-[9px] font-gotham font-medium tracking-
+                <span class="text-[9px] font-gotham font-medium tracking-tight">History</span>
+            </a>
+
+            <!-- 🌊 CENTER WORK ORB: LIQUID WATER DROPLET + BLUE RIPPLE EXPANSION 🌊 -->
+            <a href="/allwork" class="nav-item -mt-5 flex flex-col items-center group active:scale-95 transition relative" data-path="/allwork">
+                <!-- Outer Pulsing Water Wave Rings -->
+                <span class="liquid-ripple-ring"></span>
+                <span class="liquid-ripple-ring" style="animation-delay: 1.4s;"></span>
+
+                <!-- Morphing Water Droplet Core -->
+                <div class="liquid-water-droplet w-12 h-12 flex items-center justify-center text-white text-base">
+                    <i class="fa-solid fa-bolt drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"></i>
+                </div>
+                <span class="text-[9px] font-gotham font-bold text-sky-400 mt-1 drop-shadow-[0_0_8px_#38bdf8]">Work</span>
+            </a>
+
+            <!-- Payout -->
+            <a href="/withdraw" class="water-nav-item nav-item flex flex-col items-center gap-1 text-slate-400 hover:text-sky-300 transition group" data-path="/withdraw">
+                <i class="fa-solid fa-wallet text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
+                <span class="text-[9px] font-gotham font-medium tracking-tight">Payout</span>
+            </a>
+
+            <!-- Profile -->
+            <a href="/account" class="water-nav-item nav-item flex flex-col items-center gap-1 text-slate-400 hover:text-sky-300 transition group" data-path="/account">
+                <i class="fa-solid fa-user text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
+                <span class="text-[9px] font-gotham font-medium tracking-tight">Profile</span>
+            </a>
+
+        </nav>
+    </div>
+
+    <!-- SCRIPT: LEFT DRAWER, AUTO-DISMISS TOAST & ACTIVE ACCENT HIGHLIGHT -->
+    <script>
+        function toggleSidebar(open) {
+            const overlay = document.getElementById('drawerOverlay');
+            const panel = document.getElementById('drawerPanel');
+            if (open) {
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                overlay.classList.add('opacity-100');
+                panel.classList.remove('-translate-x-full');
+                panel.classList.add('translate-x-0');
+            } else {
+                overlay.classList.remove('opacity-100');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                panel.classList.remove('translate-x-0');
+                panel.classList.add('-translate-x-full');
+            }
+        }
+
+        // Active Bottom Navigation Electric Blue Glow
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.nav-item').forEach(item => {
+                const target = item.getAttribute('data-path');
+                if (target && currentPath === target) {
+                    item.classList.remove('text-slate-400');
+                    item.classList.add('active');
+                }
+            });
+
+            // Auto-Dismiss Flash Messages after 4.5 seconds
+            setTimeout(() => {
+                document.querySelectorAll('.flash-toast').forEach(toast => {
+                    dismissToast(toast);
+                });
+            }, 4500);
+        });
+
+        function dismissToast(element) {
+            if (!element) return;
+            element.style.transition = "all 0.35s ease";
+            element.style.opacity = "0";
+            element.style.transform = "translateY(-15px) scale(0.95)";
+            setTimeout(() => element.remove(), 350);
+        }
+    </script>
+</body>
+</html>
