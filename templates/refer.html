@@ -2,167 +2,159 @@
 {% block content %}
 <style>
     .fintech-card {
-        background: rgba(255, 255, 255, 0.025);
+        background: rgba(255, 255, 255, 0.02);
         border: 1px solid rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(24px);
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        backdrop-filter: blur(20px);
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .fintech-card:hover {
         border-color: rgba(56, 189, 248, 0.25);
     }
 
-    /* Ambient Glow Behind Hero Card */
-    .referral-hero-glow {
-        background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.22) 0%, rgba(10, 15, 29, 0.95) 60%, #04060b 100%);
-        border: 1px solid rgba(56, 189, 248, 0.25);
-        box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    /* Crisp Matte Terminal Box */
+    .affiliate-terminal {
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.6) 0%, rgba(4, 6, 11, 0.95) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.85);
     }
 
-    /* Glowing Pulsing Copy Field */
-    .copy-glow-box {
+    .copy-pill-input {
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.08);
-        transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease;
     }
-    .copy-glow-box:focus-within {
+    .copy-pill-input:focus-within {
         border-color: #2563eb;
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
         background: rgba(255, 255, 255, 0.05);
     }
 
-    /* Social Share Buttons */
-    .share-btn {
+    /* Social Pill Share */
+    .social-share-pill {
         background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        transition: all 0.2s ease;
     }
-    .share-btn:hover {
+    .social-share-pill:hover {
         background: rgba(255, 255, 255, 0.07);
         transform: translateY(-2px);
     }
 
-    /* Live Toast Animation */
-    @keyframes toastFade {
+    /* Toast Notification */
+    @keyframes toastSlide {
         0% { opacity: 0; transform: translate(-50%, 15px); }
         15% { opacity: 1; transform: translate(-50%, 0); }
         85% { opacity: 1; transform: translate(-50%, 0); }
         100% { opacity: 0; transform: translate(-50%, -15px); }
     }
-    .animate-toast {
-        animation: toastFade 2.5s ease-in-out forwards;
+    .toast-anim {
+        animation: toastSlide 2.5s ease-in-out forwards;
     }
 </style>
 
-<div class="max-w-xl mx-auto space-y-6 pb-24">
+<div class="max-w-xl mx-auto space-y-4 pb-24 px-1 sm:px-0">
 
     <!-- Top Action Row -->
     <div class="flex items-center justify-between px-1">
-        <a href="/app" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95 shadow-sm">
+        <a href="/app" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95">
             <i class="fa-solid fa-arrow-left text-[10px] text-blue-500"></i>
             <span>ড্যাশবোর্ড</span>
         </a>
 
-        <div class="flex items-center gap-2">
-            <span class="text-[10px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
-                Partner Network
-            </span>
-        </div>
+        <span class="text-[9px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-2.5 py-0.5 rounded-full uppercase flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+            Partner Program
+        </span>
     </div>
 
-    <!-- Title Section (The Seasons Classic Typography) -->
-    <div class="text-center py-1 select-none space-y-1">
+    <!-- Title Section -->
+    <div class="text-center py-1 select-none space-y-0.5">
         <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
-            Affiliate <span class="text-slate-400 font-light italic lowercase text-xl">syndicate</span>
+            Referral <span class="text-slate-400 font-light italic lowercase text-xl">network</span>
         </h1>
-        <p class="text-xs text-slate-400 font-gotham font-light">বন্ধুদের ইনভাইট করুন এবং প্রতিটি সফল রেফারেলে পান নিশ্চিত ক্যাশ বোনাস</p>
+        <p class="text-[11px] text-slate-400 font-gotham font-light">বন্ধুদের ইনভাইট করুন এবং প্রতি সফল রেফারেলে পান সরাসরি ২০৳ ক্যাশ বোনাস</p>
     </div>
 
-    <!-- ================= 1. HERO REFERRAL MATRIX CARD ================= -->
-    <div class="referral-hero-glow rounded-[32px] p-6 space-y-5 text-white relative overflow-hidden select-none">
+    <!-- ================= 1. NEW AFFILIATE TERMINAL CARD ================= -->
+    <div class="affiliate-terminal rounded-[28px] p-5 sm:p-6 space-y-4 select-none">
         
-        <!-- Header Row: Title & Referral Code Badge -->
-        <div class="flex items-center justify-between border-b border-white/[0.08] pb-3.5">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-2xl bg-blue-600/20 border border-blue-500/30 text-sky-400 flex items-center justify-center text-sm">
+        <!-- Header: Referral Code & 20৳ Tag -->
+        <div class="flex items-center justify-between border-b border-white/[0.08] pb-3">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-blue-600/15 border border-blue-500/30 text-sky-400 flex items-center justify-center text-xs">
                     <i class="fa-solid fa-user-plus"></i>
                 </div>
                 <div class="leading-tight">
-                    <span class="text-[9px] font-gotham uppercase tracking-wider text-slate-400 block">Unique Code</span>
-                    <h3 class="font-mono text-sm font-bold text-white tracking-wider">CODE: {{ user.referral_code }}</h3>
+                    <span class="text-[9px] font-gotham uppercase tracking-wider text-slate-400 block">Your Code</span>
+                    <span class="font-mono text-sm font-bold text-white tracking-wider">{{ user.referral_code }}</span>
                 </div>
             </div>
 
-            <!-- Instant Reward Chip -->
-            <span class="font-gotham text-xs font-black px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                +৳15.00 / Lead
+            <!-- 🌟 UPDATED TO 20৳ 🌟 -->
+            <span class="font-gotham text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                +৳২০.০০ / Refer
             </span>
         </div>
 
-        <!-- 2-Grid Live Metrics (Total Partners & Total Commission) -->
-        <div class="grid grid-cols-2 gap-3 font-gotham">
+        <!-- 2-Grid Live Metrics (Total Partners & Revenue) -->
+        <div class="grid grid-cols-2 gap-2.5 font-gotham">
             
-            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.06] space-y-0.5">
-                <span class="text-[9px] uppercase tracking-wider text-slate-400 block font-semibold">Active Referrals</span>
-                <div class="text-2xl font-black text-white tabular-nums">
-                    {{ referred_users|length }} <span class="text-xs text-slate-500 font-normal">জন</span>
+            <div class="p-3 rounded-2xl bg-white/[0.025] border border-white/[0.06] space-y-0.5">
+                <span class="text-[9px] uppercase tracking-wider text-slate-400 block font-semibold">Total Partners</span>
+                <div class="text-xl sm:text-2xl font-black text-white tabular-nums">
+                    {{ referred_users|length }} <span class="text-[11px] text-slate-500 font-normal">জন</span>
                 </div>
-                <span class="text-[9px] text-slate-400 block">মোট সফল পার্টনার</span>
+                <span class="text-[9px] text-slate-500 block">সফল রেফারেল সংখ্যা</span>
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.06] space-y-0.5">
-                <span class="text-[9px] uppercase tracking-wider text-slate-400 block font-semibold">Total Revenue</span>
-                <div class="text-2xl font-black text-sky-400 tabular-nums">
+            <div class="p-3 rounded-2xl bg-white/[0.025] border border-white/[0.06] space-y-0.5">
+                <span class="text-[9px] uppercase tracking-wider text-slate-400 block font-semibold">Total Earnings</span>
+                <div class="text-xl sm:text-2xl font-black text-emerald-400 tabular-nums">
                     ৳ {{ "%.2f"|format(total_earned) }}
                 </div>
-                <span class="text-[9px] text-slate-400 block">রেফারেল থেকে মোট আয়</span>
+                <span class="text-[9px] text-slate-500 block">রেফারেল থেকে মোট আয়</span>
             </div>
 
         </div>
 
-        <!-- Interactive 1-Click Copy Referral Link Box -->
-        <div class="space-y-1.5 pt-1">
-            <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">
-                আপনার এক্সক্লুসিভ ইনভাইট লিংক
-            </label>
-            <div class="copy-glow-box rounded-2xl p-1.5 pl-3.5 flex items-center gap-2">
+        <!-- Referral Link Input with 1-Click Copy -->
+        <div class="space-y-1 pt-1">
+            <span class="text-[10px] font-gotham uppercase tracking-wider text-slate-400 block ml-1">
+                আপনার ইউনিক রেফারেল লিংক
+            </span>
+            <div class="copy-pill-input rounded-2xl p-1.5 pl-3 flex items-center gap-2">
                 <input type="text" id="myRefLink" readonly 
                        value="{{ request.host_url }}?ref={{ user.referral_code }}" 
                        class="flex-1 bg-transparent text-slate-200 text-xs font-mono focus:outline-none truncate">
                 
-                <!-- 10% Cobalt Blue Copy Button -->
                 <button onclick="copyMyReferralLink()" id="btnCopyRef" 
-                        class="bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-gotham font-semibold text-xs py-2.5 px-4 rounded-xl transition shadow-lg shadow-blue-600/30 flex items-center gap-1.5 shrink-0">
-                    <i class="fa-regular fa-copy text-[11px]"></i>
-                    <span id="btnCopyText">কপি লিংক</span>
+                        class="bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-gotham font-semibold text-xs py-2 px-3.5 rounded-xl transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-regular fa-copy text-[10px]"></i>
+                    <span id="btnCopyText">কপি</span>
                 </button>
             </div>
         </div>
 
-        <!-- 1-Click Social Sharing Matrix (Dark Glass Fintech Style) -->
-        <div class="pt-2 border-t border-white/[0.08] space-y-2">
-            <span class="text-[9px] font-gotham uppercase tracking-wider text-slate-400 block text-center">
-                Instant Social Distribution
+        <!-- Social Distribution Grid (Matte Glass) -->
+        <div class="pt-2 border-t border-white/[0.06] space-y-1.5">
+            <span class="text-[9px] font-gotham uppercase tracking-wider text-slate-500 block text-center">
+                Share With Friends
             </span>
 
             <div class="grid grid-cols-3 gap-2 font-gotham text-xs select-none">
-                <!-- Telegram -->
-                <a href="https://t.me/share/url?url={{ request.host_url }}?ref={{ user.referral_code }}&text=TaskWallet এ যুক্ত হয়ে ফ্রিতে প্রতিদিন ক্যাশ ইনকাম করুন!" target="_blank" 
-                   class="share-btn rounded-xl py-2.5 px-3 flex items-center justify-center gap-2 text-slate-200 hover:text-sky-400 active:scale-95">
+                <a href="https://t.me/share/url?url={{ request.host_url }}?ref={{ user.referral_code }}&text=TaskWallet এ যুক্ত হয়ে ১০০ টাকা ফ্রি বোনাস নিন ও প্রতিদিন কাজ করে আয় করুন!" target="_blank" 
+                   class="social-share-pill rounded-xl py-2 px-2 flex items-center justify-center gap-1.5 text-slate-300 hover:text-sky-400 active:scale-95">
                     <i class="fa-brands fa-telegram text-sky-400 text-sm"></i>
                     <span class="text-[11px] font-medium">Telegram</span>
                 </a>
 
-                <!-- WhatsApp -->
                 <a href="https://api.whatsapp.com/send?text=TaskWallet এ জয়েন করে ১০০ টাকা ফ্রি ওয়েলকাম বোনাস নিন: {{ request.host_url }}?ref={{ user.referral_code }}" target="_blank" 
-                   class="share-btn rounded-xl py-2.5 px-3 flex items-center justify-center gap-2 text-slate-200 hover:text-emerald-400 active:scale-95">
+                   class="social-share-pill rounded-xl py-2 px-2 flex items-center justify-center gap-1.5 text-slate-300 hover:text-emerald-400 active:scale-95">
                     <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i>
                     <span class="text-[11px] font-medium">WhatsApp</span>
                 </a>
 
-                <!-- Facebook -->
                 <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.host_url }}?ref={{ user.referral_code }}" target="_blank" 
-                   class="share-btn rounded-xl py-2.5 px-3 flex items-center justify-center gap-2 text-slate-200 hover:text-blue-400 active:scale-95">
+                   class="social-share-pill rounded-xl py-2 px-2 flex items-center justify-center gap-1.5 text-slate-300 hover:text-blue-400 active:scale-95">
                     <i class="fa-brands fa-facebook text-blue-400 text-sm"></i>
                     <span class="text-[11px] font-medium">Facebook</span>
                 </a>
@@ -171,81 +163,74 @@
 
     </div>
 
-    <!-- ================= 2. VIP MULTIPLIER ACCELERATOR BANNER ================= -->
+    <!-- ================= 2. VIP ACCELERATOR TEASER ================= -->
     <a href="/upgrade" 
-       class="group fintech-card rounded-[24px] p-4 flex items-center justify-between gap-3 border-amber-500/25 bg-amber-500/[0.025] hover:bg-amber-500/[0.06] transition active:scale-[0.99] select-none">
-        <div class="flex items-center gap-3.5">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center text-base shrink-0 group-hover:scale-105 transition">
+       class="fintech-card rounded-2xl p-3.5 flex items-center justify-between gap-3 border-amber-500/20 bg-amber-500/[0.02] hover:bg-amber-500/[0.05] transition active:scale-[0.99] select-none">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xs shrink-0">
                 <i class="fa-solid fa-crown"></i>
             </div>
             <div class="leading-tight">
-                <div class="flex items-center gap-1.5 mb-0.5">
-                    <span class="text-xs font-bold text-white">ভিআইপি রেফারেল মাল্টিপ্লায়ার</span>
+                <div class="flex items-center gap-1.5">
+                    <span class="text-xs font-semibold text-white">ভিআইপি রেফারেল বুস্টার</span>
                     <span class="font-gotham text-[8px] bg-amber-400/20 text-amber-300 border border-amber-400/30 px-1.5 py-0.2 rounded-full font-bold">1.5X CASH</span>
                 </div>
-                <p class="text-[10px] text-slate-400">ডায়মন্ড মেম্বাররা প্রতি রেফারে ১.৫ গুণ বেশি বোনাস পান</p>
+                <p class="text-[10px] text-slate-400 mt-0.5">ডায়মন্ড টিয়ারে প্রতি রেফারে ১.৫ গুণ বেশি (৩০৳ পর্যন্ত) বোনাস পান</p>
             </div>
         </div>
-        <div class="shrink-0 text-amber-400 text-xs flex items-center gap-1 font-gotham font-semibold pr-1">
-            <span>আপগ্রেড</span>
-            <i class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-0.5 transition"></i>
-        </div>
+        <i class="fa-solid fa-arrow-right text-xs text-amber-400 mr-0.5"></i>
     </a>
 
-    <!-- ================= 3. REFERRAL ARCHITECTURE & BLUEPRINT ================= -->
-    <div class="fintech-card rounded-[28px] p-5 sm:p-6 space-y-4">
-        <div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
+    <!-- ================= 3. 4-STEP COMMISSION BLUEPRINT ================= -->
+    <div class="fintech-card rounded-[24px] p-4.5 space-y-3">
+        <div class="flex items-center justify-between border-b border-white/[0.06] pb-2.5">
             <span class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-                <i class="fa-solid fa-circle-nodes text-sky-400"></i> আর্নিং সিস্টেম ও নীতিমালা
+                <i class="fa-solid fa-circle-nodes text-sky-400"></i> রেফারেল রুলস ও শর্তাবলী
             </span>
-            <span class="text-[10px] font-gotham text-slate-500">How It Works</span>
+            <span class="text-[10px] font-gotham text-slate-500">Rules</span>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs leading-relaxed">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs leading-relaxed">
             
-            <!-- Step 1 -->
-            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04] space-y-1">
+            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] space-y-1">
                 <div class="flex items-center gap-2">
                     <span class="w-5 h-5 rounded-full bg-blue-600/20 text-sky-400 font-gotham font-black text-[10px] flex items-center justify-center border border-blue-500/30">1</span>
-                    <h4 class="font-bold text-white text-xs">লিংক ছড়িয়ে দিন</h4>
+                    <h4 class="font-bold text-white text-xs">লিংক শেয়ার করুন</h4>
                 </div>
-                <p class="text-slate-400 text-[11px]">আপনার ইউনিক রেফারেল লিংক সোশ্যাল মিডিয়ায় বন্ধুদের সাথে শেয়ার করুন।</p>
+                <p class="text-slate-400 text-[11px]">আপনার ইউনিক রেফারেল লিংকটি সোশ্যাল মিডিয়া বা বন্ধুদের ইনবক্সে পাঠান।</p>
             </div>
 
-            <!-- Step 2 -->
-            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04] space-y-1">
+            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] space-y-1">
                 <div class="flex items-center gap-2">
                     <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 font-gotham font-black text-[10px] flex items-center justify-center border border-emerald-500/30">2</span>
                     <h4 class="font-bold text-white text-xs">বন্ধু পাবে ৳১০০ বোনাস</h4>
                 </div>
-                <p class="text-slate-400 text-[11px]">আপনার লিংকে সাইন-আপ করলেই আপনার বন্ধু সরাসরি ৳১০০ জয়েনিং বোনাস পাবে।</p>
+                <p class="text-slate-400 text-[11px]">আপনার লিংকে নতুন অ্যাকাউন্ট খুললেই আপনার বন্ধু সাথে সাথে ৳১০০ জয়েনিং বোনাস পাবে।</p>
             </div>
 
-            <!-- Step 3 -->
-            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04] space-y-1">
+            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] space-y-1">
                 <div class="flex items-center gap-2">
                     <span class="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 font-gotham font-black text-[10px] flex items-center justify-center border border-amber-500/30">3</span>
-                    <h4 class="font-bold text-white text-xs">আপনি পাবেন ৳১৫ ক্যাশ</h4>
+                    <h4 class="font-bold text-white text-xs">আপনি পাবেন ৳২০ ক্যাশ</h4>
                 </div>
-                <p class="text-slate-400 text-[11px]">প্রতিটি সফল রেজিস্ট্রেশনে আপনার ওয়ালেটে সাথে সাথে ৳১৫.০০ ক্যাশ যুক্ত হবে।</p>
+                <p class="text-slate-400 text-[11px]">রেজিস্ট্রেশন সম্পন্ন হওয়া মাত্রই আপনার ওয়ালেটে সরাসরি <strong>৳২০.০০</strong> যোগ হবে।</p>
             </div>
 
-            <!-- Step 4 -->
-            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04] space-y-1">
+            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] space-y-1">
                 <div class="flex items-center gap-2">
                     <span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 font-gotham font-black text-[10px] flex items-center justify-center border border-purple-500/30">4</span>
                     <h4 class="font-bold text-white text-xs">ডিভাইস সিকিউরিটি</h4>
                 </div>
-                <p class="text-slate-400 text-[11px]">১ ডিভাইসে কেবল ১টি অ্যাকাউন্ট। সেলফ-রেফার বা ফ্রড করার চেষ্টা করলে অ্যাকাউন্ট ব্যান হবে।</p>
+                <p class="text-slate-400 text-[11px]">১ ডিভাইসে কেবল ১টি অ্যাকাউন্ট অনুমোদিত। নিজের অ্যাকাউন্টে নিজে রেফার সম্পূর্ণ ব্লক।</p>
             </div>
 
         </div>
     </div>
 
-    <!-- ================= 4. REFERRED PARTNERS NETWORK LIST ================= -->
-    <div class="fintech-card rounded-[28px] p-5 sm:p-6 space-y-4">
+    <!-- ================= 4. REFERRED MEMBERS AUDIT LIST ================= -->
+    <div class="fintech-card rounded-[24px] p-4.5 space-y-3">
         
-        <div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
+        <div class="flex items-center justify-between border-b border-white/[0.06] pb-2.5">
             <div>
                 <h3 class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-200">Referred Members</h3>
                 <span class="text-[10px] text-slate-500 font-gotham">মোট মেম্বার: {{ referred_users|length }} জন</span>
@@ -257,14 +242,12 @@
             </a>
         </div>
 
-        <!-- Members Feed -->
         <div class="space-y-2">
             {% for ref in referred_users %}
-            <div class="p-3 rounded-2xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition flex items-center justify-between gap-3">
+            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] flex items-center justify-between gap-3">
                 
-                <div class="flex items-center gap-3 min-w-0">
-                    <!-- Medallion Initial Frame -->
-                    <div class="w-9 h-9 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center font-gotham font-bold text-xs text-slate-200 shrink-0 shadow-inner">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="w-8 h-8 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center font-gotham font-bold text-xs text-slate-200 shrink-0">
                         {{ ref.name[:1] }}
                     </div>
 
@@ -276,20 +259,18 @@
                     </div>
                 </div>
 
+                <!-- 🌟 20৳ EARNED BADGE 🌟 -->
                 <div class="text-right shrink-0">
-                    <span class="font-gotham font-black text-xs text-emerald-400 block tabular-nums">+৳15.00</span>
+                    <span class="font-gotham font-black text-xs text-emerald-400 block tabular-nums">+৳20.00</span>
                     <span class="text-[9px] font-mono text-slate-500">{{ ref.created_at[:10] }}</span>
                 </div>
 
             </div>
             {% else %}
-            <!-- Cinematic Empty Network State -->
-            <div class="p-8 text-center text-slate-500 space-y-2 select-none">
-                <div class="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mx-auto text-xl text-slate-400 mb-1">
-                    <i class="fa-solid fa-users-slash"></i>
-                </div>
+            <div class="p-6 text-center text-slate-500 space-y-1.5 select-none">
+                <i class="fa-solid fa-users-slash text-xl opacity-40"></i>
                 <h4 class="text-xs font-medium text-slate-300">এখনো কোনো মেম্বার যুক্ত হয়নি</h4>
-                <p class="text-[11px] text-slate-500">আপনার ইউনিক রেফারেল লিংকটি বন্ধুদের সাথে শেয়ার করে ইনকাম শুরু করুন।</p>
+                <p class="text-[10px] text-slate-500">আপনার লিংক শেয়ার করে প্রতিটি সফল রেফারেলে ২০৳ বোনাস নিন।</p>
             </div>
             {% endfor %}
         </div>
@@ -298,45 +279,38 @@
 
 </div>
 
-<!-- ================= DYNAMIC SUCCESS TOAST ================= -->
-<div id="copyToast" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-[#0a0f1d] border border-sky-400/50 rounded-2xl py-2 px-4 shadow-2xl hidden flex items-center gap-2 select-none">
+<!-- Copy Feedback Toast -->
+<div id="copyToast" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-[#0a0f1d] border border-sky-400/50 rounded-2xl py-2 px-4 shadow-xl hidden flex items-center gap-2 select-none">
     <i class="fa-solid fa-circle-check text-sky-400 text-xs"></i>
     <span class="text-xs font-gotham font-semibold text-white">রেফারেল লিংক সফলভাবে কপি হয়েছে!</span>
 </div>
 
-<!-- ================= JAVASCRIPT: 1-CLICK CLIPBOARD COPY ENGINE ================= -->
+<!-- 1-Click Clipboard Engine -->
 <script>
 function copyMyReferralLink() {
     const input = document.getElementById('myRefLink');
     const btnText = document.getElementById('btnCopyText');
-    const btn = document.getElementById('btnCopyRef');
     const toast = document.getElementById('copyToast');
 
     input.select();
     input.setSelectionRange(0, 99999);
 
     if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(input.value).then(showCopySuccess);
+        navigator.clipboard.writeText(input.value).then(showToast);
     } else {
         document.execCommand('copy');
-        showCopySuccess();
+        showToast();
     }
 
-    function showCopySuccess() {
+    function showToast() {
         btnText.innerText = "কপি হয়েছে!";
-        btn.classList.remove('bg-blue-600', 'hover:bg-blue-500');
-        btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
-
-        // Show Toast
         toast.classList.remove('hidden');
-        toast.classList.add('animate-toast');
+        toast.classList.add('toast-anim');
 
         setTimeout(() => {
-            btnText.innerText = "কপি লিংক";
-            btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
-            btn.classList.add('bg-blue-600', 'hover:bg-blue-500');
+            btnText.innerText = "কপি";
             toast.classList.add('hidden');
-            toast.classList.remove('animate-toast');
+            toast.classList.remove('toast-anim');
         }, 2500);
     }
 }
