@@ -641,6 +641,7 @@ def reset_confirm_password():
     session.pop('verified_reset_email', None)
 
     return jsonify({"success": True, "message": "আপনার পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে!"})
+    
 @app.route('/auth/google')
 def google_auth():
     ref = request.args.get('ref')
@@ -735,8 +736,8 @@ def google_callback():
             ref_user = ref_res[0]
             if ref_user['email'] != email and ref_user.get('device_id') != device_id:
                 valid_referrer = ref_user
-                initial_balance = 100.00
-                new_ref_bal = float(ref_user['balance']) + 15.00
+                initial_balance = 90.00
+                new_ref_bal = float(ref_user['balance']) + 20.00
                 sb.table('users').update({'balance': new_ref_bal}).eq('id', ref_user['id']).execute()
 
     my_ref_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
@@ -859,7 +860,7 @@ def register():
             if ref_user['email'] != email and ref_user.get('device_id') != device_id:
                 valid_referrer = ref_user
                 initial_balance = 100.00
-                new_ref_bal = float(ref_user['balance']) + 15.00
+                new_ref_bal = float(ref_user['balance']) + 20.00
                 sb.table('users').update({'balance': new_ref_bal}).eq('id', ref_user['id']).execute()
 
     new_user = {
