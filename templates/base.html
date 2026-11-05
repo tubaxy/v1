@@ -14,24 +14,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <!-- PWA Config -->
+<!-- New App Logo & Favicon for PWA -->
+    <link rel="icon" type="image/jpeg" href="https://i.ibb.co.com/1wxLMwW/IMG-20261104-WA0022.jpg">
+    <link rel="apple-touch-icon" href="https://i.ibb.co.com/1wxLMwW/IMG-20261104-WA0022.jpg">
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#03050a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="TaskWallet">
 
-    <!-- PWA Service Worker Registration -->
-<script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js', { scope: '/' })
-                .then((reg) => console.log('✓ Service Worker Active:', reg.scope))
-                .catch((err) => console.error('SW Error:', err));
-        });
-    }
-</script>
+    <!-- Active Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js', { scope: '/' })
+                    .then(function(reg) {
+                        console.log('PWA ServiceWorker ready:', reg.scope);
+                    })
+                    .catch(function(err) {
+                        console.error('PWA ServiceWorker failed:', err);
+                    });
+            });
+        }
+    </script>
     
     <style>
         * {
