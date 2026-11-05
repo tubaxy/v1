@@ -31,15 +31,15 @@
 
     /* Ambient Glow Behind Title */
     @keyframes subtle-breath {
-        0%, 100% { opacity: 0.25; transform: scale(0.96); }
-        50% { opacity: 0.55; transform: scale(1.06); }
+        0%, 100% { opacity: 0.2; transform: scale(0.96); }
+        50% { opacity: 0.45; transform: scale(1.05); }
     }
     .ambient-title-glow {
         animation: subtle-breath 5s infinite ease-in-out;
     }
 </style>
 
-<div class="max-w-sm mx-auto py-2 space-y-5">
+<div class="max-w-sm mx-auto py-2 space-y-4">
 
     <!-- 1. Top Action Row (Left: Register Link | Right: Headphone Support) -->
     <div class="flex items-center justify-between px-1">
@@ -51,23 +51,30 @@
         </a>
 
         <!-- Right Headphone Support Link -->
-        <a href="https://t.me/micro_earnx" target="_blank" 
+        <a href="https://t.me/task_wallet_online" target="_blank" 
            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] text-slate-400 hover:text-slate-200 text-xs font-gotham transition active:scale-95" 
-           title="সাপোর্ট">
+           title="২৪/৭ কাস্টমার সাপোর্ট">
             <i class="fa-solid fa-headset text-blue-400 text-xs"></i>
             <span>সাপোর্ট</span>
         </a>
     </div>
 
-    <!-- 2. Classic Animated Headline with Gradient & Glow -->
+    <!-- 2. Headline: Welcome Back to <Special Font>TaskWallet</Special Font> -->
     <div class="relative text-center py-2 select-none">
-        <!-- Floating Ambient Glow Circle Behind Text -->
+        <!-- Ambient Radial Glow Circle -->
         <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-20 bg-blue-600/15 rounded-full blur-2xl pointer-events-none ambient-title-glow"></div>
 
-        <h1 class="relative font-classic-seasons text-3xl sm:text-4xl font-normal tracking-[0.03em] classic-gradient-text leading-tight">
-            Welcome to TaskWallet
-        </h1>
-        <p class="relative text-xs text-slate-400 font-gotham font-light tracking-wider mt-1.5 opacity-90">
+        <div class="relative space-y-0.5">
+            <span class="font-gotham text-xs font-medium tracking-[0.2em] uppercase text-slate-400 block">
+                Welcome Back to
+            </span>
+            <!-- 🌟 TaskWallet in Special "The Seasons" Font with Gradient 🌟 -->
+            <h1 class="font-classic-seasons text-3xl sm:text-4xl font-normal tracking-[0.04em] classic-gradient-text uppercase">
+                TaskWallet
+            </h1>
+        </div>
+
+        <p class="relative text-xs text-slate-400 font-gotham font-light tracking-wide mt-1 opacity-90">
             লগইন করে আপনার অ্যাকাউন্টে প্রবেশ করুন
         </p>
     </div>
@@ -92,7 +99,7 @@
     </div>
 
     <!-- 4. Clean Login Form -->
-    <form action="/login" method="POST" onsubmit="return validateEmail('loginEmail')" class="space-y-3.5">
+    <form action="/login" method="POST" onsubmit="return validateEmail('loginEmail')" class="space-y-3">
         
         <!-- Email Field -->
         <div class="space-y-1">
@@ -117,16 +124,24 @@
             </div>
         </div>
 
+        <!-- 🌟 👉 5. FORGOT PASSWORD OPTION 👈 🌟 -->
+        <div class="flex items-center justify-end px-1 pt-0.5">
+            <a href="/reset" class="text-[11px] font-gotham text-slate-400 hover:text-sky-400 transition hover:underline flex items-center gap-1">
+                <i class="fa-solid fa-key text-[10px] text-sky-400/80"></i>
+                <span>পাসওয়ার্ড ভুলে গেছেন? (Forgot Password)</span>
+            </a>
+        </div>
+
         <!-- 10% Blue Accent Login CTA Button -->
         <button type="submit" 
-                class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-3.5 px-4 rounded-2xl shadow-lg shadow-blue-600/25 transition mt-2 flex items-center justify-center gap-2">
+                class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-3.5 px-4 rounded-2xl shadow-lg shadow-blue-600/30 transition mt-2 flex items-center justify-center gap-2">
             <span>লগইন করুন</span>
             <i class="fa-solid fa-arrow-right text-[10px]"></i>
         </button>
     </form>
 
-    <!-- 5. Switch to Registration Link -->
-    <div class="text-center pt-2">
+    <!-- 6. Switch to Registration Link -->
+    <div class="text-center pt-1">
         <p class="text-xs text-slate-400 font-gotham">
             অ্যাকাউন্ট নেই? 
             <a href="/" class="text-blue-400 hover:text-blue-300 font-medium ml-1">নতুন অ্যাকাউন্ট তৈরি করুন &raquo;</a>
