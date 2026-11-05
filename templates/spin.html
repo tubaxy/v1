@@ -2,50 +2,40 @@
 {% block content %}
 <style>
     .fintech-card {
-        background: rgba(255, 255, 255, 0.025);
+        background: rgba(255, 255, 255, 0.02);
         border: 1px solid rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(24px);
-    }
-
-    /* Ambient Glow Behind Wheel */
-    .wheel-ambient-glow {
-        background: radial-gradient(circle, rgba(56, 189, 248, 0.18) 0%, rgba(37, 99, 235, 0.08) 50%, transparent 75%);
-    }
-
-    /* Outer Titanium Rim */
-    .titanium-rim {
-        box-shadow: 0 0 35px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(20px);
     }
 </style>
 
-<div class="max-w-md mx-auto space-y-5 pb-24">
+<div class="max-w-md mx-auto space-y-4 pb-24 px-1 sm:px-0">
 
     <!-- Top Action Row -->
     <div class="flex items-center justify-between px-1">
-        <a href="/allwork" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95 shadow-sm">
+        <a href="/allwork" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95">
             <i class="fa-solid fa-arrow-left text-[10px] text-blue-500"></i>
             <span>আর্নিং হাব</span>
         </a>
 
-        <span class="text-[10px] font-gotham font-semibold tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+        <span class="text-[9px] font-gotham font-semibold tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2.5 py-0.5 rounded-full uppercase flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
             Daily Vault
         </span>
     </div>
 
     <!-- Title Section -->
-    <div class="text-center py-1 select-none space-y-1">
+    <div class="text-center py-1 select-none space-y-0.5">
         <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
             Lucky <span class="text-slate-400 font-light italic lowercase text-xl">roulette</span>
         </h1>
-        <p class="text-xs text-slate-400 font-gotham font-light">চাকা ঘুরিয়ে প্রতি স্পিনে জিতে নিন নিশ্চিত ওয়ালেট ক্যাশ</p>
+        <p class="text-[11px] text-slate-400 font-gotham font-light">চাকা ঘুরিয়ে প্রতি স্পিনে জিতে নিন নিশ্চিত ওয়ালেট ক্যাশ</p>
     </div>
 
-    <!-- Main Spin Card -->
-    <div class="fintech-card rounded-[32px] p-5 sm:p-7 flex flex-col items-center text-center relative overflow-hidden space-y-4 shadow-2xl">
+    <!-- Main Spin Card (Matte - No Glow) -->
+    <div class="fintech-card rounded-[28px] p-5 sm:p-6 flex flex-col items-center text-center relative space-y-4">
         
-        <!-- Live Remaining & Balance Status Bar -->
-        <div class="w-full grid grid-cols-2 gap-2 bg-white/[0.025] border border-white/[0.06] rounded-2xl p-3 font-gotham text-xs select-none">
+        <!-- Status Bar -->
+        <div class="w-full grid grid-cols-2 gap-2 bg-white/[0.025] border border-white/[0.06] rounded-2xl p-2.5 font-gotham text-xs select-none">
             <div class="text-left pl-1">
                 <span class="text-[9px] text-slate-500 uppercase tracking-wider block">Spins Left</span>
                 <span class="text-xs font-bold text-sky-400" id="remainingBadge">
@@ -60,40 +50,37 @@
             </div>
         </div>
 
-        <!-- ================= LUXURY TITANIUM WHEEL CONTAINER ================= -->
-        <div class="relative w-72 h-72 my-3 flex items-center justify-center select-none">
+        <!-- ================= MATTE WHEEL CONTAINER (ZERO GLOW) ================= -->
+        <div class="relative w-72 h-72 my-1 flex items-center justify-center select-none">
             
-            <!-- Ambient Backlight -->
-            <div class="absolute inset-0 rounded-full wheel-ambient-glow pointer-events-none scale-125"></div>
-
-            <!-- Top Indicator Pointer (Electric Cyan Laser Pin) -->
-            <div class="absolute -top-3.5 z-30 flex flex-col items-center drop-shadow-[0_0_12px_#38bdf8]">
+            <!-- Crisp Sharp Indicator Pointer (No Glow) -->
+            <div class="absolute -top-3 z-30 flex flex-col items-center">
                 <i class="fa-solid fa-location-pin text-sky-400 text-3xl"></i>
             </div>
 
-            <!-- Outer Beveled Metallic Ring -->
-            <div class="absolute inset-0 rounded-full border-4 border-slate-700/80 titanium-rim pointer-events-none"></div>
+            <!-- Crisp Outer Rim (No Glow) -->
+            <div class="absolute inset-0 rounded-full border-2 border-white/[0.12] pointer-events-none"></div>
 
             <!-- Rotating Canvas Wheel -->
             <canvas id="wheelCanvas" width="280" height="280" 
-                    class="rounded-full shadow-2xl transition-transform duration-[4200ms] ease-out"></canvas>
+                    class="rounded-full transition-transform duration-[4000ms] ease-out"></canvas>
 
-            <!-- Center Metallic Hub Cap -->
-            <div class="absolute inset-0 m-auto w-14 h-14 rounded-full bg-gradient-to-tr from-[#0a0f1d] to-[#1e293b] border-2 border-white/20 shadow-xl flex items-center justify-center z-20 pointer-events-none">
-                <span class="font-gotham font-black text-[10px] tracking-wider text-sky-400">TW</span>
+            <!-- Center Hub Cap (Matte Obsidian) -->
+            <div class="absolute inset-0 m-auto w-12 h-12 rounded-full bg-[#080c14] border border-white/20 flex items-center justify-center z-20 pointer-events-none">
+                <span class="font-gotham font-bold text-[10px] tracking-wider text-slate-300">TW</span>
             </div>
 
         </div>
 
-        <!-- Spin Action Button (10% Blue Accent) -->
+        <!-- Spin Action Button (Matte Clean Blue) -->
         <button id="spinBtn" onclick="triggerSpinWheel()" 
-                class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-3.5 px-4 rounded-xl transition shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2">
+                class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-3.5 px-4 rounded-xl transition flex items-center justify-center gap-2">
             <i class="fa-solid fa-play text-[10px]"></i>
             <span id="spinBtnLabel">স্পিন শুরু করুন</span>
         </button>
 
         <p class="text-[10px] text-slate-500 font-gotham flex items-center gap-1.5 justify-center">
-            <i class="fa-solid fa-shield-halved text-sky-400 text-[10px]"></i>
+            <i class="fa-solid fa-shield-halved text-slate-400 text-[10px]"></i>
             <span>জিতে নেওয়া টাকা সরাসরি মূল ব্যালেন্সে যোগ হয়</span>
         </p>
 
@@ -101,33 +88,32 @@
 
 </div>
 
-<!-- ================= LUXURY REWARD CELEBRATION MODAL ================= -->
+<!-- ================= CLEAN REWARD MODAL (NO GLOW) ================= -->
 <div id="winModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-    <div class="w-full max-w-xs bg-[#0a0e17] border border-amber-500/30 rounded-3xl p-6 text-center space-y-4 transform scale-90 transition-transform duration-300 shadow-2xl" id="winModalCard">
+    <div class="w-full max-w-xs bg-[#0a0e17] border border-white/10 rounded-2xl p-6 text-center space-y-3.5 transform scale-90 transition-transform duration-300 shadow-xl" id="winModalCard">
         
-        <!-- Trophy Glow -->
-        <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center text-2xl shadow-inner animate-bounce">
+        <div class="w-12 h-12 mx-auto rounded-xl bg-white/[0.04] border border-white/10 text-amber-400 flex items-center justify-center text-xl">
             <i class="fa-solid fa-trophy"></i>
         </div>
 
         <div>
-            <span class="text-[9px] font-gotham uppercase tracking-widest text-slate-400 block">Congratulations!</span>
-            <h3 class="font-classic-seasons text-xl text-white mt-0.5 uppercase tracking-wide">Roulette Reward</h3>
-            <div class="text-3xl font-gotham font-black text-amber-400 my-2 tabular-nums" id="wonAmountDisplay">
+            <span class="text-[9px] font-gotham uppercase tracking-widest text-slate-400 block">Reward Credited</span>
+            <h3 class="font-classic-seasons text-lg text-white mt-0.5 uppercase tracking-wide">Roulette Reward</h3>
+            <div class="text-3xl font-gotham font-black text-white my-2 tabular-nums" id="wonAmountDisplay">
                 ৳ ০.০০
             </div>
-            <p class="text-xs text-slate-400">টাকাটি সফলভাবে আপনার ওয়ালেটে ক্রেডিট করা হয়েছে।</p>
+            <p class="text-[11px] text-slate-400">টাকাটি আপনার অ্যাকাউন্টের ব্যালেন্সে যুক্ত করা হয়েছে।</p>
         </div>
 
         <button onclick="closeWinModal()" 
-                class="w-full bg-blue-600 hover:bg-blue-500 text-white font-gotham font-semibold text-xs py-3 rounded-xl transition shadow-lg shadow-blue-600/30 active:scale-95">
-            দারুণ! গ্রহণ করলাম
+                class="w-full bg-blue-600 hover:bg-blue-500 text-white font-gotham font-semibold text-xs py-2.5 rounded-xl transition active:scale-95">
+            গ্রহণ করলাম
         </button>
     </div>
 </div>
 
 <script>
-// Titanium & Neon Dual-Tone Slices (No cheap rainbow colors!)
+// Sharp, High-Contrast Matte Slices (Zero Glow, Clean Crisp Lines)
 const slices = [
     { label: "৳০.৫০", value: 0.50, bg: "#090d16", text: "#38bdf8" },
     { label: "৳১.০০", value: 1.00, bg: "#131b2e", text: "#fbbf24" },
@@ -149,7 +135,7 @@ let currentRotation = 0;
 function drawWheel() {
     const W = canvas.width, H = canvas.height;
     const centerX = W / 2, centerY = H / 2;
-    const radius = W / 2 - 6;
+    const radius = W / 2 - 4;
 
     ctx.clearRect(0, 0, W, H);
 
@@ -163,20 +149,20 @@ function drawWheel() {
         ctx.lineTo(centerX, centerY);
         ctx.fill();
 
+        // Crisp Border Lines
         ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
-        ctx.lineWidth = 1.5;
+        ctx.lineWidth = 1;
         ctx.stroke();
 
         ctx.save();
         ctx.translate(centerX, centerY);
         ctx.rotate(angle + arc / 2);
         
+        // Pure Sharp Typography without blur
         ctx.textAlign = "right";
         ctx.fillStyle = slices[i].text;
-        ctx.font = "bold 14px 'Montserrat', sans-serif";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
-        ctx.shadowBlur = 4;
-        ctx.fillText(slices[i].label, radius - 22, 5);
+        ctx.font = "bold 13px 'Montserrat', sans-serif";
+        ctx.fillText(slices[i].label, radius - 20, 5);
         ctx.restore();
     }
 }
@@ -233,7 +219,7 @@ function triggerSpinWheel() {
             isSpinning = false;
             spinBtn.disabled = false;
             spinBtnLabel.innerText = currentRemaining > 0 ? "আবার স্পিন করুন" : "স্পিন শেষ";
-        }, 4300);
+        }, 4100);
     })
     .catch(() => {
         alert("সার্ভার ত্রুটি! কিছুক্ষণ পর আবার চেষ্টা করুন।");
