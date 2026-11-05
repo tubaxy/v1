@@ -223,16 +223,16 @@ def auto_release_expired_gmail_tasks(sb):
 
 
 # ==========================================================
-# VIP TIERS CONFIGURATION
+# VIP TIERS CONFIGURATION (UPDATED WITH NEW RULES)
 # ==========================================================
 TIER_CONFIG = {
     'wood': {
         'name': 'Wood (কাঠ)',
         'price': 0,
-        'validity_days': None, # Lifetime
+        'validity_days': None,
         'min_withdraw': 500,
         'withdraw_time': '6 Hours',
-        'ref_required': 5,
+        'ref_required': 5,      # ৫টি রেফার
         'daily_free': 0,
         'spin_quiz_mult': 1.0,
         'badge_color': 'amber',
@@ -242,9 +242,9 @@ TIER_CONFIG = {
         'name': 'Bronze (ব্রোঞ্জ)',
         'price': 110,
         'validity_days': 15,
-        'min_withdraw': 300,
+        'min_withdraw': 200,    # মাত্র ২০০৳
         'withdraw_time': '3 Hours',
-        'ref_required': 3,
+        'ref_required': 1,      # মাত্র ১টি রেফার!
         'daily_free': 10,
         'spin_quiz_mult': 1.0,
         'badge_color': 'orange',
@@ -254,9 +254,9 @@ TIER_CONFIG = {
         'name': 'Silver (সিলভার)',
         'price': 250,
         'validity_days': 15,
-        'min_withdraw': 150,
+        'min_withdraw': 100,    # মাত্র ১০০৳
         'withdraw_time': '1 Hour',
-        'ref_required': 1,
+        'ref_required': 0,      # ০ রেফারেল
         'daily_free': 23,
         'spin_quiz_mult': 1.0,
         'badge_color': 'slate',
@@ -266,9 +266,9 @@ TIER_CONFIG = {
         'name': 'Gold (গোল্ড)',
         'price': 400,
         'validity_days': 15,
-        'min_withdraw': 50,
+        'min_withdraw': 50,     # মাত্র ৫০৳
         'withdraw_time': '30 Mins',
-        'ref_required': 0,
+        'ref_required': 0,      # ০ রেফারেল
         'daily_free': 30,
         'spin_quiz_mult': 1.5,
         'badge_color': 'yellow',
@@ -278,15 +278,15 @@ TIER_CONFIG = {
         'name': 'Diamond (ডায়মন্ড)',
         'price': 700,
         'validity_days': 15,
-        'min_withdraw': 20,
-        'withdraw_time': '2 Mins',
-        'ref_required': 0,
+        'min_withdraw': 20,     # মাত্র ২০৳
+        'withdraw_time': '2 Mins', # ২ মিনিট পেআউট
+        'ref_required': 0,      # ০ রেফারেল
         'daily_free': 55,
         'spin_quiz_mult': 2.0,
         'badge_color': 'cyan',
         'accent': '#06b6d4'
     }
-}
+        }
 
 # ==========================================================
 # PASSWORD RESET SYSTEM (/reset)
