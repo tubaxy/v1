@@ -2326,13 +2326,13 @@ def pwa_manifest():
         "orientation": "portrait-primary",
         "icons": [
             {
-                "src": "https://i.ibb.co/1JbqCDHq/Add-Text-10-10-03-15-45.jpg",
+                "src": "https://i.ibb.co.com/1wxLMwW/IMG-20261104-WA0022.jpg",
                 "sizes": "192x192",
                 "type": "image/jpeg",
                 "purpose": "any maskable"
             },
             {
-                "src": "https://i.ibb.co/1JbqCDHq/Add-Text-10-10-03-15-45.jpg",
+                "src": "https://i.ibb.co.com/1wxLMwW/IMG-20261104-WA0022.jpg",
                 "sizes": "512x512",
                 "type": "image/jpeg",
                 "purpose": "any maskable"
