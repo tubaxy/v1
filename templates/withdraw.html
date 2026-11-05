@@ -54,9 +54,9 @@
     <!-- Title Header -->
     <div class="text-center py-1 select-none space-y-1">
         <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
-            Payout <span class="text-slate-400 font-light italic lowercase text-xl">request</span>
+            Withdraw <span class="text-slate-400 font-light italic lowercase text-xl">request</span>
         </h1>
-        <p class="text-xs text-slate-400 font-gotham font-light">আপনার উপার্জিত অর্থ সহজে ও নিরাপদে উত্তোলন করুন</p>
+        <p class="text-xs text-slate-400 font-gotham font-light">টাকা Withdraw করতে সর্বনিম্ন ৫০০ টাকা ব্যালেন্স এবং ৫ টি রেফার লাগবে</p>
     </div>
 
     <!-- ================= 2. BALANCE & REFERRAL STATUS CARD ================= -->
@@ -72,7 +72,7 @@
             <div class="text-right">
                 <span class="text-[9px] font-gotham uppercase tracking-widest text-slate-400 block mb-0.5">Referral Status</span>
                 <span class="text-xs font-gotham font-bold {% if referral_count >= 4 %}text-emerald-400{% else %}text-amber-400{% endif %}">
-                    {{ referral_count }} / 4 Completed
+                    {{ referral_count }} / 5 Completed
                 </span>
             </div>
         </div>
@@ -81,13 +81,13 @@
         <div class="space-y-1 pt-1 border-t border-white/[0.04]">
             <div class="w-full bg-white/[0.04] rounded-full h-1.5 overflow-hidden">
                 <div class="bg-gradient-to-r from-blue-600 to-sky-400 h-full rounded-full transition-all duration-500" 
-                     style="width: {{ [100, (referral_count / 4) * 100]|min }}%;"></div>
+                     style="width: {{ [100, (referral_count / 5) * 100]|min }}%;"></div>
             </div>
 
             <div class="flex items-center justify-between text-[10px] text-slate-400 pt-0.5">
-                {% if referral_count < 4 %}
+                {% if referral_count < 5 %}
                     <span class="text-amber-400/90 font-medium">
-                        <i class="fa-solid fa-circle-exclamation mr-1 text-[9px]"></i>উইথড্র করতে আরও {{ 4 - referral_count }}টি রেফারেল প্রয়োজন
+                        <i class="fa-solid fa-circle-exclamation mr-1 text-[9px]"></i>উইথড্র করতে আরও {{ 5 - referral_count }}টি রেফারেল প্রয়োজন
                     </span>
                     <a href="/refer" class="text-sky-400 font-semibold hover:underline">রেফার করুন &raquo;</a>
                 {% else %}
@@ -151,12 +151,12 @@
         <div class="space-y-1.5 pt-1">
             <div class="flex items-center justify-between text-[10px] font-gotham ml-1">
                 <span class="uppercase tracking-wider text-slate-400">উত্তোলনের পরিমাণ (৳)</span>
-                <span class="text-sky-400 font-semibold">মিনিমাম ৳৪৫০</span>
+                <span class="text-sky-400 font-semibold">মিনিমাম ৳500</span>
             </div>
 
             <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2">
                 <span class="text-slate-400 font-black text-sm">৳</span>
-                <input type="number" id="withdrawAmountInput" name="amount" min="450" required placeholder="450" 
+                <input type="number" id="withdrawAmountInput" name="amount" min="500" required placeholder="500" 
                        class="w-full bg-transparent text-sm font-gotham font-black text-white focus:outline-none placeholder-slate-600">
             </div>
 
