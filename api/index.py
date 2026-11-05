@@ -1754,16 +1754,16 @@ def withdraw():
     method = request.form.get('method', '').strip()
     account = request.form.get('account', '').strip()
 
-    if amount < 450:
-        flash("সর্বনিম্ন উইথড্রয়াল অ্যামাউন্ট 450 টাকা!", "danger")
+    if amount < 500:
+        flash("সর্বনিম্ন উইথড্রয়াল অ্যামাউন্ট 500 টাকা!", "danger")
         return redirect(url_for('withdraw'))
 
     if float(user['balance']) < amount:
         flash("আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই!", "danger")
         return redirect(url_for('withdraw'))
 
-    if ref_count < 4:
-        flash(f"উইথড্র করতে সর্বনিম্ন ৪টি রেফারেল প্রয়োজন! আপনার বর্তমান রেফারেল: {ref_count} টি।", "danger")
+    if ref_count < 5:
+        flash(f"উইথড্র করতে সর্বনিম্ন 5টি রেফারেল প্রয়োজন! আপনার বর্তমান রেফারেল: {ref_count} টি।", "danger")
         return redirect(url_for('withdraw'))
         
     sb.table('users').update({'balance': float(user['balance']) - amount}).eq('id', user_id).execute()
