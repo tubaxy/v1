@@ -22,6 +22,17 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="TaskWallet">
 
+    <!-- PWA Service Worker Registration -->
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js', { scope: '/' })
+                .then((reg) => console.log('✓ Service Worker Active:', reg.scope))
+                .catch((err) => console.error('SW Error:', err));
+        });
+    }
+</script>
+    
     <style>
         * {
             font-family: 'Anek Bangla', 'Montserrat', sans-serif;
