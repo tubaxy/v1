@@ -170,44 +170,6 @@
 
     </div>
 
-    <!-- ================= 4. LIVE SITE AGE COUNTDOWN (SINCE 03 MARCH 2026) ================= -->
-    <div class="fintech-card rounded-[24px] p-4 sm:p-5 space-y-2.5 border-white/[0.08]">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20 flex items-center justify-center text-xs">
-                    <i class="fa-solid fa-clock-rotate-left"></i>
-                </div>
-                <div>
-                    <h3 class="text-xs font-semibold text-white">প্ল্যাটফর্মের বয়স (Site Operating Age)</h3>
-                    <span class="text-[10px] text-slate-400 font-gotham">Active Since: 03 March, 2026</span>
-                </div>
-            </div>
-            <span class="text-[9px] font-gotham font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                100% Uptime
-            </span>
-        </div>
-
-        <!-- Live 4-Block Ticking Grid -->
-        <div class="grid grid-cols-4 gap-1.5 sm:gap-2 text-center pt-0.5 font-gotham select-none">
-            <div class="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                <span class="text-base sm:text-xl font-black text-white block tabular-nums" id="uptimeDays">00</span>
-                <span class="text-[8px] text-slate-500 uppercase font-semibold">Days</span>
-            </div>
-            <div class="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                <span class="text-base sm:text-xl font-black text-sky-400 block tabular-nums" id="uptimeHours">00</span>
-                <span class="text-[8px] text-slate-500 uppercase font-semibold">Hours</span>
-            </div>
-            <div class="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                <span class="text-base sm:text-xl font-black text-sky-400 block tabular-nums" id="uptimeMinutes">00</span>
-                <span class="text-[8px] text-slate-500 uppercase font-semibold">Mins</span>
-            </div>
-            <div class="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                <span class="text-base sm:text-xl font-black text-emerald-400 block tabular-nums" id="uptimeSeconds">00</span>
-                <span class="text-[8px] text-slate-500 uppercase font-semibold">Secs</span>
-            </div>
-        </div>
-    </div>
-
     <!-- ================= 5. VIDEO TUTORIAL GUIDE BANNER ================= -->
     <a href="/tutorial" 
        class="group fintech-card rounded-2xl p-3 flex items-center justify-between gap-3 border-blue-500/20 bg-blue-500/[0.02] hover:bg-blue-500/[0.06] transition active:scale-[0.99]">
@@ -323,9 +285,48 @@
 
         </div>
     </div>
+    
+    <!-- ================= 4. LIVE SITE AGE COUNTDOWN (SINCE 03 MARCH 2026) ================= -->
+    <div class="fintech-card rounded-[24px] p-4 sm:p-5 space-y-2.5 border-white/[0.08]">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+                <div>
+                    <h3 class="text-xs font-semibold text-white">প্ল্যাটফর্মের বয়স</h3>
+                    <span class="text-[10px] text-slate-400 font-gotham">Active Since: 03 March, 2026</span>
+                </div>
+            </div>
+            <span class="text-[9px] font-gotham font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                100% Uptime
+            </span>
+        </div>
+
+        <!-- Live 4-Block Ticking Grid -->
+        <div class="grid grid-cols-4 gap-1.5 sm:gap-2 text-center pt-0.5 font-gotham select-none">
+            <div class="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                <span class="text-base sm:text-xl font-black text-white block tabular-nums" id="uptimeDays">00</span>
+                <span class="text-[8px] text-slate-500 uppercase font-semibold">Days</span>
+            </div>
+            <div class="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                <span class="text-base sm:text-xl font-black text-sky-400 block tabular-nums" id="uptimeHours">00</span>
+                <span class="text-[8px] text-slate-500 uppercase font-semibold">Hours</span>
+            </div>
+            <div class="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                <span class="text-base sm:text-xl font-black text-sky-400 block tabular-nums" id="uptimeMinutes">00</span>
+                <span class="text-[8px] text-slate-500 uppercase font-semibold">Mins</span>
+            </div>
+            <div class="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                <span class="text-base sm:text-xl font-black text-emerald-400 block tabular-nums" id="uptimeSeconds">00</span>
+                <span class="text-[8px] text-slate-500 uppercase font-semibold">Secs</span>
+            </div>
+        </div>
+    </div>
+    
 
     <!-- ================= 7. UPGRADE CTA (POSITIONED BELOW EARNING ZONE) ================= -->
-    <a href="/upgrade" 
+    <a href="/upgrade" style="padding: 10px;"
        class="group fintech-card rounded-[24px] sm:rounded-[28px] p-4.5 sm:p-5 flex items-center justify-between gap-3 border-amber-500/30 bg-amber-500/[0.03] hover:bg-amber-500/[0.07] transition shadow-[0_0_30px_rgba(245,158,11,0.08)] active:scale-[0.99]">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center text-base group-hover:scale-105 transition shadow-sm shrink-0">
@@ -350,7 +351,7 @@
     <!-- ================= 8. MORE NAVS: LEADERBOARD & ANNOUNCEMENT ================= -->
     <div class="grid grid-cols-2 gap-2.5 sm:gap-3">
         <!-- Leaderboard -->
-        <a href="/leaderboard" class="fintech-card rounded-2xl p-3.5 flex items-center gap-2.5 group active:scale-95">
+        <a href="/leaderboard" style="padding: 10px;" class="fintech-card rounded-2xl p-3.5 flex items-center gap-2.5 group active:scale-95">
             <div class="w-8 h-8 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 group-hover:text-amber-400 flex items-center justify-center text-xs transition shrink-0">
                 <i class="fa-solid fa-trophy"></i>
             </div>
@@ -361,7 +362,7 @@
         </a>
 
         <!-- Announcements -->
-        <a href="/announcements" class="fintech-card rounded-2xl p-3.5 flex items-center gap-2.5 group active:scale-95">
+        <a href="/announcements" style="padding: 10px;" class="fintech-card rounded-2xl p-3.5 flex items-center gap-2.5 group active:scale-95">
             <div class="w-8 h-8 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 group-hover:text-sky-400 flex items-center justify-center text-xs transition shrink-0">
                 <i class="fa-solid fa-bullhorn"></i>
             </div>
@@ -387,7 +388,7 @@
         </div>
 
         <p class="text-[10px] sm:text-[11px] text-slate-400 leading-relaxed">
-            বন্ধুদের ইনভাইট করুন। প্রতি সফল রেফারেলে পান <strong class="text-slate-200">৳১৫.০০</strong> ক্যাশ বোনাস।
+            বন্ধুদের ইনভাইট করুন। প্রতি সফল রেফারেলে পান <strong class="text-slate-200">৳20</strong> ক্যাশ বোনাস।
         </p>
 
         <!-- Referral Link Input with 1-Click Copy -->
