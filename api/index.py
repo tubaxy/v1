@@ -2314,33 +2314,6 @@ def promote():
 
     return render_template('promote.html', is_logged_in=is_logged_in, user=user)
 
-@app.route('/manifest.json')
-def pwa_manifest():
-    manifest_data = {
-        "name": "TakaWallet - Micro Task & Earn",
-        "short_name": "TakaWallet",
-        "start_url": "/app",
-        "display": "standalone",
-        "background_color": "#ffffff",
-        "theme_color": "#E11D48",
-        "orientation": "portrait-primary",
-        "icons": [
-            {
-                "src": "https://i.ibb.co.com/1wxLMwW/IMG-20261104-WA0022.jpg",
-                "sizes": "192x192",
-                "type": "image/jpeg",
-                "purpose": "any maskable"
-            },
-            {
-                "src": "https://i.ibb.co.com/1wxLMwW/IMG-20261104-WA0022.jpg",
-                "sizes": "512x512",
-                "type": "image/jpeg",
-                "purpose": "any maskable"
-            }
-        ]
-    }
-    return jsonify(manifest_data)
-
 @app.route('/admin/submit/<int:sub_id>/approve', methods=['POST'])
 @admin_required
 def admin_single_approve_submission(sub_id):
@@ -2376,17 +2349,67 @@ def admin_single_reject_submission(sub_id):
     flash("টাস্কটি রিজেক্ট করা হয়েছে!", "warning")
     return redirect(url_for('admin_submissions'))
     
+# ==========================================================
+# PWA MANIFEST & SERVICE WORKER CONTROLLER
+# ==========================================================
+@app.route('/manifest.json')
+def pwa_manifest():
+    logo_url = "https://i.ibb.co.com/1wxLMwW/IMG-20261104-WA0022.jpg"
+    manifest_data = {
+        "id": "/",
+        "name": "TaskWallet - Minimal Fintech & Earning",
+        "short_name": "TaskWallet",
+        "description": "TaskWallet Micro Task & Earning Platform",
+        "start_url": "/app",
+        "scope": "/",
+        "display": "standalone",
+        "background_color": "#04060b",
+        "theme_color": "#04060b",
+        "orientation": "portrait-primary",
+        "icons": [
+            {
+                "src": logo_url,
+                "sizes": "192x192",
+                "type": "image/jpeg",
+                "purpose": "any"
+            },
+            {
+                "src": logo_url,
+                "sizes": "512x512",
+                "type": "image/jpeg",
+                "purpose": "any"
+            },
+            {
+                "src": logo_url,
+                "sizes": "512x512",
+                "type": "image/jpeg",
+                "purpose": "maskable"
+            }
+        ]
+    }
+    response = jsonify(manifest_data)
+    response.headers['Content-Type'] = 'application/manifest+json; charset=utf-8'
+    return response
+
 @app.route('/sw.js')
 def pwa_sw():
     sw_code = """
-    self.addEventListener('install', (e) => { self.skipWaiting(); });
-    self.addEventListener('activate', (e) => { e.waitUntil(clients.claim()); });
+    const CACHE_NAME = 'taskwallet-cache-v1';
+    self.addEventListener('install', (e) => {
+        self.skipWaiting();
+    });
+    self.addEventListener('activate', (e) => {
+        e.waitUntil(clients.claim());
+    });
     self.addEventListener('fetch', (e) => {
-        e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+        e.respondWith(
+            fetch(e.request).catch(() => caches.match(e.request))
+        );
     });
     """
-    return app.response_class(sw_code, mimetype='application/javascript')
-
+    response = app.response_class(sw_code, mimetype='application/javascript')
+    response.headers['Service-Worker-Allowed'] = '/'
+    return response
 @app.route('/install')
 def install_app_page():
     return render_template('install.html')
