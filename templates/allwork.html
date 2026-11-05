@@ -1,32 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
-    .work-compact-card {
-        background: rgba(255, 255, 255, 0.025);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+    .fintech-work-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.07);
         backdrop-filter: blur(24px);
         transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         position: relative;
         overflow: hidden;
     }
-    .work-compact-card:hover {
-        border-color: rgba(56, 189, 248, 0.35);
-        background: rgba(255, 255, 255, 0.045);
+    .fintech-work-card:hover {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(255, 255, 255, 0.04);
         transform: translateY(-2px);
-        box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.8);
     }
 
-    /* Ambient Pulsing Glow for Coming Soon */
-    @keyframes comingSoonPulse {
-        0%, 100% { opacity: 0.4; transform: scale(0.98); }
-        50% { opacity: 0.8; transform: scale(1.02); }
+    /* Subtly Animated Coming Soon Border */
+    @keyframes pulseComingSoon {
+        0%, 100% { border-color: rgba(255, 255, 255, 0.1); opacity: 0.6; }
+        50% { border-color: rgba(56, 189, 248, 0.4); opacity: 1; }
     }
-    .coming-soon-glow {
-        animation: comingSoonPulse 3s infinite ease-in-out;
+    .coming-soon-card {
+        animation: pulseComingSoon 3.5s infinite ease-in-out;
     }
 </style>
 
-<div class="max-w-xl mx-auto space-y-4 pb-24 px-1 sm:px-0">
+<div class="max-w-xl mx-auto space-y-4 pb-24 px-2 sm:px-0 overflow-hidden w-full">
 
     <!-- Top Action Row -->
     <div class="flex items-center justify-between px-1">
@@ -36,278 +35,273 @@
         </a>
 
         <div class="flex items-center gap-2">
-            <span class="text-[9px] font-gotham font-semibold tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full uppercase flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                Active Hub
+            <span class="text-[9px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-2.5 py-0.5 rounded-full uppercase flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+                Operations Live
             </span>
         </div>
     </div>
 
-    <!-- Title Section -->
+    <!-- Title Section (The Seasons Classic Typography) -->
     <div class="text-center py-1 select-none space-y-0.5">
         <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
-            All <span class="text-slate-400 font-light italic lowercase text-xl">operations</span>
+            Work <span class="text-slate-400 font-light italic lowercase text-xl">operations</span>
         </h1>
-        <p class="text-[11px] text-slate-400 font-gotham font-light">সবগুলো আর্নিং মেথড ও কাজের সমন্বিত তালিকা</p>
+        <p class="text-[11px] text-slate-400 font-gotham font-light">নিরাপদ ও ভেরিফাইড আর্নিং মেথডের সমন্বিত টার্মিনাল</p>
     </div>
 
-    <!-- ================= COMPACT 2-COLUMN RESPONSIVE WORK GRID ================= -->
-    <div class="grid grid-cols-2 gap-2.5 sm:gap-3">
-        
-        <!-- 1. Micro Tasks -->
-        <a href="/tasks" class="work-compact-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-95">
-            <div class="space-y-2">
-                <div class="flex items-center justify-between">
-                    <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-sky-400 group-hover:border-sky-500/40 transition">
-                        <i class="fa-solid fa-list-check"></i>
-                    </div>
-                    <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-blue-600/15 text-sky-400 border border-blue-500/30">
-                        Top Yield
-                    </span>
-                </div>
-                <div>
-                    <h3 class="text-xs font-semibold text-white">মাইক্রো টাস্ক</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 line-clamp-1">সহজ কাজ করে স্ক্রিনশট দিন</p>
-                </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-slate-400 group-hover:text-sky-400 transition">
-                <span>কাজ শুরু করুন</span>
-                <i class="fa-solid fa-arrow-right text-[8px]"></i>
-            </div>
-        </a>
+    <!-- ================= 1. CORE EARNING MODULES (COMPACT 2-COLUMN GRID) ================= -->
+    <div class="space-y-2">
+        <div class="flex items-center justify-between px-1 text-[10px] font-gotham">
+            <span class="uppercase tracking-widest text-slate-500 font-bold">Daily Tasks & Vaults</span>
+            <span class="text-sky-400 font-semibold">Active Feed</span>
+        </div>
 
-        <!-- 2. Video Watch -->
-        <a href="/yt" class="work-compact-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-95">
-            <div class="space-y-2">
-                <div class="flex items-center justify-between">
-                    <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-red-400 group-hover:border-red-500/40 transition">
-                        <i class="fa-brands fa-youtube"></i>
+        <div class="grid grid-cols-2 gap-2 sm:gap-2.5">
+            
+            <!-- 1. Micro Tasks -->
+            <a href="/tasks" class="fintech-work-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-[0.98]">
+                <div class="space-y-2 min-w-0">
+                    <div class="flex items-center justify-between">
+                        <div class="w-8 h-8 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-sky-400 transition shrink-0">
+                            <i class="fa-solid fa-list-check"></i>
+                        </div>
+                        <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-blue-600/15 text-sky-400 border border-blue-500/30">
+                            High Yield
+                        </span>
                     </div>
-                    <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-red-500/15 text-red-400 border border-red-500/30">
-                        30s Watch
-                    </span>
-                </div>
-                <div>
-                    <h3 class="text-xs font-semibold text-white">ভিডিও ওয়াচ</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 line-clamp-1">৩০ সেকেন্ডে নগদ ক্যাশ</p>
-                </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-slate-400 group-hover:text-red-400 transition">
-                <span>ভিডিও দেখুন</span>
-                <i class="fa-solid fa-arrow-right text-[8px]"></i>
-            </div>
-        </a>
-
-        <!-- 3. Lucky Spin -->
-        <a href="/spin" class="work-compact-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-95">
-            <div class="space-y-2">
-                <div class="flex items-center justify-between">
-                    <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-amber-400 group-hover:border-amber-500/40 transition">
-                        <i class="fa-solid fa-dharmachakra"></i>
+                    <div class="leading-tight min-w-0">
+                        <h3 class="text-xs font-semibold text-white truncate">মাইক্রো টাস্ক</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">সহজ কাজ করে স্ক্রিনশট দিন</p>
                     </div>
-                    <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30">
-                        3x Daily
-                    </span>
                 </div>
-                <div>
-                    <h3 class="text-xs font-semibold text-white">লাকি স্পিন</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 line-clamp-1">চাকা ঘুরিয়ে ফ্রি বোনাস</p>
+                <div class="mt-3 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-slate-400 group-hover:text-sky-400 transition">
+                    <span>শুরু করুন</span>
+                    <i class="fa-solid fa-arrow-right text-[8px]"></i>
                 </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-slate-400 group-hover:text-amber-400 transition">
-                <span>স্পিন করুন</span>
-                <i class="fa-solid fa-arrow-right text-[8px]"></i>
-            </div>
-        </a>
+            </a>
 
-        <!-- 4. Scratch Card -->
-        <a href="/scratch" class="work-compact-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-95">
-            <div class="space-y-2">
-                <div class="flex items-center justify-between">
-                    <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-emerald-400 group-hover:border-emerald-500/40 transition">
-                        <i class="fa-solid fa-gift"></i>
+            <!-- 2. Video Streams -->
+            <a href="/yt" class="fintech-work-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-[0.98]">
+                <div class="space-y-2 min-w-0">
+                    <div class="flex items-center justify-between">
+                        <div class="w-8 h-8 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-red-400 transition shrink-0">
+                            <i class="fa-brands fa-youtube"></i>
+                        </div>
+                        <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-red-500/15 text-red-400 border border-red-500/30">
+                            30s Stream
+                        </span>
                     </div>
-                    <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                        Instant
-                    </span>
-                </div>
-                <div>
-                    <h3 class="text-xs font-semibold text-white">স্ক্র্যাচ কার্ড</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 line-clamp-1">কার্ড ঘষে ক্যাশ আনলক</p>
-                </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-slate-400 group-hover:text-emerald-400 transition">
-                <span>কার্ড ঘষুন</span>
-                <i class="fa-solid fa-arrow-right text-[8px]"></i>
-            </div>
-        </a>
-
-        <!-- 5. Math Quiz -->
-        <a href="/quiz" class="work-compact-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-95">
-            <div class="space-y-2">
-                <div class="flex items-center justify-between">
-                    <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-pink-400 group-hover:border-pink-500/40 transition">
-                        <i class="fa-solid fa-brain"></i>
+                    <div class="leading-tight min-w-0">
+                        <h3 class="text-xs font-semibold text-white truncate">ভিডিও ওয়াচ</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">৩০ সেকেন্ডে নগদ রিওয়ার্ড</p>
                     </div>
-                    <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-pink-500/15 text-pink-400 border border-pink-500/30">
-                        5x Daily
-                    </span>
                 </div>
-                <div>
-                    <h3 class="text-xs font-semibold text-white">ম্যাথ কুইজ</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 line-clamp-1">অংক সমাধান করে টাকা</p>
+                <div class="mt-3 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-slate-400 group-hover:text-red-400 transition">
+                    <span>দেখুন</span>
+                    <i class="fa-solid fa-arrow-right text-[8px]"></i>
                 </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-slate-400 group-hover:text-pink-400 transition">
-                <span>কুইজ খেলুন</span>
-                <i class="fa-solid fa-arrow-right text-[8px]"></i>
-            </div>
-        </a>
+            </a>
 
-        <!-- 6. Referral Program (👉 UPDATED TO 20৳ 👈) -->
-        <a href="/refer" class="work-compact-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-95 border-blue-500/20">
-            <div class="space-y-2">
-                <div class="flex items-center justify-between">
-                    <div class="w-8 h-8 rounded-lg bg-blue-600/15 border border-blue-500/30 text-sky-400 flex items-center justify-center text-xs">
+            <!-- 3. Lucky Spin -->
+            <a href="/spin" class="fintech-work-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-[0.98]">
+                <div class="space-y-2 min-w-0">
+                    <div class="flex items-center justify-between">
+                        <div class="w-8 h-8 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-amber-400 transition shrink-0">
+                            <i class="fa-solid fa-dharmachakra"></i>
+                        </div>
+                        <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                            3x Daily
+                        </span>
+                    </div>
+                    <div class="leading-tight min-w-0">
+                        <h3 class="text-xs font-semibold text-white truncate">লাকি স্পিন</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">চাকা ঘুরিয়ে নিশ্চিত বোনাস</p>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-slate-400 group-hover:text-amber-400 transition">
+                    <span>স্পিন করুন</span>
+                    <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                </div>
+            </a>
+
+            <!-- 4. Scratch Card -->
+            <a href="/scratch" class="fintech-work-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-[0.98]">
+                <div class="space-y-2 min-w-0">
+                    <div class="flex items-center justify-between">
+                        <div class="w-8 h-8 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-emerald-400 transition shrink-0">
+                            <i class="fa-solid fa-gift"></i>
+                        </div>
+                        <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                            Instant
+                        </span>
+                    </div>
+                    <div class="leading-tight min-w-0">
+                        <h3 class="text-xs font-semibold text-white truncate">স্ক্র্যাচ কার্ড</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">কার্ড ঘষে ক্যাশ আনলক</p>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-slate-400 group-hover:text-emerald-400 transition">
+                    <span>ঘষুন</span>
+                    <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                </div>
+            </a>
+
+            <!-- 5. Math Quiz -->
+            <a href="/quiz" class="fintech-work-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-[0.98]">
+                <div class="space-y-2 min-w-0">
+                    <div class="flex items-center justify-between">
+                        <div class="w-8 h-8 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-pink-400 transition shrink-0">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-pink-500/15 text-pink-400 border border-pink-500/30">
+                            5x Daily
+                        </span>
+                    </div>
+                    <div class="leading-tight min-w-0">
+                        <h3 class="text-xs font-semibold text-white truncate">ম্যাথ কুইজ</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">অংক সমাধান করে টাকা</p>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-slate-400 group-hover:text-pink-400 transition">
+                    <span>কুইজ খেলুন</span>
+                    <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                </div>
+            </a>
+
+            <!-- 6. Video Tutorial -->
+            <a href="/tutorial" class="fintech-work-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-[0.98]">
+                <div class="space-y-2 min-w-0">
+                    <div class="flex items-center justify-between">
+                        <div class="w-8 h-8 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-blue-400 transition shrink-0">
+                            <i class="fa-solid fa-circle-play"></i>
+                        </div>
+                        <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-white/[0.04] text-slate-400 border border-white/10">
+                            1-Min Guide
+                        </span>
+                    </div>
+                    <div class="leading-tight min-w-0">
+                        <h3 class="text-xs font-semibold text-white truncate">ভিডিও গাইড</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">সহজ ভিডিও টিউটোরিয়াল</p>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-slate-400 group-hover:text-white transition">
+                    <span>টিউটোরিয়াল</span>
+                    <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- ================= 2. HIGH-YIELD STRATEGIC PROGRAMS (SLEEK HORIZONTAL TILES) ================= -->
+    <div class="space-y-2 pt-1">
+        <div class="flex items-center justify-between px-1 text-[10px] font-gotham">
+            <span class="uppercase tracking-widest text-slate-500 font-bold">Programs & Acceleration</span>
+            <span class="text-amber-400 font-semibold">Scale</span>
+        </div>
+
+        <div class="space-y-2">
+            
+            <!-- Referral Program (Per Refer 20৳ Highlighted) -->
+            <a href="/refer" class="fintech-work-card rounded-2xl p-3.5 flex items-center justify-between gap-3 group active:scale-[0.99]">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-9 h-9 rounded-xl bg-blue-600/15 border border-blue-500/30 text-sky-400 flex items-center justify-center text-sm shrink-0">
                         <i class="fa-solid fa-user-plus"></i>
                     </div>
-                    <!-- 🌟 20৳ PER REFER BADGE 🌟 -->
-                    <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-blue-600/20 text-sky-400 border border-blue-500/30">
-                        ৳২০ / Lead
-                    </span>
+                    <div class="leading-tight min-w-0">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h3 class="text-xs font-semibold text-white truncate">রেফারেল পার্টনারশিপ</h3>
+                            <!-- 🌟 20৳ BADGE 🌟 -->
+                            <span class="font-gotham text-[8px] font-bold px-2 py-0.2 rounded-full bg-blue-600/20 text-sky-400 border border-blue-500/30">
+                                ৳২০ / Lead
+                            </span>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">প্রতিটি সফল রেফারেলে সরাসরি ২০৳ ক্যাশ কমিশন</p>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="text-xs font-semibold text-white">রেফারেল প্রোগ্রাম</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 line-clamp-1">প্রতি রেফারে সরাসরি ২০৳</p>
-                </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-sky-400 transition">
-                <span>রেফার করুন</span>
-                <i class="fa-solid fa-arrow-right text-[8px]"></i>
-            </div>
-        </a>
+                <i class="fa-solid fa-arrow-right text-xs text-slate-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition shrink-0 mr-1"></i>
+            </a>
 
-        <!-- 7. VIP Upgrade -->
-        <a href="/upgrade" class="work-compact-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-95 border-amber-500/20">
-            <div class="space-y-2">
-                <div class="flex items-center justify-between">
-                    <div class="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xs">
+            <!-- VIP Membership Upgrade -->
+            <a href="/upgrade" class="fintech-work-card rounded-2xl p-3.5 flex items-center justify-between gap-3 border-amber-500/25 bg-amber-500/[0.02] group active:scale-[0.99]">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center text-sm shrink-0">
                         <i class="fa-solid fa-crown"></i>
                     </div>
-                    <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30">
-                        0-Ref
-                    </span>
-                </div>
-                <div>
-                    <h3 class="text-xs font-semibold text-white">ভিআইপি আপগ্রেড</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 line-clamp-1">রেফার ছাড়া দ্রুত উইথড্র</p>
-                </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-amber-400 transition">
-                <span>আপগ্রেড করুন</span>
-                <i class="fa-solid fa-arrow-right text-[8px]"></i>
-            </div>
-        </a>
-
-        <!-- 8. Video Tutorial -->
-        <a href="/tutorial" class="work-compact-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-95">
-            <div class="space-y-2">
-                <div class="flex items-center justify-between">
-                    <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-blue-400 transition">
-                        <i class="fa-solid fa-circle-play"></i>
+                    <div class="leading-tight min-w-0">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h3 class="text-xs font-semibold text-white truncate">ভিআইপি মেম্বারশিপ আপগ্রেড</h3>
+                            <span class="font-gotham text-[8px] font-bold px-2 py-0.2 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                                0-Ref Payout
+                            </span>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">রেফার ছাড়া উইথড্র ও দৈনিক ফ্রি আয়ের সুবিধা</p>
                     </div>
-                    <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-white/[0.04] text-slate-400 border border-white/10">
-                        1-Min Guide
-                    </span>
                 </div>
-                <div>
-                    <h3 class="text-xs font-semibold text-white">ভিডিও গাইড</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 line-clamp-1">কাজের সহজ ভিডিও টিউটোরিয়াল</p>
-                </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-slate-400 group-hover:text-white transition">
-                <span>ভিডিও দেখুন</span>
-                <i class="fa-solid fa-arrow-right text-[8px]"></i>
-            </div>
-        </a>
+                <i class="fa-solid fa-arrow-right text-xs text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 transition shrink-0 mr-1"></i>
+            </a>
 
-        <!-- 9. Promote & Ads -->
-        <a href="/promote" class="work-compact-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-95">
-            <div class="space-y-2">
-                <div class="flex items-center justify-between">
-                    <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-purple-400 transition">
+            <!-- Promote / Advertising Studio -->
+            <a href="/promote" class="fintech-work-card rounded-2xl p-3.5 flex items-center justify-between gap-3 group active:scale-[0.99]">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm shrink-0">
                         <i class="fa-solid fa-bullhorn"></i>
                     </div>
-                    <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-white/[0.04] text-slate-400 border border-white/10">
-                        Campaign
-                    </span>
+                    <div class="leading-tight min-w-0">
+                        <h3 class="text-xs font-semibold text-white truncate">বিজ্ঞাপন ও প্রমোশন হাব</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">পেজ বা চ্যানেল আসল মানুষ দিয়ে বুস্ট করান</p>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="text-xs font-semibold text-white">বিজ্ঞাপন ও প্রমোশন</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 line-clamp-1">পেজ বা চ্যানেল বুস্ট করান</p>
-                </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-slate-400 group-hover:text-purple-400 transition">
-                <span>অর্ডার দিন</span>
-                <i class="fa-solid fa-arrow-right text-[8px]"></i>
-            </div>
-        </a>
+                <i class="fa-solid fa-arrow-right text-xs text-slate-500 group-hover:text-white group-hover:translate-x-0.5 transition shrink-0 mr-1"></i>
+            </a>
 
-        <!-- 10. Sponsorship -->
-        <a href="/sponsor" class="work-compact-card rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between group active:scale-95">
-            <div class="space-y-2">
-                <div class="flex items-center justify-between">
-                    <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-sky-400 transition">
+            <!-- Partner Hub -->
+            <a href="/sponsor" class="fintech-work-card rounded-2xl p-3.5 flex items-center justify-between gap-3 group active:scale-[0.99]">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm shrink-0">
                         <i class="fa-solid fa-handshake"></i>
                     </div>
-                    <span class="text-[8px] font-gotham font-bold uppercase tracking-wider px-2 py-0.2 rounded-full bg-white/[0.04] text-slate-400 border border-white/10">
-                        Weekly Salary
-                    </span>
+                    <div class="leading-tight min-w-0">
+                        <h3 class="text-xs font-semibold text-white truncate">পার্টনার হাব (Partner Hub)</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">টিম বা চ্যানেল থাকলে ফিক্সড সাপ্তাহিক বেতন</p>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="text-xs font-semibold text-white">স্পনসরশিপ</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 line-clamp-1">টিম থাকলে সাপ্তাহিক বেতন</p>
-                </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-gotham text-slate-400 group-hover:text-sky-400 transition">
-                <span>আবেদন করুন</span>
-                <i class="fa-solid fa-arrow-right text-[8px]"></i>
-            </div>
-        </a>
+                <i class="fa-solid fa-arrow-right text-xs text-slate-500 group-hover:text-white group-hover:translate-x-0.5 transition shrink-0 mr-1"></i>
+            </a>
 
+        </div>
     </div>
 
-    <!-- ================= 🌟 "MORE WORK COMING SOON..." CARD 🌟 ================= -->
-    <div class="w-full p-4 rounded-2xl bg-white/[0.02] border border-dashed border-white/10 text-center select-none relative overflow-hidden">
-        <div class="flex flex-col items-center justify-center space-y-1 relative z-10">
-            <div class="flex items-center gap-1.5 text-sky-400 font-gotham font-bold text-xs uppercase tracking-widest">
+    <!-- ================= 🌟 "MORE WORK COMING SOON..." (SLICK FINTECH BADGE) 🌟 ================= -->
+    <div class="w-full p-4 rounded-2xl bg-white/[0.02] border border-dashed border-white/10 coming-soon-card text-center select-none">
+        <div class="flex flex-col items-center justify-center space-y-1">
+            <div class="inline-flex items-center gap-1.5 text-sky-400 font-gotham font-bold text-xs uppercase tracking-wider">
                 <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-ping"></span>
                 <span>More Work Coming Soon...</span>
             </div>
             <p class="text-[10px] text-slate-400 font-normal">
-                নতুন মাইক্রো-টাস্ক ও ইনকামের আকর্ষণীয় ফিচার খুব শীঘ্রই যুক্ত হচ্ছে।
+                নতুন মাইক্রো-টাস্ক ও ইনকামের এক্সক্লুসিভ ফিচার খুব শীঘ্রই যুক্ত হচ্ছে
             </p>
         </div>
     </div>
 
-    <!-- ================= 🌟 ROBUST NON-BREAKING TELEGRAM CHANNEL CARD 🌟 ================= -->
+    <!-- ================= 🌟 NON-BREAKING TELEGRAM CHANNEL CARD 🌟 ================= -->
     <a href="https://t.me/taskwallet_bd" target="_blank" 
-       class="work-compact-card rounded-2xl p-3.5 flex items-center justify-between gap-3 border-sky-500/20 bg-sky-500/[0.02] hover:bg-sky-500/[0.05] transition active:scale-[0.99] select-none w-full overflow-hidden">
+       class="fintech-work-card rounded-2xl p-3.5 flex items-center justify-between gap-3 border-sky-500/20 bg-sky-500/[0.02] hover:bg-sky-500/[0.05] transition active:scale-[0.99] select-none w-full overflow-hidden">
         <div class="flex items-center gap-3 min-w-0">
-            <!-- Telegram Icon -->
-            <div class="w-9 h-9 rounded-xl bg-sky-500/15 border border-sky-500/30 text-sky-400 flex items-center justify-center text-base shrink-0 shadow-sm">
+            <div class="w-9 h-9 rounded-xl bg-sky-500/15 border border-sky-500/30 text-sky-400 flex items-center justify-center text-base shrink-0">
                 <i class="fa-brands fa-telegram"></i>
             </div>
-            <!-- Text (min-w-0 and truncate prevents mobile design breaking) -->
             <div class="leading-tight min-w-0">
                 <div class="flex items-center gap-1.5 mb-0.5 flex-wrap">
                     <span class="text-xs font-semibold text-white truncate">অফিসিয়াল টেলিগ্রাম চ্যানেল</span>
                     <span class="text-[8px] font-gotham bg-sky-400/20 text-sky-300 border border-sky-400/30 px-1.5 py-0.2 rounded-full font-bold">UPDATES</span>
                 </div>
-                <p class="text-[10px] text-slate-400 truncate">পেমেন্ট প্রুফ ও নোটিশ সবার আগে দেখতে যুক্ত থাকুন</p>
+                <p class="text-[10px] text-slate-400 truncate">পেমেন্ট প্রুফ ও নতুন কাজের নোটিশ সবার আগে দেখতে যুক্ত থাকুন</p>
             </div>
         </div>
-        <i class="fa-solid fa-arrow-right text-xs text-sky-400 shrink-0 mr-0.5"></i>
+        <i class="fa-solid fa-arrow-right text-xs text-sky-400 shrink-0 mr-1"></i>
     </a>
 
 </div>
