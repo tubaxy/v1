@@ -1,251 +1,238 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{% block title %}MicroEarnX • Executive Admin Workspace{% endblock %}</title>
+    <title>{% block title %}TaskWallet • Executive Admin Terminal{% endblock %}</title>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome 6 Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: '#E11D48',
-                        brandHover: '#BE123C',
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Fonts: Anek Bangla (Bangla), The Seasons Style (Cormorant Garamond Classic Serif), Gotham Style (Montserrat) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- Custom Awesome Glassmorphism & Neon Halo CSS -->
     <style>
-        /* 1. Neon Halo Ring Behind X */
-        @keyframes neon-halo-spin {
-            0% {
-                transform: rotate(0deg) scale(0.96);
-                box-shadow: 0 0 10px #ff0055, 0 0 18px #ff0055 inset;
-                filter: hue-rotate(0deg);
-            }
-            50% {
-                transform: rotate(180deg) scale(1.12);
-                box-shadow: 0 0 16px #ff0077, 0 0 26px #ff0055 inset;
-                filter: hue-rotate(25deg);
-            }
-            100% {
-                transform: rotate(360deg) scale(0.96);
-                box-shadow: 0 0 10px #ff0055, 0 0 18px #ff0055 inset;
-                filter: hue-rotate(0deg);
-            }
-        }
-        .neon-x-box {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 26px;
-            height: 26px;
-            margin-left: 2px;
-        }
-        .neon-halo-ring {
-            position: absolute;
-            inset: 0;
-            border-radius: 9999px;
-            background: radial-gradient(circle, rgba(225, 29, 72, 0.45) 0%, rgba(255, 0, 100, 0.18) 70%, transparent 100%);
-            border: 1.5px solid rgba(255, 0, 85, 0.7);
-            animation: neon-halo-spin 3s linear infinite;
-            pointer-events: none;
-        }
-        .x-glow-text {
-            position: relative;
-            z-index: 10;
-            font-weight: 900;
-            font-size: 1.2rem;
-            color: #ffffff;
-            text-shadow: 0 0 8px #ff0055, 0 0 15px #ff0055;
-            user-select: none;
+        * {
+            font-family: 'Anek Bangla', 'Montserrat', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* 2. Frosted Liquid Glass Header & Navbar */
-        .glass-admin-header {
-            background: rgba(9, 13, 22, 0.82);
+        .font-classic-seasons {
+            font-family: 'The Seasons', 'Cormorant Garamond', Georgia, serif;
+            letter-spacing: 0.04em;
+        }
+
+        .font-gotham {
+            font-family: 'Gotham', 'Montserrat', -apple-system, sans-serif;
+            letter-spacing: -0.01em;
+        }
+
+        body {
+            background-color: #04060b;
+            color: #f1f5f9;
+        }
+
+        /* Glassmorphism Header & Nav */
+        .admin-glass-header {
+            background: rgba(8, 11, 20, 0.88);
             backdrop-filter: blur(28px) saturate(190%);
             -webkit-backdrop-filter: blur(28px) saturate(190%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
         }
 
-        .glass-nav-bar {
-            background: rgba(15, 23, 42, 0.65);
+        .admin-glass-dock {
+            background: rgba(10, 15, 29, 0.75);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* 3. Glowing Active Admin Nav Pill */
-        .admin-nav-active {
-            background: linear-gradient(135deg, #E11D48 0%, #be123c 100%) !important;
+        /* 10% Cobalt Blue Active Nav Pill */
+        .admin-tab-active {
+            background: #2563eb !important;
             color: #ffffff !important;
-            border-color: rgba(255, 255, 255, 0.3) !important;
-            box-shadow: 0 4px 20px rgba(225, 29, 72, 0.4) !important;
+            border-color: #3b82f6 !important;
+            box-shadow: 0 4px 18px rgba(37, 99, 235, 0.35) !important;
         }
 
-        /* Custom Scrollbar for horizontal tabs */
+        /* Horizontal Scrollbar Styling */
         .admin-scroll-tabs::-webkit-scrollbar {
             height: 3px;
         }
         .admin-scroll-tabs::-webkit-scrollbar-thumb {
-            background: rgba(225, 29, 72, 0.3);
+            background: rgba(56, 189, 248, 0.3);
             border-radius: 10px;
+        }
+
+        /* On-Screen Floating Toast Animation */
+        @keyframes toastSlideDown {
+            0% { opacity: 0; transform: translateY(-20px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .animate-toast-slide {
+            animation: toastSlideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
     </style>
 </head>
-<body class="bg-[#0b0f19] text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-rose-500/20 selection:text-rose-400 relative overflow-x-hidden">
+<body class="selection:bg-blue-600/20 selection:text-sky-300 relative overflow-x-hidden min-h-screen flex flex-col font-sans antialiased">
 
-    <!-- Ambient Neon Background Spotlights -->
-    <div class="fixed -top-40 -left-40 w-96 h-96 bg-[#E11D48]/10 rounded-full blur-[140px] pointer-events-none"></div>
-    <div class="fixed top-1/3 -right-40 w-96 h-96 bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none"></div>
-    <div class="fixed -bottom-40 left-1/3 w-96 h-96 bg-amber-500/5 rounded-full blur-[140px] pointer-events-none"></div>
+    <!-- Ambient Dark Fintech Spotlights -->
+    <div class="fixed -top-40 -left-32 w-96 h-96 bg-blue-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="fixed top-1/3 -right-32 w-96 h-96 bg-cyan-600/10 rounded-full blur-[150px] pointer-events-none"></div>
 
-    <!-- ================= 1. EXECUTIVE LIQUID GLASS TOP HEADER ================= -->
-    <header class="sticky top-0 z-50 glass-admin-header">
+    <!-- ================= 1. FLOATING ON-SCREEN FLASH NOTIFICATION WIDGET ================= -->
+    <div id="adminFlashToastContainer" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-full max-w-sm px-4 space-y-2 pointer-events-none">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="admin-toast pointer-events-auto p-3.5 rounded-2xl border backdrop-blur-2xl shadow-2xl flex items-center justify-between gap-3 text-xs font-gotham animate-toast-slide
+                        {% if category == 'success' %}
+                            bg-[#041a14]/95 border-emerald-500/40 text-emerald-300 shadow-[0_10px_35px_rgba(16,185,129,0.25)]
+                        {% elif category == 'danger' or category == 'error' %}
+                            bg-[#20070d]/95 border-rose-500/40 text-rose-300 shadow-[0_10px_35px_rgba(244,63,94,0.25)]
+                        {% else %}
+                            bg-[#071326]/95 border-sky-500/40 text-sky-300 shadow-[0_10px_35px_rgba(56,189,248,0.25)]
+                        {% endif %}">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <i class="fa-solid {% if category == 'success' %}fa-circle-check text-emerald-400{% elif category == 'danger' or category == 'error' %}fa-circle-exclamation text-rose-400{% else %}fa-circle-info text-sky-400{% endif %} text-sm shrink-0"></i>
+                            <span class="truncate leading-relaxed font-medium">{{ message }}</span>
+                        </div>
+                        <button onclick="dismissAdminToast(this.parentElement)" class="text-slate-400 hover:text-white shrink-0 p-1 transition">
+                            <i class="fa-solid fa-xmark text-xs"></i>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- ================= 2. EXECUTIVE TOP HEADER ================= -->
+    <header class="sticky top-0 z-40 admin-glass-header">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
             
-            <!-- Brand Logo & Title with Neon X -->
-            <div class="flex items-center gap-3">
-                <a href="/admin" class="flex items-center gap-2.5 group">
-                    <!-- Circular Glass Logo -->
-                    <div class="w-10 h-10 rounded-full border-2 border-rose-300/80 p-0.5 bg-slate-900 shadow-md overflow-hidden flex items-center justify-center shrink-0 group-hover:scale-105 transition duration-300">
-                        <img src="https://i.ibb.co/1JbqCDHq/Add-Text-10-10-03-15-45.jpg" alt="Admin Logo" class="w-full h-full object-cover rounded-full">
-                    </div>
-                    
-                    <div class="flex items-center select-none">
-                        <span class="font-black text-white text-base tracking-tight">MicroEarn</span>
-                        <div class="neon-x-box">
-                            <span class="neon-halo-ring"></span>
-                            <span class="x-glow-text">X</span>
-                        </div>
-                        <span class="ml-1 text-[9px] font-black uppercase tracking-wider bg-[#E11D48] text-white px-2 py-0.5 rounded-full shadow-sm">
-                            ADMIN
-                        </span>
-                    </div>
+            <!-- Left: Classic Typography Brand + Terminal Badge -->
+            <div class="flex items-center gap-3.5">
+                <!-- Hamburger Trigger (Opens Left Drawer on Mobile) -->
+                <button onclick="toggleAdminDrawer(true)" 
+                        class="lg:hidden w-10 h-10 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] active:scale-95 border border-white/[0.08] flex items-center justify-center text-slate-300 hover:text-white transition shadow-sm" 
+                        aria-label="Open Admin Menu">
+                    <i class="fa-solid fa-bars-staggered text-sm"></i>
+                </button>
+
+                <a href="/admin" class="flex items-baseline select-none group">
+                    <span class="font-classic-seasons text-2xl font-normal text-white uppercase tracking-[0.06em]">
+                        Task<span class="font-light italic text-slate-400 lowercase text-xl ml-0.5">wallet</span>
+                    </span>
+                    <span class="ml-2 font-gotham text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md bg-blue-600/20 text-sky-400 border border-blue-500/30">
+                        ADMIN
+                    </span>
                 </a>
 
-                <!-- Realtime Engine Health Status Badge -->
-                <div class="hidden xl:flex items-center gap-2 bg-slate-900/80 border border-slate-800 px-3 py-1 rounded-full text-[10px] font-bold text-slate-300 ml-2 shadow-inner">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>System Live</span>
-                    <span class="text-slate-500">•</span>
-                    <span class="text-slate-400 font-mono">Vercel Edge</span>
+                <!-- System Operational Status Badge -->
+                <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.06] text-[10px] font-gotham font-semibold text-slate-300 ml-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>System Operational</span>
+                    <span class="text-slate-600">•</span>
+                    <span class="text-slate-400 font-mono">Edge Cluster</span>
                 </div>
             </div>
 
-            <!-- Header Quick Action Controls -->
-            <div class="flex items-center gap-2 sm:gap-3">
-                
-                <!-- Quick Live Site View -->
+            <!-- Right: Quick Navigation Actions -->
+            <div class="flex items-center gap-2.5">
+                <!-- User Dashboard Link -->
                 <a href="/app" target="_blank" 
-                   class="flex items-center gap-1.5 bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-2 rounded-xl border border-slate-700/80 transition shadow-sm active:scale-95"
-                   title="ইউজার ড্যাশবোর্ড দেখুন">
+                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] text-slate-300 hover:text-white text-xs font-gotham transition active:scale-95 shadow-sm">
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-sky-400"></i>
-                    <span class="hidden sm:inline-block">ইউজার সাইট</span>
+                    <span class="hidden sm:inline">ইউজার ড্যাশবোর্ড</span>
                 </a>
 
-                <!-- Secure Logout -->
+                <!-- Admin Logout -->
                 <a href="/logout" 
-                   class="bg-rose-500/10 hover:bg-[#E11D48] text-rose-400 hover:text-white border border-rose-500/30 text-xs font-bold px-3 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm active:scale-95"
-                   title="লগআউট করুন">
+                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 text-rose-400 text-xs font-gotham transition active:scale-95 shadow-sm">
                     <i class="fa-solid fa-power-off text-xs"></i>
-                    <span class="hidden sm:inline-block">লগআউট</span>
+                    <span class="hidden sm:inline">লগআউট</span>
                 </a>
-
-                <!-- Mobile Drawer Toggle Button -->
-                <button onclick="toggleAdminDrawer(true)" class="lg:hidden w-9 h-9 rounded-xl bg-slate-800 text-slate-200 border border-slate-700 flex items-center justify-center text-sm shadow-sm active:scale-95 transition" aria-label="Open Admin Menu">
-                    <i class="fa-solid fa-bars-staggered"></i>
-                </button>
             </div>
 
         </div>
 
-        <!-- ================= 2. DESKTOP ALL MODULES HORIZONTAL PILL DOCK ================= -->
-        <div class="hidden lg:block glass-nav-bar">
+        <!-- ================= 3. DESKTOP ALL-MODULES HORIZONTAL DOCK ================= -->
+        <div class="hidden lg:block admin-glass-dock">
             <div class="max-w-7xl mx-auto px-4 sm:px-6">
-                <nav class="flex items-center gap-1.5 py-2 overflow-x-auto admin-scroll-tabs text-xs font-extrabold" id="desktopAdminTabs">
+                <nav class="flex items-center gap-1.5 py-2 overflow-x-auto admin-scroll-tabs text-xs font-gotham font-semibold select-none" id="desktopAdminTabs">
                     
-                    <!-- 1. Dashboard -->
-                    <a href="/admin" data-admin-path="/admin" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-slate-800/60 transition whitespace-nowrap">
+                    <a href="/admin" data-admin-path="/admin" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04] transition whitespace-nowrap">
                         <i class="fa-solid fa-chart-pie text-xs"></i>
                         <span>ড্যাশবোর্ড</span>
                     </a>
 
-                    <!-- 2. Users -->
-                    <a href="/admin/users" data-admin-path="/admin/users" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-slate-800/60 transition whitespace-nowrap">
+                    <a href="/admin/users" data-admin-path="/admin/users" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04] transition whitespace-nowrap">
                         <i class="fa-solid fa-users text-xs"></i>
                         <span>ইউজার্স</span>
                     </a>
 
-                    <!-- 3. ID Check / Audit -->
-                    <a href="/admin/check" data-admin-path="/admin/check" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-slate-800/60 transition whitespace-nowrap">
-                        <i class="fa-solid fa-magnifying-glass-chart text-xs text-sky-400"></i>
-                        <span>আইডি চেক</span>
+                    <a href="/admin/check" data-admin-path="/admin/check" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04] transition whitespace-nowrap">
+                        <i class="fa-solid fa-magnifying-glass-chart text-xs"></i>
+                        <span>আইডি অডিট</span>
                     </a>
 
-                    <!-- 4. Password Reset -->
-                    <a href="/admin/pass" data-admin-path="/admin/pass" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-slate-800/60 transition whitespace-nowrap">
-                        <i class="fa-solid fa-key text-xs text-amber-400"></i>
-                        <span>পাসওয়ার্ড</span>
+                    <a href="/admin/pass" data-admin-path="/admin/pass" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04] transition whitespace-nowrap">
+                        <i class="fa-solid fa-key text-xs"></i>
+                        <span>পাসওয়ার্ড টুল</span>
                     </a>
 
-                    <!-- 5. Withdrawals -->
-                    <a href="/admin/withdraw" data-admin-path="/admin/withdraw" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-slate-800/60 transition whitespace-nowrap">
-                        <i class="fa-solid fa-money-bill-transfer text-xs text-emerald-400"></i>
+                    <a href="/admin/withdraw" data-admin-path="/admin/withdraw" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04] transition whitespace-nowrap">
+                        <i class="fa-solid fa-wallet text-xs"></i>
                         <span>উইথড্রয়াল</span>
                     </a>
 
-                    <!-- 6. Tasks Create -->
-                    <a href="/admin/task" data-admin-path="/admin/task" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-slate-800/60 transition whitespace-nowrap">
+                    <!-- 👉 Newly Added Upgrades Module 👈 -->
+                    <a href="/admin/upgrades" data-admin-path="/admin/upgrades" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04] transition whitespace-nowrap">
+                        <i class="fa-solid fa-crown text-xs text-amber-400"></i>
+                        <span>আপগ্রেডস</span>
+                    </a>
+
+                    <a href="/admin/task" data-admin-path="/admin/task" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04] transition whitespace-nowrap">
                         <i class="fa-solid fa-list-check text-xs"></i>
                         <span>টাস্ক তৈরি</span>
                     </a>
 
-                    <!-- 7. Bulk Submissions -->
-                    <a href="/admin/submit" data-admin-path="/admin/submit" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-slate-800/60 transition whitespace-nowrap">
-                        <i class="fa-solid fa-bolt text-xs text-yellow-400"></i>
+                    <a href="/admin/submit" data-admin-path="/admin/submit" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04] transition whitespace-nowrap">
+                        <i class="fa-solid fa-bolt text-xs"></i>
                         <span>বাল্ক রিভিউ</span>
                     </a>
 
-                    <!-- 8. Gmail Farm -->
-                    <a href="/admin/gmail" data-admin-path="/admin/gmail" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-slate-800/60 transition whitespace-nowrap">
-                        <i class="fa-solid fa-envelope text-xs text-rose-400"></i>
-                        <span>জিমেইল ফার্ম</span>
-                    </a>
-
-                    <!-- 9. Sponsorships -->
-                    <a href="/admin/sponsor" data-admin-path="/admin/sponsor" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-slate-800/60 transition whitespace-nowrap">
-                        <i class="fa-solid fa-handshake text-xs text-pink-400"></i>
+                    <a href="/admin/sponsor" data-admin-path="/admin/sponsor" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04] transition whitespace-nowrap">
+                        <i class="fa-solid fa-handshake text-xs"></i>
                         <span>স্পনসরশিপ</span>
                     </a>
 
-                    <!-- 10. Payment Banner -->
-                    <a href="/admin/pay" data-admin-path="/admin/pay" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-slate-800/60 transition whitespace-nowrap">
-                        <i class="fa-solid fa-wand-magic-sparkles text-xs text-amber-300"></i>
-                        <span>পেমেন্ট ব্যানার</span>
+                    <a href="/admin/promote" data-admin-path="/admin/promote" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04] transition whitespace-nowrap">
+                        <i class="fa-solid fa-chart-line text-xs"></i>
+                        <span>বিজ্ঞাপন লিডস</span>
                     </a>
 
-                    <!-- 11. YouTube Videos -->
-                    <a href="/admin/yt" data-admin-path="/admin/yt" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-slate-800/60 transition whitespace-nowrap">
-                        <i class="fa-brands fa-youtube text-xs text-red-500"></i>
+                    <a href="/admin/kyc" data-admin-path="/admin/kyc" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04] transition whitespace-nowrap">
+                        <i class="fa-solid fa-shield-halved text-xs"></i>
+                        <span>কেওয়াইসি</span>
+                    </a>
+
+                    <a href="/admin/yt" data-admin-path="/admin/yt" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04] transition whitespace-nowrap">
+                        <i class="fa-brands fa-youtube text-xs"></i>
                         <span>YouTube</span>
                     </a>
 
-                    <!-- 12. ImgBB Keys -->
-                    <a href="/admin/imgbb" data-admin-path="/admin/imgbb" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-slate-800/60 transition whitespace-nowrap">
-                        <i class="fa-solid fa-cloud-arrow-up text-xs text-purple-400"></i>
+                    <a href="/admin/pay" data-admin-path="/admin/pay" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04] transition whitespace-nowrap">
+                        <i class="fa-solid fa-file-invoice text-xs"></i>
+                        <span>পেমেন্ট ব্যানার</span>
+                    </a>
+
+                    <a href="/admin/imgbb" data-admin-path="/admin/imgbb" class="admin-tab-item flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04] transition whitespace-nowrap">
+                        <i class="fa-solid fa-cloud-arrow-up text-xs"></i>
                         <span>ImgBB</span>
                     </a>
 
@@ -254,84 +241,100 @@
         </div>
     </header>
 
-    <!-- ================= 3. MOBILE FULL-GLASS OFF-CANVAS DRAWER ================= -->
-    <div id="adminDrawerOverlay" onclick="toggleAdminDrawer(false)" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <!-- ================= 4. LEFT-OPENING MOBILE ADMIN DRAWER ================= -->
+    <div id="adminDrawerOverlay" onclick="toggleAdminDrawer(false)" 
+         class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
 
-    <aside id="adminDrawerPanel" class="fixed top-0 right-0 h-full w-72 sm:w-80 bg-slate-950/95 backdrop-blur-3xl text-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col p-6 border-l border-slate-800/80 overflow-y-auto">
+    <aside id="adminDrawerPanel" 
+           class="fixed top-0 left-0 h-full w-72 sm:w-80 bg-[#07090e] text-slate-200 shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-out flex flex-col p-5 border-r border-white/[0.08] rounded-r-3xl overflow-hidden">
         
         <!-- Drawer Header -->
-        <div class="flex items-center justify-between pb-4 border-b border-slate-800">
-            <div class="flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-[#E11D48] animate-ping"></span>
-                <span class="text-xs font-black uppercase tracking-wider text-white">অ্যাডমিন হাব মেনু</span>
+        <div class="flex items-center justify-between pb-3.5 border-b border-white/[0.06]">
+            <div class="flex items-baseline select-none">
+                <span class="font-classic-seasons text-lg text-white uppercase tracking-wider">
+                    Task<span class="font-light italic text-slate-400 lowercase text-base">wallet</span>
+                </span>
+                <span class="ml-2 font-gotham text-[8px] font-black uppercase tracking-widest px-1.5 py-0.2 rounded bg-blue-600/20 text-sky-400 border border-blue-500/30">
+                    ROOT
+                </span>
             </div>
-            <button onclick="toggleAdminDrawer(false)" class="w-8 h-8 rounded-full bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs transition border border-slate-800">
+            <button onclick="toggleAdminDrawer(false)" 
+                    class="w-8 h-8 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-slate-400 hover:text-white flex items-center justify-center text-xs transition border border-white/[0.05]">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
 
-        <!-- Mobile Navigation List (All 12 Modules) -->
-        <nav class="flex-1 py-4 space-y-1 text-xs font-bold">
-            <a href="/admin" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-900 transition">
-                <i class="fa-solid fa-chart-pie w-4 text-center text-rose-500"></i>
+        <!-- Mobile Navigation List (Monochromatic Clean Icons) -->
+        <nav class="flex-1 py-3 space-y-1 overflow-y-auto pr-1 text-xs font-gotham font-semibold">
+            
+            <a href="/admin" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-chart-pie w-4 text-center text-slate-400"></i>
                 <span>ড্যাশবোর্ড ও নোটিশ</span>
             </a>
-            <a href="/admin/users" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-900 transition">
-                <i class="fa-solid fa-users w-4 text-center text-indigo-400"></i>
+            <a href="/admin/users" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-users w-4 text-center text-slate-400"></i>
                 <span>ইউজার ম্যানেজমেন্ট</span>
             </a>
-            <a href="/admin/check" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-900 transition">
-                <i class="fa-solid fa-magnifying-glass-chart w-4 text-center text-sky-400"></i>
+            <a href="/admin/check" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-magnifying-glass-chart w-4 text-center text-slate-400"></i>
                 <span>ইউজার আইডি অডিট</span>
             </a>
-            <a href="/admin/pass" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-900 transition">
-                <i class="fa-solid fa-key w-4 text-center text-amber-400"></i>
+            <a href="/admin/pass" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-key w-4 text-center text-slate-400"></i>
                 <span>পাসওয়ার্ড রিসেট টুল</span>
             </a>
-            <a href="/admin/withdraw" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-900 transition">
-                <i class="fa-solid fa-money-bill-transfer w-4 text-center text-emerald-400"></i>
+            <a href="/admin/withdraw" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-wallet w-4 text-center text-slate-400"></i>
                 <span>উইথড্রয়াল রিকোয়েস্ট</span>
             </a>
-            <a href="/admin/task" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-900 transition">
-                <i class="fa-solid fa-list-check w-4 text-center text-amber-400"></i>
+            <a href="/admin/upgrades" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-crown w-4 text-center text-amber-400"></i>
+                <span>ভিআইপি আপগ্রেডস</span>
+            </a>
+            <a href="/admin/task" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-list-check w-4 text-center text-slate-400"></i>
                 <span>টাস্ক তৈরি ও এডিট</span>
             </a>
-            <a href="/admin/submit" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-900 transition">
-                <i class="fa-solid fa-bolt w-4 text-center text-yellow-400"></i>
+            <a href="/admin/submit" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-bolt w-4 text-center text-slate-400"></i>
                 <span>বাল্ক রিভিউ (Max 30)</span>
             </a>
-            <a href="/admin/gmail" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-900 transition">
-                <i class="fa-solid fa-envelope w-4 text-center text-rose-400"></i>
-                <span>জিমেইল ফার্মিং জবস</span>
-            </a>
-            <a href="/admin/sponsor" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-900 transition">
-                <i class="fa-solid fa-handshake w-4 text-center text-pink-400"></i>
+            <a href="/admin/sponsor" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-handshake w-4 text-center text-slate-400"></i>
                 <span>স্পনসরশিপ আবেদন</span>
             </a>
-            <a href="/admin/pay" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-900 transition">
-                <i class="fa-solid fa-wand-magic-sparkles w-4 text-center text-amber-300"></i>
+            <a href="/admin/promote" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-chart-line w-4 text-center text-slate-400"></i>
+                <span>বিজ্ঞাপন লিড ম্যানেজমেন্ট</span>
+            </a>
+            <a href="/admin/kyc" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-shield-halved w-4 text-center text-slate-400"></i>
+                <span>কেওয়াইসি রিকোয়েস্ট</span>
+            </a>
+            <a href="/admin/yt" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-brands fa-youtube w-4 text-center text-slate-400"></i>
+                <span>YouTube ভিডিও লিংক</span>
+            </a>
+            <a href="/admin/pay" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-file-invoice w-4 text-center text-slate-400"></i>
                 <span>পেমেন্ট প্রুফ ব্যানার</span>
             </a>
-            <a href="/admin/yt" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-900 transition">
-                <i class="fa-brands fa-youtube w-4 text-center text-red-500"></i>
-                <span>YouTube ভিডিও লিঙ্ক</span>
-            </a>
-            <a href="/admin/imgbb" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-900 transition">
-                <i class="fa-solid fa-cloud-arrow-up w-4 text-center text-purple-400"></i>
+            <a href="/admin/imgbb" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-cloud-arrow-up w-4 text-center text-slate-400"></i>
                 <span>ImgBB API Failover</span>
             </a>
 
-            <div class="pt-3 my-2 border-t border-slate-800"></div>
+            <div class="pt-2 my-2 border-t border-white/[0.06]"></div>
 
-            <a href="/app" target="_blank" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sky-400 hover:bg-slate-900 transition">
+            <a href="/app" target="_blank" class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-sky-400 hover:bg-white/[0.04] transition">
                 <i class="fa-solid fa-arrow-up-right-from-square w-4 text-center"></i>
                 <span>ইউজার সাইট ভিজিট</span>
             </a>
         </nav>
 
         <!-- Logout in Drawer -->
-        <div class="pt-3 border-t border-slate-800">
-            <a href="/logout" class="w-full bg-[#E11D48]/15 hover:bg-[#E11D48] text-[#E11D48] hover:text-white border border-[#E11D48]/30 text-xs font-black py-3 rounded-2xl flex items-center justify-center gap-2 transition active:scale-95 shadow">
+        <div class="pt-3 border-t border-white/[0.06]">
+            <a href="/logout" class="w-full flex items-center justify-center gap-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 text-xs font-gotham font-semibold py-2.5 rounded-xl transition">
                 <i class="fa-solid fa-power-off"></i>
                 <span>অ্যাডমিন লগআউট</span>
             </a>
@@ -339,31 +342,17 @@
 
     </aside>
 
-    <!-- ================= 4. MAIN ADMIN WORKSPACE (HIGH-CONTRAST DUAL-TONE) ================= -->
+    <!-- ================= 5. MAIN ADMIN WORKSPACE ================= -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 relative z-10">
-        
-        <!-- Global Flash Notifications -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="mb-5 p-4 rounded-2xl text-xs font-black flex items-center gap-3 border shadow-xl backdrop-blur-md {% if category == 'success' %}bg-emerald-500/10 text-emerald-400 border-emerald-500/30{% else %}bg-rose-500/10 text-rose-400 border-rose-500/30{% endif %}">
-                        <i class="fa-solid {% if category == 'success' %}fa-circle-check text-emerald-400{% else %}fa-circle-exclamation text-rose-400{% endif %} text-sm"></i>
-                        <span>{{ message }}</span>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-
-        <!-- Content Area -->
         {% block admin_content %}{% endblock %}
     </main>
 
-    <!-- ================= 5. FOOTER ================= -->
-    <footer class="border-t border-slate-800/80 bg-slate-950/60 backdrop-blur-lg py-4 text-center text-xs text-slate-500 font-medium relative z-10">
-        MicroEarnX Enterprise &copy; 2026 • Serverless Cloud Architecture
+    <!-- ================= 6. FOOTER ================= -->
+    <footer class="border-t border-white/[0.06] bg-[#04060b]/80 backdrop-blur-md py-4 text-center text-xs font-gotham text-slate-500 relative z-10">
+        TaskWallet Enterprise &copy; 2026 • Serverless Cloud Infrastructure
     </footer>
 
-    <!-- Script: Intelligent Active Tab Highlighting & Drawer Controller -->
+    <!-- SCRIPT: LEFT DRAWER CONTROLLER, ACTIVE TAB HIGHLIGHTER & TOAST DISMISS -->
     <script>
         function toggleAdminDrawer(open) {
             const overlay = document.getElementById('adminDrawerOverlay');
@@ -371,26 +360,42 @@
             if (open) {
                 overlay.classList.remove('opacity-0', 'pointer-events-none');
                 overlay.classList.add('opacity-100');
-                panel.classList.remove('translate-x-full');
+                panel.classList.remove('-translate-x-full');
+                panel.classList.add('translate-x-0');
             } else {
                 overlay.classList.remove('opacity-100');
                 overlay.classList.add('opacity-0', 'pointer-events-none');
-                panel.classList.add('translate-x-full');
+                panel.classList.remove('translate-x-0');
+                panel.classList.add('-translate-x-full');
             }
         }
 
-        // Automatic Active State Detection across all Admin modules
+        // Automatic Active Nav Tab Detection
         document.addEventListener("DOMContentLoaded", function () {
             const currentPath = window.location.pathname;
             document.querySelectorAll('.admin-tab-item').forEach(link => {
                 const target = link.getAttribute('data-admin-path');
                 if (target && currentPath === target) {
-                    link.classList.add('admin-nav-active');
+                    link.classList.add('admin-tab-active');
                     link.classList.remove('text-slate-400', 'border-transparent');
                 }
             });
-        });
-    </script>
 
+            // Auto-Dismiss Flash Messages
+            setTimeout(() => {
+                document.querySelectorAll('.admin-toast').forEach(toast => {
+                    dismissAdminToast(toast);
+                });
+            }, 4500);
+        });
+
+        function dismissAdminToast(element) {
+            if (!element) return;
+            element.style.transition = "all 0.35s ease";
+            element.style.opacity = "0";
+            element.style.transform = "translateY(-15px) scale(0.95)";
+            setTimeout(() => element.remove(), 350);
+        }
+    </script>
 </body>
 </html>
