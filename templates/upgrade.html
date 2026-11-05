@@ -1,48 +1,86 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
-    /* ================= INDIVIDUAL TIER METALLIC THEMES ================= */
-    /* 1. Wood Theme (Earthy Bronze/Bark) */
-    .tier-wood {
-        background: linear-gradient(180deg, rgba(120, 53, 15, 0.15) 0%, rgba(10, 14, 23, 0.9) 100%);
-        border: 1px solid rgba(180, 83, 9, 0.3);
+    /* ================= 🌟 ULTRA-GLOWING METALLIC TIER SUITES 🌟 ================= */
+    .glowing-tier-card {
+        border-radius: 28px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        backdrop-filter: blur(28px);
     }
-    .tier-wood:hover { border-color: rgba(217, 119, 6, 0.6); }
+    .glowing-tier-card:hover {
+        transform: translateY(-4px) scale(1.01);
+    }
 
-    /* 2. Bronze Theme (Copper Sheen) */
-    .tier-bronze {
-        background: linear-gradient(180deg, rgba(194, 65, 12, 0.18) 0%, rgba(10, 14, 23, 0.95) 100%);
-        border: 1px solid rgba(234, 88, 12, 0.35);
-        box-shadow: 0 10px 30px -10px rgba(234, 88, 12, 0.2);
+    /* 1. Wood Tier Glowing Theme */
+    .glow-wood {
+        background: linear-gradient(180deg, rgba(146, 64, 14, 0.22) 0%, rgba(15, 23, 42, 0.95) 60%, #04060b 100%);
+        border: 1.5px solid rgba(217, 119, 6, 0.45);
+        box-shadow: 0 15px 35px -10px rgba(180, 83, 9, 0.35), inset 0 1px 2px rgba(251, 191, 36, 0.2);
     }
-    .tier-bronze:hover { border-color: rgba(251, 146, 60, 0.65); }
+    .glow-wood:hover {
+        border-color: rgba(245, 158, 11, 0.8);
+        box-shadow: 0 20px 45px -5px rgba(217, 119, 6, 0.55), inset 0 1px 4px rgba(251, 191, 36, 0.4);
+    }
 
-    /* 3. Silver Theme (Liquid Chrome & Platinum) */
-    .tier-silver {
-        background: linear-gradient(180deg, rgba(148, 163, 184, 0.15) 0%, rgba(10, 14, 23, 0.95) 100%);
-        border: 1px solid rgba(226, 232, 240, 0.3);
-        box-shadow: 0 10px 30px -10px rgba(148, 163, 184, 0.2);
+    /* 2. Bronze Tier Glowing Theme (Copper Neon) */
+    .glow-bronze {
+        background: linear-gradient(180deg, rgba(234, 88, 12, 0.25) 0%, rgba(20, 15, 30, 0.95) 60%, #04060b 100%);
+        border: 1.5px solid rgba(249, 115, 22, 0.55);
+        box-shadow: 0 15px 40px -10px rgba(234, 88, 12, 0.4), inset 0 1px 2px rgba(253, 186, 116, 0.3);
     }
-    .tier-silver:hover { border-color: rgba(255, 255, 255, 0.6); }
+    .glow-bronze:hover {
+        border-color: rgba(251, 146, 60, 0.9);
+        box-shadow: 0 20px 50px -5px rgba(234, 88, 12, 0.65), inset 0 1px 4px rgba(253, 186, 116, 0.5);
+    }
 
-    /* 4. Gold Theme (24K Champagne Gold Radiance) */
-    .tier-gold {
-        background: linear-gradient(180deg, rgba(245, 158, 11, 0.22) 0%, rgba(10, 14, 23, 0.95) 100%);
-        border: 1px solid rgba(245, 158, 11, 0.45);
-        box-shadow: 0 15px 35px -10px rgba(245, 158, 11, 0.25);
+    /* 3. Silver Tier Glowing Theme (Liquid Chrome & Platinum) */
+    .glow-silver {
+        background: linear-gradient(180deg, rgba(203, 213, 225, 0.22) 0%, rgba(15, 23, 42, 0.95) 60%, #04060b 100%);
+        border: 1.5px solid rgba(226, 232, 240, 0.5);
+        box-shadow: 0 15px 40px -10px rgba(226, 232, 240, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.4);
     }
-    .tier-gold:hover { border-color: rgba(253, 224, 71, 0.75); }
+    .glow-silver:hover {
+        border-color: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 20px 50px -5px rgba(241, 245, 249, 0.55), inset 0 1px 4px rgba(255, 255, 255, 0.6);
+    }
 
-    /* 5. Diamond Theme (Electric Cyan Ice Prism) */
-    .tier-diamond {
-        background: linear-gradient(180deg, rgba(6, 182, 212, 0.25) 0%, rgba(10, 14, 23, 0.95) 100%);
-        border: 1px solid rgba(56, 189, 248, 0.5);
-        box-shadow: 0 15px 40px -10px rgba(56, 189, 248, 0.3);
+    /* 4. Gold Tier Glowing Theme (24K Champagne Gold Halo) */
+    .glow-gold {
+        background: linear-gradient(180deg, rgba(245, 158, 11, 0.3) 0%, rgba(30, 20, 10, 0.95) 60%, #04060b 100%);
+        border: 1.5px solid rgba(245, 158, 11, 0.65);
+        box-shadow: 0 20px 50px -10px rgba(245, 158, 11, 0.45), inset 0 1px 3px rgba(253, 224, 71, 0.45);
     }
-    .tier-diamond:hover { border-color: rgba(125, 211, 252, 0.85); }
+    .glow-gold:hover {
+        border-color: rgba(253, 224, 71, 1);
+        box-shadow: 0 25px 60px -5px rgba(245, 158, 11, 0.75), inset 0 1px 6px rgba(253, 224, 71, 0.7);
+    }
+
+    /* 5. Diamond Tier Glowing Theme (Electric Cyan Ice Prism Halo) */
+    .glow-diamond {
+        background: linear-gradient(180deg, rgba(6, 182, 212, 0.35) 0%, rgba(10, 22, 45, 0.95) 60%, #04060b 100%);
+        border: 1.5px solid rgba(56, 189, 248, 0.7);
+        box-shadow: 0 25px 60px -10px rgba(56, 189, 248, 0.5), inset 0 1px 3px rgba(125, 211, 252, 0.55);
+    }
+    .glow-diamond:hover {
+        border-color: rgba(125, 211, 252, 1);
+        box-shadow: 0 30px 70px -5px rgba(56, 189, 248, 0.85), inset 0 1px 8px rgba(125, 211, 252, 0.8);
+    }
+
+    /* Facility Glowing Feature Tag */
+    .perk-highlight-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 10px;
+        font-size: 11px;
+        font-weight: 600;
+    }
 </style>
 
-<div class="max-w-xl mx-auto space-y-6 pb-20">
+<div class="max-w-xl mx-auto space-y-5 pb-24 px-1 sm:px-0">
 
     <!-- Top Navigation Row -->
     <div class="flex items-center justify-between px-1">
@@ -53,33 +91,35 @@
 
         <!-- Current Active Tier Badge -->
         <div class="flex items-center gap-1.5 bg-white/[0.04] border border-white/10 px-3 py-1 rounded-full text-xs font-gotham">
-            <span class="text-slate-400 text-[10px] uppercase">Active:</span>
-            <span class="font-bold text-white uppercase">{{ tier_config[current_tier].name }}</span>
+            <span class="text-slate-400 text-[9px] uppercase tracking-wider">Active Plan:</span>
+            <span class="font-bold text-sky-400 uppercase">{{ tier_config[current_tier].name }}</span>
         </div>
     </div>
 
-    <!-- Title Section -->
+    <!-- Title Section (The Seasons Classic Typography) -->
     <div class="text-center py-1 select-none space-y-1">
-        <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
-            Membership <span class="text-slate-400 font-light italic lowercase text-xl">upgrade</span>
+        <h1 class="font-classic-seasons text-2xl sm:text-4xl font-normal text-white uppercase tracking-wider leading-tight">
+            VIP <span class="text-slate-400 font-light italic lowercase text-2xl sm:text-3xl">privilege vault</span>
         </h1>
-        <p class="text-xs text-slate-400 font-gotham font-light">আপনার পছন্দের মেম্বারশিপ নির্বাচন করে বাড়তি সুবিধা উপভোগ করুন</p>
+        <p class="text-xs text-slate-300 font-gotham font-light max-w-sm mx-auto">
+            কোনো রেফার ছাড়া উইথড্র ও প্রতিদিনের নিশ্চিত ফ্রি ইনকাম উপভোগ করুন
+        </p>
     </div>
 
     <!-- ================= ALERT 1: READY TO CLAIM (APPROVED BY ADMIN) ================= -->
     {% if ready_to_claim %}
-    <div class="p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-200 flex items-center justify-between gap-3 shadow-lg">
+    <div class="p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-200 flex items-center justify-between gap-3 shadow-[0_0_25px_rgba(16,185,129,0.3)] select-none">
         <div class="leading-tight">
             <div class="flex items-center gap-1.5 mb-0.5">
                 <i class="fa-solid fa-circle-check text-emerald-400"></i>
-                <span class="text-xs font-bold text-white">পেমেন্ট অনুমোদিত হয়েছে!</span>
+                <span class="text-xs font-bold text-white">পেমেন্ট সফলভাবে অনুমোদিত!</span>
             </div>
             <p class="text-[11px] text-emerald-300">
                 আপনার <strong>{{ tier_config[ready_to_claim.tier].name }}</strong> সক্রিয় করতে এখনই ক্লেইম করুন।
             </p>
         </div>
         <form action="/upgrade/claim-tier/{{ ready_to_claim.id }}" method="POST">
-            <button type="submit" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-gotham font-black text-xs px-4 py-2.5 rounded-xl transition shadow-md active:scale-95 shrink-0">
+            <button type="submit" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-gotham font-black text-xs px-4 py-2.5 rounded-xl transition shadow-lg active:scale-95 shrink-0">
                 Claim Now
             </button>
         </form>
@@ -91,8 +131,8 @@
     <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 flex items-center gap-3">
         <i class="fa-solid fa-clock-rotate-left text-amber-400 text-lg"></i>
         <div class="text-xs">
-            <span class="font-bold block text-white">{{ tier_config[pending_req.tier].name }} রিকোয়েস্ট পেন্ডিং</span>
-            <span class="text-[10px] text-slate-400">অ্যাডমিন চেক করে অনুমোদন দিলে এখানে ক্লেইম বাটন পাবেন।</span>
+            <span class="font-bold block text-white">{{ tier_config[pending_req.tier].name }} পেমেন্ট রিভিউ চলছে</span>
+            <span class="text-[10px] text-slate-400">অ্যাডমিন চেক করে অনুমোদন দিলে এখানে সাথে সাথে ক্লেইম বাটন পেয়ে যাবেন।</span>
         </div>
     </div>
     {% endif %}
@@ -101,191 +141,304 @@
     {% if daily_reward_amount > 0 %}
     <div class="fintech-card rounded-2xl p-4 border border-white/10 flex items-center justify-between gap-3">
         <div class="leading-tight">
-            <span class="text-[10px] font-gotham uppercase tracking-wider text-slate-400 block mb-0.5">VIP Daily Perk</span>
-            <h4 class="text-xs font-bold text-white">প্রতিদিনের ফ্রি ইনকাম: <span class="text-sky-400 font-gotham">৳{{ "%.2f"|format(daily_reward_amount) }}</span></h4>
+            <span class="text-[9px] font-gotham uppercase tracking-wider text-slate-400 block mb-0.5">VIP Daily Perk</span>
+            <h4 class="text-xs font-bold text-white">দৈনিক ফ্রি ইনকাম: <span class="text-sky-400 font-gotham font-black">৳{{ "%.2f"|format(daily_reward_amount) }}</span></h4>
         </div>
         <button onclick="claimDailyReward()" id="btnDailyClaim" 
             {% if not can_claim_daily %}disabled{% endif %}
-            class="{% if can_claim_daily %}bg-blue-600 hover:bg-blue-500 text-white cursor-pointer active:scale-95{% else %}bg-white/5 text-slate-500 cursor-not-allowed border border-white/5{% endif %} font-gotham font-bold text-xs px-4 py-2 rounded-xl transition">
+            class="{% if can_claim_daily %}bg-blue-600 hover:bg-blue-500 text-white cursor-pointer active:scale-95 shadow-md shadow-blue-600/30{% else %}bg-white/5 text-slate-500 cursor-not-allowed border border-white/5{% endif %} font-gotham font-bold text-xs px-4 py-2 rounded-xl transition">
             {% if can_claim_daily %}Claim ৳{{ daily_reward_amount }}{% else %}Claimed Today{% endif %}
         </button>
     </div>
     {% endif %}
 
-    <!-- ================= 5 DISTINCT THEMED PACKAGE CARDS ================= -->
+    <!-- ================= 5 STUNNING GLOWING TIER CARDS ================= -->
     <div class="space-y-4">
 
         <!-- 1. WOOD TIER (FREE - 0৳) -->
-        <div class="tier-wood rounded-[28px] p-5 sm:p-6 space-y-4 transition">
+        <div class="glowing-tier-card glow-wood p-5 sm:p-6 space-y-4 select-none">
             <div class="flex items-start justify-between border-b border-white/[0.08] pb-3">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-amber-950/40 border border-amber-800/40 text-amber-600 flex items-center justify-center text-lg">
+                    <div class="w-11 h-11 rounded-2xl bg-amber-950/60 border border-amber-800/50 text-amber-500 flex items-center justify-center text-xl shadow-inner">
                         <i class="fa-solid fa-tree"></i>
                     </div>
                     <div>
-                        <h3 class="font-classic-seasons text-lg text-white font-bold uppercase tracking-wide">Wood</h3>
-                        <span class="text-[10px] font-gotham text-amber-400">ফ্রি লেভেল • লাইফটাইম</span>
+                        <h3 class="font-classic-seasons text-xl text-white font-bold uppercase tracking-wide">Wood Plan</h3>
+                        <span class="text-[10px] font-gotham text-amber-400/90 font-medium">ফ্রি মেম্বারশিপ • লাইফটাইম</span>
                     </div>
                 </div>
                 <div class="text-right">
                     <span class="font-gotham text-2xl font-black text-white">৳ 0</span>
-                    <span class="text-[10px] text-slate-400 block">Lifetime</span>
+                    <span class="text-[10px] text-slate-400 block font-gotham">Lifetime</span>
                 </div>
             </div>
 
-            <ul class="text-xs space-y-2 text-slate-300">
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-500 text-[10px]"></i> No Ads</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-500 text-[10px]"></i> Support via Telegram</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-500 text-[10px]"></i> সর্বনিম্ন উইথড্র ৳৫০০</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-500 text-[10px]"></i> উইথড্র প্রসেসিং টাইম: ৬ ঘণ্টা</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-500 text-[10px]"></i> উইথড্র করতে রেফারেল প্রয়োজন: ৫টি</li>
-            </ul>
+            <!-- Facilities Checklist -->
+            <div class="space-y-2 text-xs">
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-users text-amber-500"></i> রেফারেল রিকোয়ারমেন্ট:</span>
+                    <span class="perk-highlight-pill bg-amber-500/15 text-amber-300 border border-amber-500/30">৫টি রেফার বাধ্যতামূলক</span>
+                </div>
+
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-wallet text-amber-500"></i> সর্বনিম্ন উইথড্রয়াল:</span>
+                    <span class="font-gotham font-black text-white text-xs">৳ ৫০০.০০</span>
+                </div>
+
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-clock text-amber-500"></i> উইথড্র প্রসেসিং টাইম:</span>
+                    <span class="font-gotham text-slate-300">৬ ঘণ্টা</span>
+                </div>
+
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-shield-halved text-amber-500"></i> বিজ্ঞাপন ও সাপোর্ট:</span>
+                    <span class="text-slate-400">No Ads • Telegram Support</span>
+                </div>
+            </div>
 
             <div class="pt-1">
-                <button disabled class="w-full bg-white/[0.05] border border-white/10 text-slate-400 font-gotham font-semibold text-xs py-3 rounded-xl cursor-default">
-                    {% if current_tier == 'wood' %}Active (Current Plan){% else %}Free Plan{% endif %}
+                <button disabled class="w-full bg-white/[0.04] border border-white/10 text-slate-400 font-gotham font-bold text-xs py-3.5 rounded-xl cursor-default">
+                    {% if current_tier == 'wood' %}Active (Current Plan){% else %}Default Free Plan{% endif %}
                 </button>
             </div>
         </div>
 
-        <!-- 2. BRONZE TIER (110৳) -->
-        <div class="tier-bronze rounded-[28px] p-5 sm:p-6 space-y-4 transition">
+        <!-- 2. BRONZE TIER (110৳ - মাত্র ১টি রেফার!) -->
+        <div class="glowing-tier-card glow-bronze p-5 sm:p-6 space-y-4 select-none">
             <div class="flex items-start justify-between border-b border-white/[0.08] pb-3">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-orange-950/40 border border-orange-800/40 text-orange-400 flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-shield"></i>
+                    <div class="w-11 h-11 rounded-2xl bg-orange-950/60 border border-orange-600/50 text-orange-400 flex items-center justify-center text-xl shadow-inner">
+                        <i class="fa-solid fa-medal"></i>
                     </div>
                     <div>
-                        <h3 class="font-classic-seasons text-lg text-white font-bold uppercase tracking-wide">Bronze</h3>
-                        <span class="text-[10px] font-gotham text-orange-400">মেয়াদ ১৫ দিন</span>
+                        <h3 class="font-classic-seasons text-xl text-white font-bold uppercase tracking-wide">Bronze Plan</h3>
+                        <span class="text-[10px] font-gotham text-orange-400 font-medium">১৫ দিনের মেয়াদ</span>
                     </div>
                 </div>
                 <div class="text-right">
-                    <span class="font-gotham text-2xl font-black text-orange-400">৳ 110</span>
-                    <span class="text-[10px] text-slate-400 block">15 Days</span>
+                    <span class="font-gotham text-3xl font-black text-orange-400">৳ 110</span>
+                    <span class="text-[10px] text-slate-400 block font-gotham">15 Days</span>
                 </div>
             </div>
 
-            <ul class="text-xs space-y-2 text-slate-200">
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-orange-400 text-[10px]"></i> No Ads & Priority Support</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-orange-400 text-[10px]"></i> Live Support</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-orange-400 text-[10px]"></i> সর্বনিম্ন উইথড্র ৳৩০০ (রেফার মাত্র ৩টি)</li>
-                <li class="flex items-center gap-2 font-bold text-orange-300"><i class="fa-solid fa-gift text-orange-400 text-[10px]"></i> প্রতিদিন ফ্রি ইনকাম ৳১০</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-orange-400 text-[10px]"></i> উইথড্র প্রসেসিং টাইম: ৩ ঘণ্টা</li>
-            </ul>
+            <!-- Facilities Checklist (Highlighted) -->
+            <div class="space-y-2 text-xs">
+                <!-- Highlight 1: Only 1 Refer -->
+                <div class="flex items-center justify-between p-2 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                    <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-bolt text-orange-400"></i> রেফারেল রিকোয়ারমেন্ট:</span>
+                    <span class="perk-highlight-pill bg-orange-500/25 text-orange-200 border border-orange-400/40">মাত্র ১টি রেফার! 🚀</span>
+                </div>
+
+                <!-- Highlight 2: Low 200 Tk Withdraw -->
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <span class="text-slate-200 flex items-center gap-2"><i class="fa-solid fa-wallet text-orange-400"></i> সর্বনিম্ন উইথড্রয়াল:</span>
+                    <span class="font-gotham font-black text-orange-400 text-sm">৳ ২০০.০০</span>
+                </div>
+
+                <!-- Highlight 3: Free Daily 10 Tk -->
+                <div class="flex items-center justify-between p-2 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                    <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-gift text-orange-400"></i> প্রতিদিন ফ্রি ক্যাশ:</span>
+                    <span class="perk-highlight-pill bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">৳ ১০.০০ (মোট ১৫০৳)</span>
+                </div>
+
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-clock text-orange-400"></i> উইথড্র প্রসেসিং:</span>
+                    <span class="font-gotham text-slate-200">মাত্র ৩ ঘণ্টা</span>
+                </div>
+
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-headset text-orange-400"></i> লাইভ সাপোর্ট:</span>
+                    <span class="text-slate-200 font-medium">Priority Live Support</span>
+                </div>
+            </div>
 
             <div class="pt-1">
                 {% if current_tier == 'bronze' %}
-                    <button disabled class="w-full bg-orange-500/20 text-orange-300 border border-orange-500/30 font-gotham font-semibold text-xs py-3 rounded-xl cursor-default">Active Plan</button>
+                    <button disabled class="w-full bg-orange-500/20 text-orange-300 border border-orange-500/40 font-gotham font-bold text-xs py-3.5 rounded-xl cursor-default">Active Plan</button>
                 {% else %}
-                    <a href="/upgrade/checkout/bronze" class="block w-full text-center bg-orange-600 hover:bg-orange-500 text-white font-gotham font-semibold text-xs py-3.5 rounded-xl transition shadow-lg active:scale-95">Upgrade to Bronze</a>
+                    <a href="/upgrade/checkout/bronze" class="block w-full text-center bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-gotham font-bold text-xs py-3.5 rounded-xl transition shadow-lg active:scale-95">Upgrade to Bronze &raquo;</a>
                 {% endif %}
             </div>
         </div>
 
-        <!-- 3. SILVER TIER (250৳) -->
-        <div class="tier-silver rounded-[28px] p-5 sm:p-6 space-y-4 transition">
+        <!-- 3. SILVER TIER (250৳ - ০ রেফারেল & ১০০৳ উইথড্র) -->
+        <div class="glowing-tier-card glow-silver p-5 sm:p-6 space-y-4 select-none">
             <div class="flex items-start justify-between border-b border-white/[0.08] pb-3">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-slate-800/60 border border-slate-600/50 text-slate-200 flex items-center justify-center text-lg">
+                    <div class="w-11 h-11 rounded-2xl bg-slate-800 border border-slate-600/60 text-slate-200 flex items-center justify-center text-xl shadow-inner">
                         <i class="fa-solid fa-award"></i>
                     </div>
                     <div>
-                        <h3 class="font-classic-seasons text-lg text-white font-bold uppercase tracking-wide">Silver</h3>
-                        <span class="text-[10px] font-gotham text-slate-300">মেয়াদ ১৫ দিন</span>
+                        <h3 class="font-classic-seasons text-xl text-white font-bold uppercase tracking-wide">Silver Plan</h3>
+                        <span class="text-[10px] font-gotham text-slate-300 font-medium">১৫ দিনের মেয়াদ</span>
                     </div>
                 </div>
                 <div class="text-right">
-                    <span class="font-gotham text-2xl font-black text-slate-200">৳ 250</span>
-                    <span class="text-[10px] text-slate-400 block">15 Days</span>
+                    <span class="font-gotham text-3xl font-black text-slate-100">৳ 250</span>
+                    <span class="text-[10px] text-slate-400 block font-gotham">15 Days</span>
                 </div>
             </div>
 
-            <ul class="text-xs space-y-2 text-slate-200">
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-slate-300 text-[10px]"></i> No Ads & Live Support by Agent</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-slate-300 text-[10px]"></i> সর্বনিম্ন উইথড্র ৳১৫০ (রেফার মাত্র ১টি)</li>
-                <li class="flex items-center gap-2 font-bold text-slate-200"><i class="fa-solid fa-gift text-slate-300 text-[10px]"></i> প্রতিদিন ফ্রি ইনকাম ৳২৩</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-slate-300 text-[10px]"></i> Exclusive High-Paying Tasks Unlock</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-slate-300 text-[10px]"></i> উইথড্র প্রসেসিং টাইম: ১ ঘণ্টা</li>
-            </ul>
+            <!-- Facilities Checklist -->
+            <div class="space-y-2 text-xs">
+                <!-- Highlight 1: 0 Refer -->
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.05] border border-white/20">
+                    <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-bolt text-sky-400"></i> রেফারেল রিকোয়ারমেন্ট:</span>
+                    <span class="perk-highlight-pill bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">০ টি (কোনো রেফার ছাড়াই উইথড্র!) ⚡</span>
+                </div>
+
+                <!-- Highlight 2: 100 Tk Withdraw -->
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <span class="text-slate-200 flex items-center gap-2"><i class="fa-solid fa-wallet text-slate-300"></i> সর্বনিম্ন উইথড্রয়াল:</span>
+                    <span class="font-gotham font-black text-white text-sm">৳ ১০০.০০</span>
+                </div>
+
+                <!-- Highlight 3: Free Daily 23 Tk -->
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.05] border border-white/20">
+                    <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-gift text-sky-400"></i> প্রতিদিন ফ্রি ক্যাশ:</span>
+                    <span class="perk-highlight-pill bg-sky-500/20 text-sky-300 border border-sky-400/30">৳ ২৩.০০ (মোট ৩৪৫৳)</span>
+                </div>
+
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-clock text-slate-300"></i> উইথড্র প্রসেসিং:</span>
+                    <span class="font-gotham text-white font-bold">মাত্র ১ ঘণ্টা!</span>
+                </div>
+
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-lock-open text-slate-300"></i> এক্সক্লুসিভ টাস্ক:</span>
+                    <span class="text-emerald-400 font-semibold">High-Paying Tasks Unlock</span>
+                </div>
+            </div>
 
             <div class="pt-1">
                 {% if current_tier == 'silver' %}
-                    <button disabled class="w-full bg-white/20 text-white border border-white/30 font-gotham font-semibold text-xs py-3 rounded-xl cursor-default">Active Plan</button>
+                    <button disabled class="w-full bg-white/20 text-white border border-white/30 font-gotham font-bold text-xs py-3.5 rounded-xl cursor-default">Active Plan</button>
                 {% else %}
-                    <a href="/upgrade/checkout/silver" class="block w-full text-center bg-slate-200 hover:bg-white text-slate-950 font-gotham font-bold text-xs py-3.5 rounded-xl transition shadow-lg active:scale-95">Upgrade to Silver</a>
+                    <a href="/upgrade/checkout/silver" class="block w-full text-center bg-slate-100 hover:bg-white text-slate-950 font-gotham font-black text-xs py-3.5 rounded-xl transition shadow-lg active:scale-95">Upgrade to Silver &raquo;</a>
                 {% endif %}
             </div>
         </div>
 
-        <!-- 4. GOLD TIER (400৳) -->
-        <div class="tier-gold rounded-[28px] p-5 sm:p-6 space-y-4 transition">
+        <!-- 4. GOLD TIER (400৳ - ০ রেফারেল, ৫০৳ উইথড্র & ১.৫ গুণ আয়!) -->
+        <div class="glowing-tier-card glow-gold p-5 sm:p-6 space-y-4 select-none">
             <div class="flex items-start justify-between border-b border-white/[0.08] pb-3">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-amber-950/50 border border-amber-500/50 text-amber-400 flex items-center justify-center text-lg">
+                    <div class="w-11 h-11 rounded-2xl bg-amber-950/70 border border-amber-500/60 text-amber-400 flex items-center justify-center text-xl shadow-inner">
                         <i class="fa-solid fa-crown"></i>
                     </div>
                     <div>
-                        <h3 class="font-classic-seasons text-lg text-white font-bold uppercase tracking-wide">Gold</h3>
-                        <span class="text-[10px] font-gotham text-amber-400">মেয়াদ ১৫ দিন</span>
+                        <h3 class="font-classic-seasons text-xl text-white font-bold uppercase tracking-wide">Gold Premier</h3>
+                        <span class="text-[10px] font-gotham text-amber-300 font-medium">১৫ দিনের মেয়াদ • আল্ট্রা ভ্যালু</span>
                     </div>
                 </div>
                 <div class="text-right">
-                    <span class="font-gotham text-2xl font-black text-amber-400">৳ 400</span>
-                    <span class="text-[10px] text-slate-400 block">15 Days</span>
+                    <span class="font-gotham text-3xl font-black text-amber-400">৳ 400</span>
+                    <span class="text-[10px] text-slate-400 block font-gotham">15 Days</span>
                 </div>
             </div>
 
-            <ul class="text-xs space-y-2 text-slate-200">
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400 text-[10px]"></i> No Ads & Live Support by Agent</li>
-                <li class="flex items-center gap-2 font-bold text-amber-300"><i class="fa-solid fa-bolt text-amber-400 text-[10px]"></i> কোনো রেফার ছাড়াই উইথড্র (Min: ৳৫০)</li>
-                <li class="flex items-center gap-2 font-bold text-amber-300"><i class="fa-solid fa-gift text-amber-400 text-[10px]"></i> প্রতিদিন ফ্রি ইনকাম ৳৩০</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400 text-[10px]"></i> Spin, Scratch, Quiz রিওয়ার্ড ১.৫ গুণ (1.5x)</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400 text-[10px]"></i> উইথড্র প্রসেসিং টাইম: মাত্র ৩০ মিনিট</li>
-            </ul>
+            <!-- Facilities Checklist -->
+            <div class="space-y-2 text-xs">
+                <!-- Highlight 1: 0 Refer -->
+                <div class="flex items-center justify-between p-2 rounded-xl bg-amber-500/15 border border-amber-500/35">
+                    <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-bolt text-amber-400"></i> রেফারেল রিকোয়ারমেন্ট:</span>
+                    <span class="perk-highlight-pill bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">০ টি (কোনো রেফারেল লাগবে না!) ⚡</span>
+                </div>
+
+                <!-- Highlight 2: 50 Tk Withdraw -->
+                <div class="flex items-center justify-between p-2 rounded-xl bg-amber-500/10 border border-amber-500/25">
+                    <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-wallet text-amber-400"></i> সর্বনিম্ন উইথড্রয়াল:</span>
+                    <span class="font-gotham font-black text-amber-300 text-sm">মাত্র ৳ ৫০.০০</span>
+                </div>
+
+                <!-- Highlight 3: Free Daily 30 Tk -->
+                <div class="flex items-center justify-between p-2 rounded-xl bg-amber-500/15 border border-amber-500/35">
+                    <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-gift text-amber-400"></i> প্রতিদিন ফ্রি ক্যাশ:</span>
+                    <span class="perk-highlight-pill bg-amber-500/20 text-amber-200 border border-amber-400/30">৳ ৩০.০০ (মোট ৪৫০৳ ফেরত!)</span>
+                </div>
+
+                <!-- Highlight 4: 1.5x Multiplier -->
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <span class="text-slate-200 flex items-center gap-2"><i class="fa-solid fa-dharmachakra text-amber-400"></i> গেম ও কুইজ মাল্টিপ্লায়ার:</span>
+                    <span class="perk-highlight-pill bg-purple-500/20 text-purple-300 border border-purple-400/30">১.৫ গুণ বেশি আয় (1.5x)</span>
+                </div>
+
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-clock text-amber-400"></i> উইথড্র প্রসেসিং:</span>
+                    <span class="font-gotham text-amber-300 font-bold">মাত্র ৩০ মিনিট!</span>
+                </div>
+            </div>
 
             <div class="pt-1">
                 {% if current_tier == 'gold' %}
-                    <button disabled class="w-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-gotham font-semibold text-xs py-3 rounded-xl cursor-default">Active Plan</button>
+                    <button disabled class="w-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-gotham font-bold text-xs py-3.5 rounded-xl cursor-default">Active Plan</button>
                 {% else %}
-                    <a href="/upgrade/checkout/gold" class="block w-full text-center bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-gotham font-black text-xs py-3.5 rounded-xl transition shadow-lg active:scale-95">Upgrade to Gold</a>
+                    <a href="/upgrade/checkout/gold" class="block w-full text-center bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-gotham font-black text-xs py-3.5 rounded-xl transition shadow-[0_0_25px_rgba(245,158,11,0.5)] active:scale-95">Upgrade to Gold &raquo;</a>
                 {% endif %}
             </div>
         </div>
 
-        <!-- 5. DIAMOND TIER (700৳) -->
-        <div class="tier-diamond rounded-[28px] p-5 sm:p-6 space-y-4 transition">
+        <!-- 5. DIAMOND TIER (700৳ - ০ রেফারেল, ২০৳ উইথড্র, ২ মিনিটে পেআউট & ২ গুণ আয়!) -->
+        <div class="glowing-tier-card glow-diamond p-5 sm:p-6 space-y-4 select-none">
             <div class="flex items-start justify-between border-b border-white/[0.08] pb-3">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-cyan-950/60 border border-cyan-400/60 text-cyan-400 flex items-center justify-center text-lg">
+                    <div class="w-11 h-11 rounded-2xl bg-cyan-950/70 border border-cyan-400/70 text-cyan-400 flex items-center justify-center text-xl shadow-inner">
                         <i class="fa-solid fa-gem"></i>
                     </div>
                     <div>
-                        <h3 class="font-classic-seasons text-lg text-white font-bold uppercase tracking-wide">Diamond</h3>
-                        <span class="text-[10px] font-gotham text-cyan-300">মেয়াদ ১৫ দিন • সর্বোচ্চ ক্ষমতা</span>
+                        <h3 class="font-classic-seasons text-xl text-white font-bold uppercase tracking-wide">Diamond Reserve</h3>
+                        <span class="text-[10px] font-gotham text-cyan-300 font-medium">১৫ দিনের মেয়াদ • আল্টিমেট পাওয়ার</span>
                     </div>
                 </div>
                 <div class="text-right">
-                    <span class="font-gotham text-2xl font-black text-cyan-300">৳ 700</span>
-                    <span class="text-[10px] text-slate-400 block">15 Days</span>
+                    <span class="font-gotham text-3xl font-black text-cyan-300">৳ 700</span>
+                    <span class="text-[10px] text-slate-400 block font-gotham">15 Days</span>
                 </div>
             </div>
 
-            <ul class="text-xs space-y-2 text-slate-100">
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-[10px]"></i> Live Support by Personal Agent</li>
-                <li class="flex items-center gap-2 font-black text-cyan-300"><i class="fa-solid fa-bolt text-cyan-400 text-[10px]"></i> কোনো রেফার ছাড়াই উইথড্র (Min: মাত্র ৳২০)</li>
-                <li class="flex items-center gap-2 font-black text-cyan-300"><i class="fa-solid fa-gift text-cyan-400 text-[10px]"></i> প্রতিদিন ফ্রি ইনকাম ৳৫৫</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-[10px]"></i> Spin, Scratch, Quiz ডাবল ইনকাম (2.0x)</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-[10px]"></i> প্রতি রেফারে ১.৫ গুণ আয় (1.5x)</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-[10px]"></i> ড্রাইভ ক্রয়ে ১০% বিশেষ ডিসকাউন্ট</li>
-                <li class="flex items-center gap-2 font-bold text-cyan-300"><i class="fa-solid fa-clock text-cyan-400 text-[10px]"></i> সুপারফাস্ট উইথড্র প্রসেসিং: মাত্র ২ মিনিট!</li>
-            </ul>
+            <!-- Facilities Checklist -->
+            <div class="space-y-2 text-xs">
+                <!-- Highlight 1: 0 Refer -->
+                <div class="flex items-center justify-between p-2 rounded-xl bg-cyan-500/15 border border-cyan-500/35">
+                    <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-bolt text-cyan-400"></i> রেফারেল রিকোয়ারমেন্ট:</span>
+                    <span class="perk-highlight-pill bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">০ টি (কোনো রেফারেল ছাড়া লাইফটাইম) ⚡</span>
+                </div>
+
+                <!-- Highlight 2: Minimum 20 Tk Withdraw -->
+                <div class="flex items-center justify-between p-2 rounded-xl bg-cyan-500/15 border border-cyan-500/35">
+                    <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-wallet text-cyan-400"></i> সর্বনিম্ন উইথড্রয়াল:</span>
+                    <span class="font-gotham font-black text-cyan-300 text-sm">মাত্র ৳ ২০.০০ হলেই টাকা তোলা যাবে!</span>
+                </div>
+
+                <!-- Highlight 3: Free Daily 55 Tk -->
+                <div class="flex items-center justify-between p-2 rounded-xl bg-cyan-500/15 border border-cyan-500/35">
+                    <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-gift text-cyan-400"></i> প্রতিদিন ফ্রি ক্যাশ:</span>
+                    <span class="perk-highlight-pill bg-cyan-500/25 text-cyan-200 border border-cyan-400/40">৳ ৫৫.০০ (মোট ৮২৫৳ ফেরত!)</span>
+                </div>
+
+                <!-- Highlight 4: 2x Multiplier & 1.5x Refer -->
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.03] border border-white/10">
+                    <span class="text-slate-200 flex items-center gap-2"><i class="fa-solid fa-fire text-cyan-400"></i> গেম ও রেফার বোনাস:</span>
+                    <span class="perk-highlight-pill bg-purple-500/20 text-purple-300 border border-purple-400/30">গেম ২x ও প্রতি রেফারে ১.৫x আয়</span>
+                </div>
+
+                <!-- Highlight 5: 2 Mins Payout -->
+                <div class="flex items-center justify-between p-2 rounded-xl bg-cyan-500/20 border border-cyan-400/40">
+                    <span class="text-white font-black flex items-center gap-2"><i class="fa-solid fa-clock text-cyan-400"></i> উইথড্র প্রসেসিং টাইম:</span>
+                    <span class="perk-highlight-pill bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">সুপারফাস্ট মাত্র ২ মিনিট! ⚡</span>
+                </div>
+
+                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-tags text-cyan-400"></i> ড্রাইভ ডিসকাউন্ট:</span>
+                    <span class="text-cyan-300 font-semibold">Drive Buy Off 10%</span>
+                </div>
+            </div>
 
             <div class="pt-1">
                 {% if current_tier == 'diamond' %}
-                    <button disabled class="w-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-gotham font-semibold text-xs py-3 rounded-xl cursor-default">Active Plan</button>
+                    <button disabled class="w-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-gotham font-bold text-xs py-3.5 rounded-xl cursor-default">Active Plan</button>
                 {% else %}
-                    <a href="/upgrade/checkout/diamond" class="block w-full text-center bg-gradient-to-r from-cyan-500 to-sky-400 hover:from-cyan-400 hover:to-sky-300 text-slate-950 font-gotham font-black text-xs py-3.5 rounded-xl transition shadow-lg active:scale-95">Upgrade to Diamond</a>
+                    <a href="/upgrade/checkout/diamond" class="block w-full text-center bg-gradient-to-r from-cyan-500 to-sky-400 hover:from-cyan-400 hover:to-sky-300 text-slate-950 font-gotham font-black text-xs py-3.5 rounded-xl transition shadow-[0_0_30px_rgba(56,189,248,0.6)] active:scale-95">Upgrade to Diamond &raquo;</a>
                 {% endif %}
             </div>
         </div>
@@ -294,6 +447,7 @@
 
 </div>
 
+<!-- SCRIPT: DAILY FREE BONUS CLAIM -->
 <script>
 function claimDailyReward() {
     const btn = document.getElementById('btnDailyClaim');
