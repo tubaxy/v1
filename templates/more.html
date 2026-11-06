@@ -30,7 +30,7 @@
 
         <div class="flex items-center gap-2">
             <span class="text-[9px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
-                <i class="fa-solid fa-layer-group text-[9px]"></i> Menu Hub
+                <i class="fa-solid fa-layer-group text-[9px]"></i> Master Menu
             </span>
         </div>
     </div>
@@ -38,14 +38,13 @@
     <!-- Title Section -->
     <div class="text-center py-1 select-none space-y-1">
         <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
-            Explore <span class="text-slate-400 font-light italic lowercase text-xl">more</span>
+            Explore <span class="text-slate-400 font-light italic lowercase text-xl">everything</span>
         </h1>
-        <p class="text-[11px] text-slate-400 font-gotham font-light">আপনার প্রয়োজনীয় সকল সার্ভিস এবং শর্টকাট মেনু</p>
+        <p class="text-[11px] text-slate-400 font-gotham font-light">আপনার প্রয়োজনীয় সকল সার্ভিস, কাজ এবং শর্টকাট মেনু</p>
     </div>
 
-    <!-- ================= 1. IMPORTANT CTAs (TOP) ================= -->
+    <!-- ================= 1. IMPORTANT CTAs ================= -->
     <div class="space-y-3">
-        
         <!-- 👉 Dynamic App Install CTA (Hides if already installed) 👈 -->
         <div id="pwaInstallCard" class="hidden bg-gradient-to-r from-emerald-500/10 to-teal-500/5 border border-emerald-500/30 rounded-[24px] p-4 flex items-center justify-between gap-3 install-glow transition active:scale-[0.99] select-none">
             <div class="flex items-center gap-3 min-w-0">
@@ -79,93 +78,174 @@
                 <i class="fa-solid fa-arrow-right text-[10px]"></i>
             </div>
         </a>
-
     </div>
 
-    <!-- ================= 2. QUICK LINKS GRID ================= -->
-    <div class="grid grid-cols-2 gap-3 pt-2">
-        
-        <!-- Profile ID -->
-        <a href="/account" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
-            <div class="space-y-2.5">
-                <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-purple-400 group-hover:border-purple-500/40 transition">
+    <!-- ================= 2. EARNING HUB (সকল কাজের তালিকা) ================= -->
+    <div class="space-y-2.5 pt-2">
+        <span class="text-[10px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-2 block">
+            Earning Hub (কাজের তালিকা)
+        </span>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+            <!-- Tasks -->
+            <a href="/tasks" class="fintech-card rounded-2xl p-3.5 flex flex-col justify-between group active:scale-95">
+                <div class="space-y-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-sky-400 group-hover:border-sky-500/40 transition">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <div class="leading-tight">
+                        <h3 class="text-xs font-semibold text-white">মাইক্রো টাস্ক</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">সহজ কাজ করে আয়</p>
+                    </div>
+                </div>
+            </a>
+            <!-- YT -->
+            <a href="/yt" class="fintech-card rounded-2xl p-3.5 flex flex-col justify-between group active:scale-95">
+                <div class="space-y-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-red-400 group-hover:border-red-500/40 transition">
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+                    <div class="leading-tight">
+                        <h3 class="text-xs font-semibold text-white">ভিডিও ওয়াচ</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">৩০ সেকেন্ডে রিওয়ার্ড</p>
+                    </div>
+                </div>
+            </a>
+            <!-- Spin -->
+            <a href="/spin" class="fintech-card rounded-2xl p-3.5 flex flex-col justify-between group active:scale-95">
+                <div class="space-y-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-amber-400 group-hover:border-amber-500/40 transition">
+                        <i class="fa-solid fa-dharmachakra"></i>
+                    </div>
+                    <div class="leading-tight">
+                        <h3 class="text-xs font-semibold text-white">লাকি স্পিন</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">চাকা ঘুরিয়ে বোনাস</p>
+                    </div>
+                </div>
+            </a>
+            <!-- Scratch -->
+            <a href="/scratch" class="fintech-card rounded-2xl p-3.5 flex flex-col justify-between group active:scale-95">
+                <div class="space-y-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-emerald-400 group-hover:border-emerald-500/40 transition">
+                        <i class="fa-solid fa-gift"></i>
+                    </div>
+                    <div class="leading-tight">
+                        <h3 class="text-xs font-semibold text-white">স্ক্র্যাচ কার্ড</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">কার্ড ঘষে ক্যাশ</p>
+                    </div>
+                </div>
+            </a>
+            <!-- Quiz -->
+            <a href="/quiz" class="fintech-card rounded-2xl p-3.5 flex flex-col justify-between group active:scale-95">
+                <div class="space-y-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-pink-400 group-hover:border-pink-500/40 transition">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div class="leading-tight">
+                        <h3 class="text-xs font-semibold text-white">ম্যাথ কুইজ</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">অংক সমাধান করে আয়</p>
+                    </div>
+                </div>
+            </a>
+            <!-- Refer -->
+            <a href="/refer" class="fintech-card rounded-2xl p-3.5 flex flex-col justify-between group active:scale-95 border-blue-500/20">
+                <div class="space-y-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-blue-600/15 border border-blue-500/30 text-sky-400 flex items-center justify-center text-sm transition">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                    <div class="leading-tight">
+                        <h3 class="text-xs font-semibold text-white">রেফারেল (৳২০)</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">বন্ধুদের ইনভাইট করুন</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- ================= 3. FINANCE & VIP ================= -->
+    <div class="space-y-2.5 pt-2">
+        <span class="text-[10px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-2 block">
+            Finance & Account
+        </span>
+        <div class="grid grid-cols-2 gap-2.5">
+            <a href="/account" class="fintech-card rounded-2xl p-3.5 flex items-center gap-3 group active:scale-95">
+                <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-purple-400 transition shrink-0">
                     <i class="fa-solid fa-id-card"></i>
                 </div>
-                <div class="leading-tight">
-                    <h3 class="text-xs font-semibold text-white">Profile ID</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 truncate">ডিজিটাল মেম্বার কার্ড</p>
+                <div class="leading-tight min-w-0">
+                    <h3 class="text-xs font-semibold text-white truncate">Profile ID</h3>
+                    <p class="text-[9px] text-slate-400 mt-0.5 truncate">ডিজিটাল মেম্বার কার্ড</p>
                 </div>
-            </div>
-        </a>
-
-        <!-- Leaderboard -->
-        <a href="/leaderboard" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
-            <div class="space-y-2.5">
-                <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-amber-400 group-hover:border-amber-500/40 transition">
-                    <i class="fa-solid fa-trophy"></i>
+            </a>
+            <a href="/withdraw" class="fintech-card rounded-2xl p-3.5 flex items-center gap-3 group active:scale-95">
+                <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-emerald-400 transition shrink-0">
+                    <i class="fa-solid fa-wallet"></i>
                 </div>
-                <div class="leading-tight">
-                    <h3 class="text-xs font-semibold text-white">Leaderboard</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 truncate">টপ রেফারার তালিকা</p>
+                <div class="leading-tight min-w-0">
+                    <h3 class="text-xs font-semibold text-white truncate">Payout</h3>
+                    <p class="text-[9px] text-slate-400 mt-0.5 truncate">টাকা উত্তোলন করুন</p>
                 </div>
-            </div>
-        </a>
-
-        <!-- Announcements -->
-        <a href="/announcements" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
-            <div class="space-y-2.5">
-                <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-sky-400 group-hover:border-sky-500/40 transition">
-                    <i class="fa-solid fa-bullhorn"></i>
+            </a>
+            <a href="/history" class="fintech-card rounded-2xl p-3.5 flex items-center gap-3 group active:scale-95">
+                <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-slate-100 transition shrink-0">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
                 </div>
-                <div class="leading-tight">
-                    <h3 class="text-xs font-semibold text-white">Notice Hub</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 truncate">অফিসিয়াল নোটিশ</p>
+                <div class="leading-tight min-w-0">
+                    <h3 class="text-xs font-semibold text-white truncate">History</h3>
+                    <p class="text-[9px] text-slate-400 mt-0.5 truncate">লেনদেন বিবরণী</p>
                 </div>
-            </div>
-        </a>
-
-        <!-- Video Tutorial -->
-        <a href="/tutorial" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
-            <div class="space-y-2.5">
-                <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-red-400 group-hover:border-red-500/40 transition">
-                    <i class="fa-solid fa-circle-play"></i>
+            </a>
+            <a href="/upgrade" class="fintech-card rounded-2xl p-3.5 flex items-center gap-3 group active:scale-95 border-amber-500/20">
+                <div class="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xs transition shrink-0">
+                    <i class="fa-solid fa-crown"></i>
                 </div>
-                <div class="leading-tight">
-                    <h3 class="text-xs font-semibold text-white">Video Guide</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 truncate">কাজের ভিডিও টিউটোরিয়াল</p>
+                <div class="leading-tight min-w-0">
+                    <h3 class="text-xs font-semibold text-white truncate">VIP Upgrade</h3>
+                    <p class="text-[9px] text-slate-400 mt-0.5 truncate">মেম্বারশিপ প্ল্যান</p>
                 </div>
-            </div>
-        </a>
-
-        <!-- Promote -->
-        <a href="/promote" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
-            <div class="space-y-2.5">
-                <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-emerald-400 group-hover:border-emerald-500/40 transition">
-                    <i class="fa-solid fa-chart-line"></i>
-                </div>
-                <div class="leading-tight">
-                    <h3 class="text-xs font-semibold text-white">Advertising</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 truncate">বিজ্ঞাপন ও প্রমোশন</p>
-                </div>
-            </div>
-        </a>
-
-        <!-- Sponsor -->
-        <a href="/sponsor" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
-            <div class="space-y-2.5">
-                <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-blue-400 group-hover:border-blue-500/40 transition">
-                    <i class="fa-solid fa-handshake"></i>
-                </div>
-                <div class="leading-tight">
-                    <h3 class="text-xs font-semibold text-white">Partner Hub</h3>
-                    <p class="text-[10px] text-slate-400 mt-0.5 truncate">স্পনসরশিপ প্রোগ্রাম</p>
-                </div>
-            </div>
-        </a>
-
+            </a>
+        </div>
     </div>
 
-    <!-- ================= 3. LOGOUT BUTTON (DANGER ZONE) ================= -->
+    <!-- ================= 4. COMMUNITY & SERVICES ================= -->
+    <div class="space-y-2.5 pt-2">
+        <span class="text-[10px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-2 block">
+            Ecosystem & Support
+        </span>
+        <div class="grid grid-cols-2 gap-2.5">
+            <a href="/leaderboard" class="fintech-card rounded-2xl p-3.5 flex items-center gap-3 group active:scale-95">
+                <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-amber-400 transition shrink-0">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <h3 class="text-xs font-semibold text-white truncate">Leaderboard</h3>
+            </a>
+            <a href="/announcements" class="fintech-card rounded-2xl p-3.5 flex items-center gap-3 group active:scale-95">
+                <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-sky-400 transition shrink-0">
+                    <i class="fa-solid fa-bullhorn"></i>
+                </div>
+                <h3 class="text-xs font-semibold text-white truncate">Notice Hub</h3>
+            </a>
+            <a href="/tutorial" class="fintech-card rounded-2xl p-3.5 flex items-center gap-3 group active:scale-95">
+                <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-red-400 transition shrink-0">
+                    <i class="fa-solid fa-circle-play"></i>
+                </div>
+                <h3 class="text-xs font-semibold text-white truncate">Video Guide</h3>
+            </a>
+            <a href="/promote" class="fintech-card rounded-2xl p-3.5 flex items-center gap-3 group active:scale-95">
+                <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-emerald-400 transition shrink-0">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <h3 class="text-xs font-semibold text-white truncate">Promote & Ads</h3>
+            </a>
+            <a href="/sponsor" class="fintech-card rounded-2xl p-3.5 flex items-center gap-3 group active:scale-95 sm:col-span-2">
+                <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-xs group-hover:text-blue-400 transition shrink-0">
+                    <i class="fa-solid fa-handshake"></i>
+                </div>
+                <h3 class="text-xs font-semibold text-white truncate">Partner Sponsorship</h3>
+            </a>
+        </div>
+    </div>
+
+    <!-- ================= 5. LOGOUT BUTTON (DANGER ZONE) ================= -->
     <div class="pt-4">
         <a href="/logout" 
            class="w-full bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-400 font-gotham font-semibold text-xs py-3.5 rounded-2xl transition flex items-center justify-center gap-2 active:scale-[0.98]">
@@ -182,30 +262,23 @@ let deferredInstallPrompt;
 const installCard = document.getElementById('pwaInstallCard');
 const installBtn = document.getElementById('nativeInstallBtn');
 
-// Detect if app is already running in Standalone (PWA) Mode
 function checkAppInstalledState() {
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-    
-    // If NOT standalone, show the Install Card
     if (!isStandalone) {
         installCard.classList.remove('hidden');
     } else {
-        // If already installed, ensure it stays hidden
         installCard.classList.add('hidden');
     }
 }
 
-// Check on load
 checkAppInstalledState();
 
-// Capture Chrome's native Install Prompt
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredInstallPrompt = e;
     installCard.classList.remove('hidden');
 });
 
-// Trigger Installation
 function triggerNativeInstall() {
     if (deferredInstallPrompt) {
         installBtn.innerText = "Installing...";
