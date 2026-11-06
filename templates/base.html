@@ -10,30 +10,18 @@
     <!-- FontAwesome 6 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Fonts: Anek Bangla (Bangla), The Seasons Style (Cormorant Garamond Classic Serif), Gotham Style (Montserrat) -->
+    <!-- Fonts: Anek Bangla, The Seasons Style, Gotham Style -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<!-- New App Logo & Favicon for PWA -->
-    <link rel="icon" type="image/jpeg" href="https://i.ibb.co.com/1wxLMwW/IMG-20261104-WA0022.jpg">
-    <link rel="apple-touch-icon" href="https://i.ibb.co.com/1wxLMwW/IMG-20261104-WA0022.jpg">
-    <link rel="manifest" href="/manifest.json">
 
-    <!-- Active Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js', { scope: '/' })
-                    .then(function(reg) {
-                        console.log('PWA ServiceWorker ready:', reg.scope);
-                    })
-                    .catch(function(err) {
-                        console.error('PWA ServiceWorker failed:', err);
-                    });
-            });
-        }
-    </script>
-    
+    <!-- PWA Config -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#03050a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TaskWallet">
+
     <style>
         * {
             font-family: 'Anek Bangla', 'Montserrat', sans-serif;
@@ -62,84 +50,118 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* ================= 🎯 EXACT SCREENSHOT PILL DOCK ================= */
-        .pill-dock-container {
-            background: rgba(8, 11, 20, 0.94);
-            backdrop-filter: blur(28px) saturate(180%);
-            -webkit-backdrop-filter: blur(28px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.14);
-            border-radius: 9999px;
-        }
-
-        .dock-nav-item {
+        /* ================= 🌊 LIQUID BLUE WATER BOTTOM DOCK ================= */
+        .classic-glass-dock {
+            background: rgba(10, 15, 29, 0.82);
+            backdrop-filter: blur(28px) saturate(210%);
+            -webkit-backdrop-filter: blur(28px) saturate(210%);
+            border: 1px solid rgba(56, 189, 248, 0.22);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.85), 0 0 25px rgba(37, 99, 235, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.25);
             position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 4px 8px;
-            color: #64748b;
-            transition: all 0.25s ease;
-        }
-        .dock-nav-item:hover {
-            color: #cbd5e1;
         }
 
-        /* Active Spotlight Glow (As seen in Screenshot) */
-        .dock-nav-item.active {
-            color: #ffffff !important;
-        }
-
-        .dock-icon-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            z-index: 10;
-        }
-
-        .dock-nav-item.active .dock-icon-wrapper::before {
+        .classic-glass-dock::before {
             content: '';
             position: absolute;
-            inset: -8px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, rgba(56, 189, 248, 0.2) 45%, transparent 75%);
-            border-radius: 50%;
-            filter: blur(6px);
-            z-index: -1;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.7), transparent);
             pointer-events: none;
         }
 
-        .dock-nav-item.active i {
-            color: #ffffff;
-            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+        @keyframes water-fluid-morph {
+            0% {
+                border-radius: 42% 58% 62% 38% / 45% 50% 50% 55%;
+                box-shadow: 0 0 25px rgba(56, 189, 248, 0.65), inset 0 3px 6px rgba(255, 255, 255, 0.7), inset 0 -4px 8px rgba(29, 78, 216, 0.85);
+                transform: translateY(0);
+            }
+            33% {
+                border-radius: 58% 42% 40% 60% / 55% 45% 55% 45%;
+                box-shadow: 0 0 30px rgba(37, 99, 235, 0.8), inset 0 4px 8px rgba(255, 255, 255, 0.8), inset 0 -3px 6px rgba(6, 182, 212, 0.85);
+                transform: translateY(-2px);
+            }
+            66% {
+                border-radius: 45% 55% 58% 42% / 40% 60% 40% 60%;
+                box-shadow: 0 0 25px rgba(6, 182, 212, 0.7), inset 0 3px 6px rgba(255, 255, 255, 0.7), inset 0 -4px 8px rgba(37, 99, 235, 0.85);
+                transform: translateY(1px);
+            }
+            100% {
+                border-radius: 42% 58% 62% 38% / 45% 50% 50% 55%;
+                box-shadow: 0 0 25px rgba(56, 189, 248, 0.65), inset 0 3px 6px rgba(255, 255, 255, 0.7), inset 0 -4px 8px rgba(29, 78, 216, 0.85);
+                transform: translateY(0);
+            }
         }
 
-        /* Center Elevated "Work" Disc */
-        .dock-center-orb {
+        .liquid-water-droplet {
+            animation: water-fluid-morph 6s infinite ease-in-out;
+            background: radial-gradient(circle at 35% 25%, #38bdf8 0%, #2563eb 45%, #1e40af 80%, #0f172a 100%);
+            border: 1.5px solid rgba(255, 255, 255, 0.45);
             position: relative;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 40% 30%, #222c40 0%, #0d121f 70%, #060911 100%);
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7), 0 0 18px rgba(255, 255, 255, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.35);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.25s ease;
-        }
-        .dock-center-orb:active {
-            transform: scale(0.92);
-        }
-        .dock-center-orb i {
-            color: #ffffff;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
         }
 
-        /* Headphone Support Pulsing Wave */
+        @keyframes water-pulse-ring {
+            0% { transform: scale(0.85); opacity: 0.8; }
+            50% { transform: scale(1.35); opacity: 0.25; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+        .liquid-ripple-ring {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid rgba(56, 189, 248, 0.55);
+            animation: water-pulse-ring 3s cubic-bezier(0.1, 0.7, 0.3, 1) infinite;
+            pointer-events: none;
+        }
+
+        .water-nav-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 18px;
+            padding: 6px 14px;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .water-nav-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 90%, rgba(56, 189, 248, 0.35) 0%, rgba(37, 99, 235, 0.18) 50%, transparent 80%);
+            opacity: 0;
+            transform: scale(0.6) translateY(8px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: inherit;
+            pointer-events: none;
+        }
+        .water-nav-item:hover::before {
+            opacity: 0.8;
+            transform: scale(1) translateY(0);
+        }
+        .water-nav-item.active::before {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            background: radial-gradient(circle at 50% 85%, rgba(56, 189, 248, 0.45) 0%, rgba(37, 99, 235, 0.25) 55%, transparent 85%);
+        }
+
+        .water-nav-item.active {
+            color: #38bdf8 !important;
+            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.75));
+        }
+
+        .water-nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 3px;
+            border-radius: 9999px;
+            background: #38bdf8;
+            box-shadow: 0 0 10px #38bdf8, 0 0 18px #2563eb;
+        }
+
         @keyframes support-ring {
             0% { transform: scale(0.9); opacity: 0.7; }
             50% { transform: scale(1.3); opacity: 0; }
@@ -155,13 +177,20 @@
             pointer-events: none;
         }
 
-        /* Floating Flash Toast Notification Animation */
+        /* Floating Flash Toast Animation */
         @keyframes toastSlideDown {
             0% { opacity: 0; transform: translateY(-20px) scale(0.95); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
         .animate-toast-slide {
             animation: toastSlideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Highlighted More Button Glowing Edge */
+        .more-highlight-btn {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.15);
         }
     </style>
 
@@ -208,7 +237,7 @@
 </head>
 <body class="selection:bg-blue-600/20 selection:text-sky-300 relative overflow-x-hidden pb-28">
 
-    <!-- Ambient Dark Glows -->
+    <!-- Ambient Dark Fintech Glows -->
     <div class="fixed -top-40 -left-32 w-96 h-96 bg-blue-600/10 rounded-full blur-[140px] pointer-events-none"></div>
     <div class="fixed top-1/2 -right-40 w-96 h-96 bg-cyan-600/10 rounded-full blur-[160px] pointer-events-none"></div>
 
@@ -242,7 +271,6 @@
     <header class="sticky top-0 z-40 header-glass">
         <div class="max-w-xl mx-auto px-4 h-16 flex items-center justify-between">
             
-            <!-- Left: Toggle Hamburger & Classic Logo -->
             <div class="flex items-center gap-3.5">
                 <button onclick="toggleSidebar(true)" 
                         class="w-10 h-10 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] active:scale-95 border border-white/[0.08] flex items-center justify-center text-slate-300 hover:text-white transition shadow-sm" 
@@ -257,7 +285,6 @@
                 </a>
             </div>
 
-            <!-- Right: Minimal Titanium Balance / Login Pill -->
             <div>
                 {% if current_user %}
                     <a href="/account" 
@@ -278,7 +305,7 @@
         </div>
     </header>
 
-    <!-- ================= 3. LEFT-OPENING DRAWER (WITH PROFILE PIC & ALL DIRECTORY LINKS) ================= -->
+    <!-- ================= 3. LEFT-OPENING DRAWER (MINIMAL NAV & HIGHLIGHTED MORE) ================= -->
     <div id="drawerOverlay" onclick="toggleSidebar(false)" 
          class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
 
@@ -296,12 +323,11 @@
             </button>
         </div>
 
-        <!-- 🌟 PROMINENT USER PROFILE PIC & WALLET CARD IN DRAWER 🌟 -->
+        <!-- 🌟 USER PROFILE CARD 🌟 -->
         <div class="pt-3 pb-2">
             {% if current_user %}
             <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-3.5 space-y-3">
                 <div class="flex items-center gap-3">
-                    <!-- User Avatar -->
                     <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-sky-400/40 bg-slate-900 shrink-0 flex items-center justify-center text-sm font-bold text-white shadow-lg shadow-sky-500/10">
                         {% if current_user.avatar_url %}
                             <img src="{{ current_user.avatar_url }}" alt="{{ current_user.name }}" class="w-full h-full object-cover">
@@ -341,121 +367,63 @@
             {% endif %}
         </div>
 
-        <!-- 🌟 COMPLETE DIRECTORY OF NAVIGATION LINKS IN DRAWER 🌟 -->
-        <nav class="flex-1 py-2 space-y-3 overflow-y-auto pr-1 text-xs font-medium no-scrollbar">
+        <!-- 🌟 MINIMAL NAVIGATION (ONLY NECESSARY LINKS) 🌟 -->
+        <nav class="flex-1 py-2 space-y-2 overflow-y-auto pr-1 text-xs font-medium no-scrollbar">
             
-            <!-- Category 1: Main Suite -->
-            <div class="space-y-0.5">
-                <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
-                    প্রধান মেনু
-                </span>
-                <a href="/app" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-house w-4 text-center text-slate-400"></i>
-                    <span>ড্যাশবোর্ড (Home)</span>
-                </a>
-                <a href="/allwork" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-bolt w-4 text-center text-slate-400"></i>
-                    <span>সকল কাজ (All Work)</span>
-                </a>
-                <a href="/withdraw" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-wallet w-4 text-center text-slate-400"></i>
-                    <span>টাকা উত্তোলন (Payout)</span>
-                </a>
-                <a href="/history" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-clock-rotate-left w-4 text-center text-slate-400"></i>
-                    <span>লেনদেন হিস্ট্রি</span>
-                </a>
-                <a href="/account" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-id-card w-4 text-center text-slate-400"></i>
-                    <span>প্রোফাইল আইডি (Profile ID)</span>
-                </a>
-            </div>
+            <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
+                Quick Access
+            </span>
+            
+            <!-- Kept Only Home, Leaderboard, Notice, App Install -->
+            <a href="/app" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-house w-4 text-center text-slate-400"></i>
+                <span>ড্যাশবোর্ড (Home)</span>
+            </a>
+            
+            <a href="/leaderboard" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-trophy w-4 text-center text-amber-400"></i>
+                <span>রেফারেল লিডারবোর্ড</span>
+            </a>
+            
+            <a href="/announcements" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-bullhorn w-4 text-center text-sky-400"></i>
+                <span>অফিসিয়াল নোটিশ হাব</span>
+            </a>
 
-            <!-- Category 2: Earning Modules -->
-            <div class="space-y-0.5 pt-1 border-t border-white/[0.04]">
-                <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
-                    আর্নিং হাব
-                </span>
-                <a href="/tasks" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-list-check w-4 text-center text-slate-400"></i>
-                    <span>মাইক্রো টাস্ক (Tasks)</span>
-                </a>
-                <a href="/yt" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-brands fa-youtube w-4 text-center text-slate-400"></i>
-                    <span>ভিডিও ওয়াচ (Streams)</span>
-                </a>
-                <a href="/spin" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-dharmachakra w-4 text-center text-slate-400"></i>
-                    <span>লাকি স্পিন (Spin Wheel)</span>
-                </a>
-                <a href="/scratch" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-gift w-4 text-center text-slate-400"></i>
-                    <span>স্ক্র্যাচ কার্ড (Scratch Vault)</span>
-                </a>
-                <a href="/quiz" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-brain w-4 text-center text-slate-400"></i>
-                    <span>ম্যাথ কুইজ </span>
-                </a>
-                <a href="/refer" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-user-plus w-4 text-center text-slate-400"></i>
-                    <span>রেফারেল ও ইনভাইট</span>
-                </a>
-            </div>
+            <a href="/install" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.04] transition">
+                <i class="fa-solid fa-mobile-screen-button w-4 text-center text-emerald-400"></i>
+                <span>অ্যাপ ইনস্টল করুন (PWA)</span>
+            </a>
 
-            <!-- Category 3: VIP & Growth -->
-            <div class="space-y-0.5 pt-1 border-t border-white/[0.04]">
-                <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
-                    ভিআইপি ও নেটওয়ার্ক
-                </span>
-                <a href="/upgrade" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-crown w-4 text-center text-amber-400"></i>
-                    <span>মেম্বারশিপ আপগ্রেড</span>
-                </a>
-                <a href="/leaderboard" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-trophy w-4 text-center text-slate-400"></i>
-                    <span>রেফারেল লিডারবোর্ড</span>
-                </a>
-                <a href="/announcements" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-bullhorn w-4 text-center text-slate-400"></i>
-                    <span>অফিসিয়াল নোটিশ হাব</span>
-                </a>
-            </div>
+            <div class="pt-2 my-2 border-t border-white/[0.04]"></div>
 
-            <!-- Category 4: Services & Community -->
-            <div class="space-y-0.5 pt-1 border-t border-white/[0.04]">
-                <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
-                    সেবা ও সাপোর্ট
-                </span>
-                <a href="/tutorial" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-circle-play w-4 text-center text-slate-400"></i>
-                    <span>কাজের ভিডিও গাইড</span>
-                </a>
-                <a href="/promote" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-chart-line w-4 text-center text-slate-400"></i>
-                    <span>বিজ্ঞাপন ও প্রমোশন</span>
-                </a>
-                <a href="/sponsor" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-handshake w-4 text-center text-slate-400"></i>
-                    <span>পার্টনারশীপ প্রোগ্রাম</span>
-                </a>
-                <a href="/install" class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.04] transition">
-                    <i class="fa-solid fa-mobile-screen-button w-4 text-center text-slate-400"></i>
-                    <span>আমাদের অ্যাপ ইনস্টল করুন </span>
-                </a>
-                <a href="https://t.me/taskwallet_bd" target="_blank" class="flex items-center gap-3 px-3 py-2 rounded-xl text-sky-400 hover:bg-white/[0.04] transition font-semibold">
-                    <i class="fa-brands fa-telegram w-4 text-center"></i>
-                    <span>টেলিগ্রাম চ্যানেল (@taskwallet_bd)</span>
-                </a>
-                <a href="https://t.me/task_wallet_online" target="_blank" class="flex items-center gap-3 px-3 py-2 rounded-xl text-emerald-400 hover:bg-white/[0.04] transition font-semibold">
-                    <i class="fa-solid fa-headset w-4 text-center"></i>
-                    <span>সাপোর্ট (@task_wallet_online)</span>
-                </a>
-            </div>
+            <!-- 🌟 👉 HIGHLIGHTED "EXPLORE MORE" BUTTON 👈 🌟 -->
+            <a href="/more" class="more-highlight-btn flex items-center justify-between px-4 py-3 rounded-2xl text-white group transition active:scale-95">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-layer-group text-sky-400"></i>
+                    <span class="font-gotham font-bold tracking-wider">Explore More</span>
+                </div>
+                <i class="fa-solid fa-arrow-right text-[10px] text-sky-400 group-hover:translate-x-1 transition"></i>
+            </a>
 
-            <!-- Category 5: Root Admin Portal Shortcut -->
+            <div class="pt-2 my-2 border-t border-white/[0.04]"></div>
+
+            <!-- Support Contacts -->
+            <span class="text-[9px] font-gotham font-bold uppercase tracking-widest text-slate-500 px-3 block mb-1">
+                Help & Support
+            </span>
+            <a href="https://t.me/taskwallet_bd" target="_blank" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sky-400 hover:bg-white/[0.04] transition font-semibold">
+                <i class="fa-brands fa-telegram w-4 text-center"></i>
+                <span>টেলিগ্রাম চ্যানেল</span>
+            </a>
+            <a href="https://t.me/task_wallet_online" target="_blank" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-emerald-400 hover:bg-white/[0.04] transition font-semibold">
+                <i class="fa-solid fa-headset w-4 text-center"></i>
+                <span>সাপোর্ট ডেক্স</span>
+            </a>
+
             {% if current_user and current_user.email == 'admin@gmail.com' %}
-            <div class="pt-1 border-t border-white/[0.04]">
-                <a href="/admin" class="flex items-center gap-3 px-3 py-2 rounded-xl bg-blue-600/10 border border-blue-500/20 text-sky-400 font-semibold transition">
+            <div class="pt-3 border-t border-white/[0.04]">
+                <a href="/admin" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-blue-600/10 border border-blue-500/20 text-sky-400 font-semibold transition">
                     <i class="fa-solid fa-sliders w-4 text-center"></i>
                     <span>অ্যাডমিন কন্ট্রোল প্যানেল</span>
                 </a>
@@ -474,12 +442,12 @@
         {% endif %}
     </aside>
 
-    <!-- ================= 4. MAIN BODY ================= -->
+    <!-- ================= 4. MAIN CONTENT ================= -->
     <main class="flex-1 max-w-xl w-full mx-auto p-4 md:py-6 relative z-10">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- ================= 5. HEADPHONE SUPPORT BUTTON (@task_wallet_online) ================= -->
+    <!-- ================= 5. HEADPHONE SUPPORT BUTTON ================= -->
     <div class="fixed bottom-24 right-5 z-40">
         <a href="https://t.me/task_wallet_online" target="_blank"
            class="support-water-pulse relative group w-12 h-12 rounded-full bg-[#0a0e17] border border-sky-400/40 text-sky-400 hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(56,189,248,0.35)]"
@@ -489,54 +457,45 @@
         </a>
     </div>
 
-    <!-- ================= 6. 🎯 EXACT SCREENSHOT PILL BOTTOM NAV DOCK ================= -->
+    <!-- ================= 6. 🌊 LIQUID WATER BLUE BOTTOM NAV DOCK ================= -->
     <div class="fixed bottom-3 left-0 right-0 z-40 px-3 flex justify-center pointer-events-none">
-        <nav class="pill-dock-container w-full max-w-md px-4 py-1.5 flex justify-between items-center pointer-events-auto select-none">
+        <nav class="classic-glass-dock w-full max-w-md rounded-3xl px-3 py-2 flex justify-around items-center pointer-events-auto">
             
-            <!-- 1. Home -->
-            <a href="/app" class="dock-nav-item nav-item flex-1" data-path="/app">
-                <div class="dock-icon-wrapper">
-                    <i class="fa-solid fa-house text-base"></i>
-                </div>
-                <span class="text-[10px] font-gotham font-medium tracking-tight mt-0.5">Home</span>
+            <a href="/app" class="water-nav-item nav-item flex flex-col items-center gap-1 text-slate-400 hover:text-sky-300 transition group" data-path="/app">
+                <i class="fa-solid fa-house text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
+                <span class="text-[9px] font-gotham font-medium tracking-tight">Home</span>
             </a>
 
-            <!-- 2. History -->
-            <a href="/history" class="dock-nav-item nav-item flex-1" data-path="/history">
-                <div class="dock-icon-wrapper">
-                    <i class="fa-solid fa-clock-rotate-left text-base"></i>
-                </div>
-                <span class="text-[10px] font-gotham font-medium tracking-tight mt-0.5">History</span>
+            <a href="/history" class="water-nav-item nav-item flex flex-col items-center gap-1 text-slate-400 hover:text-sky-300 transition group" data-path="/history">
+                <i class="fa-solid fa-clock-rotate-left text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
+                <span class="text-[9px] font-gotham font-medium tracking-tight">History</span>
             </a>
 
-            <!-- 3. Work (Center Floating Disc) -->
-            <a href="/allwork" class="nav-item -mt-5 flex flex-col items-center flex-1 group" data-path="/allwork">
-                <div class="dock-center-orb">
-                    <i class="fa-solid fa-bolt text-lg"></i>
+            <!-- CENTER WORK ORB -->
+            <a href="/allwork" class="nav-item -mt-5 flex flex-col items-center group active:scale-95 transition relative" data-path="/allwork">
+                <span class="liquid-ripple-ring"></span>
+                <span class="liquid-ripple-ring" style="animation-delay: 1.4s;"></span>
+
+                <div class="liquid-water-droplet w-12 h-12 flex items-center justify-center text-white text-base">
+                    <i class="fa-solid fa-bolt drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"></i>
                 </div>
-                <span class="text-[10px] font-gotham font-semibold text-slate-300 mt-1">Work</span>
+                <span class="text-[9px] font-gotham font-bold text-sky-400 mt-1 drop-shadow-[0_0_8px_#38bdf8]">Work</span>
             </a>
 
-            <!-- 4. Payout (Withdraw) -->
-            <a href="/withdraw" class="dock-nav-item nav-item flex-1" data-path="/withdraw">
-                <div class="dock-icon-wrapper">
-                    <i class="fa-solid fa-wallet text-base"></i>
-                </div>
-                <span class="text-[10px] font-gotham font-medium tracking-tight mt-0.5">Payout</span>
+            <a href="/withdraw" class="water-nav-item nav-item flex flex-col items-center gap-1 text-slate-400 hover:text-sky-300 transition group" data-path="/withdraw">
+                <i class="fa-solid fa-wallet text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
+                <span class="text-[9px] font-gotham font-medium tracking-tight">Payout</span>
             </a>
 
-            <!-- 5. Profile -->
-            <a href="/account" class="dock-nav-item nav-item flex-1" data-path="/account">
-                <div class="dock-icon-wrapper">
-                    <i class="fa-solid fa-user text-base"></i>
-                </div>
-                <span class="text-[10px] font-gotham font-medium tracking-tight mt-0.5">Profile</span>
+            <a href="/account" class="water-nav-item nav-item flex flex-col items-center gap-1 text-slate-400 hover:text-sky-300 transition group" data-path="/account">
+                <i class="fa-solid fa-user text-sm group-hover:-translate-y-0.5 transition duration-200"></i>
+                <span class="text-[9px] font-gotham font-medium tracking-tight">Profile</span>
             </a>
 
         </nav>
     </div>
 
-    <!-- SCRIPT: LEFT DRAWER, AUTO-DISMISS TOAST & SPOTLIGHT ACTIVE HIGHLIGHT -->
+    <!-- SCRIPT -->
     <script>
         function toggleSidebar(open) {
             const overlay = document.getElementById('drawerOverlay');
@@ -554,7 +513,6 @@
             }
         }
 
-        // Active State Spotlight Glow on Current Page
         document.addEventListener("DOMContentLoaded", function () {
             const currentPath = window.location.pathname;
             document.querySelectorAll('.nav-item').forEach(item => {
@@ -565,7 +523,6 @@
                 }
             });
 
-            // Auto-Dismiss Floating Flash Messages after 4.5 seconds
             setTimeout(() => {
                 document.querySelectorAll('.flash-toast').forEach(toast => {
                     dismissToast(toast);
