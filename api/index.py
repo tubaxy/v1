@@ -1574,7 +1574,7 @@ def refer_page():
         .eq('referred_by', user['referral_code']) \
         .order('id', desc=True).execute().data or []
 
-    total_earned = len(referred_users) * 15.00
+    total_earned = len(referred_users) * 20.00
 
     return render_template(
         'refer.html',
@@ -1762,7 +1762,7 @@ def withdraw():
         flash("আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই!", "danger")
         return redirect(url_for('withdraw'))
 
-    if ref_count < 0:
+    if ref_count < 5:
         flash(f"উইথড্র করতে সর্বনিম্ন 5টি রেফারেল প্রয়োজন! আপনার বর্তমান রেফারেল: {ref_count} টি।", "danger")
         return redirect(url_for('withdraw'))
         
