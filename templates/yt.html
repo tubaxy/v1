@@ -1,39 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
-    .cinema-card {
-        background: rgba(255, 255, 255, 0.025);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(24px);
+    /* Sleek Data Row Hover Effect */
+    .stream-data-row {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        overflow: hidden;
     }
-    .cinema-card:hover {
-        border-color: rgba(56, 189, 248, 0.35);
-        transform: translateY(-3px);
-        box-shadow: 0 16px 40px -15px rgba(0, 0, 0, 0.85);
-    }
-    .cinema-thumb {
-        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .cinema-card:hover .cinema-thumb {
-        transform: scale(1.05);
+    .stream-data-row:hover {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(56, 189, 248, 0.25);
+        transform: translateX(4px);
     }
 
-    /* Ambient Cinema Theater Frame */
-    .theater-frame {
-        background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.18) 0%, rgba(10, 15, 29, 0.95) 60%, #04060b 100%);
-        border: 1px solid rgba(56, 189, 248, 0.25);
-        box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    /* Active Stream Console */
+    .stream-console-glass {
+        background: radial-gradient(circle at 50% -20%, rgba(37, 99, 235, 0.15) 0%, rgba(10, 15, 29, 0.98) 60%, #04060b 100%);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
     }
 
-    /* Laser Timer Glow Bar */
-    .timer-laser-bar {
-        box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+    /* Processing Laser Bar */
+    @keyframes dataProcess {
+        0% { background-position: 100% 0; }
+        100% { background-position: -100% 0; }
+    }
+    .laser-process-bar {
+        background: linear-gradient(90deg, #1d4ed8, #38bdf8, #34d399, #1d4ed8);
+        background-size: 300% 100%;
+        animation: dataProcess 3s infinite linear;
     }
 </style>
 
-<div class="max-w-4xl mx-auto space-y-6 pb-24">
+<div class="max-w-xl mx-auto space-y-5 pb-24 px-1 sm:px-0">
 
     <!-- Top Action Row -->
     <div class="flex items-center justify-between px-1">
@@ -43,171 +42,142 @@
         </a>
 
         <div class="flex items-center gap-2">
-            <span class="text-[10px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
-                {{ total_available }} Streams Active
+            <span class="text-[9px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-satellite-dish text-[9px]"></i>
+                {{ total_available }} Active Nodes
             </span>
         </div>
     </div>
 
-    <!-- Title Section (The Seasons Classic Typography) -->
+    <!-- Title Section -->
     <div class="text-center py-1 select-none space-y-1">
         <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
-            Video <span class="text-slate-400 font-light italic lowercase text-xl">streams</span>
+            Media <span class="text-slate-400 font-light italic lowercase text-xl">protocol</span>
         </h1>
-        <p class="text-xs text-slate-400 font-gotham font-light">৩০ সেকেন্ড ভিডিও স্ট্রিম দেখে সরাসরি আপনার ওয়ালেটে ক্যাশ যোগ করুন</p>
+        <p class="text-[11px] text-slate-400 font-gotham font-light">ব্রডকাস্ট স্ট্রিম কমপ্লিট করে ইনস্ট্যান্ট রেভিনিউ জেনারেট করুন</p>
     </div>
 
-    <!-- ================= 1. CINEMA THEATER PLAYER SECTION (INITIALLY HIDDEN) ================= -->
-    <div id="playerSection" class="hidden theater-frame rounded-[32px] p-5 sm:p-6 space-y-4 transition-all duration-300">
+    <!-- ================= 1. ACTIVE STREAM CONSOLE (HIDDEN DEFAULT) ================= -->
+    <div id="streamConsoleSection" class="hidden stream-console-glass rounded-[28px] p-5 space-y-4 transition-all duration-300 relative overflow-hidden">
         
-        <!-- Player Header Bar -->
         <div class="flex items-center justify-between border-b border-white/[0.08] pb-3">
-            <div class="flex items-center gap-2.5 min-w-0 pr-2">
-                <div class="w-8 h-8 rounded-xl bg-red-600/15 border border-red-500/30 text-red-400 flex items-center justify-center text-xs shrink-0">
-                    <i class="fa-brands fa-youtube"></i>
+            <div class="flex items-center gap-2 min-w-0">
+                <div class="w-8 h-8 rounded-full bg-blue-600/20 text-sky-400 flex items-center justify-center text-xs shrink-0 border border-blue-500/30">
+                    <i class="fa-solid fa-satellite-dish animate-pulse"></i>
                 </div>
-                <div class="min-w-0 leading-tight">
-                    <span class="text-[9px] font-gotham uppercase tracking-wider text-slate-400 block">Now Streaming</span>
-                    <h4 id="nowPlayingTitle" class="text-xs sm:text-sm font-semibold text-white truncate">ভিডিও চলছে...</h4>
+                <div class="leading-tight min-w-0">
+                    <span class="text-[9px] font-gotham uppercase tracking-widest text-sky-400 block font-bold">Live Transmission</span>
+                    <h4 id="consoleTitleText" class="text-xs font-semibold text-white truncate max-w-[200px]">Connecting...</h4>
                 </div>
             </div>
             
-            <div class="flex items-center gap-2 shrink-0">
-                <!-- Open in App Fallback -->
-                <a id="directYtLink" href="#" target="_blank" 
-                   class="bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-slate-300 hover:text-white text-[11px] font-gotham font-semibold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fa-brands fa-youtube text-red-500 text-xs"></i>
-                    <span class="hidden sm:inline">YouTube অ্যাপে দেখুন</span>
-                </a>
-
-                <!-- Close Player Button -->
-                <button onclick="closePlayer()" 
-                        class="w-8 h-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-white flex items-center justify-center text-xs transition border border-white/[0.08]" 
-                        title="প্লেয়ার বন্ধ করুন">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
+            <button onclick="terminateStream()" class="w-8 h-8 rounded-full bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-rose-400 flex items-center justify-center text-xs transition border border-white/[0.06]">
+                <i class="fa-solid fa-power-off"></i>
+            </button>
         </div>
 
-        <!-- 16:9 Video Frame with Privacy Bypass -->
-        <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-2xl border border-white/10">
-            <iframe id="ytIframe" class="w-full h-full" src="" frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen>
+        <!-- Video Player Module -->
+        <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-inner border border-white/10">
+            <iframe id="mediaIframe" class="w-full h-full" src="" frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
             </iframe>
         </div>
 
-        <!-- 30-Second Laser Countdown & Claim Console -->
-        <div class="p-4 rounded-2xl bg-white/[0.025] border border-white/[0.08] space-y-3">
-            
-            <div class="flex items-center justify-between text-xs">
-                <div class="flex items-center gap-2.5">
-                    <div id="timerBadge" class="w-8 h-8 rounded-xl bg-blue-600/20 border border-blue-500/30 text-sky-400 font-gotham font-black text-xs flex items-center justify-center tabular-nums">
-                        30
+        <!-- Processing Status & Claim Terminal -->
+        <div class="p-4 rounded-2xl bg-[#04060b] border border-white/[0.05] space-y-3">
+            <div class="flex items-center justify-between text-xs font-gotham">
+                <span class="text-slate-400 font-medium" id="statusMessage">Receiving Data Packets...</span>
+                <span class="text-sky-400 font-bold tabular-nums" id="countdownTimer">30s</span>
+            </div>
+
+            <!-- Laser Bar -->
+            <div class="w-full bg-white/[0.04] rounded-full h-1 overflow-hidden">
+                <div id="processingBar" class="laser-process-bar h-full w-0 transition-all duration-1000"></div>
+            </div>
+
+            <button id="extractYieldBtn" disabled onclick="extractStreamYield()" 
+                class="w-full bg-white/[0.03] cursor-not-allowed text-slate-500 font-gotham font-semibold text-xs py-3.5 rounded-xl border border-white/[0.05] transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-lock text-[10px]"></i>
+                <span id="extractBtnLabel">Processing (30s)</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= 2. STREAM PROTOCOL LIST (SPOTIFY / LINEAR STYLE) ================= -->
+    <div class="space-y-2">
+        <div class="flex items-center justify-between px-2 pb-1">
+            <span class="text-[10px] font-gotham font-bold uppercase tracking-widest text-slate-500">Available Nodes</span>
+            <i class="fa-solid fa-sort text-slate-500 text-[10px]"></i>
+        </div>
+
+        <div class="space-y-2.5">
+            {% for v in videos %}
+            <div class="stream-data-row rounded-2xl p-3 flex items-center justify-between gap-3 group cursor-pointer"
+                 onclick="initiateStream('{{ v.id }}', '{{ v.video_id }}', '{{ v.title }}', '{{ v.amount }}')">
+                
+                <!-- Left: Square Thumbnail Frame -->
+                <div class="flex items-center gap-3.5 min-w-0">
+                    <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden bg-black shrink-0 border border-white/10 shadow-sm">
+                        <img src="https://img.youtube.com/vi/{{ v.video_id }}/hqdefault.jpg" 
+                             alt="Cover" 
+                             class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-transparent transition">
+                            <i class="fa-solid fa-play text-white/70 text-[10px] group-hover:hidden"></i>
+                        </div>
                     </div>
-                    <div class="leading-tight">
-                        <span id="timerStatusText" class="text-xs font-semibold text-slate-200 block">ভিডিওটি ৩০ সেকেন্ড দেখুন</span>
-                        <span class="text-[10px] text-slate-500">টাইমার শেষ হলে ক্লেইম বাটন আনলক হবে</span>
+
+                    <!-- Meta Data -->
+                    <div class="leading-tight min-w-0">
+                        <h4 class="text-xs sm:text-sm font-semibold text-slate-200 truncate group-hover:text-white transition">
+                            {{ v.title }}
+                        </h4>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="font-gotham text-[9px] px-1.5 py-0.5 rounded bg-white/[0.05] text-slate-400 uppercase">30 Sec</span>
+                            <span class="font-mono text-[9px] text-slate-500">HQ Protocol</span>
+                        </div>
                     </div>
                 </div>
 
-                <span class="text-[11px] font-gotham font-bold text-sky-400 tabular-nums" id="timerSecondsRemaining">
-                    30s Remaining
-                </span>
+                <!-- Right: Yield Info & Action -->
+                <div class="text-right shrink-0 pr-1">
+                    <span class="font-gotham text-xs font-black text-emerald-400 block tabular-nums">
+                        + ৳{{ "%.2f"|format(v.amount) }}
+                    </span>
+                    <span class="text-[9px] font-gotham text-sky-400 font-semibold flex items-center justify-end gap-1 mt-0.5 opacity-0 group-hover:opacity-100 transition translate-x-2 group-hover:translate-x-0">
+                        Initiate <i class="fa-solid fa-arrow-right text-[7px]"></i>
+                    </span>
+                </div>
             </div>
-
-            <!-- Animated Laser Progress Bar -->
-            <div class="w-full bg-white/[0.04] rounded-full h-1.5 overflow-hidden">
-                <div id="timerProgressBar" class="bg-gradient-to-r from-blue-600 via-sky-400 to-emerald-400 timer-laser-bar h-full w-0 transition-all duration-1000 linear"></div>
+            {% else %}
+            <!-- Blank State -->
+            <div class="stream-data-row rounded-[24px] p-10 text-center text-slate-500 space-y-2 select-none">
+                <div class="w-12 h-12 mx-auto rounded-full bg-white/[0.03] border border-white/[0.05] flex items-center justify-center text-lg mb-1">
+                    <i class="fa-solid fa-tower-broadcast opacity-50"></i>
+                </div>
+                <h3 class="text-sm font-semibold text-slate-300">নেটওয়ার্কে কোনো ডাটা নেই</h3>
+                <p class="text-[11px]">নতুন মিডিয়া স্ট্রিম রিসিভ হলে এখানে স্বয়ংক্রিয়ভাবে পপুলেট হবে।</p>
             </div>
-
-            <!-- Claim Button (Unlocks after 30s) -->
-            <button id="claimBtn" disabled onclick="claimCurrentVideo()" 
-                class="w-full bg-white/[0.03] cursor-not-allowed text-slate-500 font-gotham font-semibold text-xs py-3.5 px-4 rounded-xl border border-white/[0.06] transition flex items-center justify-center gap-2 shadow-md">
-                <i class="fa-solid fa-lock text-xs"></i>
-                <span id="claimBtnText">অপেক্ষা করুন (৩০ সে.)</span>
-            </button>
-
+            {% endfor %}
         </div>
     </div>
 
-    <!-- ================= 2. CINEMA TILES GRID ================= -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-        {% for v in videos %}
-        <div id="video-card-{{ v.id }}" class="cinema-card rounded-[26px] flex flex-col justify-between group select-none">
-            
-            <!-- Video Thumbnail & Floating Badges -->
-            <div class="relative aspect-video overflow-hidden bg-black/60">
-                <img src="https://img.youtube.com/vi/{{ v.video_id }}/hqdefault.jpg" 
-                     alt="{{ v.title }}" 
-                     class="cinema-thumb w-full h-full object-cover">
-                
-                <!-- Dark Gradient Overlay -->
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none"></div>
-
-                <!-- 30s Tag (Top Left) -->
-                <span class="absolute top-2.5 left-2.5 font-gotham text-[9px] font-bold px-2 py-0.5 rounded-full bg-black/70 text-slate-300 border border-white/10 backdrop-blur-md">
-                    <i class="fa-regular fa-clock text-[8px] mr-0.5"></i> 30s
-                </span>
-
-                <!-- Reward Amount Floating Pill (Bottom Right) -->
-                <span class="absolute bottom-2.5 right-2.5 font-gotham text-xs font-black px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 backdrop-blur-md shadow-lg tabular-nums">
-                    + ৳ {{ "%.2f"|format(v.amount) }}
-                </span>
-            </div>
-
-            <!-- Content & Action -->
-            <div class="p-4 flex flex-col justify-between flex-1 space-y-3">
-                <h4 class="text-xs font-semibold text-slate-200 line-clamp-2 leading-relaxed group-hover:text-white transition" title="{{ v.title }}">
-                    {{ v.title }}
-                </h4>
-
-                <button onclick="startWatching('{{ v.id }}', '{{ v.video_id }}', '{{ v.title }}', '{{ v.amount }}')" 
-                    class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-2.5 px-4 rounded-xl transition shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-play text-[10px]"></i>
-                    <span>ভিডিও দেখুন ও আয় করুন</span>
-                </button>
-            </div>
-
-        </div>
-        {% else %}
-        <!-- All Caught Up Empty State -->
-        <div class="col-span-full cinema-card rounded-[32px] p-12 text-center text-slate-400 space-y-3 select-none">
-            <div class="w-14 h-14 mx-auto rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl shadow-inner">
-                <i class="fa-solid fa-circle-check"></i>
-            </div>
-            <div class="space-y-1">
-                <h3 class="text-sm font-semibold text-white">সব ভিডিও দেখা সম্পন্ন হয়েছে!</h3>
-                <p class="text-xs text-slate-400">নতুন ভিডিও যুক্ত হওয়ার সাথে সাথে এই পেজে স্বয়ংক্রিয়ভাবে দেখতে পাবেন।</p>
-            </div>
-            <div class="pt-2">
-                <a href="/allwork" class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white font-gotham font-semibold text-xs px-5 py-2.5 rounded-xl transition shadow-lg shadow-blue-600/25 active:scale-95">
-                    <span>অন্যান্য কাজ দেখুন</span>
-                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                </a>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-
-    <!-- ================= 3. DARK GLASS PAGINATION ================= -->
+    <!-- ================= 3. PAGINATION ================= -->
     {% if total_available > 0 %}
-    <div class="flex items-center justify-center gap-2 pt-2 font-gotham select-none text-xs">
+    <div class="flex items-center justify-center gap-2 pt-4 font-gotham select-none text-[10px] font-semibold">
         {% if page > 1 %}
-        <a href="?page={{ page - 1 }}" class="px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] text-slate-300 transition">
-            &laquo; Prev
+        <a href="?page={{ page - 1 }}" class="px-3.5 py-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] text-slate-300 transition">
+            PREV
         </a>
         {% endif %}
         
-        <span class="px-3 py-1.5 rounded-xl bg-white/[0.02] border border-white/[0.04] text-slate-500 font-mono">
-            Page {{ page }}
+        <span class="px-3 py-1.5 text-slate-500 uppercase tracking-widest">
+            Seq {{ page }}
         </span>
         
         {% if has_next %}
-        <a href="?page={{ page + 1 }}" class="px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] text-slate-300 transition">
-            Next &raquo;
+        <a href="?page={{ page + 1 }}" class="px-3.5 py-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] text-slate-300 transition">
+            NEXT
         </a>
         {% endif %}
     </div>
@@ -215,115 +185,106 @@
 
 </div>
 
-<!-- ================= JAVASCRIPT: THEATER MODE & 30S TIMER ENGINE ================= -->
+<!-- ================= JAVASCRIPT: MEDIA PROTOCOL ENGINE ================= -->
 <script>
-let currentWatchId = null;
-let currentAmount = 0;
-let watchTimer = null;
-let secondsRemaining = 30;
+let currentStreamId = null;
+let currentYieldAmount = 0;
+let streamInterval = null;
+let ticksRemaining = 30;
 
-function startWatching(id, vid, title, amount) {
-    if (watchTimer) clearInterval(watchTimer);
+function initiateStream(id, vid, title, amount) {
+    if (streamInterval) clearInterval(streamInterval);
 
-    currentWatchId = id;
-    currentAmount = amount;
-    secondsRemaining = 30;
+    currentStreamId = id;
+    currentYieldAmount = amount;
+    ticksRemaining = 30;
 
-    // Reveal Player Section & Set Fallbacks
-    const playerSec = document.getElementById('playerSection');
-    playerSec.classList.remove('hidden');
-    document.getElementById('nowPlayingTitle').innerText = title;
-    document.getElementById('directYtLink').href = `https://www.youtube.com/watch?v=${vid}`;
+    // Open Terminal
+    const consoleSec = document.getElementById('streamConsoleSection');
+    consoleSec.classList.remove('hidden');
+    document.getElementById('consoleTitleText').innerText = title;
 
-    // Privacy-Enhanced Embedded Video
-    document.getElementById('ytIframe').src = `https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1`;
+    // Secure embed URL
+    document.getElementById('mediaIframe').src = `https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1&controls=1`;
 
-    const timerBadge = document.getElementById('timerBadge');
-    const timerStatusText = document.getElementById('timerStatusText');
-    const timerProgress = document.getElementById('timerProgressBar');
-    const secondsRemainingText = document.getElementById('timerSecondsRemaining');
-    const claimBtn = document.getElementById('claimBtn');
-    const claimBtnText = document.getElementById('claimBtnText');
+    const countdownText = document.getElementById('countdownTimer');
+    const statusMsg = document.getElementById('statusMessage');
+    const progressBar = document.getElementById('processingBar');
+    const yieldBtn = document.getElementById('extractYieldBtn');
+    const yieldBtnLabel = document.getElementById('extractBtnLabel');
 
-    // Reset Controls
-    claimBtn.disabled = true;
-    claimBtn.className = "w-full bg-white/[0.03] cursor-not-allowed text-slate-500 font-gotham font-semibold text-xs py-3.5 px-4 rounded-xl border border-white/[0.06] transition flex items-center justify-center gap-2 shadow-md";
-    claimBtnText.innerText = `অপেক্ষা করুন (${secondsRemaining} সে.)`;
-    timerBadge.innerText = secondsRemaining;
-    timerBadge.className = "w-8 h-8 rounded-xl bg-blue-600/20 border border-blue-500/30 text-sky-400 font-gotham font-black text-xs flex items-center justify-center tabular-nums";
-    timerStatusText.innerText = "ভিডিওটি ৩০ সেকেন্ড দেখুন";
-    timerProgress.style.width = "0%";
-    secondsRemainingText.innerText = `${secondsRemaining}s Remaining`;
+    // Reset States
+    yieldBtn.disabled = true;
+    yieldBtn.className = "w-full bg-white/[0.03] cursor-not-allowed text-slate-500 font-gotham font-semibold text-xs py-3.5 rounded-xl border border-white/[0.05] transition flex items-center justify-center gap-2";
+    yieldBtnLabel.innerText = `Processing (${ticksRemaining}s)`;
+    countdownText.innerText = `${ticksRemaining}s`;
+    statusMsg.innerText = "Receiving Data Packets...";
+    progressBar.style.width = "0%";
 
-    // Smooth Scroll into Player
-    playerSec.scrollIntoView({ behavior: 'smooth' });
+    // Scroll up to console
+    consoleSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-    // 30 Seconds Countdown Timer
-    watchTimer = setInterval(() => {
-        secondsRemaining--;
-        timerBadge.innerText = secondsRemaining;
-        claimBtnText.innerText = `অপেক্ষা করুন (${secondsRemaining} সে.)`;
-        secondsRemainingText.innerText = `${secondsRemaining}s Remaining`;
+    // Tick Engine
+    streamInterval = setInterval(() => {
+        ticksRemaining--;
+        countdownText.innerText = `${ticksRemaining}s`;
+        yieldBtnLabel.innerText = `Processing (${ticksRemaining}s)`;
         
-        // Update Progress Bar Percentage
-        const percentage = ((30 - secondsRemaining) / 30) * 100;
-        timerProgress.style.width = `${percentage}%`;
+        const progress = ((30 - ticksRemaining) / 30) * 100;
+        progressBar.style.width = `${progress}%`;
 
-        if (secondsRemaining <= 0) {
-            clearInterval(watchTimer);
+        if (ticksRemaining <= 0) {
+            clearInterval(streamInterval);
             
-            // Completed Unlock State
-            timerBadge.innerHTML = '<i class="fa-solid fa-check text-xs text-emerald-400"></i>';
-            timerBadge.className = "w-8 h-8 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center";
-            timerStatusText.innerText = "সময় সম্পন্ন! আপনার টাকা ক্লেইম করুন";
-            secondsRemainingText.innerText = "Ready to Claim";
-            timerProgress.style.width = "100%";
+            countdownText.innerText = "0s";
+            countdownText.classList.replace('text-sky-400', 'text-emerald-400');
+            statusMsg.innerText = "Transmission Complete. Ready to Extract.";
+            progressBar.style.width = "100%";
 
-            // Enable 10% Blue / Emerald Accent Claim Button
-            claimBtn.disabled = false;
-            claimBtn.className = "w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-bold text-xs py-3.5 px-4 rounded-xl transition shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 cursor-pointer";
-            claimBtnText.innerText = `🎉 ৳ ${parseFloat(currentAmount).toFixed(2)} ক্লেইম করুন`;
-            claimBtn.querySelector('i').className = "fa-solid fa-gift text-xs";
+            yieldBtn.disabled = false;
+            yieldBtn.className = "w-full bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-gotham font-semibold text-xs py-3.5 rounded-xl transition shadow-[0_0_20px_rgba(37,99,235,0.4)] flex items-center justify-center gap-2 cursor-pointer";
+            yieldBtnLabel.innerText = `Extract ৳ ${parseFloat(currentYieldAmount).toFixed(2)}`;
+            yieldBtn.querySelector('i').className = "fa-solid fa-bolt text-[10px] text-sky-300";
         }
     }, 1000);
 }
 
-function claimCurrentVideo() {
-    if (!currentWatchId) return;
+function extractStreamYield() {
+    if (!currentStreamId) return;
 
-    const claimBtn = document.getElementById('claimBtn');
-    claimBtn.disabled = true;
-    claimBtn.innerText = "ক্লেইম হচ্ছে...";
+    const yieldBtn = document.getElementById('extractYieldBtn');
+    yieldBtn.disabled = true;
+    yieldBtn.innerText = "Extracting...";
 
     fetch('/yt/claim', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ video_id: currentWatchId })
+        body: JSON.stringify({ video_id: currentStreamId })
     })
     .then(r => r.json())
     .then(data => {
         if (data.success) {
             alert(data.message);
-            closePlayer();
-            window.location.reload(); // দেখা ভিডিও ১০০% হাইড হবে এবং ব্যালেন্স রিলোড হবে
+            terminateStream();
+            window.location.reload();
         } else {
             alert(data.message);
-            claimBtn.disabled = false;
-            claimBtn.innerText = "পুনরায় চেষ্টা করুন";
+            yieldBtn.disabled = false;
+            yieldBtn.innerText = "Retry Extraction";
         }
     })
     .catch(() => {
-        alert("সার্ভার ত্রুটি! কিছুক্ষণ পর আবার চেষ্টা করুন।");
-        claimBtn.disabled = false;
-        claimBtn.innerText = "পুনরায় চেষ্টা করুন";
+        alert("Connection Error. Re-establishing link...");
+        yieldBtn.disabled = false;
+        yieldBtn.innerText = "Retry Extraction";
     });
 }
 
-function closePlayer() {
-    if (watchTimer) clearInterval(watchTimer);
-    document.getElementById('ytIframe').src = "";
-    document.getElementById('playerSection').classList.add('hidden');
-    currentWatchId = null;
+function terminateStream() {
+    if (streamInterval) clearInterval(streamInterval);
+    document.getElementById('mediaIframe').src = "";
+    document.getElementById('streamConsoleSection').classList.add('hidden');
+    currentStreamId = null;
 }
 </script>
 {% endblock %}
