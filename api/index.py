@@ -1433,6 +1433,15 @@ def admin_gmail_delete(task_id):
     flash("টাস্কটি ডিলিট করা হয়েছে!", "success")
     return redirect(url_for('admin_gmail'))
 
+# ==========================================================
+# MORE / MENU CONTROLLER (/more)
+# ==========================================================
+@app.route('/more')
+@login_required
+def more_page():
+    return render_template('more.html')
+    
+    
 @app.route('/quiz')
 @login_required
 @kyc_required
