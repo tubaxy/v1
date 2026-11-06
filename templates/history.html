@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
-    /* Ultra-Minimal List Row */
     .minimal-row {
         background: transparent;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -10,8 +9,6 @@
     .minimal-row:hover {
         background: rgba(255, 255, 255, 0.02);
     }
-    
-    /* Clean Tab Switcher */
     .tab-btn {
         color: #64748b;
         border-bottom: 2px solid transparent;
@@ -21,8 +18,6 @@
         color: #38bdf8;
         border-bottom-color: #38bdf8;
     }
-
-    /* Premium Digital Receipt Card (No paper, no barcode) */
     .digital-receipt-card {
         background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.1) 0%, rgba(10, 15, 29, 0.95) 50%, #04060b 100%);
         border: 1px solid rgba(255, 255, 255, 0.08);
@@ -40,7 +35,7 @@
         </a>
     </div>
 
-    <!-- Title Section (Extremely Minimal) -->
+    <!-- Title Section -->
     <div class="px-1 select-none pt-2 pb-4">
         <h1 class="font-classic-seasons text-3xl font-normal text-white tracking-wide">
             Transactions
@@ -48,7 +43,7 @@
         <p class="text-[11px] text-slate-500 font-gotham mt-1">আপনার সকল লেনদেন ও আয়-ব্যয়ের পরিষ্কার বিবরণী</p>
     </div>
 
-    <!-- ================= 1. MINIMAL TAB SWITCHER ================= -->
+    <!-- Tab Switcher -->
     <div class="flex items-center gap-6 border-b border-white/[0.08] px-2 font-gotham text-xs font-semibold select-none">
         <button id="tabBtn-payouts" onclick="switchTab('payouts')" class="tab-btn active pb-2.5">
             উইথড্রয়াল
@@ -58,29 +53,28 @@
         </button>
     </div>
 
-    <!-- ================= 2. PAYOUTS (WITHDRAWALS) LIST ================= -->
+    <!-- ================= 1. PAYOUTS (WITHDRAWALS) LIST ================= -->
     <div id="section-payouts" class="space-y-0">
         {% for w in withdrawals %}
         <div class="minimal-row py-4 px-2 flex items-center justify-between gap-3 group">
             
             <div class="flex items-center gap-3.5 min-w-0">
-                <!-- Icon -->
                 <div class="w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-slate-300 shrink-0 group-hover:bg-white/[0.05] transition">
                     <i class="fa-solid fa-arrow-up-right-from-square text-sky-400 text-[11px]"></i>
                 </div>
-                
-                <!-- Info -->
                 <div class="leading-tight min-w-0">
                     <span class="text-xs font-gotham font-semibold text-white block truncate">{{ w.method }} Cashout</span>
-                    <span class="text-[10px] font-mono text-slate-500 block mt-1">{{ w.created_at[:10] }} • {{ w.account_number[-4:] }}</span>
+                    <!-- 🌟 UNIQUE ALPHANUMERIC TRX ID 🌟 -->
+                    <span class="text-[10px] font-mono text-sky-400 font-bold block mt-1">{{ w.trx_id }}</span>
+                    <span class="text-[9px] font-gotham text-slate-500 block mt-0.5">{{ w.created_at[:10] }} • A/C: {{ w.account_number[-4:] }}</span>
                 </div>
             </div>
 
-            <!-- Amount & Receipt Action -->
             <div class="text-right shrink-0">
                 <span class="font-gotham font-bold text-sm text-white block tabular-nums">৳{{ "%.2f"|format(w.amount) }}</span>
                 
-                <button onclick="openReceiptModal('{{ w.id }}', '{{ w.amount }}', '{{ w.method }}', '{{ w.account_number }}', '{{ w.status }}', '{{ w.created_at[:10] }}')" 
+                <!-- 🌟 PASSED w.trx_id INSTEAD OF ID 🌟 -->
+                <button onclick="openReceiptModal('{{ w.trx_id }}', '{{ w.amount }}', '{{ w.method }}', '{{ w.account_number }}', '{{ w.status }}', '{{ w.created_at[:10] }}')" 
                         class="mt-1 text-[9px] font-gotham font-semibold text-sky-400 hover:text-sky-300 transition flex items-center justify-end gap-1">
                     <span>রসিদ দেখুন</span>
                     <i class="fa-solid fa-chevron-right text-[7px]"></i>
@@ -96,25 +90,21 @@
         {% endfor %}
     </div>
 
-    <!-- ================= 3. EARNINGS (TASKS & OTHERS) LIST ================= -->
+    <!-- ================= 2. EARNINGS (TASKS & OTHERS) LIST ================= -->
     <div id="section-earnings" class="space-y-0 hidden">
         {% for t in task_subs %}
         <div class="minimal-row py-4 px-2 flex items-center justify-between gap-3 group">
-            
             <div class="flex items-center gap-3.5 min-w-0">
                 <div class="w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-slate-300 shrink-0 group-hover:bg-white/[0.05] transition">
                     <i class="fa-solid fa-briefcase text-emerald-400 text-[11px]"></i>
                 </div>
-                
                 <div class="leading-tight min-w-0 max-w-[180px] sm:max-w-xs">
                     <span class="text-xs font-gotham font-semibold text-white block truncate">{{ t.tasks.title }}</span>
                     <span class="text-[10px] font-mono text-slate-500 block mt-1">{{ t.created_at[:10] }}</span>
                 </div>
             </div>
-
             <div class="text-right shrink-0">
                 <span class="font-gotham font-bold text-sm text-emerald-400 block tabular-nums">+৳{{ "%.2f"|format(t.tasks.amount) }}</span>
-                
                 {% if t.status == 'approved' %}
                     <span class="text-[9px] text-emerald-500 font-gotham font-medium">Approved</span>
                 {% elif t.status == 'pending' %}
@@ -123,7 +113,6 @@
                     <span class="text-[9px] text-rose-500 font-gotham font-medium">Rejected</span>
                 {% endif %}
             </div>
-
         </div>
         {% else %}
         <div class="py-12 text-center text-slate-500 space-y-2 select-none">
@@ -135,14 +124,12 @@
 
 </div>
 
-<!-- ================= NEW PREMIUM DIGITAL RECEIPT MODAL (NO PAPER/BARCODE) ================= -->
+<!-- ================= 3. DIGITAL RECEIPT MODAL ================= -->
 <div id="receiptModal" class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
     <div class="w-full max-w-sm digital-receipt-card rounded-3xl p-6 sm:p-7 shadow-2xl transform scale-95 transition-transform duration-300 relative overflow-hidden" id="modalCardBox">
         
-        <!-- Subtle Background Glow -->
         <div class="absolute -top-10 -right-10 w-32 h-32 bg-sky-500/20 blur-3xl pointer-events-none"></div>
 
-        <!-- Header -->
         <div class="flex items-center justify-between pb-4">
             <div class="flex items-center gap-2">
                 <div class="w-7 h-7 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center">
@@ -155,14 +142,12 @@
             </button>
         </div>
 
-        <!-- Big Amount Display -->
         <div class="py-6 text-center space-y-1">
             <p class="text-[10px] font-gotham text-slate-500 uppercase tracking-widest">Transaction Amount</p>
             <h2 class="text-4xl font-gotham font-black text-white tracking-tight tabular-nums" id="rAmount">৳ 0.00</h2>
             <div id="rStatusBadge" class="pt-2"></div>
         </div>
 
-        <!-- Clean Details List -->
         <div class="space-y-4 pt-4 border-t border-white/[0.06] font-gotham text-xs">
             <div class="flex justify-between items-center">
                 <span class="text-slate-500">Method</span>
@@ -178,14 +163,12 @@
             </div>
             <div class="flex justify-between items-center">
                 <span class="text-slate-500">Transaction ID</span>
-                <span class="text-sky-400 font-mono" id="rTrx">#0000</span>
+                <span class="text-sky-400 font-mono font-bold" id="rTrx">TXN-00000000</span>
             </div>
         </div>
 
-        <!-- Hidden Canvas For HD Export -->
         <canvas id="receiptExportCanvas" width="800" height="1200" class="hidden"></canvas>
 
-        <!-- 1-Click HD Download Button -->
         <div class="pt-8">
             <button onclick="downloadDigitalReceipt()" id="btnDownloadReceipt" 
                     class="w-full bg-white/[0.05] hover:bg-white/[0.08] active:scale-95 border border-white/10 text-white font-gotham font-semibold text-[11px] py-3.5 rounded-xl transition flex items-center justify-center gap-2">
@@ -197,11 +180,9 @@
     </div>
 </div>
 
-<!-- ================= JAVASCRIPT CONTROLLERS ================= -->
 <script>
 let currentReceiptData = {};
 
-// Simple Minimal Tab Switcher
 function switchTab(tab) {
     document.getElementById('section-payouts').classList.add('hidden');
     document.getElementById('section-earnings').classList.add('hidden');
@@ -212,11 +193,11 @@ function switchTab(tab) {
     document.getElementById('tabBtn-' + tab).classList.add('active');
 }
 
-// Open Digital Receipt Modal
+// 🌟 UPDATED TO RECEIVE UNIQUE TRX_ID 🌟
 function openReceiptModal(id, amount, method, account, status, date) {
     currentReceiptData = { id, amount, method, account, status, date };
 
-    document.getElementById('rTrx').innerText = `TRX-${String(id).padStart(5, '0')}`;
+    document.getElementById('rTrx').innerText = id; // Directly sets TXN-XXXXXX
     document.getElementById('rAmount').innerText = `৳ ${parseFloat(amount).toFixed(2)}`;
     document.getElementById('rMethod').innerText = method;
     document.getElementById('rAccount').innerText = account;
@@ -248,7 +229,6 @@ function closeReceiptModal() {
     box.classList.remove('scale-100');
 }
 
-// Premium Digital Canvas Export (Sleek Dark Mode, No Barcode)
 function downloadDigitalReceipt() {
     const btn = document.getElementById('btnDownloadReceipt');
     const btnText = document.getElementById('btnDownloadText');
@@ -258,39 +238,30 @@ function downloadDigitalReceipt() {
     btn.disabled = true;
     btnText.innerText = "Processing...";
 
-    const W = 800;
-    const H = 1200;
-
-    // 1. Dark Obsidian Canvas Background
+    const W = 800, H = 1200;
     ctx.fillStyle = "#020306";
     ctx.fillRect(0, 0, W, H);
 
-    // 2. Center Receipt Card Geometry
     const cX = 60, cY = 80, cW = W - 120, cH = H - 160;
-    
     ctx.beginPath();
     ctx.roundRect(cX, cY, cW, cH, 32);
     
-    // Sleek Dark Gradient Card Fill
     const cardGrad = ctx.createLinearGradient(cX, cY, cX, cY + cH);
     cardGrad.addColorStop(0, "#0a0f1d");
     cardGrad.addColorStop(1, "#04060b");
     ctx.fillStyle = cardGrad;
     ctx.fill();
 
-    // Subtle Glass Border
     ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Ambient Blue Glow Top-Right
     const glow = ctx.createRadialGradient(cX + cW, cY, 10, cX + cW, cY, 400);
     glow.addColorStop(0, "rgba(37, 99, 235, 0.15)");
     glow.addColorStop(1, "transparent");
     ctx.fillStyle = glow;
     ctx.fill();
 
-    // 3. Brand Header
     ctx.fillStyle = "#ffffff";
     ctx.textAlign = "center";
     ctx.font = "normal 38px 'Georgia', serif";
@@ -300,7 +271,6 @@ function downloadDigitalReceipt() {
     ctx.font = "bold 14px 'Arial', sans-serif";
     ctx.fillText("DIGITAL TRANSACTION RECEIPT", W / 2, cY + 115);
 
-    // 4. Amount Section
     ctx.fillStyle = "#94a3b8";
     ctx.font = "bold 16px 'Arial', sans-serif";
     ctx.fillText("DISBURSED AMOUNT", W / 2, cY + 240);
@@ -309,7 +279,6 @@ function downloadDigitalReceipt() {
     ctx.font = "900 85px 'Arial', sans-serif";
     ctx.fillText(`৳ ${parseFloat(currentReceiptData.amount).toFixed(2)}`, W / 2, cY + 340);
 
-    // Status
     ctx.font = "bold 18px 'Arial', sans-serif";
     if (currentReceiptData.status === 'approved') {
         ctx.fillStyle = "#34d399";
@@ -322,7 +291,6 @@ function downloadDigitalReceipt() {
         ctx.fillText("✕ REJECTED", W / 2, cY + 395);
     }
 
-    // 5. Divider Line
     ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
     ctx.lineWidth = 2;
     ctx.beginPath();
@@ -330,40 +298,42 @@ function downloadDigitalReceipt() {
     ctx.lineTo(cX + cW - 50, cY + 480);
     ctx.stroke();
 
-    // 6. Transaction Details (Minimalist Grid)
     const startY = cY + 560;
     const spacing = 75;
     const details = [
         ["Payment Method", currentReceiptData.method],
         ["Target Account", currentReceiptData.account],
         ["Date & Time", currentReceiptData.date],
-        ["Transaction ID", `TRX-${String(currentReceiptData.id).padStart(5, '0')}`],
+        ["Transaction ID", currentReceiptData.id],
         ["Gateway Network", "TaskWallet Internal"]
     ];
 
     details.forEach((row, i) => {
         const rowY = startY + (i * spacing);
-        
         ctx.textAlign = "left";
         ctx.font = "normal 20px 'Arial', sans-serif";
         ctx.fillStyle = "#64748b";
         ctx.fillText(row[0], cX + 60, rowY);
-
         ctx.textAlign = "right";
         ctx.font = "bold 22px 'Courier New', monospace";
         ctx.fillStyle = "#f8fafc";
         ctx.fillText(row[1], cX + cW - 60, rowY);
     });
 
-    // 7. Footer Authentic Seal (Replacing Barcode)
+    ctx.setLineDash([8, 6]);
     ctx.beginPath();
-    ctx.arc(W / 2, cY + cH - 110, 45, 0, Math.PI * 2);
+    ctx.moveTo(cX + 30, cY + cH - 150);
+    ctx.lineTo(cX + cW - 30, cY + cH - 150);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.beginPath();
+    ctx.arc(W / 2, cY + cH - 80, 40, 0, Math.PI * 2);
     ctx.strokeStyle = "rgba(56, 189, 248, 0.3)";
     ctx.lineWidth = 3;
     ctx.stroke();
-    
     ctx.beginPath();
-    ctx.arc(W / 2, cY + cH - 110, 35, 0, Math.PI * 2);
+    ctx.arc(W / 2, cY + cH - 80, 30, 0, Math.PI * 2);
     ctx.strokeStyle = "rgba(56, 189, 248, 0.15)";
     ctx.lineWidth = 1;
     ctx.stroke();
@@ -371,13 +341,12 @@ function downloadDigitalReceipt() {
     ctx.textAlign = "center";
     ctx.fillStyle = "#38bdf8";
     ctx.font = "bold 20px 'Arial'";
-    ctx.fillText("TW", W / 2, cY + cH - 102);
+    ctx.fillText("TW", W / 2, cY + cH - 72);
 
     ctx.fillStyle = "#475569";
     ctx.font = "bold 13px 'Arial'";
-    ctx.fillText("SECURE ENCRYPTED VOUCHER", W / 2, cY + cH - 35);
+    ctx.fillText("SECURE ENCRYPTED VOUCHER", W / 2, cY + cH - 20);
 
-    // Export and Download Image
     canvas.toBlob(blob => {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
