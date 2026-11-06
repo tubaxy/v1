@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .fintech-card {
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(24px);
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fintech-card:hover {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(255, 255, 255, 0.04);
+        transform: translateY(-2px);
+    }
+
+    /* PWA Install Card Pulse Glow */
+    .install-glow {
+        box-shadow: 0 15px 35px -10px rgba(16, 185, 129, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    }
+</style>
+
+<div class="max-w-xl mx-auto space-y-5 pb-24 px-1 sm:px-0">
+
+    <!-- Top Action Row -->
+    <div class="flex items-center justify-between px-1">
+        <a href="/app" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95 shadow-sm">
+            <i class="fa-solid fa-arrow-left text-[10px] text-blue-500"></i>
+            <span>ড্যাশবোর্ড</span>
+        </a>
+
+        <div class="flex items-center gap-2">
+            <span class="text-[9px] font-gotham font-semibold tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-layer-group text-[9px]"></i> Menu Hub
+            </span>
+        </div>
+    </div>
+
+    <!-- Title Section -->
+    <div class="text-center py-1 select-none space-y-1">
+        <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
+            Explore <span class="text-slate-400 font-light italic lowercase text-xl">more</span>
+        </h1>
+        <p class="text-[11px] text-slate-400 font-gotham font-light">আপনার প্রয়োজনীয় সকল সার্ভিস এবং শর্টকাট মেনু</p>
+    </div>
+
+    <!-- ================= 1. IMPORTANT CTAs (TOP) ================= -->
+    <div class="space-y-3">
+        
+        <!-- 👉 Dynamic App Install CTA (Hides if already installed) 👈 -->
+        <div id="pwaInstallCard" class="hidden bg-gradient-to-r from-emerald-500/10 to-teal-500/5 border border-emerald-500/30 rounded-[24px] p-4 flex items-center justify-between gap-3 install-glow transition active:scale-[0.99] select-none">
+            <div class="flex items-center gap-3 min-w-0">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg shrink-0">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                </div>
+                <div class="leading-tight min-w-0">
+                    <span class="text-xs font-semibold text-white block truncate">TaskWallet অ্যাপ ইনস্টল করুন</span>
+                    <span class="text-[10px] text-emerald-300/80 font-gotham truncate block mt-0.5">হোমস্ক্রিন থেকে ১-ট্যাপে ফাস্ট এক্সেস</span>
+                </div>
+            </div>
+            <!-- 1-Click Action -->
+            <button id="nativeInstallBtn" onclick="triggerNativeInstall()" class="bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-gotham font-bold text-[10px] px-3.5 py-2 rounded-xl transition shadow-md shrink-0">
+                Install
+            </button>
+        </div>
+
+        <!-- Official Telegram Community CTA (Always Visible) -->
+        <a href="https://t.me/taskwallet_bd" target="_blank" 
+           class="flex items-center justify-between gap-3 p-4 rounded-[24px] border border-sky-500/30 bg-gradient-to-r from-sky-500/10 to-blue-500/5 hover:bg-sky-500/10 transition active:scale-[0.99] select-none">
+            <div class="flex items-center gap-3 min-w-0">
+                <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-lg shrink-0">
+                    <i class="fa-brands fa-telegram"></i>
+                </div>
+                <div class="leading-tight min-w-0">
+                    <span class="text-xs font-semibold text-white block truncate">অফিসিয়াল টেলিগ্রাম চ্যানেল</span>
+                    <span class="text-[10px] text-sky-300/80 font-gotham truncate block mt-0.5">সব আপডেট ও পেমেন্ট প্রুফ দেখতে যুক্ত হোন</span>
+                </div>
+            </div>
+            <div class="bg-white/[0.08] text-sky-400 w-8 h-8 rounded-full flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </div>
+        </a>
+
+    </div>
+
+    <!-- ================= 2. QUICK LINKS GRID ================= -->
+    <div class="grid grid-cols-2 gap-3 pt-2">
+        
+        <!-- Profile ID -->
+        <a href="/account" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
+            <div class="space-y-2.5">
+                <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-purple-400 group-hover:border-purple-500/40 transition">
+                    <i class="fa-solid fa-id-card"></i>
+                </div>
+                <div class="leading-tight">
+                    <h3 class="text-xs font-semibold text-white">Profile ID</h3>
+                    <p class="text-[10px] text-slate-400 mt-0.5 truncate">ডিজিটাল মেম্বার কার্ড</p>
+                </div>
+            </div>
+        </a>
+
+        <!-- Leaderboard -->
+        <a href="/leaderboard" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
+            <div class="space-y-2.5">
+                <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-amber-400 group-hover:border-amber-500/40 transition">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <div class="leading-tight">
+                    <h3 class="text-xs font-semibold text-white">Leaderboard</h3>
+                    <p class="text-[10px] text-slate-400 mt-0.5 truncate">টপ রেফারার তালিকা</p>
+                </div>
+            </div>
+        </a>
+
+        <!-- Announcements -->
+        <a href="/announcements" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
+            <div class="space-y-2.5">
+                <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-sky-400 group-hover:border-sky-500/40 transition">
+                    <i class="fa-solid fa-bullhorn"></i>
+                </div>
+                <div class="leading-tight">
+                    <h3 class="text-xs font-semibold text-white">Notice Hub</h3>
+                    <p class="text-[10px] text-slate-400 mt-0.5 truncate">অফিসিয়াল নোটিশ</p>
+                </div>
+            </div>
+        </a>
+
+        <!-- Video Tutorial -->
+        <a href="/tutorial" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
+            <div class="space-y-2.5">
+                <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-red-400 group-hover:border-red-500/40 transition">
+                    <i class="fa-solid fa-circle-play"></i>
+                </div>
+                <div class="leading-tight">
+                    <h3 class="text-xs font-semibold text-white">Video Guide</h3>
+                    <p class="text-[10px] text-slate-400 mt-0.5 truncate">কাজের ভিডিও টিউটোরিয়াল</p>
+                </div>
+            </div>
+        </a>
+
+        <!-- Promote -->
+        <a href="/promote" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
+            <div class="space-y-2.5">
+                <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-emerald-400 group-hover:border-emerald-500/40 transition">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div class="leading-tight">
+                    <h3 class="text-xs font-semibold text-white">Advertising</h3>
+                    <p class="text-[10px] text-slate-400 mt-0.5 truncate">বিজ্ঞাপন ও প্রমোশন</p>
+                </div>
+            </div>
+        </a>
+
+        <!-- Sponsor -->
+        <a href="/sponsor" class="fintech-card rounded-2xl p-4 flex flex-col justify-between group active:scale-95">
+            <div class="space-y-2.5">
+                <div class="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 flex items-center justify-center text-sm group-hover:text-blue-400 group-hover:border-blue-500/40 transition">
+                    <i class="fa-solid fa-handshake"></i>
+                </div>
+                <div class="leading-tight">
+                    <h3 class="text-xs font-semibold text-white">Partner Hub</h3>
+                    <p class="text-[10px] text-slate-400 mt-0.5 truncate">স্পনসরশিপ প্রোগ্রাম</p>
+                </div>
+            </div>
+        </a>
+
+    </div>
+
+    <!-- ================= 3. LOGOUT BUTTON (DANGER ZONE) ================= -->
+    <div class="pt-4">
+        <a href="/logout" 
+           class="w-full bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-400 font-gotham font-semibold text-xs py-3.5 rounded-2xl transition flex items-center justify-center gap-2 active:scale-[0.98]">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>অ্যাকাউন্ট থেকে লগআউট করুন</span>
+        </a>
+    </div>
+
+</div>
+
+<!-- SCRIPT: SMART PWA INSTALL DETECTOR -->
+<script>
+let deferredInstallPrompt;
+const installCard = document.getElementById('pwaInstallCard');
+const installBtn = document.getElementById('nativeInstallBtn');
+
+// Detect if app is already running in Standalone (PWA) Mode
+function checkAppInstalledState() {
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    
+    // If NOT standalone, show the Install Card
+    if (!isStandalone) {
+        installCard.classList.remove('hidden');
+    } else {
+        // If already installed, ensure it stays hidden
+        installCard.classList.add('hidden');
+    }
+}
+
+// Check on load
+checkAppInstalledState();
+
+// Capture Chrome's native Install Prompt
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    installCard.classList.remove('hidden');
+});
+
+// Trigger Installation
+function triggerNativeInstall() {
+    if (deferredInstallPrompt) {
+        installBtn.innerText = "Installing...";
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                installCard.classList.add('hidden');
+                alert('🎉 অভিনন্দন! TaskWallet অ্যাপটি ইনস্টল হচ্ছে।');
+            } else {
+                installBtn.innerText = "Install";
+            }
+            deferredInstallPrompt = null;
+        });
+    } else {
+        alert("আপনার ব্রাউজারের থ্রি-ডট (⋮) বা শেয়ার (⎋) মেনু থেকে 'Add to Home Screen' চাপুন।");
+    }
+}
+
+window.addEventListener('appinstalled', () => {
+    installCard.classList.add('hidden');
+});
+</script>
+{% endblock %}
