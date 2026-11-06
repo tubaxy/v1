@@ -826,40 +826,53 @@ def register():
     email = request.form.get('email', '').strip().lower()
     password = request.form.get('password', '')
     ref_by = request.form.get('ref_by', '').strip().upper() or session.get('cached_ref', '')
-    device_id = request.form.get('device_id', '').strip() or request.cookies.get('device_id', '')
+    
+    # ফর্ম অথবা কুকি থেকে ডিভাইস আইডি নেওয়া
+    device_id = request.form.get('device_id', '').strip() or request.cookies.get('device_id', '').strip()
 
     if not email or not password:
         flash("ইমেইল ও পাসওয়ার্ড প্রদান করুন!", "danger")
         return redirect(url_for('index'))
 
     if not email.endswith('@gmail.com'):
-        flash("অনুগ্রহ করে একটি সঠিক ও বৈধ @gmail.com ইমেইল প্রদান করুন!", "danger")
+        flash("শুধুমাত্র সঠিক @gmail.com ইমেইল গ্রহণযোগ্য!", "danger")
         return redirect(url_for('index'))
 
+    # ইমেইল থেকে নাম তৈরি (hellp@gmail.com -> Hellp)
     name = email.split('@')[0].replace('.', ' ').replace('_', ' ').title()
 
+    # ১. এই একই ডিভাইসে আগে কোনো অ্যাকাউন্ট খোলা হয়েছে কিনা চেক
     if device_id:
         existing_device = sb.table('users').select('id').eq('device_id', device_id).execute().data
         if existing_device:
-            flash("⛔ এই ডিভাইস থেকে ইতিমধ্যে একটি অ্যাকাউন্ট খোলা হয়েছে!", "danger")
+            flash("⛔ এই ডিভাইস থেকে ইতিমধ্যে একটি অ্যাকাউন্ট তৈরি করা হয়েছে!", "danger")
             return redirect(url_for('index'))
 
+    # ২. ইমেইল ডুপ্লিকেট চেক
     existing_email = sb.table('users').select('id').eq('email', email).execute().data
     if existing_email:
         flash("এই ইমেইল দিয়ে ইতিমধ্যে অ্যাকাউন্ট তৈরি করা আছে!", "danger")
         return redirect(url_for('login'))
 
     my_ref_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
-    initial_balance = 50.00
+    initial_balance = 50.00  # সরাসরি সাইন-আপে ৫০৳ বোনাস
 
+    # ৩. রেফারেল সিকিউরিটি লজিক
     valid_referrer = None
     if ref_by:
         referrer_res = sb.table('users').select('*').ilike('referral_code', ref_by).execute().data
         if referrer_res:
             ref_user = referrer_res[0]
-            if ref_user['email'] != email and ref_user.get('device_id') != device_id:
+            
+            # 🛡️ সিকিউরিটি: নিজের ডিভাইসে নিজে রেফার বা একই ইমেইল সম্পূর্ণ ব্লক
+            if ref_user['email'] == email or (device_id and ref_user.get('device_id') == device_id):
+                flash("⛔ নিজের ডিভাইসে নিজে রেফার করা সম্পূর্ণ নিষিদ্ধ!", "danger")
+                return redirect(url_for('index'))
+            else:
                 valid_referrer = ref_user
-                initial_balance = 100.00
+                initial_balance = 100.00  # রেফারে জয়েন করায় নতুন ইউজার পাবে ১০০৳
+
+                # রেফারার পাবে সরাসরি ২০৳
                 new_ref_bal = float(ref_user['balance']) + 20.00
                 sb.table('users').update({'balance': new_ref_bal}).eq('id', ref_user['id']).execute()
 
@@ -867,7 +880,7 @@ def register():
         'name': name,
         'email': email,
         'password_hash': generate_password_hash(password),
-        'device_id': device_id if device_id else 'DEV-' + ''.join(random.choices(string.hexdigits, k=16)).upper(),
+        'device_id': device_id if device_id else 'DEV_' + ''.join(random.choices(string.hexdigits, k=16)).upper(),
         'referral_code': my_ref_code,
         'referred_by': valid_referrer['referral_code'] if valid_referrer else None,
         'balance': initial_balance
@@ -882,11 +895,12 @@ def register():
             session.pop('cached_ref', None)
             flash(f"অভিনন্দন {name}! আপনি ৳{initial_balance:.2f} জয়েনিং বোনাস পেয়েছেন।", "success")
             return redirect(url_for('dashboard'))
-    except Exception:
-        flash("রেজিস্ট্রেশন ত্রুটি, অনুগ্রহ করে পুনরায় চেষ্টা করুন।", "danger")
+    except Exception as e:
+        print("Registration Error:", e)
+        flash("রেজিস্ট্রেশন ত্রুটি, পুনরায় চেষ্টা করুন।", "danger")
         
     return redirect(url_for('index'))
-
+    
 @app.route('/kyc', methods=['GET', 'POST'])
 @login_required
 def kyc_page():
