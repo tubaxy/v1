@@ -78,6 +78,15 @@
         font-size: 11px;
         font-weight: 600;
     }
+
+    /* Ambient Pulsing Glow for Coming Soon */
+    @keyframes pulseComingSoon {
+        0%, 100% { border-color: rgba(255, 255, 255, 0.1); opacity: 0.6; }
+        50% { border-color: rgba(56, 189, 248, 0.4); opacity: 1; }
+    }
+    .coming-soon-card {
+        animation: pulseComingSoon 3.5s infinite ease-in-out;
+    }
 </style>
 
 <div class="max-w-xl mx-auto space-y-5 pb-24 px-1 sm:px-0">
@@ -139,7 +148,7 @@
 
     <!-- ================= DAILY FREE CLAIM WIDGET ================= -->
     {% if daily_reward_amount > 0 %}
-    <div class="fintech-card rounded-2xl p-4 border border-white/10 flex items-center justify-between gap-3">
+    <div class="bg-white/[0.025] rounded-2xl p-4 border border-white/10 flex items-center justify-between gap-3 backdrop-blur-md">
         <div class="leading-tight">
             <span class="text-[9px] font-gotham uppercase tracking-wider text-slate-400 block mb-0.5">VIP Daily Perk</span>
             <h4 class="text-xs font-bold text-white">দৈনিক ফ্রি ইনকাম: <span class="text-sky-400 font-gotham font-black">৳{{ "%.2f"|format(daily_reward_amount) }}</span></h4>
@@ -173,26 +182,18 @@
                 </div>
             </div>
 
-            <!-- Facilities Checklist -->
             <div class="space-y-2 text-xs">
                 <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                     <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-users text-amber-500"></i> রেফারেল রিকোয়ারমেন্ট:</span>
                     <span class="perk-highlight-pill bg-amber-500/15 text-amber-300 border border-amber-500/30">৫টি রেফার বাধ্যতামূলক</span>
                 </div>
-
                 <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                     <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-wallet text-amber-500"></i> সর্বনিম্ন উইথড্রয়াল:</span>
-                    <span class="font-gotham font-black text-white text-xs">৳ 430.০০</span>
+                    <span class="font-gotham font-black text-white text-xs">৳ ৫০০.০০</span>
                 </div>
-
                 <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                     <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-clock text-amber-500"></i> উইথড্র প্রসেসিং টাইম:</span>
                     <span class="font-gotham text-slate-300">৬ ঘণ্টা</span>
-                </div>
-
-                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                    <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-shield-halved text-amber-500"></i> বিজ্ঞাপন ও সাপোর্ট:</span>
-                    <span class="text-slate-400">No Ads • Telegram Support</span>
                 </div>
             </div>
 
@@ -221,34 +222,22 @@
                 </div>
             </div>
 
-            <!-- Facilities Checklist (Highlighted) -->
             <div class="space-y-2 text-xs">
-                <!-- Highlight 1: Only 1 Refer -->
                 <div class="flex items-center justify-between p-2 rounded-xl bg-orange-500/10 border border-orange-500/30">
                     <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-bolt text-orange-400"></i> রেফারেল রিকোয়ারমেন্ট:</span>
                     <span class="perk-highlight-pill bg-orange-500/25 text-orange-200 border border-orange-400/40">মাত্র ১টি রেফার! 🚀</span>
                 </div>
-
-                <!-- Highlight 2: Low 200 Tk Withdraw -->
                 <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                     <span class="text-slate-200 flex items-center gap-2"><i class="fa-solid fa-wallet text-orange-400"></i> সর্বনিম্ন উইথড্রয়াল:</span>
                     <span class="font-gotham font-black text-orange-400 text-sm">৳ ২০০.০০</span>
                 </div>
-
-                <!-- Highlight 3: Free Daily 10 Tk -->
                 <div class="flex items-center justify-between p-2 rounded-xl bg-orange-500/10 border border-orange-500/30">
                     <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-gift text-orange-400"></i> প্রতিদিন ফ্রি ক্যাশ:</span>
                     <span class="perk-highlight-pill bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">৳ ১০.০০ (মোট ১৫০৳)</span>
                 </div>
-
                 <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                     <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-clock text-orange-400"></i> উইথড্র প্রসেসিং:</span>
                     <span class="font-gotham text-slate-200">মাত্র ৩ ঘণ্টা</span>
-                </div>
-
-                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                    <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-headset text-orange-400"></i> লাইভ সাপোর্ট:</span>
-                    <span class="text-slate-200 font-medium">Priority Live Support</span>
                 </div>
             </div>
 
@@ -261,7 +250,7 @@
             </div>
         </div>
 
-        <!-- 3. SILVER TIER (250৳ - ০ রেফারেল & ১০০৳ উইথড্র) -->
+        <!-- 3. SILVER TIER (250৳) -->
         <div class="glowing-tier-card glow-silver p-5 sm:p-6 space-y-4 select-none">
             <div class="flex items-start justify-between border-b border-white/[0.08] pb-3">
                 <div class="flex items-center gap-3">
@@ -279,34 +268,22 @@
                 </div>
             </div>
 
-            <!-- Facilities Checklist -->
             <div class="space-y-2 text-xs">
-                <!-- Highlight 1: 0 Refer -->
                 <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.05] border border-white/20">
                     <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-bolt text-sky-400"></i> রেফারেল রিকোয়ারমেন্ট:</span>
                     <span class="perk-highlight-pill bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">০ টি (কোনো রেফার ছাড়াই উইথড্র!) ⚡</span>
                 </div>
-
-                <!-- Highlight 2: 100 Tk Withdraw -->
                 <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                     <span class="text-slate-200 flex items-center gap-2"><i class="fa-solid fa-wallet text-slate-300"></i> সর্বনিম্ন উইথড্রয়াল:</span>
                     <span class="font-gotham font-black text-white text-sm">৳ ১০০.০০</span>
                 </div>
-
-                <!-- Highlight 3: Free Daily 23 Tk -->
                 <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.05] border border-white/20">
                     <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-gift text-sky-400"></i> প্রতিদিন ফ্রি ক্যাশ:</span>
                     <span class="perk-highlight-pill bg-sky-500/20 text-sky-300 border border-sky-400/30">৳ ২৩.০০ (মোট ৩৪৫৳)</span>
                 </div>
-
                 <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                     <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-clock text-slate-300"></i> উইথড্র প্রসেসিং:</span>
                     <span class="font-gotham text-white font-bold">মাত্র ১ ঘণ্টা!</span>
-                </div>
-
-                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                    <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-lock-open text-slate-300"></i> এক্সক্লুসিভ টাস্ক:</span>
-                    <span class="text-emerald-400 font-semibold">High-Paying Tasks Unlock</span>
                 </div>
             </div>
 
@@ -314,12 +291,12 @@
                 {% if current_tier == 'silver' %}
                     <button disabled class="w-full bg-white/20 text-white border border-white/30 font-gotham font-bold text-xs py-3.5 rounded-xl cursor-default">Active Plan</button>
                 {% else %}
-                    <a href="/upgrade/checkout/silver" class="block w-full text-center bg-slate-100 hover:bg-white text-slate-950 font-gotham font-black text-xs py-3.5 rounded-xl transition shadow-lg active:scale-95">Upgrade to Silver &raquo;</a>
+                    <a href="/upgrade/checkout/silver" class="block w-full text-center bg-slate-200 hover:bg-white text-slate-950 font-gotham font-bold text-xs py-3.5 rounded-xl transition shadow-lg active:scale-95">Upgrade to Silver &raquo;</a>
                 {% endif %}
             </div>
         </div>
 
-        <!-- 4. GOLD TIER (400৳ - ০ রেফারেল, ৫০৳ উইথড্র & ১.৫ গুণ আয়!) -->
+        <!-- 4. GOLD TIER (400৳) -->
         <div class="glowing-tier-card glow-gold p-5 sm:p-6 space-y-4 select-none">
             <div class="flex items-start justify-between border-b border-white/[0.08] pb-3">
                 <div class="flex items-center gap-3">
@@ -337,32 +314,19 @@
                 </div>
             </div>
 
-            <!-- Facilities Checklist -->
             <div class="space-y-2 text-xs">
-                <!-- Highlight 1: 0 Refer -->
                 <div class="flex items-center justify-between p-2 rounded-xl bg-amber-500/15 border border-amber-500/35">
                     <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-bolt text-amber-400"></i> রেফারেল রিকোয়ারমেন্ট:</span>
                     <span class="perk-highlight-pill bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">০ টি (কোনো রেফারেল লাগবে না!) ⚡</span>
                 </div>
-
-                <!-- Highlight 2: 50 Tk Withdraw -->
                 <div class="flex items-center justify-between p-2 rounded-xl bg-amber-500/10 border border-amber-500/25">
                     <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-wallet text-amber-400"></i> সর্বনিম্ন উইথড্রয়াল:</span>
                     <span class="font-gotham font-black text-amber-300 text-sm">মাত্র ৳ ৫০.০০</span>
                 </div>
-
-                <!-- Highlight 3: Free Daily 30 Tk -->
                 <div class="flex items-center justify-between p-2 rounded-xl bg-amber-500/15 border border-amber-500/35">
                     <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-gift text-amber-400"></i> প্রতিদিন ফ্রি ক্যাশ:</span>
                     <span class="perk-highlight-pill bg-amber-500/20 text-amber-200 border border-amber-400/30">৳ ৩০.০০ (মোট ৪৫০৳ ফেরত!)</span>
                 </div>
-
-                <!-- Highlight 4: 1.5x Multiplier -->
-                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                    <span class="text-slate-200 flex items-center gap-2"><i class="fa-solid fa-dharmachakra text-amber-400"></i> গেম ও কুইজ মাল্টিপ্লায়ার:</span>
-                    <span class="perk-highlight-pill bg-purple-500/20 text-purple-300 border border-purple-400/30">১.৫ গুণ বেশি আয় (1.5x)</span>
-                </div>
-
                 <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                     <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-clock text-amber-400"></i> উইথড্র প্রসেসিং:</span>
                     <span class="font-gotham text-amber-300 font-bold">মাত্র ৩০ মিনিট!</span>
@@ -378,7 +342,7 @@
             </div>
         </div>
 
-        <!-- 5. DIAMOND TIER (700৳ - ০ রেফারেল, ২০৳ উইথড্র, ২ মিনিটে পেআউট & ২ গুণ আয়!) -->
+        <!-- 5. DIAMOND TIER (700৳) -->
         <div class="glowing-tier-card glow-diamond p-5 sm:p-6 space-y-4 select-none">
             <div class="flex items-start justify-between border-b border-white/[0.08] pb-3">
                 <div class="flex items-center gap-3">
@@ -396,41 +360,22 @@
                 </div>
             </div>
 
-            <!-- Facilities Checklist -->
             <div class="space-y-2 text-xs">
-                <!-- Highlight 1: 0 Refer -->
                 <div class="flex items-center justify-between p-2 rounded-xl bg-cyan-500/15 border border-cyan-500/35">
                     <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-bolt text-cyan-400"></i> রেফারেল রিকোয়ারমেন্ট:</span>
                     <span class="perk-highlight-pill bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">০ টি (কোনো রেফারেল ছাড়া লাইফটাইম) ⚡</span>
                 </div>
-
-                <!-- Highlight 2: Minimum 20 Tk Withdraw -->
                 <div class="flex items-center justify-between p-2 rounded-xl bg-cyan-500/15 border border-cyan-500/35">
                     <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-wallet text-cyan-400"></i> সর্বনিম্ন উইথড্রয়াল:</span>
                     <span class="font-gotham font-black text-cyan-300 text-sm">মাত্র ৳ ২০.০০ হলেই টাকা তোলা যাবে!</span>
                 </div>
-
-                <!-- Highlight 3: Free Daily 55 Tk -->
                 <div class="flex items-center justify-between p-2 rounded-xl bg-cyan-500/15 border border-cyan-500/35">
                     <span class="text-white font-bold flex items-center gap-2"><i class="fa-solid fa-gift text-cyan-400"></i> প্রতিদিন ফ্রি ক্যাশ:</span>
                     <span class="perk-highlight-pill bg-cyan-500/25 text-cyan-200 border border-cyan-400/40">৳ ৫৫.০০ (মোট ৮২৫৳ ফেরত!)</span>
                 </div>
-
-                <!-- Highlight 4: 2x Multiplier & 1.5x Refer -->
-                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.03] border border-white/10">
-                    <span class="text-slate-200 flex items-center gap-2"><i class="fa-solid fa-fire text-cyan-400"></i> গেম ও রেফার বোনাস:</span>
-                    <span class="perk-highlight-pill bg-purple-500/20 text-purple-300 border border-purple-400/30">গেম ২x ও প্রতি রেফারে ১.৫x আয়</span>
-                </div>
-
-                <!-- Highlight 5: 2 Mins Payout -->
                 <div class="flex items-center justify-between p-2 rounded-xl bg-cyan-500/20 border border-cyan-400/40">
                     <span class="text-white font-black flex items-center gap-2"><i class="fa-solid fa-clock text-cyan-400"></i> উইথড্র প্রসেসিং টাইম:</span>
                     <span class="perk-highlight-pill bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">সুপারফাস্ট মাত্র ২ মিনিট! ⚡</span>
-                </div>
-
-                <div class="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                    <span class="text-slate-300 flex items-center gap-2"><i class="fa-solid fa-tags text-cyan-400"></i> ড্রাইভ ডিসকাউন্ট:</span>
-                    <span class="text-cyan-300 font-semibold">Drive Buy Off 10%</span>
                 </div>
             </div>
 
@@ -445,9 +390,21 @@
 
     </div>
 
+    <!-- ================= 🌟 "MORE TIERS COMING SOON..." CARD 🌟 ================= -->
+    <div class="w-full p-5 rounded-3xl bg-white/[0.02] border border-dashed border-white/10 coming-soon-card text-center select-none mt-2">
+        <div class="flex flex-col items-center justify-center space-y-1.5 relative z-10">
+            <div class="inline-flex items-center gap-1.5 text-sky-400 font-gotham font-bold text-xs uppercase tracking-widest">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-ping"></span>
+                <span>More VIP Perks Coming Soon...</span>
+            </div>
+            <p class="text-[10px] text-slate-400 font-normal">
+                নতুন স্পেশাল মেম্বারশিপ প্যাকেজ এবং এক্সক্লুসিভ রিওয়ার্ড খুব শীঘ্রই যুক্ত হচ্ছে।
+            </p>
+        </div>
+    </div>
+
 </div>
 
-<!-- SCRIPT: DAILY FREE BONUS CLAIM -->
 <script>
 function claimDailyReward() {
     const btn = document.getElementById('btnDailyClaim');
