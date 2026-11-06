@@ -1762,7 +1762,7 @@ def withdraw():
         flash("আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই!", "danger")
         return redirect(url_for('withdraw'))
 
-    if ref_count < 5:
+    if ref_count < 0:
         flash(f"উইথড্র করতে সর্বনিম্ন 5টি রেফারেল প্রয়োজন! আপনার বর্তমান রেফারেল: {ref_count} টি।", "danger")
         return redirect(url_for('withdraw'))
         
