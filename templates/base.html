@@ -164,47 +164,67 @@
             animation: toastSlideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
     </style>
-
-    <!-- Robust Hardware Fingerprint Engine -->
-    <script>
-        async function getHardwareFingerprint() {
-            const parts = [
-                screen.width + "x" + screen.height + "x" + screen.colorDepth,
-                Intl.DateTimeFormat().resolvedOptions().timeZone,
-                navigator.language,
-                navigator.hardwareConcurrency || "4"
-            ];
-            try {
-                const canvas = document.createElement('canvas');
-                canvas.width = 200; canvas.height = 40;
-                const ctx = canvas.getContext('2d');
-                ctx.textBaseline = "top"; ctx.font = "14px 'Montserrat'";
-                ctx.fillStyle = "#1e293b"; ctx.fillRect(100, 1, 62, 20);
-                ctx.fillStyle = "#cbd5e1"; ctx.fillText("TaskWallet-Secure", 2, 15);
-                parts.push(canvas.toDataURL());
-            } catch(e) {}
-
-            const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(parts.join("|||")));
-            const hash = Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-            return "DEV-" + hash.substring(0, 24).toUpperCase();
+<!-- Accurate Unique Device Token & Model Tracker -->
+<script>
+    async function getAccurateDeviceToken() {
+        // ১. আগে থেকে সেভ করা টোকেন আছে কিনা চেক (localStorage বা Cookie)
+        let token = localStorage.getItem('tw_device_token');
+        if (!token) {
+            const match = document.cookie.match(new RegExp('(^| )device_id=([^;]+)'));
+            if (match) token = match[2];
         }
 
-        (async function initDevice() {
-            const deviceID = await getHardwareFingerprint();
-            localStorage.setItem('mx_device_unique_token', deviceID);
-            document.cookie = "device_id=" + deviceID + "; path=/; max-age=31536000; SameSite=Lax";
+        // ২. ফোনের আসল মডেল বা প্ল্যাটফর্ম ডিটেক্ট করা
+        let deviceModel = "Mobile";
+        try {
+            if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+                const hints = await navigator.userAgentData.getHighEntropyValues(['model']);
+                if (hints.model) deviceModel = hints.model.replace(/[^a-zA-Z0-9]/g, '');
+            } else {
+                const ua = navigator.userAgent;
+                if (/Android/i.test(ua)) {
+                    const matchAndroid = ua.match(/Android\s([0-9\.]+);?\s?([^;]+)\sBuild/);
+                    if (matchAndroid && matchAndroid[2]) {
+                        deviceModel = matchAndroid[2].replace(/[^a-zA-Z0-9]/g, '').substring(0, 12);
+                    } else {
+                        deviceModel = "Android";
+                    }
+                } else if (/iPhone|iPad/i.test(ua)) {
+                    deviceModel = "iPhone";
+                }
+            }
+        } catch(e) {}
 
-            const ref = new URLSearchParams(window.location.search).get('ref');
-            if (ref) localStorage.setItem('mx_referral_cached', ref.trim().toUpperCase());
+        // ৩. প্রথমবার ভিজিট করলে একটি পারফেক্ট ইউনিক ক্রিপ্টো আইডি তৈরি হবে
+        if (!token || token.length < 15) {
+            const randomBytes = new Uint8Array(8);
+            crypto.getRandomValues(randomBytes);
+            const randomHex = Array.from(randomBytes).map(b => b.toString(16).padStart(2, '0')).join('');
+            token = `DEV_${deviceModel}_${randomHex}`.toUpperCase();
+        }
 
-            document.addEventListener("DOMContentLoaded", function () {
-                document.querySelectorAll('input[name="device_id"]').forEach(el => el.value = deviceID);
-                const cachedRef = localStorage.getItem('mx_referral_cached');
-                const refInput = document.getElementById('refField') || document.querySelector('input[name="ref_by"]');
-                if (cachedRef && refInput && !refInput.value) refInput.value = cachedRef;
-            });
-        })();
-    </script>
+        // ৪. মেমরিতে এবং ১ বছরের জন্য কুকিতে পার্মানেন্ট সেভ
+        localStorage.setItem('tw_device_token', token);
+        document.cookie = `device_id=${token}; path=/; max-age=31536000; SameSite=Lax`;
+
+        return token;
+    }
+
+    (async function initDeviceTracking() {
+        const deviceID = await getAccurateDeviceToken();
+
+        const ref = new URLSearchParams(window.location.search).get('ref');
+        if (ref) localStorage.setItem('mx_referral_cached', ref.trim().toUpperCase());
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll('input[name="device_id"]').forEach(el => el.value = deviceID);
+            const cachedRef = localStorage.getItem('mx_referral_cached');
+            const refInput = document.getElementById('refField') || document.querySelector('input[name="ref_by"]');
+            if (cachedRef && refInput && !refInput.value) refInput.value = cachedRef;
+        });
+    })();
+</script>
+    
 </head>
 <body class="selection:bg-blue-600/20 selection:text-sky-300 relative overflow-x-hidden pb-28">
 
