@@ -164,67 +164,106 @@
             animation: toastSlideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
     </style>
-<!-- Accurate Unique Device Token & Model Tracker -->
+<!-- Deep Physical Hardware Fusion Engine -->
 <script>
-    async function getAccurateDeviceToken() {
-        // ১. আগে থেকে সেভ করা টোকেন আছে কিনা চেক (localStorage বা Cookie)
-        let token = localStorage.getItem('tw_device_token');
-        if (!token) {
-            const match = document.cookie.match(new RegExp('(^| )device_id=([^;]+)'));
-            if (match) token = match[2];
-        }
+    // ১. ব্রাউজারের ডিপ স্টোরেজ (IndexedDB) থেকে টোকেন চেক (কুকিজ ডিলিট করলেও থেকে যায়)
+    function getPersistentStorageToken() {
+        return new Promise((resolve) => {
+            try {
+                const req = indexedDB.open('tw_secure_store', 1);
+                req.onupgradeneeded = (e) => e.target.result.createObjectStore('device');
+                req.onsuccess = (e) => {
+                    const db = e.target.result;
+                    const tx = db.transaction('device', 'readonly');
+                    const getReq = tx.objectStore('device').get('uid');
+                    getReq.onsuccess = () => resolve(getReq.result || null);
+                    getReq.onerror = () => resolve(null);
+                };
+                req.onerror = () => resolve(null);
+            } catch(e) { resolve(null); }
+        });
+    }
 
-        // ২. ফোনের আসল মডেল বা প্ল্যাটফর্ম ডিটেক্ট করা
-        let deviceModel = "Mobile";
+    function savePersistentStorageToken(token) {
         try {
-            if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
-                const hints = await navigator.userAgentData.getHighEntropyValues(['model']);
-                if (hints.model) deviceModel = hints.model.replace(/[^a-zA-Z0-9]/g, '');
-            } else {
-                const ua = navigator.userAgent;
-                if (/Android/i.test(ua)) {
-                    const matchAndroid = ua.match(/Android\s([0-9\.]+);?\s?([^;]+)\sBuild/);
-                    if (matchAndroid && matchAndroid[2]) {
-                        deviceModel = matchAndroid[2].replace(/[^a-zA-Z0-9]/g, '').substring(0, 12);
-                    } else {
-                        deviceModel = "Android";
-                    }
-                } else if (/iPhone|iPad/i.test(ua)) {
-                    deviceModel = "iPhone";
+            const req = indexedDB.open('tw_secure_store', 1);
+            req.onsuccess = (e) => {
+                const db = e.target.result;
+                const tx = db.transaction('device', 'readwrite');
+                tx.objectStore('device').put(token, 'uid');
+            };
+        } catch(e) {}
+    }
+
+    // ২. ফিজিক্যাল হার্ডওয়্যার ফিউশন (একই ওয়াইফাই-এর দুই বন্ধুর এই মান আলাদা হবেই)
+    async function extractPhysicalHardwareSignature() {
+        const hardwareMetrics = [];
+        
+        // ডিসপ্লে ডাইমেনশন ও পিক্সেল ডেনসিটি
+        hardwareMetrics.push(`${screen.width}x${screen.height}x${window.devicePixelRatio || 1}`);
+        hardwareMetrics.push(navigator.hardwareConcurrency || "4");
+        hardwareMetrics.push(screen.colorDepth || "24");
+
+        // আসল ফিজিক্যাল GPU রেন্ডারার
+        try {
+            const canvas = document.createElement('canvas');
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (gl) {
+                const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                if (debugInfo) {
+                    hardwareMetrics.push(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL));
                 }
             }
         } catch(e) {}
 
-        // ৩. প্রথমবার ভিজিট করলে একটি পারফেক্ট ইউনিক ক্রিপ্টো আইডি তৈরি হবে
-        if (!token || token.length < 15) {
-            const randomBytes = new Uint8Array(8);
-            crypto.getRandomValues(randomBytes);
-            const randomHex = Array.from(randomBytes).map(b => b.toString(16).padStart(2, '0')).join('');
-            token = `DEV_${deviceModel}_${randomHex}`.toUpperCase();
-        }
-
-        // ৪. মেমরিতে এবং ১ বছরের জন্য কুকিতে পার্মানেন্ট সেভ
-        localStorage.setItem('tw_device_token', token);
-        document.cookie = `device_id=${token}; path=/; max-age=31536000; SameSite=Lax`;
-
-        return token;
+        const rawData = hardwareMetrics.join("---");
+        const hashBuf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(rawData));
+        return Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 24);
     }
 
-    (async function initDeviceTracking() {
-        const deviceID = await getAccurateDeviceToken();
+    (async function initDeviceProtection() {
+        let token = localStorage.getItem('tw_device_token');
+        if (!token) {
+            const cookieMatch = document.cookie.match(new RegExp('(^| )device_id=([^;]+)'));
+            if (cookieMatch) token = cookieMatch[2];
+        }
+        if (!token) {
+            token = await getPersistentStorageToken();
+        }
 
+        if (!token || token.length < 15) {
+            const rand = Array.from(crypto.getRandomValues(new Uint8Array(8))).map(b => b.toString(16).padStart(2,'0')).join('');
+            token = `DEV_${rand}`.toUpperCase();
+        }
+
+        // রিফ্রেশ বা ডাটা ক্লিয়ার প্রতিরোধী সেভ
+        localStorage.setItem('tw_device_token', token);
+        document.cookie = `device_id=${token}; path=/; max-age=315360000; SameSite=Lax`;
+        savePersistentStorageToken(token);
+
+        // ফিজিক্যাল হার্ডওয়্যার সিগনেচার
+        const hwSignature = await extractPhysicalHardwareSignature();
+
+        // রেফারেল ট্র্যাকার
         const ref = new URLSearchParams(window.location.search).get('ref');
         if (ref) localStorage.setItem('mx_referral_cached', ref.trim().toUpperCase());
 
         document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll('input[name="device_id"]').forEach(el => el.value = deviceID);
-            const cachedRef = localStorage.getItem('mx_referral_cached');
-            const refInput = document.getElementById('refField') || document.querySelector('input[name="ref_by"]');
-            if (cachedRef && refInput && !refInput.value) refInput.value = cachedRef;
+            document.querySelectorAll('input[name="device_id"]').forEach(el => el.value = token);
+            
+            // সব ফর্মে হিডেন হার্ডওয়্যার সিগনেচার অটো-ইনসার্ট
+            document.querySelectorAll('form').forEach(form => {
+                if (!form.querySelector('input[name="hardware_sig"]')) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'hardware_sig';
+                    input.value = hwSignature;
+                    form.appendChild(input);
+                }
+            });
         });
     })();
 </script>
-    
 </head>
 <body class="selection:bg-blue-600/20 selection:text-sky-300 relative overflow-x-hidden pb-28">
 
