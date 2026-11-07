@@ -1777,8 +1777,8 @@ def withdraw():
     method = request.form.get('method', '').strip()
     account = request.form.get('account', '').strip()
 
-    if amount < 430:
-        flash("সর্বনিম্ন উইথড্রয়াল অ্যামাউন্ট 430 টাকা!", "danger")
+    if amount < 460:
+        flash("সর্বনিম্ন উইথড্রয়াল অ্যামাউন্ট 460 টাকা!", "danger")
         return redirect(url_for('withdraw'))
 
     if float(user['balance']) < amount:
