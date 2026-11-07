@@ -1082,6 +1082,45 @@ def sponsor():
     return render_template('sponsor.html', is_logged_in=is_logged_in, user=user)
 
 # ==========================================================
+# OLD USERS 1-TIME DEVICE & IP SYNC CONTROLLER (NEVER REPLACES)
+# ==========================================================
+@app.route('/sync-device', methods=['POST'])
+@login_required
+def sync_old_user_device():
+    sb = get_supabase()
+    user_id = session['user_id']
+    
+    # ইউজারের বর্তমান রেকর্ড আনা
+    user = sb.table('users').select('registration_ip, hardware_signature, device_id')\
+        .eq('id', user_id).single().execute().data
+    
+    if not user:
+        return jsonify({'status': 'ignored'})
+
+    client_ip = get_client_ip()
+    data = request.get_json() or {}
+    dev_id = data.get('device_id') or request.cookies.get('device_id')
+    hw_sig = data.get('hardware_sig') or request.cookies.get('hardware_sig')
+
+    update_payload = {}
+
+    # 👉 শর্ত: কেবল খালি থাকলেই ১ বার নিবে, কখনোই রিপ্লেস করবে না
+    if not user.get('registration_ip') and client_ip and client_ip != '0.0.0.0':
+        update_payload['registration_ip'] = client_ip
+
+    if not user.get('hardware_signature') and hw_sig:
+        update_payload['hardware_signature'] = hw_sig
+
+    if not user.get('device_id') and dev_id:
+        update_payload['device_id'] = dev_id
+
+    # কোনো নতুন ডাটা সেভ করার থাকলে কেবল তখনই ডাটাবেস আপডেট হবে
+    if update_payload:
+        sb.table('users').update(update_payload).eq('id', user_id).execute()
+
+    return jsonify({'status': 'synced'})
+    
+# ==========================================================
 # ANNOUNCEMENTS CONTROLLER (/announcements)
 # ==========================================================
 @app.route('/announcements')
@@ -1661,6 +1700,13 @@ def dashboard():
     sb = get_supabase()
     user = sb.table('users').select('*').eq('id', session['user_id']).single().execute().data
     
+    # পুরোনো ইউজারের যদি IP না থাকে, তবে ১ম বার প্রবেশেই আইপি লক করে নেওয়া (কখনোই রিপ্লেস করবে না)
+    if not user.get('registration_ip'):
+        c_ip = get_client_ip()
+        if c_ip and c_ip != '0.0.0.0':
+            sb.table('users').update({'registration_ip': c_ip}).eq('id', user['id']).execute()
+            user['registration_ip'] = c_ip
+
     notice_res = sb.table('settings').select('value').eq('key', 'site_notice').execute().data
     site_notice = notice_res[0]['value'] if notice_res else ""
 
@@ -1672,7 +1718,7 @@ def dashboard():
         notice=site_notice, 
         referral_count=ref_count
     )
-
+    
 @app.route('/tasks')
 @login_required
 def tasks():
