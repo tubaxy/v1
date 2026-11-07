@@ -777,7 +777,7 @@ def google_callback():
 
 @app.route('/tutorial')
 def tutorial():
-    fb_reel_url = "https://www.facebook.com/reel/1719120619189780/"
+    fb_reel_url = "https://www.facebook.com/reel/1095723733304579/"
     return render_template('tutorial.html', fb_reel_url=fb_reel_url)
 
 @app.route('/')
