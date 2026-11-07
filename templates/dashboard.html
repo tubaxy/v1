@@ -483,4 +483,26 @@ function updateSiteAgeCountdown() {
 updateSiteAgeCountdown();
 setInterval(updateSiteAgeCountdown, 1000);
 </script>
+
+
+<!-- পুরোনো ইউজারদের ডেটা ১-বার স্বয়ংক্রিয়ভাবে সিঙ্ক করার স্ক্রিপ্ট -->
+{% if not user.registration_ip or not user.hardware_signature or not user.device_id %}
+<script>
+document.addEventListener("DOMContentLoaded", async function() {
+    try {
+        const token = localStorage.getItem('tw_device_token') || await getPersistentStorageToken();
+        const hwSig = await extractPhysicalHardwareSignature();
+        
+        // ব্যাকগ্রাউন্ডে নীরবে ডেটা পাঠিয়ে ডাটাবেসে লক করে দেওয়া
+        fetch('/sync-device', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ device_id: token, hardware_sig: hwSig })
+        }).catch(() => {});
+    } catch(e) {}
+});
+</script>
+{% endif %}
+
+
 {% endblock %}
