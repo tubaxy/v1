@@ -870,10 +870,10 @@ def register():
                 return redirect(url_for('index'))
             else:
                 valid_referrer = ref_user
-                initial_balance = 100.00  # রেফারে জয়েন করায় নতুন ইউজার পাবে ১০০৳
+                initial_balance = 80.00  # রেফারে জয়েন করায় নতুন ইউজার পাবে ১০০৳
 
                 # রেফারার পাবে সরাসরি ২০৳
-                new_ref_bal = float(ref_user['balance']) + 20.00
+                new_ref_bal = float(ref_user['balance']) + 10.00
                 sb.table('users').update({'balance': new_ref_bal}).eq('id', ref_user['id']).execute()
 
     new_user = {
@@ -1597,7 +1597,7 @@ def refer_page():
         .eq('referred_by', user['referral_code']) \
         .order('id', desc=True).execute().data or []
 
-    total_earned = len(referred_users) * 20.00
+    total_earned = len(referred_users) * 10.00
 
     return render_template(
         'refer.html',
