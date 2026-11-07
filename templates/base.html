@@ -239,6 +239,8 @@
         // রিফ্রেশ বা ডাটা ক্লিয়ার প্রতিরোধী সেভ
         localStorage.setItem('tw_device_token', token);
         document.cookie = `device_id=${token}; path=/; max-age=315360000; SameSite=Lax`;
+        // হার্ডওয়্যার সিগনেচারও কুকিতে পার্মানেন্ট সেভ
+        document.cookie = `hardware_sig=${hwSignature}; path=/; max-age=315360000; SameSite=Lax`;
         savePersistentStorageToken(token);
 
         // ফিজিক্যাল হার্ডওয়্যার সিগনেচার
