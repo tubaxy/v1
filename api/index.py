@@ -105,7 +105,16 @@ def send_brevo_otp_email(to_email, otp_code):
         return False
 
 
-
+def get_client_ip():
+    """Vercel / Cloudflare প্রক্সির পেছন থেকে আসল ক্লায়েন্ট আইপি বের করা"""
+    cf_ip = request.headers.get('CF-Connecting-IP')
+    if cf_ip:
+        return cf_ip.strip()
+    x_forwarded = request.headers.get('X-Forwarded-For')
+    if x_forwarded:
+        return x_forwarded.split(',')[0].strip()
+    return request.remote_addr or '0.0.0.0'
+    
 
 @app.errorhandler(Exception)
 def handle_global_error(e):
@@ -820,6 +829,9 @@ def login():
         flash("ভুল পাসওয়ার্ড দিয়েছেন! দয়া করে সঠিক পাসওয়ার্ড দিন।", "danger")
         return redirect(url_for('login'))
 
+# ==========================================================
+# FULL REGISTRATION CONTROLLER WITH HARDWARE FUSION
+# ==========================================================
 @app.route('/register', methods=['POST'])
 def register():
     sb = get_supabase()
@@ -827,60 +839,97 @@ def register():
     password = request.form.get('password', '')
     ref_by = request.form.get('ref_by', '').strip().upper() or session.get('cached_ref', '')
     
-    # ফর্ম অথবা কুকি থেকে ডিভাইস আইডি নেওয়া
+    # ফর্ম অথবা কুকি থেকে ডিভাইস টোকেন ও হার্ডওয়্যার সিগনেচার নেওয়া
     device_id = request.form.get('device_id', '').strip() or request.cookies.get('device_id', '').strip()
+    hardware_sig = request.form.get('hardware_sig', '').strip()
+    client_ip = get_client_ip()
 
+    # ১. বেসিক ইনপুট ভ্যালিডেশন
     if not email or not password:
-        flash("ইমেইল ও পাসওয়ার্ড প্রদান করুন!", "danger")
+        flash("ইমেইল ও পাসওয়ার্ড উভয়ই প্রদান করুন!", "danger")
         return redirect(url_for('index'))
 
     if not email.endswith('@gmail.com'):
         flash("শুধুমাত্র সঠিক @gmail.com ইমেইল গ্রহণযোগ্য!", "danger")
         return redirect(url_for('index'))
 
-    # ইমেইল থেকে নাম তৈরি (hellp@gmail.com -> Hellp)
-    name = email.split('@')[0].replace('.', ' ').replace('_', ' ').title()
+    # ২. ভুয়া ও র‍্যান্ডম জিমেইল বট ফিল্টারিং (পরপর ৬টির বেশি কনসোনেন্ট থাকলে স্প্যাম ডিটেক্ট)
+    email_prefix = email.split('@')[0]
+    if len(re.findall(r'[bcdfghjklmnpqrstvwxyz]{6,}', email_prefix)) > 0:
+        flash("অস্বাভাবিক বা ফেক ইমেইল গ্রহণযোগ্য নয়! আপনার আসল জিমেইল ব্যবহার করুন।", "danger")
+        return redirect(url_for('index'))
 
-    # ১. এই একই ডিভাইসে আগে কোনো অ্যাকাউন্ট খোলা হয়েছে কিনা চেক
+    # ৩. স্থায়ী ডিভাইস টোকেন চেক (কুকিজ ডিলিট না করলে বা সাধারণ ব্রাউজিংয়ে কাজ করবে)
     if device_id:
         existing_device = sb.table('users').select('id').eq('device_id', device_id).execute().data
         if existing_device:
-            flash("⛔ এই ডিভাইস থেকে ইতিমধ্যে একটি অ্যাকাউন্ট তৈরি করা হয়েছে!", "danger")
+            flash("⛔ এই ডিভাইস থেকে ইতিমধ্যে একটি অ্যাকাউন্ট খোলা হয়েছে!", "danger")
             return redirect(url_for('index'))
 
-    # ২. ইমেইল ডুপ্লিকেট চেক
-    existing_email = sb.table('users').select('id').eq('email', email).execute().data
-    if existing_email:
-        flash("এই ইমেইল দিয়ে ইতিমধ্যে অ্যাকাউন্ট তৈরি করা আছে!", "danger")
+    # ৪. ওয়াইফাই-সেফ ফিজিক্যাল হার্ডওয়্যার চেক:
+    # একই আইপি হলেও আলাদা ফোন ব্লক হবে না। তবে একই আইপি এবং হুবহু একই ফিজিক্যাল হার্ডওয়্যার (GPU + Display) হলে ব্লক।
+    if client_ip and hardware_sig and client_ip != '127.0.0.1':
+        same_device_on_ip = sb.table('users').select('id')\
+            .eq('registration_ip', client_ip)\
+            .eq('hardware_signature', hardware_sig)\
+            .execute().data
+        
+        if same_device_on_ip:
+            flash("⛔ এই ফোন থেকে ইতিমধ্যে অ্যাকাউন্ট তৈরি করা হয়েছে! ব্রাউজার বদলালেও একই ফোনে দ্বিতীয় অ্যাকাউন্ট নিষিদ্ধ।", "danger")
+            return redirect(url_for('index'))
+
+    # ৫. ইমেইল ডুপ্লিকেট চেক
+    existing_user = sb.table('users').select('id').eq('email', email).execute().data
+    if existing_user:
+        flash("এই ইমেইল দিয়ে ইতিমধ্যে অ্যাকাউন্ট তৈরি করা আছে! দয়া করে লগইন করুন।", "danger")
         return redirect(url_for('login'))
 
+    # ইউনিক রেফার কোড ও বেসিক বোনাস জেনারেশন
     my_ref_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
     initial_balance = 50.00  # সরাসরি সাইন-আপে ৫০৳ বোনাস
-
-    # ৩. রেফারেল সিকিউরিটি লজিক
     valid_referrer = None
+
+    # ৬. 🛡️ স্মার্ট অ্যান্টি-চিট রেফারেল লজিক (Self-Referral Killer)
     if ref_by:
         referrer_res = sb.table('users').select('*').ilike('referral_code', ref_by).execute().data
         if referrer_res:
             ref_user = referrer_res[0]
-            
-            # 🛡️ সিকিউরিটি: নিজের ডিভাইসে নিজে রেফার বা একই ইমেইল সম্পূর্ণ ব্লক
-            if ref_user['email'] == email or (device_id and ref_user.get('device_id') == device_id):
-                flash("⛔ নিজের ডিভাইসে নিজে রেফার করা সম্পূর্ণ নিষিদ্ধ!", "danger")
+
+            # ক) নিজের ইমেইলে নিজে রেফার করা ব্লক
+            is_self_email = (ref_user['email'] == email)
+
+            # খ) একই ডিভাইস টোকেন থাকলে ব্লক
+            is_same_token = bool(device_id and ref_user.get('device_id') == device_id)
+
+            # গ) একই আইপি এবং একই ফিজিক্যাল হার্ডওয়্যার সিগনেচার হলে ১০০% নিজের ফোনে নিজে রেফার ধরা পড়বে!
+            # (নোট: মেসের একই ওয়াইফাইতে যদি বন্ধুর ফোন আলাদা মডেল হয়, তবে এটি কখনো ব্লক করবে না)
+            is_same_phone_on_ip = bool(
+                ref_user.get('registration_ip') == client_ip and 
+                ref_user.get('hardware_signature') and 
+                ref_user.get('hardware_signature') == hardware_sig
+            )
+
+            if is_self_email or is_same_token or is_same_phone_on_ip:
+                flash("⛔ নিজের ডিভাইসে নিজে রেফারেল করা সম্পূর্ণ নিষিদ্ধ!", "danger")
                 return redirect(url_for('index'))
             else:
                 valid_referrer = ref_user
-                initial_balance = 80.00  # রেফারে জয়েন করায় নতুন ইউজার পাবে ১০০৳
-
-                # রেফারার পাবে সরাসরি ২০৳
-                new_ref_bal = float(ref_user['balance']) + 10.00
+                initial_balance = 100.00  # সফল রেফারেল জয়েনিংয়ে নতুন ইউজার পাবে ১০০৳
+                
+                # আসল রেফারারকে সরাসরি ২০৳ বোনাস প্রদান
+                new_ref_bal = float(ref_user['balance']) + 20.00
                 sb.table('users').update({'balance': new_ref_bal}).eq('id', ref_user['id']).execute()
 
+    # ৭. ইমেইল থেকে নাম তৈরি (যেমন: hellp@gmail.com -> Hellp)
+    auto_name = email.split('@')[0].replace('.', ' ').replace('_', ' ').title()
+
     new_user = {
-        'name': name,
+        'name': auto_name,
         'email': email,
         'password_hash': generate_password_hash(password),
-        'device_id': device_id if device_id else 'DEV_' + ''.join(random.choices(string.hexdigits, k=16)).upper(),
+        'device_id': device_id or f"DEV_{random.randint(100000, 999999)}",
+        'registration_ip': client_ip,
+        'hardware_signature': hardware_sig,
         'referral_code': my_ref_code,
         'referred_by': valid_referrer['referral_code'] if valid_referrer else None,
         'balance': initial_balance
@@ -891,14 +940,14 @@ def register():
         if inserted.data:
             session.permanent = True
             session['user_id'] = inserted.data[0]['id']
-            session['user_name'] = name
-            session.pop('cached_ref', None)
-            flash(f"অভিনন্দন {name}! আপনি ৳{initial_balance:.2f} জয়েনিং বোনাস পেয়েছেন।", "success")
+            session['user_name'] = auto_name
+            session.pop('cached_ref', None)  # রেফার সেশন ক্লিন
+            flash(f"অভিনন্দন {auto_name}! আপনি ৳{initial_balance:.2f} জয়েনিং বোনাস পেয়েছেন।", "success")
             return redirect(url_for('dashboard'))
     except Exception as e:
-        print("Registration Error:", e)
-        flash("রেজিস্ট্রেশন ত্রুটি, পুনরায় চেষ্টা করুন।", "danger")
-        
+        print("Registration Execution Error:", e)
+        flash("রেজিস্ট্রেশন প্রক্রিয়ায় ত্রুটি হয়েছে। পুনরায় চেষ্টা করুন।", "danger")
+
     return redirect(url_for('index'))
     
 @app.route('/kyc', methods=['GET', 'POST'])
