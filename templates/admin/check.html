@@ -1,227 +1,260 @@
 {% extends 'admin/base_admin.html' %}
 {% block admin_content %}
-<div class="max-w-6xl mx-auto space-y-6 pb-16">
+<style>
+    .fintech-card {
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(24px);
+    }
+    .fintech-input-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.2s ease;
+    }
+    .fintech-input-box:focus-within {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+        background: rgba(255, 255, 255, 0.05);
+    }
+    .audit-row {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        transition: background 0.2s ease;
+    }
+    .audit-row:hover {
+        background: rgba(255, 255, 255, 0.025);
+    }
+</style>
+
+<div class="max-w-6xl mx-auto space-y-6 pb-20 select-none">
 
     <!-- Page Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.06] pb-4">
         <div>
-            <span class="text-[10px] font-black uppercase tracking-widest text-[#E11D48] block mb-0.5">অডিট ও ইনভেস্টিগেশন হাব</span>
-            <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-                <i class="fa-solid fa-magnifying-glass-chart text-indigo-600"></i> ইউজার ফুল ডাটা ও হিস্ট্রি চেক
-            </h2>
+            <span class="text-[9px] font-gotham font-black uppercase tracking-widest text-sky-400 block mb-0.5">
+                FORENSIC INVESTIGATION HUB
+            </span>
+            <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider flex items-center gap-2">
+                User <span class="text-slate-400 font-light italic lowercase text-xl sm:text-2xl">deep audit</span>
+            </h1>
         </div>
-        <span class="text-xs font-bold text-slate-500 bg-white border border-slate-200 px-3.5 py-1.5 rounded-2xl shadow-sm">
-            <i class="fa-solid fa-database text-rose-500 mr-1"></i> ডিপ অ্যাকাউন্ট অডিট
-        </span>
+        <div class="flex items-center gap-2">
+            <span class="text-xs font-gotham font-semibold text-slate-300 bg-white/[0.03] border border-white/[0.08] px-3.5 py-1.5 rounded-xl shadow-sm flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                <span>Database Node Audit</span>
+            </span>
+        </div>
     </div>
 
-    <!-- ================= 1. SEARCH INPUT BOX ================= -->
-    <div class="bg-white border border-slate-200 rounded-[32px] p-6 shadow-sm">
+    <!-- ================= 1. SEARCH INPUT CONSOLE ================= -->
+    <div class="fintech-card rounded-[28px] p-5 sm:p-6 shadow-xl">
         <form method="GET" action="/admin/check" class="flex flex-col sm:flex-row items-center gap-3">
-            <div class="relative flex-1 w-full">
+            <div class="relative flex-1 w-full fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5">
+                <i class="fa-solid fa-magnifying-glass text-slate-500 text-xs"></i>
                 <input type="text" name="q" value="{{ q }}" required 
-                       placeholder="ইউজারের ইমেইল, UID (যেমন: 7062) অথবা রেফার কোড লিখুন..." 
-                       class="w-full px-5 py-3.5 pl-11 rounded-2xl border border-slate-200 text-xs sm:text-sm font-bold text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-[#E11D48] transition bg-slate-50/50">
-                <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-slate-400 text-sm"></i>
+                       placeholder="ইউজারের ইমেইল, UID (যেমন: 0923) অথবা রেফার কোড লিখুন..." 
+                       class="w-full bg-transparent text-xs font-gotham text-white placeholder-slate-500 focus:outline-none">
             </div>
+            
             <button type="submit" 
-                    class="w-full sm:w-auto bg-[#E11D48] hover:bg-[#BE123C] active:scale-95 text-white font-black text-xs sm:text-sm py-3.5 px-8 rounded-2xl shadow-lg shadow-rose-500/25 transition flex items-center justify-center gap-2">
-                <i class="fa-solid fa-search text-xs"></i>
+                    class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-gotham font-semibold text-xs py-3.5 px-7 rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2 shrink-0">
+                <i class="fa-solid fa-magnifying-glass-chart text-[11px]"></i>
                 <span>ইনভেস্টিগেট করুন</span>
             </button>
         </form>
     </div>
 
+    <!-- NOT FOUND STATE -->
     {% if q and not user %}
-    <!-- Not Found Card -->
-    <div class="bg-white border border-slate-200 rounded-[32px] p-12 text-center text-slate-400 shadow-sm space-y-2">
-        <div class="w-16 h-16 mx-auto rounded-3xl bg-rose-50 text-rose-500 flex items-center justify-center text-3xl mb-2">
+    <div class="fintech-card rounded-[28px] p-12 text-center text-slate-500 space-y-2 select-none">
+        <div class="w-14 h-14 mx-auto rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center text-2xl mb-1 shadow-inner">
             <i class="fa-solid fa-user-xmark"></i>
         </div>
-        <h3 class="text-sm font-black text-slate-800">'{{ q }}' দিয়ে কোনো ইউজার পাওয়া যায়নি!</h3>
-        <p class="text-xs text-slate-400">বানান বা আইডি নম্বর চেক করে পুনরায় সার্চ করুন।</p>
+        <h3 class="text-sm font-semibold text-white">'{{ q }}' দিয়ে কোনো ইউজার পাওয়া যায়নি!</h3>
+        <p class="text-xs text-slate-400">বানান, UID বা রেফারেল কোড চেক করে পুনরায় সার্চ করুন।</p>
     </div>
     {% endif %}
 
     {% if user %}
-    <!-- ================= 2. USER PROFILE & SECURITY AUDIT CARD ================= -->
-    <div class="bg-white border border-slate-200 rounded-[32px] p-6 sm:p-8 shadow-sm space-y-6">
+    <!-- ================= 2. USER SECURITY DOSSIER ================= -->
+    <div class="fintech-card rounded-[28px] p-5 sm:p-7 space-y-5">
         
         <!-- Profile Header Row -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
-            <div class="flex items-center gap-4">
-                <div class="w-16 h-16 rounded-full overflow-hidden border-4 border-rose-100 shadow-md bg-slate-800 flex items-center justify-center text-white text-xl font-black shrink-0">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.06] pb-5">
+            <div class="flex items-center gap-3.5 min-w-0">
+                <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-white/20 bg-slate-900 shrink-0 flex items-center justify-center text-lg font-bold text-white shadow-md">
                     {% if user.avatar_url %}
                         <img src="{{ user.avatar_url }}" alt="{{ user.name }}" class="w-full h-full object-cover">
                     {% else %}
-                        {{ user.name[:1] }}
+                        <span class="font-gotham">{{ user.name[:1] }}</span>
                     {% endif %}
                 </div>
-                <div class="leading-tight space-y-1">
-                    <div class="flex items-center gap-2">
-                        <h2 class="text-lg font-black text-slate-900">{{ user.name }}</h2>
-                        <span class="text-[10px] font-mono font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-lg">
-                            UID #{{ "%05d"|format(user.id) }}
+
+                <div class="leading-tight min-w-0">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <h2 class="font-classic-seasons text-lg sm:text-xl font-normal text-white uppercase tracking-wider truncate">
+                            {{ user.name }}
+                        </h2>
+                        <span class="font-gotham text-[10px] font-bold px-2 py-0.5 rounded-md bg-white/[0.05] border border-white/10 text-sky-400">
+                            UID #{{ "%04d"|format(user.id) }}
                         </span>
+                        {% if user.tier %}
+                        <span class="font-gotham text-[9px] font-bold px-2 py-0.5 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-300 uppercase">
+                            {{ user.tier }} VIP
+                        </span>
+                        {% endif %}
                     </div>
-                    <span class="text-xs text-slate-400 font-mono block">{{ user.email }}</span>
-                    <span class="text-[10px] text-slate-400 block">যোগদান: {{ user.created_at[:19] }}</span>
+                    <span class="font-mono text-xs text-slate-400 block mt-1 truncate">{{ user.email }}</span>
+                    <span class="font-gotham text-[10px] text-slate-500 block mt-0.5">জয়েনিং: {{ user.created_at[:19] }}</span>
                 </div>
             </div>
 
-            <!-- Action Controls (Ban / Unban / Balance) -->
-            <div class="flex items-center gap-2">
+            <!-- Action Controls (Ban / Unban / Password Reset) -->
+            <div class="flex items-center gap-2 shrink-0">
                 <form action="/admin/user/{{ user.id }}/ban" method="POST">
                     <button type="submit" 
-                        class="px-4 py-2 rounded-xl text-xs font-black transition active:scale-95 flex items-center gap-1.5 {% if user.is_banned %}bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-100{% else %}bg-rose-50 text-rose-600 border border-rose-200 hover:bg-rose-100{% endif %}">
-                        <i class="fa-solid {% if user.is_banned %}fa-unlock{% else %}fa-ban{% endif %}"></i>
+                        class="px-3.5 py-2 rounded-xl text-xs font-gotham font-semibold transition active:scale-95 flex items-center gap-1.5 {% if user.is_banned %}bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30{% else %}bg-rose-500/15 hover:bg-rose-500/25 text-rose-400 border border-rose-500/30{% endif %}">
+                        <i class="fa-solid {% if user.is_banned %}fa-unlock{% else %}fa-ban{% endif %} text-[10px]"></i>
                         <span>{% if user.is_banned %}আনব্যান করুন{% else %}ব্যান করুন{% endif %}</span>
                     </button>
                 </form>
 
                 <a href="/admin/pass?q={{ user.email }}" 
-                   class="bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs px-4 py-2 rounded-xl transition flex items-center gap-1.5">
-                    <i class="fa-solid fa-key text-[10px]"></i>
+                   class="bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-white font-gotham font-semibold text-xs px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 active:scale-95 shadow-sm">
+                    <i class="fa-solid fa-key text-[10px] text-amber-400"></i>
                     <span>পাসওয়ার্ড রিসেট</span>
                 </a>
             </div>
         </div>
 
-        <!-- Identity, Device & Referral Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                <span class="text-[10px] font-bold text-slate-400 uppercase block mb-0.5">ওয়ালেট ব্যালেন্স</span>
-                <span class="text-lg font-black text-emerald-600">৳ {{ "%.2f"|format(user.balance) }}</span>
+        <!-- Identity, Device & Referral Parameters (4-Grid) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs font-gotham">
+            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-0.5">
+                <span class="text-[9px] uppercase tracking-wider text-slate-500 font-semibold block">Wallet Balance</span>
+                <span class="text-xl font-black text-emerald-400 tabular-nums block">৳ {{ "%.2f"|format(user.balance) }}</span>
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                <span class="text-[10px] font-bold text-slate-400 uppercase block mb-0.5">রেফারেল কোড</span>
-                <span class="text-sm font-black text-slate-900 font-mono">{{ user.referral_code }}</span>
+            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-0.5">
+                <span class="text-[9px] uppercase tracking-wider text-slate-500 font-semibold block">Referral Code</span>
+                <span class="font-mono text-sm font-bold text-white block">{{ user.referral_code }}</span>
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                <span class="text-[10px] font-bold text-slate-400 uppercase block mb-0.5">রেফারার (কে এনেছে)</span>
+            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-0.5">
+                <span class="text-[9px] uppercase tracking-wider text-slate-500 font-semibold block">Referred By (আসল ইনভাইটার)</span>
                 {% if referrer %}
-                    <span class="text-xs font-extrabold text-indigo-600 block">{{ referrer.name }}</span>
-                    <span class="text-[10px] text-slate-400 font-mono">UID #{{ "%05d"|format(referrer.id) }}</span>
+                    <span class="text-xs font-bold text-sky-400 block truncate">{{ referrer.name }}</span>
+                    <span class="text-[10px] text-slate-500 font-mono">UID #{{ "%04d"|format(referrer.id) }}</span>
                 {% else %}
-                    <span class="text-xs font-bold text-slate-400">সরাসরি জয়েন (None)</span>
+                    <span class="text-xs text-slate-500 block">সরাসরি জয়েন (Direct None)</span>
                 {% endif %}
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                <span class="text-[10px] font-bold text-slate-400 uppercase block mb-0.5">ডিভাইস ফিঙ্গারপ্রিন্ট</span>
-                <span class="text-[10px] font-mono font-bold text-slate-700 block truncate" title="{{ user.device_id }}">
+            <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-0.5">
+                <span class="text-[9px] uppercase tracking-wider text-slate-500 font-semibold block">Device Fingerprint</span>
+                <span class="font-mono text-[10px] text-slate-300 block truncate" title="{{ user.device_id }}">
                     {{ user.device_id }}
                 </span>
             </div>
         </div>
 
-        <!-- Social Connections (If Any) -->
-        <div class="flex flex-wrap items-center gap-2 pt-1 text-xs">
-            {% if user.fb_link %}
-                <a href="{{ user.fb_link }}" target="_blank" class="bg-blue-50 text-blue-600 border border-blue-200 px-3 py-1 rounded-xl font-bold flex items-center gap-1.5 hover:underline">
-                    <i class="fa-brands fa-facebook"></i> Facebook প্রোফাইল
-                </a>
-            {% endif %}
-            {% if user.tg_link %}
-                <a href="{{ user.tg_link }}" target="_blank" class="bg-sky-50 text-sky-500 border border-sky-200 px-3 py-1 rounded-xl font-bold flex items-center gap-1.5 hover:underline">
-                    <i class="fa-brands fa-telegram"></i> Telegram একাউন্ট
-                </a>
-            {% endif %}
-            {% if not user.fb_link and not user.tg_link %}
-                <span class="text-slate-400 text-[11px] italic">কোনো সোশ্যাল একাউন্ট কানেক্ট করা নেই।</span>
-            {% endif %}
-        </div>
-
     </div>
 
-    <!-- ================= 3. AUDIT SUMMARY STATS (4-BOX) ================= -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
-        <div class="bg-white border border-slate-200 rounded-[24px] p-4 shadow-sm">
-            <span class="text-[10px] font-bold text-slate-400 uppercase block">মোট রেফারেল</span>
-            <h4 class="text-xl font-black text-slate-900 mt-1">{{ stats.total_ref_count }} জন</h4>
+    <!-- ================= 3. AUDIT SUMMARY METRICS (4 TILES) ================= -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 font-gotham select-none">
+        
+        <div class="fintech-card rounded-2xl p-4 space-y-1">
+            <span class="text-[9px] uppercase tracking-wider text-slate-500 font-semibold block">Total Referrals</span>
+            <div class="text-xl font-black text-white tabular-nums">{{ stats.total_ref_count }} জন</div>
+            <span class="text-[9px] text-slate-500 block">রেফার করা মোট মেম্বার</span>
         </div>
-        <div class="bg-white border border-slate-200 rounded-[24px] p-4 shadow-sm">
-            <span class="text-[10px] font-bold text-slate-400 uppercase block">রেফারালদের মোট ব্যালেন্স</span>
-            <h4 class="text-xl font-black text-indigo-600 mt-1">৳ {{ "%.2f"|format(stats.total_ref_balance) }}</h4>
+
+        <div class="fintech-card rounded-2xl p-4 space-y-1">
+            <span class="text-[9px] uppercase tracking-wider text-slate-500 font-semibold block">Referrals Balance</span>
+            <div class="text-xl font-black text-sky-400 tabular-nums">৳ {{ "%.2f"|format(stats.total_ref_balance) }}</div>
+            <span class="text-[9px] text-slate-500 block">রেফারালদের বর্তমান টাকা</span>
         </div>
-        <div class="bg-white border border-slate-200 rounded-[24px] p-4 shadow-sm">
-            <span class="text-[10px] font-bold text-slate-400 uppercase block">মোট সম্পন্ন টাস্ক</span>
-            <h4 class="text-xl font-black text-emerald-600 mt-1">{{ stats.approved_tasks }} / {{ stats.total_tasks }}</h4>
+
+        <div class="fintech-card rounded-2xl p-4 space-y-1">
+            <span class="text-[9px] uppercase tracking-wider text-slate-500 font-semibold block">Task Completed</span>
+            <div class="text-xl font-black text-emerald-400 tabular-nums">{{ stats.approved_tasks }} / {{ stats.total_tasks }}</div>
+            <span class="text-[9px] text-slate-500 block">অনুমোদিত টাস্ক সংখ্যা</span>
         </div>
-        <div class="bg-white border border-slate-200 rounded-[24px] p-4 shadow-sm">
-            <span class="text-[10px] font-bold text-slate-400 uppercase block">উইথড্র রিজেক্ট সংখ্যা</span>
-            <h4 class="text-xl font-black {% if stats.rejected_withdraws > 0 %}text-rose-600{% else %}text-slate-400{% endif %} mt-1">
+
+        <div class="fintech-card rounded-2xl p-4 space-y-1">
+            <span class="text-[9px] uppercase tracking-wider text-slate-500 font-semibold block">Withdraw Rejections</span>
+            <div class="text-xl font-black {% if stats.rejected_withdraws > 0 %}text-rose-400{% else %}text-slate-500{% endif %} tabular-nums">
                 {{ stats.rejected_withdraws }} বার
-            </h4>
+            </div>
+            <span class="text-[9px] text-slate-500 block">উইথড্র বাতিল হিস্ট্রি</span>
         </div>
+
     </div>
 
-    <!-- ================= 4. TAB NAVIGATION FOR DEEP AUDIT TABLES ================= -->
-    <div class="grid grid-cols-3 gap-1.5 p-1.5 bg-white border border-slate-200 rounded-2xl shadow-sm">
+    <!-- ================= 4. TAB NAVIGATION ================= -->
+    <div class="grid grid-cols-3 gap-2 p-1 bg-white/[0.02] border border-white/[0.06] rounded-2xl font-gotham text-xs font-semibold select-none">
         <button onclick="switchAuditTab('refs')" id="tabBtn-refs" 
-                class="py-2.5 text-xs font-black rounded-xl transition bg-[#E11D48] text-white shadow-sm flex items-center justify-center gap-1.5">
-            <i class="fa-solid fa-users"></i>
-            <span>রেফারেল ও তাদের ব্যালেন্স</span>
+                class="py-2.5 rounded-xl transition bg-blue-600 text-white shadow-md shadow-blue-600/30 flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-users text-xs"></i>
+            <span>রেফারেল ও ব্যালেন্স ({{ referred_members|length }})</span>
         </button>
         <button onclick="switchAuditTab('withdraw')" id="tabBtn-withdraw" 
-                class="py-2.5 text-xs font-bold rounded-xl transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5">
-            <i class="fa-solid fa-money-bill-transfer"></i>
-            <span>উইথড্রয়াল হিস্ট্রি ({{ withdrawals|length }})</span>
+                class="py-2.5 rounded-xl transition text-slate-400 hover:text-white flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-wallet text-xs"></i>
+            <span>উইথড্রয়াল ({{ withdrawals|length }})</span>
         </button>
         <button onclick="switchAuditTab('tasks')" id="tabBtn-tasks" 
-                class="py-2.5 text-xs font-bold rounded-xl transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5">
-            <i class="fa-solid fa-list-check"></i>
+                class="py-2.5 rounded-xl transition text-slate-400 hover:text-white flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-list-check text-xs"></i>
             <span>টাস্ক হিস্ট্রি ({{ task_subs|length }})</span>
         </button>
     </div>
 
-    <!-- ================= SECTION A: REFERRED MEMBERS & CURRENT BALANCES ================= -->
-    <div id="section-refs" class="bg-white border border-slate-200 rounded-[32px] p-6 shadow-sm space-y-3">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-            <h3 class="text-sm font-black text-slate-900">রেফার করা ইউজারদের তালিকা ও বর্তমান ব্যালেন্স</h3>
-            <span class="text-xs font-extrabold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
-                মোট ব্যালেন্স: ৳ {{ "%.2f"|format(stats.total_ref_balance) }}
+    <!-- ================= SECTION A: REFERRED MEMBERS & BALANCES ================= -->
+    <div id="section-refs" class="fintech-card rounded-[28px] p-5 sm:p-6 space-y-4">
+        <div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
+            <span class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-200">
+                রেফার করা ইউজার ও বর্তমান ব্যালেন্স
+            </span>
+            <span class="text-[10px] font-gotham font-semibold px-2.5 py-0.5 rounded-full bg-blue-600/10 text-sky-400 border border-blue-500/20">
+                মোট ফান্ড: ৳ {{ "%.2f"|format(stats.total_ref_balance) }}
             </span>
         </div>
 
         <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse text-xs">
+            <table class="w-full text-left border-collapse text-xs font-gotham">
                 <thead>
-                    <tr class="border-b border-slate-100 text-[10px] text-slate-400 uppercase font-bold tracking-wider">
+                    <tr class="border-b border-white/[0.06] text-[9px] text-slate-500 uppercase font-bold tracking-wider">
                         <th class="py-2.5 px-3">UID</th>
                         <th class="py-2.5 px-3">নাম ও ইমেইল</th>
                         <th class="py-2.5 px-3">বর্তমান ব্যালেন্স</th>
-                        <th class="py-2.5 px-3">জয়েন ডেট</th>
+                        <th class="py-2.5 px-3">জয়েনিং ডেট</th>
                         <th class="py-2.5 px-3 text-right">স্ট্যাটাস</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
+                <tbody class="divide-y divide-white/[0.04]">
                     {% for m in referred_members %}
-                    <tr class="hover:bg-slate-50/50 transition">
-                        <td class="py-3 px-3 font-mono font-bold text-slate-400">#{{ "%05d"|format(m.id) }}</td>
+                    <tr class="audit-row">
+                        <td class="py-3 px-3 font-mono text-slate-400">#{{ "%04d"|format(m.id) }}</td>
                         <td class="py-3 px-3">
-                            <span class="font-extrabold text-slate-800 block">{{ m.name }}</span>
-                            <span class="text-[11px] text-slate-400 font-mono">{{ m.email }}</span>
+                            <span class="font-bold text-white block">{{ m.name }}</span>
+                            <span class="text-[10px] text-slate-500 font-mono">{{ m.email }}</span>
                         </td>
                         <td class="py-3 px-3">
-                            <span class="text-sm font-black text-emerald-600">
+                            <span class="text-xs font-bold text-emerald-400 tabular-nums">
                                 ৳ {{ "%.2f"|format(m.balance) }}
                             </span>
                         </td>
-                        <td class="py-3 px-3 text-slate-400 font-mono text-[11px]">
+                        <td class="py-3 px-3 text-slate-400 font-mono text-[10px]">
                             {{ m.created_at[:10] }}
                         </td>
                         <td class="py-3 px-3 text-right">
-                            <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full {% if m.is_banned %}bg-rose-50 text-rose-600 border border-rose-100{% else %}bg-emerald-50 text-emerald-600 border border-emerald-100{% endif %}">
+                            <span class="text-[9px] font-bold px-2 py-0.5 rounded-md {% if m.is_banned %}bg-rose-500/10 text-rose-400 border border-rose-500/20{% else %}bg-emerald-500/10 text-emerald-400 border border-emerald-500/20{% endif %}">
                                 {% if m.is_banned %}Banned{% else %}Active{% endif %}
                             </span>
                         </td>
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="5" class="py-8 text-center text-slate-400">এই ইউজারের কোনো রেফারেল নেই।</td>
+                        <td colspan="5" class="py-8 text-center text-slate-500">এই ইউজারের অধীনে কোনো রেফারেল রেকর্ড নেই।</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -229,53 +262,57 @@
         </div>
     </div>
 
-    <!-- ================= SECTION B: WITHDRAWAL HISTORY (WITH REJECTIONS) ================= -->
-    <div id="section-withdraw" class="hidden bg-white border border-slate-200 rounded-[32px] p-6 shadow-sm space-y-3">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-            <h3 class="text-sm font-black text-slate-900">উইথড্রয়াল ট্রানজেকশন হিস্ট্রি</h3>
-            <span class="text-xs font-extrabold text-rose-600 bg-rose-50 px-3 py-1 rounded-full border border-rose-100">
+    <!-- ================= SECTION B: WITHDRAWAL AUDIT ================= -->
+    <div id="section-withdraw" class="hidden fintech-card rounded-[28px] p-5 sm:p-6 space-y-4">
+        <div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
+            <span class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-200">
+                উইথড্রয়াল ট্রানজেকশন হিস্ট্রি
+            </span>
+            <span class="text-[10px] font-gotham font-semibold px-2.5 py-0.5 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20">
                 রিজেকশন: {{ stats.rejected_withdraws }} বার
             </span>
         </div>
 
         <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse text-xs">
+            <table class="w-full text-left border-collapse text-xs font-gotham">
                 <thead>
-                    <tr class="border-b border-slate-100 text-[10px] text-slate-400 uppercase font-bold tracking-wider">
-                        <th class="py-2.5 px-3">TRX আইডি</th>
+                    <tr class="border-b border-white/[0.06] text-[9px] text-slate-500 uppercase font-bold tracking-wider">
+                        <th class="py-2.5 px-3">TrxID</th>
                         <th class="py-2.5 px-3">অ্যামাউন্ট</th>
                         <th class="py-2.5 px-3">পদ্ধতি ও নাম্বার</th>
                         <th class="py-2.5 px-3">তারিখ</th>
                         <th class="py-2.5 px-3 text-right">স্ট্যাটাস</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
+                <tbody class="divide-y divide-white/[0.04]">
                     {% for w in withdrawals %}
-                    <tr class="hover:bg-slate-50/50 transition">
-                        <td class="py-3 px-3 font-mono text-slate-400 font-bold">#{{ w.id }}</td>
-                        <td class="py-3 px-3">
-                            <span class="text-sm font-black text-slate-900">৳ {{ "%.2f"|format(w.amount) }}</span>
+                    <tr class="audit-row">
+                        <td class="py-3 px-3 font-mono text-sky-400 font-bold">
+                            {{ w.trx_id if w.trx_id else 'TXN-' ~ w.id }}
+                        </td>
+                        <td class="py-3 px-3 font-bold text-white tabular-nums">
+                            ৳ {{ "%.2f"|format(w.amount) }}
                         </td>
                         <td class="py-3 px-3">
-                            <span class="font-bold text-slate-800 block">{{ w.method }}</span>
-                            <span class="font-mono text-slate-400 text-[11px]">{{ w.account_number }}</span>
+                            <span class="font-semibold text-white block">{{ w.method }}</span>
+                            <span class="font-mono text-slate-500 text-[10px]">{{ w.account_number }}</span>
                         </td>
-                        <td class="py-3 px-3 text-slate-400 font-mono text-[11px]">
+                        <td class="py-3 px-3 text-slate-400 font-mono text-[10px]">
                             {{ w.created_at[:10] }}
                         </td>
                         <td class="py-3 px-3 text-right">
                             {% if w.status == 'approved' %}
-                                <span class="text-[10px] font-black bg-emerald-50 text-emerald-600 border border-emerald-100 px-2.5 py-0.5 rounded-full">Approved</span>
+                                <span class="text-[9px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-md">Approved</span>
                             {% elif w.status == 'pending' %}
-                                <span class="text-[10px] font-black bg-amber-50 text-amber-600 border border-amber-100 px-2.5 py-0.5 rounded-full">Pending</span>
+                                <span class="text-[9px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-md">Pending</span>
                             {% else %}
-                                <span class="text-[10px] font-black bg-rose-50 text-rose-600 border border-rose-200 px-2.5 py-0.5 rounded-full">Rejected ✕</span>
+                                <span class="text-[9px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-0.5 rounded-md">Rejected</span>
                             {% endif %}
                         </td>
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="5" class="py-8 text-center text-slate-400">কোনো উইথড্রয়াল রেকর্ড নেই।</td>
+                        <td colspan="5" class="py-8 text-center text-slate-500">কোনো উইথড্রয়াল রেকর্ড পাওয়া যায়নি।</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -283,52 +320,60 @@
         </div>
     </div>
 
-    <!-- ================= SECTION C: TASK SUBMISSION HISTORY ================= -->
-    <div id="section-tasks" class="hidden bg-white border border-slate-200 rounded-[32px] p-6 shadow-sm space-y-3">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-            <h3 class="text-sm font-black text-slate-900">টাস্ক সাবমিশন হিস্ট্রি ও প্রুফ</h3>
-            <span class="text-xs font-extrabold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+    <!-- ================= SECTION C: TASK SUBMISSIONS & PROOFS ================= -->
+    <div id="section-tasks" class="hidden fintech-card rounded-[28px] p-5 sm:p-6 space-y-4">
+        <div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
+            <span class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-200">
+                টাস্ক সাবমিশন ও প্রুফ রিপোর্ট
+            </span>
+            <span class="text-[10px] font-gotham font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                 অনুমোদিত: {{ stats.approved_tasks }} টি
             </span>
         </div>
 
         <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse text-xs">
+            <table class="w-full text-left border-collapse text-xs font-gotham">
                 <thead>
-                    <tr class="border-b border-slate-100 text-[10px] text-slate-400 uppercase font-bold tracking-wider">
+                    <tr class="border-b border-white/[0.06] text-[9px] text-slate-500 uppercase font-bold tracking-wider">
                         <th class="py-2.5 px-3">টাস্ক টাইটেল</th>
-                        <th class="py-2.5 px-3">পুরস্কার</th>
+                        <th class="py-2.5 px-3">রিওয়ার্ড</th>
                         <th class="py-2.5 px-3">তারিখ</th>
                         <th class="py-2.5 px-3">প্রুফ ছবি</th>
                         <th class="py-2.5 px-3 text-right">স্ট্যাটাস</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
+                <tbody class="divide-y divide-white/[0.04]">
                     {% for t in task_subs %}
-                    <tr class="hover:bg-slate-50/50 transition">
-                        <td class="py-3 px-3 font-bold text-slate-800 max-w-[220px] truncate">
+                    <tr class="audit-row">
+                        <td class="py-3 px-3 font-semibold text-white max-w-[200px] truncate" title="{{ t.tasks.title }}">
                             {{ t.tasks.title }}
                         </td>
-                        <td class="py-3 px-3 font-extrabold text-emerald-600">
-                            ৳ {{ "%.2f"|format(t.tasks.amount) }}
+                        <td class="py-3 px-3 font-bold text-emerald-400 tabular-nums">
+                            +৳ {{ "%.2f"|format(t.tasks.amount) }}
                         </td>
-                        <td class="py-3 px-3 text-slate-400 font-mono text-[11px]">
+                        <td class="py-3 px-3 text-slate-400 font-mono text-[10px]">
                             {{ t.created_at[:10] }}
                         </td>
                         <td class="py-3 px-3">
-                            <a href="{{ t.proof_url }}" target="_blank" class="bg-indigo-50 text-indigo-600 font-bold px-2.5 py-1 rounded-lg text-[10px] hover:underline inline-flex items-center gap-1">
-                                <i class="fa-solid fa-image"></i> ছবি দেখুন
+                            <a href="{{ t.proof_url }}" target="_blank" 
+                               class="bg-white/[0.04] hover:bg-white/[0.08] text-sky-400 font-semibold px-2.5 py-1 rounded-lg text-[10px] transition border border-white/10 inline-flex items-center gap-1">
+                                <i class="fa-solid fa-image"></i>
+                                <span>ছবি দেখুন</span>
                             </a>
                         </td>
                         <td class="py-3 px-3 text-right">
-                            <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full {% if t.status == 'approved' %}bg-emerald-50 text-emerald-600 border border-emerald-100{% elif t.status == 'pending' %}bg-amber-50 text-amber-600 border border-amber-100{% else %}bg-rose-50 text-rose-600 border border-rose-100{% endif %}">
-                                {{ t.status }}
-                            </span>
+                            {% if t.status == 'approved' %}
+                                <span class="text-[9px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-md">Approved</span>
+                            {% elif t.status == 'pending' %}
+                                <span class="text-[9px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-md">Pending</span>
+                            {% else %}
+                                <span class="text-[9px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-0.5 rounded-md">Rejected</span>
+                            {% endif %}
                         </td>
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="5" class="py-8 text-center text-slate-400">কোনো টাস্ক সাবমিশন নেই।</td>
+                        <td colspan="5" class="py-8 text-center text-slate-500">কোনো টাস্ক সাবমিশন রেকর্ড নেই।</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -339,35 +384,17 @@
 
 </div>
 
-<!-- SCRIPT: TAB SWITCHER -->
+<!-- SCRIPT: AUDIT TAB SWITCHER -->
 <script>
 function switchAuditTab(tab) {
-    const secRefs = document.getElementById('section-refs');
-    const secWith = document.getElementById('section-withdraw');
-    const secTasks = document.getElementById('section-tasks');
+    const sections = ['refs', 'withdraw', 'tasks'];
+    sections.forEach(s => {
+        document.getElementById(`section-${s}`).classList.add('hidden');
+        document.getElementById(`tabBtn-${s}`).className = "py-2.5 rounded-xl transition text-slate-400 hover:text-white flex items-center justify-center gap-1.5";
+    });
 
-    const btnRefs = document.getElementById('tabBtn-refs');
-    const btnWith = document.getElementById('tabBtn-withdraw');
-    const btnTasks = document.getElementById('tabBtn-tasks');
-
-    secRefs.classList.add('hidden');
-    secWith.classList.add('hidden');
-    secTasks.classList.add('hidden');
-
-    btnRefs.className = "py-2.5 text-xs font-bold rounded-xl transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5";
-    btnWith.className = "py-2.5 text-xs font-bold rounded-xl transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5";
-    btnTasks.className = "py-2.5 text-xs font-bold rounded-xl transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5";
-
-    if (tab === 'refs') {
-        secRefs.classList.remove('hidden');
-        btnRefs.className = "py-2.5 text-xs font-black rounded-xl transition bg-[#E11D48] text-white shadow-sm flex items-center justify-center gap-1.5";
-    } else if (tab === 'withdraw') {
-        secWith.classList.remove('hidden');
-        btnWith.className = "py-2.5 text-xs font-black rounded-xl transition bg-[#E11D48] text-white shadow-sm flex items-center justify-center gap-1.5";
-    } else {
-        secTasks.classList.remove('hidden');
-        btnTasks.className = "py-2.5 text-xs font-black rounded-xl transition bg-[#E11D48] text-white shadow-sm flex items-center justify-center gap-1.5";
-    }
+    document.getElementById(`section-${tab}`).classList.remove('hidden');
+    document.getElementById(`tabBtn-${tab}`).className = "py-2.5 rounded-xl transition bg-blue-600 text-white shadow-md shadow-blue-600/30 flex items-center justify-center gap-1.5";
 }
 </script>
 {% endblock %}
