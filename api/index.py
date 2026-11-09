@@ -886,7 +886,7 @@ def register():
 
     # ইউনিক রেফার কোড ও বেসিক বোনাস জেনারেশন
     my_ref_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
-    initial_balance = 50.00  # সরাসরি সাইন-আপে ৫০৳ বোনাস
+    initial_balance = 5.00  # সরাসরি সাইন-আপে ৫০৳ বোনাস
     valid_referrer = None
 
     # ৬. 🛡️ স্মার্ট অ্যান্টি-চিট রেফারেল লজিক (Self-Referral Killer)
@@ -914,10 +914,10 @@ def register():
                 return redirect(url_for('index'))
             else:
                 valid_referrer = ref_user
-                initial_balance = 100.00  # সফল রেফারেল জয়েনিংয়ে নতুন ইউজার পাবে ১০০৳
+                initial_balance = 20.00  # সফল রেফারেল জয়েনিংয়ে নতুন ইউজার পাবে ১০০৳
                 
                 # আসল রেফারারকে সরাসরি ২০৳ বোনাস প্রদান
-                new_ref_bal = float(ref_user['balance']) + 20.00
+                new_ref_bal = float(ref_user['balance']) + 10.00
                 sb.table('users').update({'balance': new_ref_bal}).eq('id', ref_user['id']).execute()
 
     # ৭. ইমেইল থেকে নাম তৈরি (যেমন: hellp@gmail.com -> Hellp)
@@ -1872,8 +1872,8 @@ def withdraw():
     method = request.form.get('method', '').strip()
     account = request.form.get('account', '').strip()
 
-    if amount < 460:
-        flash("সর্বনিম্ন উইথড্রয়াল অ্যামাউন্ট 460 টাকা!", "danger")
+    if amount < 390:
+        flash("সর্বনিম্ন উইথড্রয়াল অ্যামাউন্ট 390 টাকা!", "danger")
         return redirect(url_for('withdraw'))
 
     if float(user['balance']) < amount:
