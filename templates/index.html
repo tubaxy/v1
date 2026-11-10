@@ -94,8 +94,8 @@
             </label>
             <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5">
                 <i class="fa-solid fa-gift text-slate-500 text-xs w-4 text-center"></i>
-                <input type="text" name="ref_by" id="refField" placeholder="রেফার কোড থাকলে দিন..." 
-                       class="w-full bg-transparent text-xs font-gotham text-slate-100 focus:outline-none placeholder-slate-600 uppercase">
+               <input type="text" name="ref_by" id="refField" value="{{ ref_code or '' }}" placeholder="রেফার কোড থাকলে দিন..." 
+       class="w-full bg-transparent text-xs font-gotham text-slate-100 focus:outline-none placeholder-slate-600 uppercase">
             </div>
         </div>
 
@@ -139,5 +139,23 @@ function validateEmail(id) {
     }
     return true;
 }
+
+    // রেফারেল লিংক থেকে সরাসরি ইনপুট বক্সে কোড বসানোর অটোমেশন
+document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const refFromUrl = urlParams.get('ref');
+    
+    if (refFromUrl) {
+        localStorage.setItem('cached_ref', refFromUrl.trim().toUpperCase());
+    }
+
+    const savedRef = refFromUrl || localStorage.getItem('cached_ref');
+    const refInput = document.getElementById('refField') || document.querySelector('input[name="ref_by"]');
+
+    if (refInput && savedRef) {
+        refInput.value = savedRef.trim().toUpperCase();
+    }
+});
+    
 </script>
 {% endblock %}
