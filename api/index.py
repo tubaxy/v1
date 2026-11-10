@@ -784,8 +784,14 @@ def tutorial():
 def index():
     if 'user_id' in session:
         return redirect(url_for('dashboard'))
-    return render_template('index.html')
 
+    # 👉 লিংক থেকে ?ref= কোড ধরা এবং সেশনে সেভ রাখা
+    ref_code = request.args.get('ref', '').strip().upper()
+    if ref_code:
+        session['cached_ref'] = ref_code
+
+    return render_template('index.html', ref_code=ref_code or session.get('cached_ref', ''))
+    
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if 'user_id' in session:
