@@ -1518,7 +1518,6 @@ def more_page():
     
 @app.route('/quiz')
 @login_required
-@kyc_required
 def math_quiz():
     sb = get_supabase()
     user_id = session['user_id']
