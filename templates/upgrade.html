@@ -1,78 +1,406 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
-    /* Premium Ambient Glow for Coming Soon Card */
-    .coming-soon-glow {
-        background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.15) 0%, rgba(10, 15, 29, 0.95) 60%, #04060b 100%);
-        border: 1px solid rgba(56, 189, 248, 0.25);
-        box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    /* ================= ☀️ LIGHT THEME OVERRIDES ================= */
+    body {
+        background-color: #f8fafc !important;
+        color: #0f172a !important;
     }
-    
-    /* Elegant Pulsing Rings for the Crown Icon */
-    @keyframes pulse-ring {
-        0% { transform: scale(0.8); opacity: 0.8; }
-        50% { transform: scale(1.2); opacity: 0.2; }
-        100% { transform: scale(0.8); opacity: 0.8; }
+
+    /* Ambient background glows adjusted for light theme */
+    .fixed.bg-blue-600\/10,
+    .fixed.bg-cyan-600\/10 {
+        display: none !important;
     }
-    .pulse-icon {
-        animation: pulse-ring 4s infinite cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Flat Modern Light Cards */
+    .light-tier-card {
+        background: #ffffff;
+        border-radius: 24px;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+    }
+    .light-tier-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Mini Infographic Data Box */
+    .infographic-stat-box {
+        background: #f8fafc;
+        border: 1px solid #f1f5f9;
+        border-radius: 14px;
+        padding: 8px 10px;
+    }
+
+    /* Specific Tier Borders & Pastel Accents */
+    .card-border-wood { border: 1.5px solid #fed7aa; }
+    .card-border-bronze { border: 1.5px solid #fdba74; }
+    .card-border-silver { border: 1.5px solid #cbd5e1; }
+    .card-border-gold { border: 2px solid #fde047; box-shadow: 0 10px 25px -5px rgba(234, 179, 8, 0.15); }
+    .card-border-diamond { border: 2px solid #7dd3fc; box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.18); }
+
+    /* Highlights Tag */
+    .light-tag {
+        font-size: 10px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
     }
 </style>
 
-<div class="max-w-xl mx-auto px-2 sm:px-0 h-[80vh] flex flex-col pb-20">
+<div class="max-w-xl mx-auto space-y-4 pb-24 px-1 sm:px-0 select-none">
 
-    <!-- Top Navigation Row -->
-    <div class="flex items-center justify-between px-1 shrink-0 pt-2">
-        <a href="/app" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95 shadow-sm">
-            <i class="fa-solid fa-arrow-left text-[10px] text-blue-500"></i>
+    <!-- Top Action Row -->
+    <div class="flex items-center justify-between px-1 pt-1">
+        <a href="/app" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 text-xs font-gotham transition active:scale-95 shadow-sm hover:bg-slate-50">
+            <i class="fa-solid fa-arrow-left text-[10px] text-blue-600"></i>
             <span>ড্যাশবোর্ড</span>
         </a>
 
-        <div class="flex items-center gap-1.5 bg-white/[0.04] border border-white/10 px-3 py-1.5 rounded-full text-xs font-gotham shadow-sm">
-            <span class="text-slate-400 text-[9px] uppercase tracking-wider">Status:</span>
-            <span class="font-bold text-sky-400 uppercase text-[9px] tracking-widest flex items-center gap-1">
-                <span class="w-1 h-1 rounded-full bg-sky-400 animate-ping"></span> Upgrade
-            </span>
+        <!-- Current Active Tier Badge -->
+        <div class="flex items-center gap-1.5 bg-white border border-slate-200 px-3 py-1 rounded-full text-xs font-gotham shadow-sm">
+            <span class="text-slate-500 text-[10px] uppercase font-semibold">Active:</span>
+            <span class="font-bold text-blue-600 uppercase">{{ tier_config[current_tier].name }}</span>
         </div>
     </div>
 
-    <!-- ================= 🌟 EXCLUSIVE "COMING SOON" BANNER 🌟 ================= -->
-    <div class="flex-1 flex items-center justify-center">
-        <div class="coming-soon-glow rounded-[32px] p-8 sm:p-10 w-full max-w-sm text-center space-y-6 relative overflow-hidden select-none">
-            
-            <!-- Ambient Corner Lights -->
-            <div class="absolute -top-12 -right-12 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Title Section (Modern Flat Typography) -->
+    <div class="text-center py-2 space-y-1">
+        <h1 class="font-classic-seasons text-2xl sm:text-3xl font-bold text-slate-900 uppercase tracking-wide">
+            Membership <span class="text-blue-600 font-light italic lowercase text-2xl sm:text-3xl">Plans</span>
+        </h1>
+        <p class="text-xs text-slate-500 font-gotham max-w-sm mx-auto leading-relaxed">
+            কোনো রেফার ছাড়াই উইথড্র ও নিশ্চিত দৈনিক ফ্রি আয়ের সুবিধা উপভোগ করুন
+        </p>
+    </div>
 
-            <!-- Floating Crown Icon with Radar Pulse -->
-            <div class="relative w-24 h-24 mx-auto flex items-center justify-center">
-                <div class="absolute inset-0 rounded-full border border-sky-400/30 pulse-icon"></div>
-                <div class="absolute inset-3 rounded-full border border-amber-400/20 pulse-icon" style="animation-delay: 2s;"></div>
-                <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500/10 to-sky-500/10 border border-white/10 flex items-center justify-center text-3xl text-amber-400 shadow-inner backdrop-blur-md z-10">
-                    <i class="fa-solid fa-crown drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]"></i>
-                </div>
+    <!-- ================= ALERT 1: READY TO CLAIM (APPROVED) ================= -->
+    {% if ready_to_claim %}
+    <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center justify-between gap-3 shadow-sm">
+        <div class="leading-tight">
+            <div class="flex items-center gap-1.5 mb-0.5">
+                <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                <span class="text-xs font-bold text-slate-900">পেমেন্ট সফলভাবে অনুমোদিত হয়েছে!</span>
             </div>
-
-            <!-- Typography & Message -->
-            <div class="space-y-2 relative z-10">
-                <h1 class="font-classic-seasons text-3xl sm:text-4xl font-normal text-white uppercase tracking-widest">
-                    Coming <span class="text-slate-400 font-light italic lowercase text-2xl sm:text-3xl">Soon</span>
-                </h1>
-                <p class="text-[11px] sm:text-xs text-slate-400 font-gotham font-light max-w-xs mx-auto leading-relaxed pt-1">
-                    TaskWallet-এর এক্সক্লুসিভ VIP মেম্বারশিপ প্যাকেজ এবং প্রিমিয়াম সুবিধাগুলো খুব শীঘ্রই উন্মুক্ত করা হবে।
-                </p>
-            </div>
-
-            <!-- Bottom Glowing Tag -->
-            <div class="pt-3 relative z-10">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600/10 border border-blue-500/20 text-sky-400 font-gotham text-[9px] font-bold uppercase tracking-widest shadow-[0_0_15px_rgba(37,99,235,0.15)]">
-                    <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
-                    Stay Tuned
-                </div>
-            </div>
-
+            <p class="text-[11px] text-emerald-700">
+                আপনার <strong>{{ tier_config[ready_to_claim.tier].name }}</strong> সক্রিয় করতে এখনই ক্লেইম করুন।
+            </p>
         </div>
+        <form action="/upgrade/claim-tier/{{ ready_to_claim.id }}" method="POST">
+            <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white font-gotham font-black text-xs px-4 py-2.5 rounded-xl transition shadow active:scale-95 shrink-0">
+                Claim Now
+            </button>
+        </form>
+    </div>
+    {% endif %}
+
+    <!-- ================= ALERT 2: PENDING APPROVAL ================= -->
+    {% if pending_req and not ready_to_claim %}
+    <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 flex items-center gap-3 shadow-sm">
+        <i class="fa-solid fa-clock-rotate-left text-amber-600 text-base"></i>
+        <div class="text-xs leading-tight">
+            <span class="font-bold block text-slate-900">{{ tier_config[pending_req.tier].name }} পেমেন্ট ভেরিফিকেশন চলছে</span>
+            <span class="text-[11px] text-slate-500 mt-0.5 block">অ্যাডমিন চেক করে অনুমোদন দিলে এখানে সাথে সাথে ক্লেইম বাটন পেয়ে যাবেন।</span>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- ================= DAILY FREE CLAIM WIDGET ================= -->
+    {% if daily_reward_amount > 0 %}
+    <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex items-center justify-between gap-3">
+        <div class="leading-tight">
+            <span class="text-[10px] font-gotham uppercase tracking-wider text-slate-400 block mb-0.5">VIP Daily Perk</span>
+            <h4 class="text-xs font-bold text-slate-800">প্রতিদিনের ফ্রি ইনকাম: <span class="text-blue-600 font-gotham font-black">৳{{ "%.2f"|format(daily_reward_amount) }}</span></h4>
+        </div>
+        <button onclick="claimDailyReward()" id="btnDailyClaim" 
+            {% if not can_claim_daily %}disabled{% endif %}
+            class="{% if can_claim_daily %}bg-blue-600 hover:bg-blue-500 text-white cursor-pointer active:scale-95 shadow-sm{% else %}bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200{% endif %} font-gotham font-bold text-xs px-4 py-2 rounded-xl transition">
+            {% if can_claim_daily %}Claim ৳{{ daily_reward_amount }}{% else %}Claimed Today{% endif %}
+        </button>
+    </div>
+    {% endif %}
+
+    <!-- ================= 5 FLAT MODERN TIER CARDS ================= -->
+    <div class="space-y-3.5">
+
+        <!-- 1. WOOD TIER (FREE - 0৳) -->
+        <div class="light-tier-card card-border-wood p-5 space-y-3.5 shadow-sm">
+            <div class="flex items-start justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200 text-amber-700 flex items-center justify-center text-lg shrink-0">
+                        <i class="fa-solid fa-tree"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-classic-seasons text-lg text-slate-900 font-bold uppercase tracking-wide">Wood Plan</h3>
+                        <span class="text-[11px] text-amber-700 font-medium">বেসিক মেম্বারশিপ • লাইফটাইম</span>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="font-gotham text-2xl font-black text-slate-900">৳ 0</span>
+                    <span class="text-[10px] text-slate-400 block font-gotham">Lifetime</span>
+                </div>
+            </div>
+
+            <!-- Infographic 4-Box Grid -->
+            <div class="grid grid-cols-2 gap-2 text-xs font-gotham">
+                <div class="infographic-stat-box">
+                    <span class="text-[9px] uppercase tracking-wider text-slate-400 block font-medium">মিনিমাম উইথড্র</span>
+                    <span class="font-black text-slate-800 text-xs">৳ ৫০০.০০</span>
+                </div>
+                <div class="infographic-stat-box">
+                    <span class="text-[9px] uppercase tracking-wider text-slate-400 block font-medium">রেফারেল প্রয়োজন</span>
+                    <span class="font-bold text-amber-700 text-xs">৫টি রেফার বাধ্যতামূলক</span>
+                </div>
+                <div class="infographic-stat-box">
+                    <span class="text-[9px] uppercase tracking-wider text-slate-400 block font-medium">উইথড্র প্রসেসিং</span>
+                    <span class="font-semibold text-slate-700 text-xs">৬ ঘণ্টা</span>
+                </div>
+                <div class="infographic-stat-box">
+                    <span class="text-[9px] uppercase tracking-wider text-slate-400 block font-medium">দৈনিক ফ্রি ইনকাম</span>
+                    <span class="font-semibold text-slate-400 text-xs">৳ ০.০০</span>
+                </div>
+            </div>
+
+            <div class="pt-1">
+                <button disabled class="w-full bg-slate-100 text-slate-400 border border-slate-200 font-gotham font-semibold text-xs py-3 rounded-xl cursor-default">
+                    {% if current_tier == 'wood' %}Active (Current Plan){% else %}Default Free Plan{% endif %}
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. BRONZE TIER (110৳ - মাত্র ১টি রেফার!) -->
+        <div class="light-tier-card card-border-bronze p-5 space-y-3.5 shadow-sm">
+            <div class="flex items-start justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 text-orange-600 flex items-center justify-center text-lg shrink-0">
+                        <i class="fa-solid fa-medal"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <h3 class="font-classic-seasons text-lg text-slate-900 font-bold uppercase tracking-wide">Bronze Plan</h3>
+                            <span class="light-tag bg-orange-100 text-orange-800">1 Refer Only</span>
+                        </div>
+                        <span class="text-[11px] text-orange-700 font-medium">১৫ দিনের মেয়াদ</span>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="font-gotham text-2xl font-black text-orange-600">৳ 110</span>
+                    <span class="text-[10px] text-slate-400 block font-gotham">15 Days</span>
+                </div>
+            </div>
+
+            <!-- Infographic 4-Box Grid -->
+            <div class="grid grid-cols-2 gap-2 text-xs font-gotham">
+                <div class="infographic-stat-box bg-orange-50/40 border-orange-100">
+                    <span class="text-[9px] uppercase tracking-wider text-orange-600 block font-semibold">মিনিমাম উইথড্র</span>
+                    <span class="font-black text-slate-900 text-sm">৳ ২০০.০০</span>
+                </div>
+                <div class="infographic-stat-box bg-orange-50/40 border-orange-100">
+                    <span class="text-[9px] uppercase tracking-wider text-orange-600 block font-semibold">রেফারেল প্রয়োজন</span>
+                    <span class="font-black text-orange-700 text-xs">মাত্র ১টি রেফার! 🚀</span>
+                </div>
+                <div class="infographic-stat-box bg-orange-50/40 border-orange-100">
+                    <span class="text-[9px] uppercase tracking-wider text-orange-600 block font-semibold">উইথড্র প্রসেসিং</span>
+                    <span class="font-bold text-slate-800 text-xs">৩ ঘণ্টা</span>
+                </div>
+                <div class="infographic-stat-box bg-emerald-50 border-emerald-100">
+                    <span class="text-[9px] uppercase tracking-wider text-emerald-700 block font-semibold">প্রতিদিন ফ্রি ক্যাশ</span>
+                    <span class="font-black text-emerald-700 text-xs">৳ ১০.০০ (মোট ১৫০৳)</span>
+                </div>
+            </div>
+
+            <div class="pt-1">
+                {% if current_tier == 'bronze' %}
+                    <button disabled class="w-full bg-orange-100 text-orange-800 font-gotham font-bold text-xs py-3 rounded-xl cursor-default">Active Plan</button>
+                {% else %}
+                    <a href="/upgrade/checkout/bronze" class="block w-full text-center bg-orange-600 hover:bg-orange-500 text-white font-gotham font-bold text-xs py-3 rounded-xl transition shadow active:scale-95">Upgrade to Bronze &raquo;</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 3. SILVER TIER (250৳ - ০ রেফারেল & ১০০৳ উইথড্র) -->
+        <div class="light-tier-card card-border-silver p-5 space-y-3.5 shadow-sm">
+            <div class="flex items-start justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-slate-100 border border-slate-300 text-slate-700 flex items-center justify-center text-lg shrink-0">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <h3 class="font-classic-seasons text-lg text-slate-900 font-bold uppercase tracking-wide">Silver Plan</h3>
+                            <span class="light-tag bg-emerald-100 text-emerald-800">০ রেফারেল উইথড্র</span>
+                        </div>
+                        <span class="text-[11px] text-slate-500 font-medium">১৫ দিনের মেয়াদ</span>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="font-gotham text-2xl font-black text-slate-800">৳ 250</span>
+                    <span class="text-[10px] text-slate-400 block font-gotham">15 Days</span>
+                </div>
+            </div>
+
+            <!-- Infographic 4-Box Grid -->
+            <div class="grid grid-cols-2 gap-2 text-xs font-gotham">
+                <div class="infographic-stat-box">
+                    <span class="text-[9px] uppercase tracking-wider text-slate-500 block font-medium">মিনিমাম উইথড্র</span>
+                    <span class="font-black text-slate-900 text-sm">৳ ১০০.০০</span>
+                </div>
+                <div class="infographic-stat-box bg-emerald-50 border-emerald-100">
+                    <span class="text-[9px] uppercase tracking-wider text-emerald-700 block font-semibold">রেফারেল রিকোয়ারমেন্ট</span>
+                    <span class="font-black text-emerald-700 text-xs">০ টি (রেফার লাগবে না!) ⚡</span>
+                </div>
+                <div class="infographic-stat-box">
+                    <span class="text-[9px] uppercase tracking-wider text-slate-500 block font-medium">উইথড্র প্রসেসিং</span>
+                    <span class="font-bold text-slate-800 text-xs">মাত্র ১ ঘণ্টা!</span>
+                </div>
+                <div class="infographic-stat-box bg-blue-50 border-blue-100">
+                    <span class="text-[9px] uppercase tracking-wider text-blue-700 block font-semibold">প্রতিদিন ফ্রি ক্যাশ</span>
+                    <span class="font-black text-blue-700 text-xs">৳ ২৩.০০ (মোট ৩৪৫৳)</span>
+                </div>
+            </div>
+
+            <div class="pt-1">
+                {% if current_tier == 'silver' %}
+                    <button disabled class="w-full bg-slate-200 text-slate-700 font-gotham font-bold text-xs py-3 rounded-xl cursor-default">Active Plan</button>
+                {% else %}
+                    <a href="/upgrade/checkout/silver" class="block w-full text-center bg-slate-800 hover:bg-slate-700 text-white font-gotham font-bold text-xs py-3 rounded-xl transition shadow active:scale-95">Upgrade to Silver &raquo;</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 4. GOLD TIER (400৳ - ০ রেফারেল & ৫০৳ উইথড্র) -->
+        <div class="light-tier-card card-border-gold p-5 space-y-3.5 relative overflow-hidden">
+            <div class="flex items-start justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-50 border border-amber-300 text-amber-600 flex items-center justify-center text-lg shrink-0">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <h3 class="font-classic-seasons text-lg text-slate-900 font-bold uppercase tracking-wide">Gold Premier</h3>
+                            <span class="light-tag bg-amber-100 text-amber-900 border border-amber-200">১.৫x আয়</span>
+                        </div>
+                        <span class="text-[11px] text-amber-700 font-medium">১৫ দিনের মেয়াদ • সুপার ভ্যালু</span>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="font-gotham text-2xl font-black text-amber-600">৳ 400</span>
+                    <span class="text-[10px] text-slate-400 block font-gotham">15 Days</span>
+                </div>
+            </div>
+
+            <!-- Infographic 4-Box Grid -->
+            <div class="grid grid-cols-2 gap-2 text-xs font-gotham">
+                <div class="infographic-stat-box bg-amber-50/50 border-amber-100">
+                    <span class="text-[9px] uppercase tracking-wider text-amber-800 block font-semibold">মিনিমাম উইথড্র</span>
+                    <span class="font-black text-slate-900 text-sm">৳ ৫০.০০</span>
+                </div>
+                <div class="infographic-stat-box bg-emerald-50 border-emerald-100">
+                    <span class="text-[9px] uppercase tracking-wider text-emerald-700 block font-semibold">রেফারেল রিকোয়ারমেন্ট</span>
+                    <span class="font-black text-emerald-700 text-xs">০ টি (রেফার লাগবে না!) ⚡</span>
+                </div>
+                <div class="infographic-stat-box bg-amber-50/50 border-amber-100">
+                    <span class="text-[9px] uppercase tracking-wider text-amber-800 block font-semibold">উইথড্র প্রসেসিং</span>
+                    <span class="font-bold text-amber-900 text-xs">মাত্র ৩০ মিনিট!</span>
+                </div>
+                <div class="infographic-stat-box bg-amber-50/60 border-amber-200">
+                    <span class="text-[9px] uppercase tracking-wider text-amber-800 block font-semibold">প্রতিদিন ফ্রি ক্যাশ</span>
+                    <span class="font-black text-amber-700 text-xs">৳ ৩০.০০ (মোট ৪৫০৳ ফেরত!)</span>
+                </div>
+            </div>
+
+            <div class="pt-1">
+                {% if current_tier == 'gold' %}
+                    <button disabled class="w-full bg-amber-100 text-amber-900 font-gotham font-bold text-xs py-3 rounded-xl cursor-default">Active Plan</button>
+                {% else %}
+                    <a href="/upgrade/checkout/gold" class="block w-full text-center bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-gotham font-black text-xs py-3 rounded-xl transition shadow active:scale-95">Upgrade to Gold &raquo;</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 5. DIAMOND TIER (700৳ - সর্বোচ্চ সুবিধা) -->
+        <div class="light-tier-card card-border-diamond p-5 space-y-3.5 relative overflow-hidden">
+            <div class="flex items-start justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-sky-50 border border-sky-300 text-sky-600 flex items-center justify-center text-lg shrink-0">
+                        <i class="fa-solid fa-gem"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <h3 class="font-classic-seasons text-lg text-slate-900 font-bold uppercase tracking-wide">Diamond Reserve</h3>
+                            <span class="light-tag bg-sky-100 text-sky-900 border border-sky-200">২.০x ডাবল আয়</span>
+                        </div>
+                        <span class="text-[11px] text-sky-700 font-medium">১৫ দিনের মেয়াদ • সর্বোচ্চ পাওয়ার</span>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="font-gotham text-2xl font-black text-sky-600">৳ 700</span>
+                    <span class="text-[10px] text-slate-400 block font-gotham">15 Days</span>
+                </div>
+            </div>
+
+            <!-- Infographic 4-Box Grid -->
+            <div class="grid grid-cols-2 gap-2 text-xs font-gotham">
+                <div class="infographic-stat-box bg-sky-50 border-sky-100">
+                    <span class="text-[9px] uppercase tracking-wider text-sky-800 block font-semibold">মিনিমাম উইথড্র</span>
+                    <span class="font-black text-slate-900 text-sm">মাত্র ৳ ২০.০০!</span>
+                </div>
+                <div class="infographic-stat-box bg-emerald-50 border-emerald-100">
+                    <span class="text-[9px] uppercase tracking-wider text-emerald-700 block font-semibold">রেফারেল রিকোয়ারমেন্ট</span>
+                    <span class="font-black text-emerald-700 text-xs">০ টি (রেফার ছাড়া লাইফটাইম) ⚡</span>
+                </div>
+                <div class="infographic-stat-box bg-emerald-50 border-emerald-100">
+                    <span class="text-[9px] uppercase tracking-wider text-emerald-700 block font-semibold">উইথড্র প্রসেসিং টাইম</span>
+                    <span class="font-black text-emerald-700 text-xs">সুপারফাস্ট মাত্র ২ মিনিট! ⚡</span>
+                </div>
+                <div class="infographic-stat-box bg-sky-50 border-sky-200">
+                    <span class="text-[9px] uppercase tracking-wider text-sky-800 block font-semibold">প্রতিদিন ফ্রি ক্যাশ</span>
+                    <span class="font-black text-sky-700 text-xs">৳ ৫৫.০০ (মোট ৮২৫৳ ফেরত!)</span>
+                </div>
+            </div>
+
+            <div class="pt-1">
+                {% if current_tier == 'diamond' %}
+                    <button disabled class="w-full bg-sky-100 text-sky-900 font-gotham font-bold text-xs py-3 rounded-xl cursor-default">Active Plan</button>
+                {% else %}
+                    <a href="/upgrade/checkout/diamond" class="block w-full text-center bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-gotham font-black text-xs py-3 rounded-xl transition shadow active:scale-95">Upgrade to Diamond &raquo;</a>
+                {% endif %}
+            </div>
+        </div>
+
     </div>
 
 </div>
+
+<!-- SCRIPT: DAILY CLAIM -->
+<script>
+function claimDailyReward() {
+    const btn = document.getElementById('btnDailyClaim');
+    btn.disabled = true;
+    btn.innerText = "Claiming...";
+
+    fetch('/upgrade/claim-daily', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(r => r.json())
+    .then(data => {
+        alert(data.message);
+        if (data.success) {
+            window.location.reload();
+        } else {
+            btn.disabled = false;
+            btn.innerText = "Claim";
+        }
+    })
+    .catch(() => {
+        alert("সার্ভার ত্রুটি, কিছুক্ষণ পর চেষ্টা করুন!");
+        btn.disabled = false;
+    });
+}
+</script>
 {% endblock %}
