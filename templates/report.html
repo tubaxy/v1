@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .fintech-card {
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(24px);
+    }
+    .fintech-input-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.2s ease;
+    }
+    .fintech-input-box:focus-within {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+        background: rgba(255, 255, 255, 0.05);
+    }
+    .report-dropzone {
+        background: rgba(255, 255, 255, 0.015);
+        border: 1.5px dashed rgba(255, 255, 255, 0.12);
+        transition: all 0.2s ease;
+    }
+    .report-dropzone:hover {
+        border-color: rgba(56, 189, 248, 0.4);
+        background: rgba(56, 189, 248, 0.02);
+    }
+</style>
+
+<div class="max-w-xl mx-auto space-y-5 pb-24 px-1 sm:px-0">
+
+    <!-- Top Action Row -->
+    <div class="flex items-center justify-between px-1">
+        <a href="/app" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-200 text-xs font-gotham transition active:scale-95 shadow-sm">
+            <i class="fa-solid fa-arrow-left text-[10px] text-blue-500"></i>
+            <span>ড্যাশবোর্ড</span>
+        </a>
+
+        <span class="text-[9px] font-gotham font-semibold tracking-widest text-rose-400 bg-rose-500/10 border border-rose-500/20 px-2.5 py-0.5 rounded-full uppercase flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span>
+            Direct Admin Desk
+        </span>
+    </div>
+
+    <!-- Title Section -->
+    <div class="text-center py-1 select-none space-y-0.5">
+        <h1 class="font-classic-seasons text-2xl sm:text-3xl font-normal text-white uppercase tracking-wider">
+            Report <span class="text-slate-400 font-light italic lowercase text-xl sm:text-2xl">Desk</span>
+        </h1>
+        <p class="text-[11px] text-slate-400 font-gotham font-light">যেকোনো সমস্যা, পেমেন্ট বিলম্ব বা ত্রুটি সরাসরি অ্যাডমিনকে জানান</p>
+    </div>
+
+    <!-- ================= 1. REPORT SUBMISSION FORM ================= -->
+    <div class="fintech-card rounded-[28px] p-5 sm:p-6 space-y-4">
+        
+        <div class="border-b border-white/[0.06] pb-3">
+            <h3 class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation text-rose-400"></i> অভিযোগ দাখিল ফর্ম
+            </h3>
+            <p class="text-[10px] text-slate-500 mt-0.5">আপনার নাম ও ইমেইল সুরক্ষিতভাবে স্বয়ংক্রিয় যুক্ত করা হয়েছে</p>
+        </div>
+
+        <form id="reportForm" action="/report" method="POST" enctype="multipart/form-data" class="space-y-3.5" onsubmit="handleSingleSubmit(this)">
+            
+            <!-- 🌟 Auto-filled Name & Email (Readonly) 🌟 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div class="space-y-1">
+                    <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">আপনার নাম (Auto)</label>
+                    <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 opacity-70 cursor-not-allowed">
+                        <i class="fa-solid fa-user text-slate-500 text-xs w-4 text-center"></i>
+                        <input type="text" value="{{ user.name }}" readonly 
+                               class="w-full bg-transparent text-xs font-gotham text-slate-200 focus:outline-none cursor-not-allowed">
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">ইমেইল (Auto)</label>
+                    <div class="fintech-input-box rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 opacity-70 cursor-not-allowed">
+                        <i class="fa-solid fa-envelope text-slate-500 text-xs w-4 text-center"></i>
+                        <input type="email" value="{{ user.email }}" readonly 
+                               class="w-full bg-transparent text-xs font-mono text-slate-200 focus:outline-none cursor-not-allowed">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Selection / Title -->
+            <div class="space-y-1">
+                <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">অভিযোগের বিষয় (Subject)</label>
+                <div class="fintech-input-box rounded-2xl px-3 py-2.5">
+                    <select name="subject" required class="w-full bg-transparent text-xs font-gotham text-white focus:outline-none">
+                        <option value="" disabled selected class="bg-[#0a0e17] text-slate-500">সমস্যার ধরন নির্বাচন করুন...</option>
+                        <option value="উইথড্রয়াল বা পেমেন্ট সংক্রান্ত সমস্যা" class="bg-[#0a0e17] text-white">উইথড্রয়াল বা পেমেন্ট সংক্রান্ত সমস্যা</option>
+                        <option value="টাস্ক রিজেকশন বা কাজের সমস্যা" class="bg-[#0a0e17] text-white">টাস্ক রিজেকশন বা কাজের সমস্যা</option>
+                        <option value="রেফারেল বোনাস যোগ না হওয়া" class="bg-[#0a0e17] text-white">রেফারেল বোনাস যোগ না হওয়া</option>
+                        <option value="পাসওয়ার্ড বা একাউন্ট অ্যাক্সেস সমস্যা" class="bg-[#0a0e17] text-white">পাসওয়ার্ড বা একাউন্ট অ্যাক্সেস সমস্যা</option>
+                        <option value="টেকনিক্যাল ত্রুটি বা সাইট বাগ" class="bg-[#0a0e17] text-white">টেকনিক্যাল ত্রুটি বা সাইট বাগ</option>
+                        <option value="অন্যান্য অভিযোগ" class="bg-[#0a0e17] text-white">অন্যান্য সাধারণ অভিযোগ</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Details Description -->
+            <div class="space-y-1">
+                <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">
+                    সমস্যার বিস্তারিত বিবরণ (Details)
+                </label>
+                <div class="fintech-input-box rounded-2xl p-3">
+                    <textarea name="details" rows="3" required 
+                              placeholder="কী সমস্যা হয়েছে বিস্তারিতভাবে লিখুন (যেমন: TrxID, টাস্কের নাম বা তারিখ)..." 
+                              class="w-full bg-transparent text-xs text-slate-100 placeholder-slate-600 focus:outline-none resize-none leading-relaxed"></textarea>
+                </div>
+            </div>
+
+            <!-- 📸 Screenshot Upload Box (Optional) -->
+            <div class="space-y-1">
+                <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-400 ml-1">
+                    প্রমাণের স্ক্রিনশট (ঐচ্ছিক)
+                </label>
+                <div class="report-dropzone rounded-2xl p-4 text-center cursor-pointer relative" id="dropzoneArea">
+                    <input type="file" name="screenshot" id="reportSsInput" accept="image/*" 
+                           class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="previewScreenshot(this)">
+
+                    <div id="uploadPlaceholder" class="flex flex-col items-center justify-center space-y-1 py-1">
+                        <i class="fa-solid fa-camera text-slate-400 text-base"></i>
+                        <span class="text-xs font-semibold text-slate-300" id="ssStatusText">স্ক্রিনশট নির্বাচন করুন</span>
+                        <span class="text-[9px] text-slate-500 font-gotham">JPG, PNG সাপোর্টেড</span>
+                    </div>
+
+                    <!-- Live Image Preview Badge -->
+                    <div id="ssPreviewCard" class="hidden flex items-center justify-between p-2 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+                        <span id="ssFileName" class="text-xs text-sky-400 font-gotham truncate max-w-[200px]">screenshot.png</span>
+                        <span class="text-[9px] text-emerald-400 font-bold">সংযুক্ত হয়েছে ✓</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🌟 SUBMIT JUST ONCE BUTTON (ANTI-DUPLICATE) 🌟 -->
+            <button type="submit" id="btnSubmitReport" 
+                    class="w-full bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-gotham font-semibold text-xs py-3.5 px-4 rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2 mt-2">
+                <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                <span id="btnSubmitText">রিপোর্ট জমা দিন (Submit Once)</span>
+            </button>
+        </form>
+
+    </div>
+
+    <!-- ================= 2. PREVIOUS REPORTS STATUS (IF ANY) ================= -->
+    {% if reports %}
+    <div class="fintech-card rounded-[28px] p-4.5 space-y-3">
+        <div class="flex items-center justify-between border-b border-white/[0.06] pb-2.5">
+            <span class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-200">
+                আপনার পূর্বের রিপোর্ট হিস্ট্রি
+            </span>
+            <span class="text-[10px] text-slate-500 font-gotham">সর্বশেষ ৫টি</span>
+        </div>
+
+        <div class="space-y-2">
+            {% for r in reports %}
+            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] flex items-center justify-between gap-3 text-xs">
+                <div class="leading-tight min-w-0">
+                    <span class="font-semibold text-white block truncate">{{ r.subject }}</span>
+                    <span class="text-[10px] font-mono text-slate-500 block mt-0.5">{{ r.created_at[:10] }}</span>
+                </div>
+                <div class="shrink-0">
+                    {% if r.status == 'resolved' %}
+                        <span class="text-[9px] font-gotham font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">Resolved ✓</span>
+                    {% elif r.status == 'investigating' %}
+                        <span class="text-[9px] font-gotham font-bold text-sky-400 bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 rounded-full">Checking ⏳</span>
+                    {% else %}
+                        <span class="text-[9px] font-gotham font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full">Pending</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Support Reassurance -->
+    <a href="https://t.me/task_wallet_online" target="_blank" 
+       class="fintech-card rounded-2xl p-3.5 flex items-center justify-between gap-3 border-sky-500/20 bg-sky-500/[0.02] hover:bg-sky-500/[0.05] transition active:scale-[0.99] select-none">
+        <div class="flex items-center gap-3 min-w-0">
+            <div class="w-8 h-8 rounded-lg bg-sky-500/15 border border-sky-500/30 text-sky-400 flex items-center justify-center text-xs shrink-0">
+                <i class="fa-solid fa-headset"></i>
+            </div>
+            <div class="leading-tight min-w-0">
+                <span class="text-xs font-bold text-white block truncate">জরুরি লাইভ সাপোর্ট প্রয়োজন?</span>
+                <span class="text-[10px] text-slate-400 truncate block">সরাসরি টেলিগ্রাম হেল্পলাইনে কথা বলুন (@task_wallet_online)</span>
+            </div>
+        </div>
+        <i class="fa-solid fa-arrow-right text-xs text-sky-400 shrink-0 mr-1"></i>
+    </a>
+
+</div>
+
+<!-- SCRIPT: PREVIEW & SINGLE-SUBMIT ENFORCEMENT -->
+<script>
+function previewScreenshot(input) {
+    if (input.files && input.files[0]) {
+        document.getElementById('uploadPlaceholder').classList.add('hidden');
+        document.getElementById('ssPreviewCard').classList.remove('hidden');
+        document.getElementById('ssFileName').innerText = input.files[0].name;
+    }
+}
+
+// 🌟 SUBMIT JUST ONCE (PREVENTS DOUBLE-CLICKING / MULTIPLE SUBMIT) 🌟
+function handleSingleSubmit(form) {
+    const btn = document.getElementById('btnSubmitReport');
+    const btnText = document.getElementById('btnSubmitText');
+
+    // বাটন তৎক্ষণাৎ লক করা
+    btn.disabled = true;
+    btn.classList.add('opacity-75', 'cursor-not-allowed');
+    btnText.innerHTML = '<i class="fa-solid fa-spinner animate-spin mr-1"></i> রিপোর্ট পাঠানো হচ্ছে...';
+    
+    return true; // ফর্ম সাবমিট চালিয়ে নেওয়া
+}
+</script>
+{% endblock %}
