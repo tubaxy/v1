@@ -304,6 +304,76 @@ TIER_CONFIG = {
 def reset_page():
     return render_template('reset.html')
 
+
+# ==========================================================
+# USER REPORT DESK CONTROLLER (/report)
+# ==========================================================
+@app.route('/report', methods=['GET', 'POST'])
+@login_required
+def user_report():
+    sb = get_supabase()
+    user_id = session['user_id']
+    user = sb.table('users').select('id, name, email').eq('id', user_id).single().execute().data
+
+    if request.method == 'POST':
+        subject = request.form.get('subject', '').strip()
+        details = request.form.get('details', '').strip()
+        ss_file = request.files.get('screenshot')
+
+        if not subject or not details:
+            flash("বিষয়ের শিরোনাম এবং সমস্যার বিবরণ অবশ্যই লিখুন!", "danger")
+            return redirect(url_for('user_report'))
+
+        ss_url = None
+        if ss_file and ss_file.filename != '':
+            ss_url = upload_to_imgbb(ss_file.read())
+
+        sb.table('reports').insert({
+            'user_id': user_id,
+            'name': user['name'],
+            'email': user['email'],
+            'subject': subject,
+            'details': details,
+            'screenshot_url': ss_url,
+            'status': 'pending'
+        }).execute()
+
+        flash("🎉 আপনার রিপোর্টটি সফলভাবে অ্যাডমিনের কাছে জমা হয়েছে! দ্রুত পর্যালোচনা করা হবে।", "success")
+        return redirect(url_for('user_report'))
+
+    # ইউজারের আগের সাবমিট করা রিপোর্ট হিস্ট্রি
+    previous_reports = sb.table('reports').select('*').eq('user_id', user_id).order('id', desc=True).limit(5).execute().data or []
+    return render_template('report.html', user=user, reports=previous_reports)
+
+
+# ==========================================================
+# ADMIN REPORTS REVIEW CONTROLLER (/admin/reports)
+# ==========================================================
+@app.route('/admin/reports')
+@admin_required
+def admin_reports():
+    sb = get_supabase()
+    all_reports = sb.table('reports').select('*').order('id', desc=True).execute().data or []
+    pending_count = sum(1 for r in all_reports if r.get('status') == 'pending')
+    return render_template('admin/reports.html', reports=all_reports, pending_count=pending_count)
+
+@app.route('/admin/report/<int:report_id>/status/<new_status>', methods=['POST'])
+@admin_required
+def admin_report_status(report_id, new_status):
+    sb = get_supabase()
+    if new_status in ['pending', 'investigating', 'resolved']:
+        sb.table('reports').update({'status': new_status}).eq('id', report_id).execute()
+        flash(f"রিপোর্ট স্ট্যাটাস পরিবর্তন করে '{new_status}' করা হয়েছে!", "success")
+    return redirect(url_for('admin_reports'))
+
+@app.route('/admin/report/<int:report_id>/delete', methods=['POST'])
+@admin_required
+def admin_report_delete(report_id):
+    sb = get_supabase()
+    sb.table('reports').delete().eq('id', report_id).execute()
+    flash("রিপোর্টটি সফলভাবে ডিলিট করা হয়েছে!", "info")
+    return redirect(url_for('admin_reports'))
+    
 @app.route('/reset/check-email', methods=['POST'])
 def reset_check_email():
     sb = get_supabase()
