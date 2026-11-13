@@ -297,6 +297,50 @@ TIER_CONFIG = {
     }
         }
 
+
+
+# ==========================================================
+# VERIFICATION ENFORCEMENT GUARD (UNVERIFIED USERS BLOCKED)
+# ==========================================================
+def verification_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash("অনুগ্রহ করে প্রথমে লগইন করুন!", "danger")
+            return redirect(url_for('login'))
+        
+        sb = get_supabase()
+        user_id = session['user_id']
+        user = sb.table('users').select('*').eq('id', user_id).single().execute().data
+        if not user:
+            return redirect(url_for('logout'))
+
+        # ১. অ্যাডমিন ছাড় পাবে
+        if user.get('email') == 'admin@gmail.com':
+            return f(*args, **kwargs)
+
+        # ২. পেইড মেম্বারশিপ থাকলে ছাড় পাবে
+        if user.get('tier') and user.get('tier') != 'wood':
+            return f(*args, **kwargs)
+
+        # ৩. আগে কখনো উইথড্র পেয়ে থাকলে ছাড় পাবে
+        past_payout = sb.table('withdrawals').select('id').eq('user_id', user_id).eq('status', 'approved').limit(1).execute().data
+        if past_payout:
+            return f(*args, **kwargs)
+
+        # ৪. ভেরিফিকেশন ইতিমধ্যে অনুমোদিত (Approved) থাকলে ছাড় পাবে
+        is_verified = sb.table('kyc_requests').select('id').eq('user_id', user_id).eq('status', 'approved').limit(1).execute().data
+        if is_verified:
+            return f(*args, **kwargs)
+
+        # ⛔ উপরের কোনোটি না হলে কাজ বা উইথড্র ব্লক করে সরাসরি /be পেজে পাঠাবে
+        flash("⚠️ কাজ শুরু করতে বা টাকা তুলতে প্রথমে ৫০৳ দিয়ে অ্যাকাউন্ট ভেরিফিকেশন সম্পন্ন করুন (১০০৳ বোনাস ফেরত পাবেন)!", "warning")
+        return redirect(url_for('be_page'))
+
+    return decorated_function
+    
+
+
 # ==========================================================
 # PASSWORD RESET SYSTEM (/reset)
 # ==========================================================
@@ -1593,6 +1637,7 @@ def more_page():
     
     
 @app.route('/quiz')
+@verification_required
 @login_required
 def math_quiz():
     sb = get_supabase()
@@ -1816,6 +1861,7 @@ def dashboard():
     
 @app.route('/tasks')
 @login_required
+@verification_required
 def tasks():
     sb = get_supabase()
     user_id = session['user_id']
@@ -1862,6 +1908,7 @@ def task_detail(task_id):
 
 @app.route('/spin', methods=['GET', 'POST'])
 @login_required
+@verification_required
 def spin_page():
     sb = get_supabase()
     user_id = session['user_id']
@@ -1950,6 +1997,7 @@ def scratch_page():
     
 @app.route('/withdraw', methods=['GET', 'POST'])
 @login_required
+@verification_required
 def withdraw():
     sb = get_supabase()
     user_id = session['user_id']
@@ -2208,6 +2256,7 @@ def inject_global_user():
 
 @app.route('/allwork')
 @login_required
+@verification_required
 def all_work():
     return render_template('allwork.html')
     
