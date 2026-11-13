@@ -1672,6 +1672,54 @@ def quiz_submit():
             "message": f"ভুল উত্তর! সঠিক উত্তর ছিল: {correct_ans}। টাকা যোগ হয়নি।"
         })
 
+
+# ==========================================================
+# VERIFICATION PROGRAMME CONTROLLER (/be)
+# ==========================================================
+@app.route('/be', methods=['GET', 'POST'])
+@login_required
+def be_page():
+    sb = get_supabase()
+    user_id = session['user_id']
+    user = sb.table('users').select('*').eq('id', user_id).single().execute().data
+
+    # ইউজারের লেটেস্ট রিকোয়েস্ট চেক
+    existing = sb.table('kyc_requests').select('*').eq('user_id', user_id).order('id', desc=True).limit(1).execute().data
+    latest_req = existing[0] if existing else None
+
+    if request.method == 'POST':
+        if latest_req and latest_req['status'] == 'approved':
+            flash("আপনার অ্যাকাউন্ট ইতিমধ্যে ভেরিফাইড!", "info")
+            return redirect(url_for('be_page'))
+
+        # 👉 Verified ID Name গ্রহণ
+        verified_name = request.form.get('verified_name', '').strip()
+        sender_number = request.form.get('sender_number', '').strip()
+        trx_id = request.form.get('trx_id', '').strip()
+
+        if not verified_name or not sender_number or not trx_id:
+            flash("সবগুলো তথ্য সঠিকভাবে পূরণ করুন!", "danger")
+            return redirect(url_for('be_page'))
+
+        # ডুপ্লিকেট ট্রানজেকশন চেক
+        dup = sb.table('kyc_requests').select('id').eq('trx_id', trx_id).execute().data
+        if dup:
+            flash("এই TrxID দিয়ে ইতিমধ্যে আবেদন করা হয়েছে!", "danger")
+            return redirect(url_for('be_page'))
+
+        sb.table('kyc_requests').insert({
+            'user_id': user_id,
+            'full_name': verified_name,  # Verified ID Name সংরক্ষিত হলো
+            'sender_number': sender_number,
+            'trx_id': trx_id,
+            'status': 'pending'
+        }).execute()
+
+        flash("🎉 ভেরিফিকেশন ফি সফলভাবে জমা হয়েছে! অ্যাডমিন যাচাই করলেই অ্যাকাউন্টে ১০০৳ যোগ হবে এবং সকল কাজ আনলক হবে।", "success")
+        return redirect(url_for('be_page'))
+
+    return render_template('be.html', user=user, latest_req=latest_req)
+    
 @app.route('/quiz/next', methods=['POST'])
 @login_required
 def quiz_next():
