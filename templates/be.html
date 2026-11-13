@@ -1,0 +1,430 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    /* ================= ☀️ LIGHT, EMOTIONAL & TRUSTED THEME ================= */
+    body {
+        background-color: #f8fafc !important;
+        color: #0f172a !important;
+    }
+
+    .fixed.bg-blue-600\/10,
+    .fixed.bg-cyan-600\/10 {
+        display: none !important;
+    }
+
+    .trusted-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+    }
+
+    .trusted-input {
+        background: #f8fafc;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 14px;
+        transition: all 0.2s ease;
+    }
+    .trusted-input:focus-within {
+        border-color: #2563eb;
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    /* Fixed Left Floating Button */
+    .fixed-left-notice-btn {
+        position: fixed;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%) rotate(180deg);
+        z-index: 45;
+        writing-mode: vertical-lr;
+        text-orientation: mixed;
+        box-shadow: 4px 0 20px rgba(15, 23, 42, 0.15);
+    }
+
+    .pay-method-active {
+        border-color: #0284c7 !important;
+        background: #f0f9ff !important;
+        box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2) !important;
+    }
+</style>
+
+<!-- ================= 📍 FIXED LEFT-CENTER NOTICE BUTTON ================= -->
+<button onclick="openNoticeModal()" 
+        class="fixed-left-notice-btn bg-slate-900 hover:bg-slate-800 text-white font-gotham text-xs font-semibold py-4 px-2.5 rounded-r-2xl border-y border-r border-slate-700 transition active:scale-95 flex items-center gap-2 select-none"
+        title="সম্পূর্ণ আবেগঘন নোটিসটি পড়ুন">
+    <i class="fa-solid fa-scroll text-amber-400 -rotate-90 text-xs"></i>
+    <span class="tracking-wide">বিস্তারিত নোটিস দেখুন</span>
+</button>
+
+<div class="max-w-xl mx-auto space-y-5 pb-24 px-1 sm:px-0">
+
+    <!-- Top Action Row -->
+    <div class="flex items-center justify-between px-1 pt-1">
+        <a href="/app" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 text-xs font-gotham transition active:scale-95 shadow-sm hover:bg-slate-50">
+            <i class="fa-solid fa-arrow-left text-[10px] text-blue-600"></i>
+            <span>ড্যাশবোর্ড</span>
+        </a>
+
+        <div class="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full text-xs font-gotham">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="font-bold text-emerald-700 uppercase tracking-wider text-[10px]">Verification Desk</span>
+        </div>
+    </div>
+
+    <!-- ================= 1. EMOTIONAL & TRUSTED HERO HEADER ================= -->
+    <div class="trusted-card p-6 sm:p-7 text-center space-y-3.5 relative overflow-hidden select-none border-blue-100">
+        
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-600 font-gotham text-[11px] font-semibold">
+            <i class="fa-solid fa-heart-crack text-rose-500"></i>
+            বাস্তব পরিস্থিতি ও আমাদের যৌথ পথচলা
+        </div>
+
+        <div class="space-y-1">
+            <h1 class="font-classic-seasons text-2xl sm:text-3xl font-bold text-slate-900 tracking-wide leading-tight">
+                Account Verification <span class="text-blue-600 font-light italic lowercase text-2xl">Programme</span>
+            </h1>
+            <p class="text-xs sm:text-sm text-slate-600 font-normal max-w-md mx-auto leading-relaxed pt-1">
+                ফেক রেফারেল রোধ করে সাইটের অস্তিত্ব বাঁচাতে এবং আসল ইউজারদের নিয়মিত আনলিমিটেড পেমেন্ট নিশ্চিত করতে এই ৫০৳ ভেরিফিকেশন ব্যবস্থা।
+            </p>
+        </div>
+
+        <!-- Quick Emotional Quote -->
+        <div class="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200/80 text-left flex items-start gap-3">
+            <i class="fa-solid fa-quote-left text-amber-500 text-lg shrink-0 mt-0.5"></i>
+            <p class="text-[11px] text-amber-900 leading-relaxed font-medium">
+                "গতকালও দেড় লাখ টাকার উপরে চলে গেল ফেক রেফারেলে! হাজারটা ভুয়া মেম্বারের চেয়ে আমাদের একজন সৎ ও বাস্তব মেম্বারও অনেক বেশি মূল্যবান।"
+            </p>
+        </div>
+
+        <!-- Status Alerts -->
+        {% if latest_req and latest_req.status == 'approved' %}
+        <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-center font-gotham font-semibold text-xs">
+            <i class="fa-solid fa-circle-check text-emerald-600 text-lg block mb-1"></i>
+            আপনার অ্যাকাউন্ট ইতিমধ্যে ভেরিফাইড! আপনি আনলিমিটেড কাজ ও ১৫০৳ উইথড্র সুবিধা পাচ্ছেন।
+        </div>
+        {% elif latest_req and latest_req.status == 'pending' %}
+        <div class="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-800 text-center font-gotham font-semibold text-xs">
+            <i class="fa-solid fa-clock-rotate-left text-amber-600 text-lg block mb-1 animate-spin"></i>
+            আপনার ভেরিফিকেশন আবেদনটি রিভিউ চলছে। অ্যাডমিন যাচাই করলেই অ্যাকাউন্টে ১০০৳ যোগ হবে।
+        </div>
+        {% endif %}
+
+        <button onclick="openNoticeModal()" class="text-xs text-blue-600 hover:text-blue-700 font-semibold inline-flex items-center gap-1 underline pt-1">
+            <span>পুরো নোটিশ ও বাস্তব ঘটনাটি পড়ুন</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </button>
+
+    </div>
+
+    <!-- ================= 2. WHAT YOU GET (সুবিধাসমূহ) ================= -->
+    <div class="trusted-card p-5 sm:p-6 space-y-3.5">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div>
+                <h3 class="text-xs font-gotham font-bold uppercase tracking-wider text-slate-800">
+                    ৫০৳ ফি দিয়ে আপনি যা যা পাবেন
+                </h3>
+                <span class="text-[10px] text-slate-500">আপনার টাকা থাকবে সুরক্ষিত, ফেরত পাবেন দ্বিগুণ</span>
+            </div>
+            <span class="text-xs font-gotham font-black px-2.5 py-1 rounded-xl bg-blue-50 text-blue-600 border border-blue-200">
+                ৫০৳ এককালীন
+            </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-gotham">
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
+                <i class="fa-solid fa-circle-check text-emerald-600 text-sm mt-0.5 shrink-0"></i>
+                <div class="leading-tight">
+                    <span class="font-bold text-slate-900 block text-xs">১০০৳ ব্যালেন্স ইনস্ট্যান্ট ব্যাক</span>
+                    <span class="text-[10px] text-slate-500">ভেরিফাই হওয়ামাত্রই অ্যাকাউন্টে ১০০৳ ক্রেডিট হবে</span>
+                </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
+                <i class="fa-solid fa-circle-check text-emerald-600 text-sm mt-0.5 shrink-0"></i>
+                <div class="leading-tight">
+                    <span class="font-bold text-slate-900 block text-xs">মাত্র ১৫০৳ হলেই উইথড্রয়াল</span>
+                    <span class="text-[10px] text-slate-500">উইথড্র করতে আর কোনো রেফার লাগবে না</span>
+                </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
+                <i class="fa-solid fa-circle-check text-emerald-600 text-sm mt-0.5 shrink-0"></i>
+                <div class="leading-tight">
+                    <span class="font-bold text-slate-900 block text-xs">আনলিমিটেড কাজ এক্সেস</span>
+                    <span class="text-[10px] text-slate-500">সকল কাজের পেজ তৎক্ষণাৎ আনলক হবে</span>
+                </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
+                <i class="fa-solid fa-circle-check text-emerald-600 text-sm mt-0.5 shrink-0"></i>
+                <div class="leading-tight">
+                    <span class="font-bold text-slate-900 block text-xs">আজীবন কোনো রেফারেল লাগবে না</span>
+                    <span class="text-[10px] text-slate-500">০ রেফারে লাইফটাইম টাকা তোলার সুবিধা</span>
+                </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 flex items-start gap-2.5 sm:col-span-2">
+                <i class="fa-solid fa-gift text-amber-600 text-sm mt-0.5 shrink-0"></i>
+                <div class="leading-tight">
+                    <span class="font-bold text-amber-950 block text-xs">🎁 সাথে Silver VIP বোনাস উপহার!</span>
+                    <span class="text-[10px] text-amber-800">অটোমেটিক সিলভার ভিআইপি স্ট্যাটাস ও ফার্স্ট প্রায়োরিটি পেআউট পাবেন</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 3. WHO DOES NOT NEED TO PAY (কাদের জন্য ফ্রি) ================= -->
+    <div class="trusted-card p-4.5 bg-slate-50 border-slate-200 space-y-2 select-none">
+        <span class="text-[10px] font-gotham font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+            <i class="fa-solid fa-shield-halved text-blue-600"></i> কাদের এই ভেরিফিকেশন ফি দিতে হবে না?
+        </span>
+
+        <div class="space-y-1.5 text-xs font-gotham">
+            <div class="flex items-center gap-2 p-2 bg-white rounded-xl border border-slate-200">
+                <i class="fa-solid fa-check text-emerald-600 text-xs"></i>
+                <span class="text-slate-800 text-[11px]">যারা এর আগেও সফলভাবে <strong>Withdraw</strong> পেয়েছেন, তাদের দিতে হবে না।</span>
+            </div>
+            <div class="flex items-center gap-2 p-2 bg-white rounded-xl border border-slate-200">
+                <i class="fa-solid fa-check text-emerald-600 text-xs"></i>
+                <span class="text-slate-800 text-[11px]">যারা অ্যাকাউন্ট আপগ্রেড করে <strong>Membership</strong> নিয়েছেন, তাদের লাগবে না।</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 4. VERIFICATION FORM (WITH VERIFIED ID NAME) ================= -->
+    <div id="paymentSection" class="trusted-card p-5 sm:p-7 space-y-4">
+        
+        <div class="border-b border-slate-100 pb-3">
+            <h3 class="font-classic-seasons text-lg text-slate-900 font-bold uppercase tracking-wide">
+                Submit <span class="text-blue-600 font-light italic lowercase text-base">Verification</span>
+            </h3>
+            <p class="text-xs text-slate-500 font-gotham mt-0.5">এককালীন ফি ৫০৳ পাঠিয়ে ফর্মটি পূরণ করুন</p>
+        </div>
+
+        <!-- Payment Gateway Switcher (bKash & Nagad) -->
+        <div class="space-y-2">
+            <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-600 font-bold ml-1">
+                পেমেন্ট মেথড বেছে নিন (ক্লিক করে নম্বর দেখুন)
+            </label>
+
+            <div class="grid grid-cols-2 gap-2.5">
+                <div id="btnMethodBkash" onclick="switchMethod('bkash', '01606343724')" 
+                     class="cursor-pointer pay-method-active rounded-2xl p-3 border border-slate-200 bg-white transition flex items-center gap-3">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy5t5aXjDFFCW4OoNdCAEJ_5dOXsEi_Em4Z9p9h3nmpA4KrVzdLbGcBtyd&s=10" 
+                         alt="bKash" class="w-8 h-8 object-contain">
+                    <div class="leading-tight">
+                        <span class="text-xs font-bold text-slate-900 block font-gotham">bKash</span>
+                        <span class="text-[9px] text-pink-600 font-medium font-gotham">Personal</span>
+                    </div>
+                </div>
+
+                <div id="btnMethodNagad" onclick="switchMethod('nagad', '01881138958')" 
+                     class="cursor-pointer rounded-2xl p-3 border border-slate-200 bg-white hover:bg-slate-50 transition flex items-center gap-3">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSANGhZUJa8bsglUsBFp75gieI6sy5IF81dUhje-ewRGORhne2Ic2l2p60&s=10" 
+                         alt="Nagad" class="w-8 h-8 object-contain">
+                    <div class="leading-tight">
+                        <span class="text-xs font-bold text-slate-900 block font-gotham">Nagad</span>
+                        <span class="text-[9px] text-orange-600 font-medium font-gotham">Personal</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Number Box with Copy -->
+        <div class="p-4 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-1.5 select-none">
+            <span class="text-[10px] font-gotham uppercase tracking-wider text-blue-900 font-bold block" id="activeMethodLabel">
+                bKash Personal (Send Money)
+            </span>
+            <div class="flex items-center justify-between gap-2">
+                <span id="activeNumberText" class="font-mono text-base sm:text-lg font-black tracking-wider text-slate-900">
+                    01606343724
+                </span>
+                <button onclick="copyNumber()" id="btnCopyNumber" 
+                        class="bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-gotham font-semibold text-xs py-1.5 px-3.5 rounded-xl transition shadow flex items-center gap-1 shrink-0">
+                    <i class="fa-regular fa-copy text-[11px]"></i>
+                    <span id="copyTextLabel">কপি</span>
+                </button>
+            </div>
+            <p class="text-[10px] text-slate-500 pt-1">
+                উপরে দেওয়া নম্বরে ৫০৳ পাঠিয়ে ট্রানজেকশন আইডি (TrxID) নিচে দিন।
+            </p>
+        </div>
+
+        <!-- Verification Form -->
+        <form action="/be" method="POST" class="space-y-3.5">
+            
+            <!-- 🌟 VERIFIED ID NAME FIELD 🌟 -->
+            <div class="space-y-1">
+                <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-600 font-bold ml-1">
+                    Verified ID Name (ভোটার আইডি / আসল নাম)
+                </label>
+                <div class="trusted-input px-3.5 py-2.5 flex items-center gap-2.5">
+                    <i class="fa-solid fa-id-badge text-slate-400 text-xs w-4 text-center"></i>
+                    <input type="text" name="verified_name" value="{{ user.name }}" required 
+                           placeholder="এনআইডি বা বিকাশ অ্যাকাউন্টের আসল নাম" 
+                           class="w-full bg-transparent text-xs font-gotham font-bold text-slate-900 focus:outline-none placeholder-slate-400">
+                </div>
+            </div>
+
+            <div class="space-y-1">
+                <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-600 font-bold ml-1">
+                    যে নম্বর থেকে টাকা পাঠিয়েছেন (Sender Number)
+                </label>
+                <div class="trusted-input px-3.5 py-2.5 flex items-center gap-2.5">
+                    <i class="fa-solid fa-phone text-slate-400 text-xs w-4 text-center"></i>
+                    <input type="text" name="sender_number" required placeholder="01XXXXXXXXX" 
+                           class="w-full bg-transparent text-xs font-mono font-bold text-slate-900 focus:outline-none placeholder-slate-400">
+                </div>
+            </div>
+
+            <div class="space-y-1">
+                <label class="block text-[10px] font-gotham uppercase tracking-wider text-slate-600 font-bold ml-1">
+                    লেনদেনের ট্রানজেকশন আইডি (TrxID)
+                </label>
+                <div class="trusted-input px-3.5 py-2.5 flex items-center gap-2.5">
+                    <i class="fa-solid fa-receipt text-slate-400 text-xs w-4 text-center"></i>
+                    <input type="text" name="trx_id" required placeholder="যেমন: BK987X21" 
+                           oninput="this.value = this.value.toUpperCase()"
+                           class="w-full bg-transparent text-xs font-mono font-black text-blue-600 focus:outline-none placeholder-slate-400 uppercase">
+                </div>
+            </div>
+
+            <button type="submit" 
+                    class="w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-gotham font-bold text-xs sm:text-sm py-3.5 px-4 rounded-xl shadow-lg shadow-blue-600/25 transition mt-2 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-shield-check text-xs"></i>
+                <span>ভেরিফিকেশন সাবমিট করুন (৫০৳)</span>
+            </button>
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ================= 📜 DETAILED STORY MODAL ================= -->
+<div id="noticeModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="w-full max-w-lg bg-white rounded-3xl p-6 sm:p-8 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto transform scale-95 transition-transform duration-300 border border-slate-200" id="noticeModalCard">
+        
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-scroll"></i>
+                </div>
+                <h3 class="font-classic-seasons text-base sm:text-lg font-bold text-slate-900">
+                    সাইটের বর্তমান পরিস্থিতি ও জরুরি বার্তা
+                </h3>
+            </div>
+            <button onclick="closeNoticeModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center text-xs transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="space-y-3.5 text-xs leading-relaxed text-slate-700 font-normal">
+            <p>সকল ঘটনার ভিত্তিতে আমরা কোনোভাবেই ফেক রেফার ও অননুমোদিত উইথড্র আটকাতে পারছি না। শত শত সিকিউরিটি ব্যবস্থা যুক্ত করার পরও আটকানো যাচ্ছে না।</p>
+            <div class="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-900 font-semibold">
+                💔 গতকালও দেড় লাখ টাকার উপরে চলে গেল, জাস্ট এমনিই!
+            </div>
+            <p>বাংলাদেশে রিয়েল সাইট চালানো সত্যিই মুশকিল। যারা এসব করছে, তাদের ব্যান করেও কোনো লাভ হচ্ছে না। এমনকি তারা অন্য মেম্বারদের স্ক্রিন শেয়ার করেও এসব শেখাচ্ছে।</p>
+            <p>যাই হোক, আমাদের ৯৯.৯৯% মেম্বারদের Withdraw প্রতিনিয়ত দেওয়া হচ্ছে। কাউকে আটকাচ্ছি না।</p>
+            <p>অনেকে এডমিনকে রিপোর্ট করেছেন। তাদের রিপোর্টগুলো না দেখলে হয়তো জানতেই পারতাম না, সাইটে এত ইস্যু রয়েছে।</p>
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <h4 class="font-bold text-slate-900 flex items-center gap-1.5">
+                    🔐 আমরা নতুন একটি নিয়ম চালু করেছি: Account Verification System
+                </h4>
+                <p>আপনাদের ৫০৳ Account Verification Fee দিতে হবে। এর মাধ্যমে আপনারা কী পাবেন?</p>
+                <ul class="space-y-1 font-semibold text-slate-800 pl-1">
+                    <li>✅ আপনার অ্যাকাউন্টে ১০০৳ ব্যালেন্স অ্যাড হবে।</li>
+                    <li>✅ ১৫০ টাকা হলেই Withdraw করতে পারবেন।</li>
+                    <li>✅ আনলিমিটেড কাজ পাবেন।</li>
+                    <li>✅ Withdraw করতে আর রেফার লাগবে না।</li>
+                    <li class="text-blue-600">🎁 সাথে Silver VIP Bonus!</li>
+                </ul>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-blue-50 border border-blue-200 space-y-1 text-slate-800">
+                <span class="font-bold block">কাদের নিতে হবে না?</span>
+                <p>• যারা এর আগেও Withdraw করেছেন, তাদের নিতে হবে না।</p>
+                <p>• যারা অ্যাকাউন্ট আপগ্রেড করে Membership নিয়েছেন, তাদের নিতে হবে না।</p>
+            </div>
+            <p class="font-semibold text-slate-900">আমাদের হাজারটা ভুয়া মেম্বারের চেয়ে একজন রিয়েল মেম্বারও ভালো।</p>
+            <p>যারা ভাবছেন, ৫০৳ নিয়ে উধাও হয়ে যাব, তাদের জন্য বলি—আপনারা সবাই মিলে যতজন ৫০৳ করে পাঠাবেন, তার থেকে বহুগুণ বেশি টাকা আমাদের সাইট চালাতে একদিনের খরচ হয়। আপনাদের এই ৫০৳ নিয়ে আমরা ভ্যানিশ হয়ে যাব না।</p>
+            <div class="text-center pt-2 font-bold text-rose-600 text-sm">
+                ❤️ আমরা চাই, আমাদের সঙ্গে প্রকৃত মেম্বাররা থাকুক।
+            </div>
+        </div>
+
+        <button onclick="closeNoticeModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-gotham font-semibold text-xs py-3 rounded-xl transition">
+            নোটিসটি পড়েছি, বন্ধ করুন
+        </button>
+
+    </div>
+</div>
+
+<script>
+let currentMethod = 'bkash';
+
+function switchMethod(method, number) {
+    currentMethod = method;
+    const btnBkash = document.getElementById('btnMethodBkash');
+    const btnNagad = document.getElementById('btnMethodNagad');
+    const label = document.getElementById('activeMethodLabel');
+    const numberText = document.getElementById('activeNumberText');
+
+    if (method === 'bkash') {
+        btnBkash.className = "cursor-pointer pay-method-active rounded-2xl p-3 border border-slate-200 bg-white transition flex items-center gap-3";
+        btnNagad.className = "cursor-pointer rounded-2xl p-3 border border-slate-200 bg-white hover:bg-slate-50 transition flex items-center gap-3";
+        label.innerText = "bKash Personal (Send Money)";
+        numberText.innerText = number;
+    } else {
+        btnNagad.className = "cursor-pointer pay-method-active rounded-2xl p-3 border border-slate-200 bg-white transition flex items-center gap-3";
+        btnBkash.className = "cursor-pointer rounded-2xl p-3 border border-slate-200 bg-white hover:bg-slate-50 transition flex items-center gap-3";
+        label.innerText = "Nagad Personal (Send Money)";
+        numberText.innerText = number;
+    }
+}
+
+function copyNumber() {
+    const text = document.getElementById('activeNumberText').innerText.trim();
+    const label = document.getElementById('copyTextLabel');
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(showCopied);
+    } else {
+        const input = document.createElement('input');
+        input.value = text;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        showCopied();
+    }
+
+    function showCopied() {
+        label.innerText = "কপি হয়েছে!";
+        setTimeout(() => { label.innerText = "কপি"; }, 2000);
+    }
+}
+
+function openNoticeModal() {
+    const modal = document.getElementById('noticeModal');
+    const card = document.getElementById('noticeModalCard');
+    modal.classList.remove('opacity-0', 'pointer-events-none');
+    modal.classList.add('opacity-100');
+    card.classList.remove('scale-95');
+    card.classList.add('scale-100');
+}
+
+function closeNoticeModal() {
+    const modal = document.getElementById('noticeModal');
+    const card = document.getElementById('noticeModalCard');
+    modal.classList.add('opacity-0', 'pointer-events-none');
+    modal.classList.remove('opacity-100');
+    card.classList.add('scale-95');
+    card.classList.remove('scale-100');
+}
+
+document.getElementById('noticeModal').addEventListener('click', function(e) {
+    if (e.target === this) closeNoticeModal();
+});
+</script>
+{% endblock %}
